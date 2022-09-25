@@ -1,0 +1,922 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Shell Style Guide - ELEE1119 Exercise Book</title>
+        <!-- Custom HTML head -->
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../Shell/shell.html"><strong aria-hidden="true">1.</strong> Shell</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../Shell/installation.html"><strong aria-hidden="true">1.1.</strong> Installation</a></li><li class="chapter-item expanded "><a href="../Shell/introducing_shell.html"><strong aria-hidden="true">1.2.</strong> Introducing the Shell</a></li><li class="chapter-item expanded "><a href="../Shell/fileDir.html"><strong aria-hidden="true">1.3.</strong> Navigating File and Directories</a></li><li class="chapter-item expanded "><a href="../Shell/create.html"><strong aria-hidden="true">1.4.</strong> Working with FIles and Directories</a></li><li class="chapter-item expanded "><a href="../Shell/pipefilter.html"><strong aria-hidden="true">1.5.</strong> Pipes and Filters</a></li><li class="chapter-item expanded "><a href="../Shell/loops.html"><strong aria-hidden="true">1.6.</strong> Loop</a></li><li class="chapter-item expanded "><a href="../Shell/scripts.html"><strong aria-hidden="true">1.7.</strong> Scripts</a></li><li class="chapter-item expanded "><a href="../Shell/find.html"><strong aria-hidden="true">1.8.</strong> Finding Things</a></li><li class="chapter-item expanded "><a href="../Shell/reference.html"><strong aria-hidden="true">1.9.</strong> Summary of Basic Commands</a></li></ol></li><li class="chapter-item expanded "><a href="../Shell_Extras/introduction.html"><strong aria-hidden="true">2.</strong> Extra Shell</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../Shell_Extras/manfiles.html"><strong aria-hidden="true">2.1.</strong> Manual Pages</a></li><li class="chapter-item expanded "><a href="../Shell_Extras/workremote.html"><strong aria-hidden="true">2.2.</strong> Working Remotely</a></li><li class="chapter-item expanded "><a href="../Shell_Extras/permissions.html"><strong aria-hidden="true">2.3.</strong> Permissions</a></li><li class="chapter-item expanded "><a href="../Shell_Extras/dirstruct.html"><strong aria-hidden="true">2.4.</strong> Working with Files and Directories</a></li><li class="chapter-item expanded "><a href="../Shell_Extras/jobs.html"><strong aria-hidden="true">2.5.</strong> Job Control</a></li><li class="chapter-item expanded "><a href="../Shell_Extras/aliases.html"><strong aria-hidden="true">2.6.</strong> Aliases and bash customisation</a></li><li class="chapter-item expanded "><a href="../Shell_Extras/shellvars.html"><strong aria-hidden="true">2.7.</strong> Shell Variables</a></li><li class="chapter-item expanded "><a href="../Shell_Extras/references.html"><strong aria-hidden="true">2.8.</strong> Summary of Commands</a></li></ol></li><li class="chapter-item expanded "><a href="../Shell_Style_Guide/shellstyleguide.html" class="active"><strong aria-hidden="true">3.</strong> Shell Style Guide</a></li><li class="chapter-item expanded "><a href="../System_Statistics_Script/systemStats.html"><strong aria-hidden="true">4.</strong> System Statistics Script</a></li><li class="chapter-item expanded "><a href="../RFC_Logger/rfclogger.html"><strong aria-hidden="true">5.</strong> RFC Logger Script</a></li><li class="chapter-item expanded "><a href="../OS_Pantheon/Introduction.html"><strong aria-hidden="true">6.</strong> OS Pantheon</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../OS_Pantheon/nixOS/nixOS.html"><strong aria-hidden="true">6.1.</strong> NixOS</a></li><li class="chapter-item expanded "><a href="../OS_Pantheon/arch/arch.html"><strong aria-hidden="true">6.2.</strong> Arch</a></li><li class="chapter-item expanded "><a href="../OS_Pantheon/RPIOS/rpios.html"><strong aria-hidden="true">6.3.</strong> Raspberry Pi OS</a></li><li class="chapter-item expanded "><a href="../OS_Pantheon/WindowsCoreIoT/WindowsCoreIoT.html"><strong aria-hidden="true">6.4.</strong> Windows Core IoT</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">ELEE1119 Exercise Book</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="shell-styling-guide"><a class="header" href="#shell-styling-guide">Shell Styling Guide</a></h1>
+<h1 id="background"><a class="header" href="#background">Background</a></h1>
+<h2 id="which-shell-to-use"><a class="header" href="#which-shell-to-use">Which Shell to Use</a></h2>
+<p>Bash is the only shell scripting language permitted for executables.</p>
+<p>Executables must start with <code>#! /usr/bin/env bash</code> and a minimum number of flags. Use <code>set</code> to set shell options so that calling your script as bash <code>script_name</code> does not break its functionality.</p>
+<p>Restricting all executable shell scripts to bash gives us a consistent shell language that's installed on all our machines.</p>
+<p>The only exception to this is where you're forced to by whatever you're coding for. One example of this is Solaris SVR4 packages which require plain Bourne shell for any scripts.</p>
+<h2 id="when-to-use-shell"><a class="header" href="#when-to-use-shell">When to Use Shell</a></h2>
+<p>Shell should only be used for small utilities or simple wrapper scripts.</p>
+<p>While shell scripting isn't a development language, it is used for writing various utility scripts throughout any system. This style guide is more a recognition of its use rather than a suggestion that it be used for widespread deployment.</p>
+<p>Some guidelines:</p>
+<ul>
+<li>
+<p>If you're mostly calling other utilities and are doing relatively little data manipulation, shell is an acceptable choice for the task.</p>
+</li>
+<li>
+<p>If performance matters, use something other than shell.</p>
+</li>
+<li>
+<p>If you are writing a script that is more than 100 lines long, or that uses non-straightforward control flow logic, you should rewrite it in a more structured language now. Bear in mind that scripts grow. Rewrite your script early to avoid a more time-consuming rewrite at a later date. </p>
+</li>
+<li>
+<p>When assessing the complexity of your code (e.g. to decide whether to switch languages) consider whether the code is easily  maintainable by people other than its author.</p>
+</li>
+</ul>
+<h1 id="shell-files-and-interpreter-invocation"><a class="header" href="#shell-files-and-interpreter-invocation">Shell Files and Interpreter Invocation</a></h1>
+<h2 id="file-extensions"><a class="header" href="#file-extensions">File Extensions</a></h2>
+<p>Executables should have no extension (strongly preferred) or a <code>.sh</code> extension. Libraries must have a <code>.sh</code> extension and should not be executable.</p>
+<p>It is not necessary to know what language a program is written in when executing it and shell doesn't require an extension so we prefer not to use one for executables.</p>
+<p>However, for libraries it's important to know what language it is and sometimes there's a need to have similar libraries in different languages. This allows library files with identical purposes but different languages to be identically named except for the language-specific suffix.</p>
+<h2 id="suidguid"><a class="header" href="#suidguid">SUID/GUID</a></h2>
+<p>Set owner User ID up on execution (SUID) Set Group ID up on execution SGID are <em>forbidden</em> on shell scripts.</p>
+<p>There are too many security issues with shell that make it nearly impossible to secure sufficiently to allow SUID/SGID. While bash does make it difficult to run SUID, it's still possible on some platforms which is why we're being explicit about banning it.</p>
+<p>Use Super user do <code>sudo</code> to provide elevated access if you need it.</p>
+<p><img src="sandwich.png" alt="image" />{width=&quot;60%&quot;}</p>
+<h1 id="environment"><a class="header" href="#environment">Environment</a></h1>
+<h2 id="stdout-vs-stderr"><a class="header" href="#stdout-vs-stderr">STDOUT vs STDERR</a></h2>
+<p>All error messages should go to STDERR.</p>
+<p>This makes it easier to separate normal status from actual issues.</p>
+<p>A function to print out error messages along with other status information is recommended.</p>
+<p><code>$*</code> means all arguments passed into the function or script.</p>
+<p>Additionally, you'll notice that the date is set to the ISO 8601 standard.</p>
+<pre><code class="language-bash">#!/usr/bi/env bash
+#
+# Perform some system saving script.
+
+err() {
+  echo &quot;[$(date +'%Y-%m-%dT%H:%M:%S%z')]: $*&quot; &gt;&amp;2
+}
+
+if ! do_something; then
+  err &quot;Unable to do_something&quot;
+  exit 1
+fi
+</code></pre>
+<h1 id="comments"><a class="header" href="#comments">Comments</a></h1>
+<h2 id="file-header"><a class="header" href="#file-header">File Header</a></h2>
+<p>Start each file with a description of its contents.</p>
+<p>Every file must have a top-level comment including a brief overview of its contents. A copyright notice and author information are optional.</p>
+<p>Example:</p>
+<pre><code class="language-bash">#!/usr/bi/env bash
+#
+# Perform some system saving script.
+</code></pre>
+<h2 id="function-comments"><a class="header" href="#function-comments">Function Comments</a></h2>
+<p>Any function that is not both obvious and short must be commented. Any function in a library must be commented regardless of length or complexity.</p>
+<p>It should be possible for someone else to learn how to use your program or to use a function in your library by reading the comments (and self-help, if provided) without reading the code.</p>
+<p>All function comments should describe the intended API behaviour using:</p>
+<ul>
+<li>
+<p>Description of the function.</p>
+</li>
+<li>
+<p>Globals: List of global variables used and modified.</p>
+</li>
+<li>
+<p>Arguments: Arguments taken.</p>
+</li>
+<li>
+<p>Outputs: Output to STDOUT or STDERR.</p>
+</li>
+<li>
+<p>Returns: Returned values other than the default exit status of the
+last command run.</p>
+</li>
+</ul>
+<p>Example:</p>
+<pre><code class="language-bash">#!/usr/bi/env bash
+#
+# Perform some system saving script.
+
+err() {
+  echo &quot;[$(date +'%Y-%m-%dT%H:%M:%S%z')]: $*&quot; &gt;&amp;2
+}
+
+if ! do_something; then
+  err &quot;Unable to do_something&quot;
+  exit 1
+fi
+
+#######################################
+# Cleanup files from the backup directory.
+# Globals:
+#   BACKUP_DIR
+#   SYSTEMTOOL_SID
+# Arguments:
+#   None
+#######################################
+function cleanup() {
+  …
+}
+
+#######################################
+# Get configuration directory.
+# Globals:
+#   SOMEDIR
+# Arguments:
+#   None
+# Outputs:
+#   Writes location to stdout
+#######################################
+function get_dir() {
+  echo &quot;${SOMEDIR}&quot;
+}
+
+#######################################
+# Delete a file in a sophisticated manner.
+# Arguments:
+#   File to delete, a path.
+# Returns:
+#   0 if thing was deleted, non-zero on error.
+#######################################
+function del_thing() {
+  rm &quot;$1&quot;
+}
+</code></pre>
+<h2 id="implementation-comments"><a class="header" href="#implementation-comments">Implementation Comments</a></h2>
+<p>Comment tricky, non-obvious, interesting or important parts of your code.</p>
+<p>This follows general coding comment practice. Don't comment everything. If there's a complex algorithm or you're doing something out of the ordinary, put a short comment in.</p>
+<h2 id="todo-comments"><a class="header" href="#todo-comments">TODO Comments</a></h2>
+<p><code># TODO(someperson): Handle the unlikely edge cases (bug ####)</code></p>
+<h1 id="formatting"><a class="header" href="#formatting">Formatting</a></h1>
+<p>While you should follow the style that's already there for files that you're modifying, the following are required for any new code.</p>
+<h2 id="indentation"><a class="header" href="#indentation">Indentation</a></h2>
+<p>Indent 2 spaces. No tabs.</p>
+<p>Use blank lines between blocks to improve readability. Indentation is two spaces. Whatever you do, don't use tabs. For existing files, stay 
+faithful to the existing indentation.</p>
+<h1 id="line-length-and-long-strings"><a class="header" href="#line-length-and-long-strings">Line Length and Long Strings</a></h1>
+<p>Maximum line length is 80 characters.</p>
+<p>If you have to write strings that are longer than 80 characters, this should be done with a here document or an embedded newline if possible. Literal strings that have to be longer than 80 chars and can't sensibly be split are ok, but it's strongly preferred to find a way to make it shorter.</p>
+<pre><code class="language-bash"># DO use 'here document's
+cat &lt;&lt;END
+I am an exceptionally long
+string.
+END
+
+# Embedded newlines are ok too
+long_string=&quot;I am an exceptionally
+long string.&quot;
+</code></pre>
+<h2 id="pipelines"><a class="header" href="#pipelines">Pipelines</a></h2>
+<p>Pipelines should be split one per line if they don't all fit on one line.</p>
+<p>If a pipeline all fits on one line, it should be on one line.</p>
+<p>If not, it should be split at one pipe segment per line with the pipe on the newline and a 2 space indent for the next section of the pipe. This applies to a chain of commands combined using <code>|</code> as well as to logical compounds using <code>||</code> and <code>&amp;&amp;</code>.</p>
+<pre><code class="language-bash"># All fits on one line
+command1 | command2
+
+# Long commands
+command1 \
+  | command2 \
+  | command3 \
+  | command4
+</code></pre>
+<h2 id="loops"><a class="header" href="#loops">Loops</a></h2>
+<p>Put <code>;</code> do and <code>;</code> then on the same line as the <code>while</code>, <code>for</code> or <code>if</code>.</p>
+<p>Loops in shell are a bit different, but we follow the same principles as with braces when declaring functions. That is: <code>:</code> then and <code>;</code> do should be on the same line as the <code>if</code>/<code>for</code>/<code>while</code>. <code>else</code> should be on its own line and closing statements should be on their own line vertically aligned with the opening statement.</p>
+<pre><code class="language-bash"># If inside a function, consider declaring the loop variable as
+# a local to avoid it leaking into the global environment:
+# local dir
+for dir in &quot;${dirs_to_cleanup[@]}&quot;; do
+  if [[ -d &quot;${dir}/${SYSTEMTOOL_SID}&quot; ]]; then
+    log_date &quot;Cleaning up old files in ${dir}/${SYSTEMTOOL_SID}&quot;
+    rm &quot;${dir}/${SYSTEMTOOL_SID}/&quot;*
+    if (( $? != 0 )); then
+      error_message
+    fi
+  else
+    mkdir -p &quot;${dir}/${SYSTEMTOOL_SID}&quot;
+    if (( $? != 0 )); then
+      error_message
+    fi
+  fi
+done 
+</code></pre>
+<h2 id="case-statement"><a class="header" href="#case-statement">Case Statement</a></h2>
+<ul>
+<li>
+<p>Indent alternatives by 2 spaces.</p>
+</li>
+<li>
+<p>A one-line alternative needs a space after the close parenthesis of the pattern and before the <code>;;</code>.</p>
+</li>
+<li>
+<p>Long or multi-command alternatives should be split over multiple lines with the pattern, actions, and <code>;;</code> on separate lines.</p>
+</li>
+</ul>
+<p>The matching expressions are indented one level from the <code>case</code> and <code>esac</code>. Multiline actions are indented another level. In general, there is no need to quote match expressions. Pattern expressions should not be preceded by an open parenthesis. Avoid the <code>;&amp;</code> and <code>;;&amp;</code> notations.</p>
+<pre><code class="language-bash">case &quot;${expression}&quot; in
+  a)
+    variable=&quot;…&quot;
+    some_command &quot;${variable}&quot; &quot;${other_expr}&quot; …
+    ;;
+  absolute)
+    actions=&quot;relative&quot;
+    another_command &quot;${actions}&quot; &quot;${other_expr}&quot; …
+    ;;
+  *)
+    error &quot;Unexpected expression '${expression}'&quot;
+    ;;
+esac
+</code></pre>
+<p>Simple commands may be put on the same line as the pattern and <code>;;</code> as long as the expression remains readable. This is often appropriate for single-letter option processing. When the actions don't fit on a single line, put the pattern on a line on its own, then the actions, then <code>;;</code> also on a line of its own. When on the same line as the actions, use a space after the close parenthesis of the pattern and another before the <code>;;</code>.</p>
+<h2 id="variable-expansion"><a class="header" href="#variable-expansion">Variable Expansion</a></h2>
+<p>In order of precedence: Stay consistent with what you find; quote your variables; prefer <code>&quot;$var&quot;</code> over <code>''$var''</code>.</p>
+<p>These are strongly recommended guidelines but not mandatory regulation. Nonetheless, the fact that it's a recommendation and not mandatory doesn't mean it should be taken lightly or downplayed.</p>
+<p>They are listed in order of precedence.</p>
+<ul>
+<li>
+<p>Stay consistent with what you find for existing code.</p>
+</li>
+<li>
+<p>Quote variables, see section below.</p>
+</li>
+<li>
+<p>Don't brace-delimit single character shell specials / positional  parameters, unless strictly necessary or avoiding deep confusion</p>
+</li>
+</ul>
+<p>Prefer brace-delimiting all other variables.</p>
+<pre><code class="language-bash"># Section of *recommended* cases.
+
+# Preferred style for 'special' variables:
+echo &quot;Positional: $1&quot; &quot;$5&quot; &quot;$3&quot;
+echo &quot;Specials: !=$!, -=$-, _=$_. ?=$?, #=$# *=$* @=$@ \$=$$ …&quot;
+
+# Braces necessary:
+echo &quot;many parameters: ${10}&quot;
+
+# Braces avoiding confusion:
+# Output is &quot;a0b0c0&quot;
+set -- a b c
+echo &quot;${1}0${2}0${3}0&quot;
+
+# Preferred style for other variables:
+echo &quot;PATH=${PATH}, PWD=${PWD}, mine=${some_var}&quot;
+while read -r f; do
+  echo &quot;file=${f}&quot;
+done &lt; &lt;(find /tmp)
+
+# Section of *discouraged* cases
+
+# Unquoted vars, unbraced vars, brace-delimited single letter
+# shell specials.
+echo a=$avar &quot;b=$bvar&quot; &quot;PID=${$}&quot; &quot;${1}&quot;
+
+# Confusing use: this is expanded as &quot;${1}0${2}0${3}0&quot;,
+# not &quot;${10}${20}${30}
+set -- a b c
+echo &quot;$10$20$30&quot;
+</code></pre>
+<blockquote>
+<p>NOTE: Using braces in <code>$var</code> is not a form of quoting. <code>&quot;</code> double quites mus be used as well.</p>
+</blockquote>
+<h2 id="quoting"><a class="header" href="#quoting">Quoting</a></h2>
+<ul>
+<li>
+<p>Always quote strings containing variables, command substitutions, spaces or shell meta characters, unless careful unquoted expansion is required or it's a shell-internal integer (see next point).</p>
+</li>
+<li>
+<p>Use arrays for safe quoting of lists of elements, especially command-line flags. See Arrays below.</p>
+</li>
+<li>
+<p>Optionally quote shell-internal, readonly special variables that are defined to be integers: <code>$?</code>, <code>$#</code>, <code>$$</code>, <code>$!</code> (man bash). Prefer quoting of &quot;named&quot; internal integer variables, e.g. PPID etc for consistency.</p>
+</li>
+<li>
+<p>Prefer quoting strings that are &quot;words&quot; (as opposed to command options or path names).</p>
+</li>
+<li>
+<p>Never quote literal integers.</p>
+</li>
+<li>
+<p>Be aware of the quoting rules for pattern matches in <code>[[ ]]</code>. See the Test, <code>[ ]</code>, and <code>[[ ]]</code> section below.</p>
+</li>
+<li>
+<p>Use <code>$</code> unless you have a specific reason to use <code>$*</code>, such as simply appending the arguments to a string in a message or log.</p>
+</li>
+</ul>
+<pre><code class="language-bash"># 'Single' quotes indicate that no substitution is desired.
+# &quot;Double&quot; quotes indicate that substitution is required/tolerated.
+
+# Simple examples
+
+# &quot;quote command substitutions&quot;
+# Note that quotes nested inside &quot;$()&quot; don't need escaping.
+flag=&quot;$(some_command and its args &quot;$@&quot; 'quoted separately')&quot;
+
+# &quot;quote variables&quot;
+echo &quot;${flag}&quot;
+
+# Use arrays with quoted expansion for lists.
+declare -a FLAGS
+FLAGS=( --foo --bar='baz' )
+readonly FLAGS
+mybinary &quot;${FLAGS[@]}&quot;
+
+# It's ok to not quote internal integer variables.
+if (( $# &gt; 3 )); then
+  echo &quot;ppid=${PPID}&quot;
+fi
+
+# &quot;never quote literal integers&quot;
+value=32
+# &quot;quote command substitutions&quot;, even when you expect integers
+number=&quot;$(generate_number)&quot;
+
+# &quot;prefer quoting words&quot;, not compulsory
+readonly USE_INTEGER='true'
+
+# &quot;quote shell meta characters&quot;
+echo 'Hello stranger, and well met. Earn lots of $$$'
+echo &quot;Process $$: Done making \$\$\$.&quot;
+
+# &quot;command options or path names&quot;
+# ($1 is assumed to contain a value here)
+grep -li Hugo /dev/null &quot;$1&quot;
+
+# Less simple examples
+# &quot;quote variables, unless proven false&quot;: ccs might be empty
+git send-email --to &quot;${reviewers}&quot; ${ccs:+&quot;--cc&quot; &quot;${ccs}&quot;}
+
+# Positional parameter precautions: $1 might be unset
+# Single quotes leave regex as-is.
+grep -cP '([Ss]pecial|\|?characters*)$' ${1:+&quot;$1&quot;}
+
+# For passing on arguments,
+# &quot;$@&quot; is right almost every time, and
+# $* is wrong almost every time:
+#
+# * $* and $@ will split on spaces, clobbering up arguments
+#   that contain spaces and dropping empty strings;
+# * &quot;$@&quot; will retain arguments as-is, so no args
+#   provided will result in no args being passed on;
+#   This is in most cases what you want to use for passing
+#   on arguments.
+# * &quot;$*&quot; expands to one argument, with all args joined
+#   by (usually) spaces,
+#   so no args provided will result in one empty string
+#   being passed on.
+# (Consult `man bash` for the nit-grits ;-)
+
+(set -- 1 &quot;2 two&quot; &quot;3 three tres&quot;; echo $#; set -- &quot;$*&quot;; echo &quot;$#, $@&quot;)
+(set -- 1 &quot;2 two&quot; &quot;3 three tres&quot;; echo $#; set -- &quot;$@&quot;; echo &quot;$#, $@&quot;)
+</code></pre>
+<h1 id="features-and-bugs"><a class="header" href="#features-and-bugs">Features and Bugs</a></h1>
+<h2 id="shell-check"><a class="header" href="#shell-check">Shell Check</a></h2>
+<p>The (<a href="https://www.shellcheck.net">https://www.shellcheck.net</a>) project identifies common bugs and warnings for your shell scripts. It is recommended for all scripts,
+large or small.</p>
+<h2 id="command-substitution"><a class="header" href="#command-substitution">Command Substitution</a></h2>
+<p>Use <code>$(command)</code> instead of backticks.</p>
+<p>Nested backticks require escaping the inner ones with <code>\</code>. The <code>$(command)</code> format doesn't change when nested and is easier to read.</p>
+<p>Example:</p>
+<pre><code class="language-bash"># This is preferred:
+var=&quot;$(command &quot;$(command1)&quot;)&quot;
+
+# This is not:
+var=&quot;`command \`command1\``&quot;
+</code></pre>
+<h2 id="test---and--"><a class="header" href="#test---and--">Test, <code>[[ ]]</code>, and <code>[ ]</code></a></h2>
+<p><code>[[ ]]</code> is preferred over <code>[ ]</code>, test and <code>/usr/bin/[</code>.</p>
+<p><code>[[ ]]</code> reduces errors as no path name expansion or word splitting takes place between <code>[[</code> and <code>]]</code>. In addition, <code>[[ ... ]]</code> allows for regular
+expression matching, while <code>[ ]</code> does not.</p>
+<pre><code class="language-bash"># This ensures the string on the left is made up of characters in
+# the alnum character class followed by the string name.
+# Note that the RHS should not be quoted here.
+if [[ &quot;filename&quot; =~ ^[[:alnum:]]+name ]]; then
+  echo &quot;Match&quot;
+fi
+
+# This matches the exact pattern &quot;f*&quot; (Does not match in this case)
+if [[ &quot;filename&quot; == &quot;f*&quot; ]]; then
+  echo &quot;Match&quot;
+fi
+</code></pre>
+<blockquote>
+<p>NOTE: For the gory details, see E14 at <a href="http://tiswww.case.edu/php/chet/bash/FAQ">http://tiswww.case.edu/php/chet/bash/FAQ</a></p>
+</blockquote>
+<h2 id="testing-strings"><a class="header" href="#testing-strings">Testing Strings</a></h2>
+<p>Use quotes rather than filler characters where possible.</p>
+<p>Bash is smart enough to deal with an empty string in a test. So, given that the code is much easier to read, use tests for empty/non-empty strings or empty strings rather than filler characters.</p>
+<pre><code class="language-bash"># Do this:
+if [[ &quot;${my_var}&quot; == &quot;some_string&quot; ]]; then
+  do_something
+fi
+
+# -z (string length is zero) and -n (string length is not zero) are
+# preferred over testing for an empty string
+if [[ -z &quot;${my_var}&quot; ]]; then
+  do_something
+fi
+
+# This is OK (ensure quotes on the empty side), but not preferred:
+if [[ &quot;${my_var}&quot; == &quot;&quot; ]]; then
+  do_something
+fi
+</code></pre>
+<pre><code class="language-bash"># Not this:
+if [[ &quot;${my_var}X&quot; == &quot;some_stringX&quot; ]]; then
+  do_something
+fi
+</code></pre>
+<p>To avoid confusion about what you're testing for, explicitly use <code>-z</code> or <code>-n</code>.</p>
+<pre><code class="language-bash"># Use this
+if [[ -n &quot;${my_var}&quot; ]]; then
+  do_something
+fi
+</code></pre>
+<pre><code class="language-bash"># Instead of this
+if [[ &quot;${my_var}&quot; ]]; then
+  do_something
+fi
+</code></pre>
+<p>For clarity, use <code>==</code> for equality rather than <code>=</code> even though both work. The former encourages the use of <code>[[</code> and the latter can be confused with an assignment. However, be careful when using <code>&lt;</code> and <code>&gt;</code> in <code>[[ ]]</code> which performs a lexicographical comparison. Use <code>(( ))</code> or <code>-lt</code> and <code>-gt</code> for numerical comparison.</p>
+<pre><code class="language-bash"># Use this
+if [[ &quot;${my_var}&quot; == &quot;val&quot; ]]; then
+  do_something
+fi
+
+if (( my_var &gt; 3 )); then
+  do_something
+fi
+
+if [[ &quot;${my_var}&quot; -gt 3 ]]; then
+  do_something
+fi
+</code></pre>
+<pre><code class="language-bash"># Instead of this
+if [[ &quot;${my_var}&quot; = &quot;val&quot; ]]; then
+  do_something
+fi
+
+# Probably unintended lexicographical comparison.
+if [[ &quot;${my_var}&quot; &gt; 3 ]]; then
+  # True for 4, false for 22.
+  do_something
+fi
+</code></pre>
+<h2 id="wildcard-expansion-of-filenames"><a class="header" href="#wildcard-expansion-of-filenames">Wildcard Expansion of Filenames</a></h2>
+<p>Use an explicit path when doing wildcard expansion of filenames.</p>
+<p>As filenames can begin with a <code>-</code>, it's a lot safer to expand wildcards with <code>./*</code> instead of <code>*</code></p>
+<pre><code class="language-bash"># Here's the contents of the directory:
+# -f  -r  somedir  somefile
+
+# Incorrectly deletes almost everything in the directory by force
+user@host$ rm -v *
+removed directory: `somedir'
+removed `somefile'
+
+# As opposed to:
+user@host$ rm -v ./*
+removed `./-f'
+removed `./-r'
+rm: cannot remove `./somedir': Is a directory
+removed `./somefile'
+</code></pre>
+<h2 id="eval"><a class="header" href="#eval">Eval</a></h2>
+<p><code>eval</code> should be avoided. <code>eval</code> munges the input when used for assignment to variables and can set variables without makingit possible to check what those variables were.</p>
+<pre><code class="language-bash">variable=&quot;$(eval some_function)&quot;
+</code></pre>
+<h2 id="arrays"><a class="header" href="#arrays">Arrays</a></h2>
+<p>Bash arrays should be used to store lists of elements, to avoid quoting complications. This particularly applies to argument lists. Arrays should not be used to facilitate more complex data structures.</p>
+<p>Arrays store an ordered collection of strings, and can be safely expanded into individual elements for a command or loop.</p>
+<p>Using a single string for multiple command arguments should be avoided, as it inevitably leads to authors using eval or trying to nest quotes inside the string, which does not give reliable or readable results and leads to needless complexity.</p>
+<pre><code class="language-bash"># An array is assigned using parentheses, and can be appended to
+# with +=( … ).
+declare -a flags
+flags=(--foo --bar='baz')
+flags+=(--greeting=&quot;Hello ${name}&quot;)
+mybinary &quot;${flags[@]}&quot;
+</code></pre>
+<pre><code class="language-bash"># Don’t use strings for sequences.
+flags='--foo --bar=baz'
+flags+=' --greeting=&quot;Hello world&quot;'  # This won’t work as intended.
+mybinary ${flags}
+</code></pre>
+<pre><code class="language-bash"># Command expansions return single strings, not arrays. Avoid
+# unquoted expansion in array assignments because it won’t
+# work correctly if the command output contains special
+# characters or whitespace.
+
+# This expands the listing output into a string, then does special keyword
+# expansion, and then whitespace splitting.  Only then is it turned into a
+# list of words.  The ls command may also change behavior based on the user's
+# active environment!
+declare -a files=($(ls /directory))
+
+# The get_arguments writes everything to STDOUT, but then goes through the
+# same expansion process above before turning into a list of arguments.
+mybinary $(get_arguments)
+</code></pre>
+<h3 id="array-pros"><a class="header" href="#array-pros">Array Pros</a></h3>
+<ul>
+<li>
+<p>Using Arrays allows lists of things without confusing quoting semantics. Conversely, not using arrays leads to misguided attempts to nest quoting inside a string.</p>
+</li>
+<li>
+<p>Arrays make it possible to safely store sequences/lists of arbitrary  strings, including strings containing whitespace.</p>
+</li>
+</ul>
+<h3 id="array-cons"><a class="header" href="#array-cons">Array Cons</a></h3>
+<p>Using arrays can risk a script's complexity growing.</p>
+<h3 id="array-decision"><a class="header" href="#array-decision">Array Decision</a></h3>
+<p>Arrays should be used to safely create and pass around lists. In particular, when building a set of command arguments, use arrays to avoid confusing quoting issues. Use quoted expansion -- <code>&quot;${array[]}&quot;</code> -- to access arrays. However, if more advanced data manipulation is required, shell scripting should be avoided altogether.</p>
+<h2 id="pipes-to-while"><a class="header" href="#pipes-to-while">Pipes to While</a></h2>
+<p>Use process substitution or the <code>readarray</code> builtin (bash4+) in preference to piping to <code>while</code>. Pipes create a subshell, so any variables modified within a pipeline do not propagate to the parent shell.</p>
+<p>The implicit subshell in a <code>pipe</code> to while can introduce subtle bugs that are hard to track down.</p>
+<pre><code class="language-bash">last_line='NULL'
+your_command | while read -r line; do
+  if [[ -n &quot;${line}&quot; ]]; then
+    last_line=&quot;${line}&quot;
+  fi
+done
+
+# This will always output 'NULL'!
+echo &quot;${last_line}&quot;
+</code></pre>
+<p>Using process substitution also creates a subshell. However, it allows redirecting from a subshell to a <code>while</code> without putting the <code>while</code> (or any other command) in a subshell.</p>
+<pre><code class="language-bash">last_line='NULL'
+while read line; do
+  if [[ -n &quot;${line}&quot; ]]; then
+    last_line=&quot;${line}&quot;
+  fi
+done &lt; &lt;(your_command)
+
+# This will output the last non-empty line from your_command
+echo &quot;${last_line}&quot;
+</code></pre>
+<p>Alternatively, use the <code>readarray</code> <em>builtin</em> to read the file into an array, then loop over the array’s con-tents. Notice that (for the same reason as above) you need to use a process substitution with <code>readarray</code> rather than a <code>pipe</code>, but with the advantage that the input generation for the loop is located beforeit, rather than after.</p>
+<pre><code class="language-bash">last_line='NULL'
+readarray -t lines &lt; &lt;(your_command)
+for line in &quot;${lines[@]}&quot;; do
+  if [[ -n &quot;${line}&quot; ]]; then
+    last_line=&quot;${line}&quot;
+  fi
+done
+echo &quot;${last_line}&quot;
+</code></pre>
+<blockquote>
+<p>NOTE: Be cautious using a for-loop to iterate over output, as in for var in <code>$(...)</code>, as theoutput is split by whitespace, not by line. Sometimes you will know this is safe because theoutput can’t contain any unexpected whitespace, but where this isn’t obvious or doesn’timprove readability (such as a long command inside <code>$(...)</code> ), a <code>while</code> read loop or <code>readarray</code> is often safer and clearer.</p>
+</blockquote>
+<h2 id="arithmetic"><a class="header" href="#arithmetic">Arithmetic</a></h2>
+<p>Always use <code>(( ))</code> or <code>$(( ))</code> rather than <code>let</code> or <code>$[ ]</code> or <code>expr</code>.</p>
+<p><strong>Never</strong> use the <code>$[ ]</code> syntax, the <code>expr</code> command, or the <code>let</code> <em>built-in</em>.</p>
+<p><code>&lt;</code> and <code>&gt;</code> don't perform numerical comparison inside <code>[[ ]]</code> expressions (they perform lexicographical comparisons instead). For preference, don't use <code>[[ ]]</code> at all for numeric comparisons, use <code>(( ... ))</code> instead.</p>
+<p>It is recommended to avoid using <code>(( ))</code> as a standalone statement, and otherwise be wary of its expression evaluating to zero </p>
+<ul>
+<li>particularly with set <code>-e</code> enabled. For example, <code>set -e; i=0. (( i++ ))</code> will cause the shell to exit.</li>
+</ul>
+<pre><code class="language-bash"># Simple calculation used as text - note the use of $(( … )) within
+# a string.
+echo &quot;$(( 2 + 2 )) is 4&quot;
+
+# When performing arithmetic comparisons for testing
+if (( a &lt; b )); then
+  …
+fi
+
+# Some calculation assigned to a variable.
+(( i = 10 * j + 400 ))
+</code></pre>
+<pre><code class="language-bash"># This form is non-portable and deprecated
+i=$[2 * 10]
+
+# Despite appearances, 'let' isn't one of the declarative keywords,
+# so unquoted assignments are subject to globbing wordsplitting.
+# For the sake of simplicity, avoid 'let' and use (( … ))
+let i=&quot;2 + 2&quot;
+
+# The expr utility is an external program and not a shell builtin.
+i=$( expr 4 + 4 )
+
+# Quoting can be error prone when using expr too.
+i=$( expr 4 '*' 4 )
+</code></pre>
+<p>Stylistic considerations aside, the shell’s built-in arithmetic is many times faster thanexpr.When using variables, the <code>${var}</code> (and <code>$var</code>) forms are not required within <code>$(( ))</code>. The shell knows to look up var for you, and omitting the <code>${...}</code> leads to cleaner code. This is slightly contrary to theprevious rule about always using braces, so this is a recommendation only.</p>
+<pre><code class="language-bash">
+# N.B.: Remember to declare your variables as integers when
+# possible, and to prefer local variables over globals.
+local -i hundred=$(( 10 * 10 ))
+declare -i five=$(( 10 / 2 ))
+
+# Increment the variable &quot;i&quot; by three.
+# Note that:
+#  - We do not write ${i} or $i.
+#  - We put a space after the (( and before the )).
+(( i += 3 ))
+
+# To decrement the variable &quot;i&quot; by five:
+(( i -= 5 ))
+
+# Do some complicated computations.
+# Note that normal arithmetic operator precedence is observed.
+hr=2
+min=5
+sec=30
+echo $(( hr * 3600 + min * 60 + sec )) # prints 7530 as expected
+</code></pre>
+<h1 id="naming-conventions"><a class="header" href="#naming-conventions">Naming Conventions</a></h1>
+<h2 id="function-names"><a class="header" href="#function-names">Function Names</a></h2>
+<p>Lower-case, with underscores to separate words. Separate libraries with <code>::</code>. Parentheses are required after the function name. The keyword <code>function</code> is optional, but must be used consistently throughout a project.</p>
+<p>If you're writing single functions, use lowercase and separate words with underscore. If you're writing a package, separate package names with <code>::</code>. Braces must be on the same line as the function name and no space between the function name and the parenthesis.</p>
+<pre><code class="language-bash"># Single function
+my_func() {
+  …
+}
+
+# Part of a package
+mypackage::my_func() {
+  …
+}
+</code></pre>
+<p>The <code>function</code> keyword is extraneous when <code>()</code> is present after the function name, but enhances quickidentification of functions</p>
+<h2 id="variable-names"><a class="header" href="#variable-names">Variable Names</a></h2>
+<p>Variables names for loops should be similarly named for any variable you're looping through.</p>
+<pre><code class="language-bash">for zone in &quot;${zones[@]}&quot;; do
+  something_with &quot;${zone}&quot;
+done
+</code></pre>
+<h2 id="constants-and-environment-variable-names"><a class="header" href="#constants-and-environment-variable-names">Constants and Environment Variable Names</a></h2>
+<p>All caps, separated with underscores, declared at the top of the file.</p>
+<p>Constants and anything exported to the environment should be capitalized.</p>
+<pre><code class="language-bash"># Constant
+readonly PATH_TO_FILES='/some/path'
+
+# Both constant and environment
+declare -xr SYSTEMTOOL_SID='PROD'
+</code></pre>
+<p>Some things become constant at their first setting (for example, via <code>getopts</code>). Thus, it's OK to set a constant in <code>getopts</code> or based on a condition, but
+it should be made <code>readonly</code> immediately afterwards. For the sake of clarity <code>readonly</code> or export is recommended instead of the equivalent declare commands.</p>
+<pre><code class="language-bash">VERBOSE='false'
+while getopts 'v' flag; do
+  case &quot;${flag}&quot; in
+    v) VERBOSE='true' ;;
+  esac
+done
+readonly VERBOSE
+</code></pre>
+<h2 id="source-files"><a class="header" href="#source-files">Source Files</a></h2>
+<p>Lowercase, with underscores to separate words if desired.</p>
+<p>This is for consistency with other code styles in used in industry: <code>maketemplate</code> or <code>make_template</code> but not <code>make-template</code>.</p>
+<h2 id="read-only-variables"><a class="header" href="#read-only-variables">Read-only Variables</a></h2>
+<p>Use <code>readonly</code> or <code>declare -r</code> to ensure they're read only.</p>
+<p>As globals are widely used in shell, it's important to catch errors when working with them. When you declare a variable that is meant to be read-only, make this explicit.</p>
+<pre><code class="language-bash">zip_version=&quot;$(dpkg --status zip | grep Version: | cut -d ' ' -f 2)&quot;
+if [[ -z &quot;${zip_version}&quot; ]]; then
+  error_message
+else
+  readonly zip_version
+fi
+</code></pre>
+<h2 id="use-local-variables"><a class="header" href="#use-local-variables">Use Local Variables</a></h2>
+<p>Declare function-specific variables with <code>local</code>. Declaration and assignment should be on different lines.</p>
+<p>Ensure that local variables are only seen inside a function and its children by using <code>local</code> when declaring them. This avoids polluting the global name space and inadvertently setting variables that may have significance outside the function.</p>
+<p>Declaration and assignment must be separate statements when the assignment value is provided by a command substitution; as the <code>local</code> builtin does not propagate the exit code from the command substitution.</p>
+<pre><code class="language-bash">my_func2() {
+  local name=&quot;$1&quot;
+
+  # Separate lines for declaration and assignment:
+  local my_var
+  my_var=&quot;$(my_func)&quot;
+  (( $? == 0 )) || return
+
+  …
+}
+</code></pre>
+<pre><code class="language-bash">my_func2() {
+  # DO NOT do this:
+  # $? will always be zero, as it contains the exit code of 'local', not my_func
+  local my_var=&quot;$(my_func)&quot;
+  (( $? == 0 )) || return
+
+  …
+}
+</code></pre>
+<h2 id="function-locations"><a class="header" href="#function-locations">Function Locations</a></h2>
+<p>Put all functions together in the file just below constants. Don't hide executable code between functions. Doing so makes the code difficult to follow and results in nasty surprises when debugging.</p>
+<p>If you've got functions, put them all together near the top of the file. Only includes, set statements and setting constants may be done before declaring functions.</p>
+<h2 id="main"><a class="header" href="#main"><code>main</code></a></h2>
+<p>A function called `` is required for scripts long enough to contain at least one other function.</p>
+<p>In order to easily find the start of the program, put the <code>main</code> program in a function called main as the bottom most function. This provides consistency with the rest of the code base as well as allowing you to define more variables as <code>local</code> (which can't be done if the main code is not a function). The last non-comment line in the file should be a call to <code>main</code>:</p>
+<pre><code class="language-bash">main &quot;$@&quot;
+</code></pre>
+<p>Obviously, for short scripts where it's just a linear flow, <code>main</code> is overkill and so is not required.</p>
+<h1 id="calling-commands"><a class="header" href="#calling-commands">Calling Commands</a></h1>
+<h2 id="checking-return-values"><a class="header" href="#checking-return-values">Checking Return Values</a></h2>
+<p>Always check return values and give informative return values.</p>
+<p>For unpiped commands, use <code>$?</code> or check directly via an if statement to keep it simple.</p>
+<p>Example:</p>
+<pre><code class="language-bash">if ! mv &quot;${file_list[@]}&quot; &quot;${dest_dir}/&quot;; then
+  echo &quot;Unable to move ${file_list[*]} to ${dest_dir}&quot; &gt;&amp;2
+  exit 1
+fi
+
+# Or
+mv &quot;${file_list[@]}&quot; &quot;${dest_dir}/&quot;
+if (( $? != 0 )); then
+  echo &quot;Unable to move ${file_list[*]} to ${dest_dir}&quot; &gt;&amp;2
+  exit 1
+fi
+</code></pre>
+<p>Bash also has the <code>PIPESTATUS</code> variable that allows checking of the return code from all parts of a pipe. If it's only necessary to check success or failure of the whole pipe, then the following is acceptable:</p>
+<pre><code class="language-bash">tar -cf - ./* | ( cd &quot;${dir}&quot; &amp;&amp; tar -xf - )
+if (( PIPESTATUS[0] != 0 || PIPESTATUS[1] != 0 )); then
+  echo &quot;Unable to tar files to ${dir}&quot; &gt;&amp;2
+fi
+</code></pre>
+<p>However, as <code>PIPESTATUS</code> will be overwritten as soon as you do any other command, if you need to act differently on errors based on where it happened in the pipe, you'll need to assign <code>PIPESTATUS</code> to another variable immediately after running the command (don't forget that <code>[</code> is a command and will wipe out <code>PIPESTATUS</code>).</p>
+<pre><code class="language-bash">tar -cf - ./* | ( cd &quot;${DIR}&quot; &amp;&amp; tar -xf - )
+return_codes=( &quot;${PIPESTATUS[@]}&quot; )
+if (( return_codes[0] != 0 )); then
+  do_something
+fi
+if (( return_codes[1] != 0 )); then
+  do_something_else
+fi
+</code></pre>
+<h2 id="builtin-commands-vs-external-commands-subsecbuilt_cmds"><a class="header" href="#builtin-commands-vs-external-commands-subsecbuilt_cmds">Builtin Commands vs. External Commands {#subsec:Built_cmds}</a></h2>
+<p>Given the choice between invoking a shell builtin and invoking a separate process, choose the builtin.</p>
+<p>We prefer the use of builtins such as the <em>Parameter Expansion</em> functions in <code>bash(1)</code> as it's more robust and portable (especially when compared to things like <code>sed</code>).</p>
+<p>Examples:</p>
+<pre><code class="language-bash"># Prefer this:
+addition=$(( X + Y ))
+substitution=&quot;${string/#foo/bar}&quot;
+</code></pre>
+<pre><code class="language-bash"># Instead of this:
+addition=&quot;$(expr &quot;${X}&quot; + &quot;${Y}&quot;)&quot;
+substitution=&quot;$(echo &quot;${string}&quot; | sed -e 's/^foo/bar/')&quot;
+</code></pre>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../Shell_Extras/references.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                            <a rel="next" href="../System_Statistics_Script/systemStats.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../Shell_Extras/references.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                    <a rel="next" href="../System_Statistics_Script/systemStats.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+    </body>
+</html>

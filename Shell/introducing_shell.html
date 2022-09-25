@@ -1,0 +1,272 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Introducing the Shell - ELEE1119 Exercise Book</title>
+        <!-- Custom HTML head -->
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../Shell/shell.html"><strong aria-hidden="true">1.</strong> Shell</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../Shell/installation.html"><strong aria-hidden="true">1.1.</strong> Installation</a></li><li class="chapter-item expanded "><a href="../Shell/introducing_shell.html" class="active"><strong aria-hidden="true">1.2.</strong> Introducing the Shell</a></li><li class="chapter-item expanded "><a href="../Shell/fileDir.html"><strong aria-hidden="true">1.3.</strong> Navigating File and Directories</a></li><li class="chapter-item expanded "><a href="../Shell/create.html"><strong aria-hidden="true">1.4.</strong> Working with FIles and Directories</a></li><li class="chapter-item expanded "><a href="../Shell/pipefilter.html"><strong aria-hidden="true">1.5.</strong> Pipes and Filters</a></li><li class="chapter-item expanded "><a href="../Shell/loops.html"><strong aria-hidden="true">1.6.</strong> Loop</a></li><li class="chapter-item expanded "><a href="../Shell/scripts.html"><strong aria-hidden="true">1.7.</strong> Scripts</a></li><li class="chapter-item expanded "><a href="../Shell/find.html"><strong aria-hidden="true">1.8.</strong> Finding Things</a></li><li class="chapter-item expanded "><a href="../Shell/reference.html"><strong aria-hidden="true">1.9.</strong> Summary of Basic Commands</a></li></ol></li><li class="chapter-item expanded "><a href="../Shell_Extras/introduction.html"><strong aria-hidden="true">2.</strong> Extra Shell</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../Shell_Extras/manfiles.html"><strong aria-hidden="true">2.1.</strong> Manual Pages</a></li><li class="chapter-item expanded "><a href="../Shell_Extras/workremote.html"><strong aria-hidden="true">2.2.</strong> Working Remotely</a></li><li class="chapter-item expanded "><a href="../Shell_Extras/permissions.html"><strong aria-hidden="true">2.3.</strong> Permissions</a></li><li class="chapter-item expanded "><a href="../Shell_Extras/dirstruct.html"><strong aria-hidden="true">2.4.</strong> Working with Files and Directories</a></li><li class="chapter-item expanded "><a href="../Shell_Extras/jobs.html"><strong aria-hidden="true">2.5.</strong> Job Control</a></li><li class="chapter-item expanded "><a href="../Shell_Extras/aliases.html"><strong aria-hidden="true">2.6.</strong> Aliases and bash customisation</a></li><li class="chapter-item expanded "><a href="../Shell_Extras/shellvars.html"><strong aria-hidden="true">2.7.</strong> Shell Variables</a></li><li class="chapter-item expanded "><a href="../Shell_Extras/references.html"><strong aria-hidden="true">2.8.</strong> Summary of Commands</a></li></ol></li><li class="chapter-item expanded "><a href="../Shell_Style_Guide/shellstyleguide.html"><strong aria-hidden="true">3.</strong> Shell Style Guide</a></li><li class="chapter-item expanded "><a href="../System_Statistics_Script/systemStats.html"><strong aria-hidden="true">4.</strong> System Statistics Script</a></li><li class="chapter-item expanded "><a href="../RFC_Logger/rfclogger.html"><strong aria-hidden="true">5.</strong> RFC Logger Script</a></li><li class="chapter-item expanded "><a href="../OS_Pantheon/Introduction.html"><strong aria-hidden="true">6.</strong> OS Pantheon</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../OS_Pantheon/nixOS/nixOS.html"><strong aria-hidden="true">6.1.</strong> NixOS</a></li><li class="chapter-item expanded "><a href="../OS_Pantheon/arch/arch.html"><strong aria-hidden="true">6.2.</strong> Arch</a></li><li class="chapter-item expanded "><a href="../OS_Pantheon/RPIOS/rpios.html"><strong aria-hidden="true">6.3.</strong> Raspberry Pi OS</a></li><li class="chapter-item expanded "><a href="../OS_Pantheon/WindowsCoreIoT/WindowsCoreIoT.html"><strong aria-hidden="true">6.4.</strong> Windows Core IoT</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">ELEE1119 Exercise Book</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="introducing-the-shell"><a class="header" href="#introducing-the-shell">Introducing the Shell</a></h1>
+<h4 id="questions"><a class="header" href="#questions">Questions</a></h4>
+<blockquote>
+<ul>
+<li>What is a command shell and why would I use one?</li>
+</ul>
+</blockquote>
+<h4 id="objectives"><a class="header" href="#objectives">Objectives</a></h4>
+<blockquote>
+<ul>
+<li>Explain how the shell relates to the keyboard, the screen, the operating system, and users' programs.
+&gt;</li>
+<li>Explain when and why command-line interfaces should be used instead of graphical interfaces.</li>
+</ul>
+</blockquote>
+<h4 id="tldr"><a class="header" href="#tldr">TL;DR</a></h4>
+<details>
+<summary>Click to see</summary>
+<blockquote>
+<ul>
+<li>A shell is a program whose primary purpose is to read commands and run other programs.
+&gt;</li>
+<li>This lesson uses Bash, the default shell in many implementations of Unix.
+&gt;</li>
+<li>Programs can be run in Bash by entering commands at the command-line prompt.
+&gt;</li>
+<li>The shell's main advantages are its high action-to-keystroke ratio, its support for automating repetitive tasks, and its capacity to access networked machines.
+&gt;</li>
+<li>The shell's main disadvantages are its primarily textual nature and how cryptic its commands and operation can be.</li>
+</ul>
+</blockquote>
+</details>
+<hr />
+<h3 id="background"><a class="header" href="#background">Background</a></h3>
+<p>Humans and computers commonly interact in many different ways, such as through a keyboard and mouse,
+touch screen interfaces, or using speech recognition systems.
+The most widely used way to interact with personal computers is called a
+<strong>graphical user interface</strong> (GUI).</p>
+<p>With a GUI, we give instructions by clicking a mouse and using menu-driven interactions. While the visual aid of a GUI makes it intuitive to learn, this way of delivering instructions to a computer scales very poorly.</p>
+<p>Imagine the following task:</p>
+<p>For a literature search, you have to copy the third line of one thousand text files in one thousand different directories and paste it into a single file. Using a GUI, you would not only be clicking at your desk for several hours, but you could potentially also commit an error in the process of completing this repetitive task. This is where we take advantage of the Unix shell.</p>
+<p>The Unix shell is both a <strong>command-line interface</strong> (CLI) and a scripting language, allowing such repetitive tasks to be done automatically and fast.  With the proper commands, the shell can repeat tasks with or without some modification as many times as we want.</p>
+<p>Using the shell, the task in the literature example can be accomplished in seconds.</p>
+<h3 id="the-shell"><a class="header" href="#the-shell">The Shell</a></h3>
+<p>The shell is a program where users can type commands. With the shell, it's possible to invoke complicated programs like climate modeling software or simple commands that create an empty directory with only one line of code.
+The most popular Unix shell is Bash (the Bourne Again SHell --- so-called because it's derived from a shell written by Stephen Bourne).</p>
+<p>Bash is the default shell on most modern implementations of Unix and in most packages that provide Unix-like tools for Windows.</p>
+<p>Using the shell will take some effort and some time to learn. While a GUI presents you with choices to select, CLI choices are not automatically presented to you, so you must learn a few commands like new vocabulary in a language you're studying. However, unlike a spoken language, a small number of &quot;words&quot; (i.e. commands) gets you a long way, and we'll cover those essential few today.</p>
+<p>The grammar of a shell allows you to combine existing tools into powerful pipelines and handle large volumes of data automatically. Sequences of commands can be written into a <em>script</em>, improving the reproducibility of workflows.</p>
+<p>In addition, the command line is often the easiest way to interact with remote machines and supercomputers.</p>
+<p>Familiarity with the shell is near essential to run a variety of specialized tools and resources including high-performance computing systems. </p>
+<p>As clusters and cloud computing systems become more popular for scientific data crunching, being able to interact with the shell is becoming a necessary skill. We can build on the command-line skills covered here to tackle a wide range of scientific questions and computational challenges.</p>
+<p>Let's get started.</p>
+<p>When the shell is first opened, you are presented with a <strong>prompt</strong> indicating that the shell is waiting for input.</p>
+<pre><code class="language-sh">$
+</code></pre>
+<p>The shell typically uses <code>$ </code> as the prompt, but may use a different symbol. In the examples for this lesson, we'll show the prompt as <code>$ </code>.</p>
+<p>Most importantly:</p>
+<p>When typing commands, either from these lessons or from other sources <em>do not type the prompt</em>, only the commands that follow it. Also note that after you type a command, you have to press the <kbd>Enter</kbd> key to execute it.</p>
+<p>The prompt is followed by a <strong>text cursor</strong>, a character that indicates the position where your typing will appear. The cursor is usually a flashing or solid block, but it can also be an underscore or a pipe. You may have seen it in a text editor program, for example.</p>
+<p>So let's try our first command, <code>ls</code> which is short for listing.</p>
+<p>This command will list the contents of the current directory:</p>
+<pre><code class="language-sh">$ ls
+</code></pre>
+<p>Output:</p>
+<pre><code class="language-sh">Desktop     Downloads   Movies      Pictures
+Documents   Library     Music       Public
+</code></pre>
+<h2 id="command-not-found"><a class="header" href="#command-not-found">Command not found</a></h2>
+<p>If the shell can't find a program whose name is the command you typed, it
+will print an error message such as:</p>
+<pre><code class="language-sh">$ ks
+</code></pre>
+<p>Output:</p>
+<pre><code class="language-sh">ks: command not found
+</code></pre>
+<p>This might happen if the command was mis-typed or if the program corresponding to that command is not installed.</p>
+<h2 id="nelles-pipeline-a-typical-problem"><a class="header" href="#nelles-pipeline-a-typical-problem">Nelle's Pipeline: A Typical Problem</a></h2>
+<p>Nelle Nemo, a marine biologist, has just returned from a six-month survey of the <a href="http://en.wikipedia.org/wiki/North_Pacific_Gyre">North Pacific Gyre</a>, where she has been sampling gelatinous marine life in the <a href="http://en.wikipedia.org/wiki/Great_Pacific_Garbage_Patch">Great Pacific Garbage Patch</a>. </p>
+<p>She has 1520 samples that she's run through an assay machine to measure the relative abundance of 300 proteins. She needs to run these 1520 files through an imaginary program called <code>goostats.sh</code> she inherited. On top of this huge task, she has to write up results by the end of the month so her paper can appear in a special issue of <em>Aquatic Goo Letters</em>.</p>
+<p>The bad news is that if she has to run <code>goostats.sh</code> by hand using a GUI, she'll have to select and open a file 1520 times. If <code>goostats.sh</code> takes 30 seconds to run each file, the whole process will take more than 12 hours of Nelle's attention.</p>
+<p>With the shell, Nelle can instead assign her computer this mundane task while she focuses her attention on writing her paper.</p>
+<p>The next few lessons will explore the ways Nelle can achieve this.
+More specifically, they explain how she can use a command shell to run the <code>goostats.sh</code> program, using loops to automate the repetitive steps of entering file names, so that her computer can work while she writes her paper.</p>
+<p>As a bonus, once she has put a processing pipeline together, she will be able to use it again whenever she collects more data.</p>
+<p>In order to achieve her task, Nelle needs to know how to:</p>
+<ul>
+<li>navigate to a file/directory</li>
+<li>create a file/directory</li>
+<li>check the length of a file</li>
+<li>chain commands together</li>
+<li>retrieve a set of files</li>
+<li>iterate over files</li>
+<li>run a shell script containing her pipeline</li>
+</ul>
+<p><a href="shell.html">Back to Contents Page</a></p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../Shell/installation.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                            <a rel="next" href="../Shell/fileDir.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../Shell/installation.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                    <a rel="next" href="../Shell/fileDir.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+    </body>
+</html>
