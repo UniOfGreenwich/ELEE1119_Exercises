@@ -4,8 +4,10 @@
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
         <title>RFC Logger Script - ELEE1119 Exercise Book</title>
+
+
         <!-- Custom HTML head -->
-        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
@@ -16,25 +18,29 @@
         <link rel="stylesheet" href="../css/general.css">
         <link rel="stylesheet" href="../css/chrome.css">
         <link rel="stylesheet" href="../css/print.css" media="print">
+
         <!-- Fonts -->
         <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
         <link rel="stylesheet" href="../fonts/fonts.css">
+
         <!-- Highlight.js Stylesheets -->
         <link rel="stylesheet" href="../highlight.css">
         <link rel="stylesheet" href="../tomorrow-night.css">
         <link rel="stylesheet" href="../ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
+
     </head>
     <body>
+    <div id="body-container">
         <!-- Provide site root to javascript -->
-        <script type="text/javascript">
+        <script>
             var path_to_root = "../";
             var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
         </script>
 
         <!-- Work around some values being stored in localStorage wrapped in quotes -->
-        <script type="text/javascript">
+        <script>
             try {
                 var theme = localStorage.getItem('mdbook-theme');
                 var sidebar = localStorage.getItem('mdbook-sidebar');
@@ -50,7 +56,7 @@
         </script>
 
         <!-- Set the theme before any content is loaded, prevents flash -->
-        <script type="text/javascript">
+        <script>
             var theme;
             try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
             if (theme === null || theme === undefined) { theme = default_theme; }
@@ -62,12 +68,14 @@
         </script>
 
         <!-- Hide / unhide sidebar before it is displayed -->
-        <script type="text/javascript">
+        <script>
             var html = document.querySelector('html');
-            var sidebar = 'hidden';
+            var sidebar = null;
             if (document.body.clientWidth >= 1080) {
                 try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
                 sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
             }
             html.classList.remove('sidebar-visible');
             html.classList.add("sidebar-" + sidebar);
@@ -75,7 +83,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><li class="part-title">Bourne Again SHell</li><li class="chapter-item expanded "><a href="../Shell/shell.html"><strong aria-hidden="true">1.</strong> Shell</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../Shell/installation.html"><strong aria-hidden="true">1.1.</strong> Installation</a></li><li class="chapter-item expanded "><a href="../Shell/introducing_shell.html"><strong aria-hidden="true">1.2.</strong> Introducing the Shell</a></li><li class="chapter-item expanded "><a href="../Shell/fileDir.html"><strong aria-hidden="true">1.3.</strong> Navigating File and Directories</a></li><li class="chapter-item expanded "><a href="../Shell/create.html"><strong aria-hidden="true">1.4.</strong> Working with FIles and Directories</a></li><li class="chapter-item expanded "><a href="../Shell/pipefilter.html"><strong aria-hidden="true">1.5.</strong> Pipes and Filters</a></li><li class="chapter-item expanded "><a href="../Shell/loops.html"><strong aria-hidden="true">1.6.</strong> Loop</a></li><li class="chapter-item expanded "><a href="../Shell/scripts.html"><strong aria-hidden="true">1.7.</strong> Scripts</a></li><li class="chapter-item expanded "><a href="../Shell/find.html"><strong aria-hidden="true">1.8.</strong> Finding Things</a></li><li class="chapter-item expanded "><a href="../Shell/reference.html"><strong aria-hidden="true">1.9.</strong> Summary of Basic Commands</a></li></ol></li><li class="chapter-item expanded "><a href="../Shell_Extras/introduction.html"><strong aria-hidden="true">2.</strong> Extra Shell</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../Shell_Extras/manfiles.html"><strong aria-hidden="true">2.1.</strong> Manual Pages</a></li><li class="chapter-item expanded "><a href="../Shell_Extras/workremote.html"><strong aria-hidden="true">2.2.</strong> Working Remotely</a></li><li class="chapter-item expanded "><a href="../Shell_Extras/permissions.html"><strong aria-hidden="true">2.3.</strong> Permissions</a></li><li class="chapter-item expanded "><a href="../Shell_Extras/dirstruct.html"><strong aria-hidden="true">2.4.</strong> Working with Files and Directories</a></li><li class="chapter-item expanded "><a href="../Shell_Extras/jobs.html"><strong aria-hidden="true">2.5.</strong> Job Control</a></li><li class="chapter-item expanded "><a href="../Shell_Extras/aliases.html"><strong aria-hidden="true">2.6.</strong> Aliases and bash customisation</a></li><li class="chapter-item expanded "><a href="../Shell_Extras/shellvars.html"><strong aria-hidden="true">2.7.</strong> Shell Variables</a></li><li class="chapter-item expanded "><a href="../Shell_Extras/references.html"><strong aria-hidden="true">2.8.</strong> Summary of Commands</a></li></ol></li><li class="chapter-item expanded "><a href="../Shell_Style_Guide/shellstyleguide.html"><strong aria-hidden="true">3.</strong> Shell Style Guide</a></li><li class="chapter-item expanded "><a href="../System_Statistics_Script/systemStats.html"><strong aria-hidden="true">4.</strong> System Statistics Script</a></li><li class="chapter-item expanded "><a href="../RFC_Logger/rfclogger.html" class="active"><strong aria-hidden="true">5.</strong> RFC Logger Script</a></li><li class="chapter-item expanded "><a href="../ManPages/manexample.html"><strong aria-hidden="true">6.</strong> Man page Example</a></li><li class="chapter-item expanded affix "><li class="part-title">Git</li><li class="chapter-item expanded "><a href="../myFirstRepository/myFirstRepository.html"><strong aria-hidden="true">7.</strong> My First Repository</a></li><li class="chapter-item expanded "><a href="../BranchingModel/BranchingModel.html"><strong aria-hidden="true">8.</strong> Branching-Strategy</a></li><li class="chapter-item expanded "><a href="../OneFlow/OneFlow.html"><strong aria-hidden="true">9.</strong> Git Oneflow</a></li><li class="chapter-item expanded "><a href="../AntiPatterns/AntiPatterns.html"><strong aria-hidden="true">10.</strong> Anti Patterns</a></li><li class="chapter-item expanded "><a href="../ContinousDeployment/ContinousDeployment.html"><strong aria-hidden="true">11.</strong> Continous Deployment</a></li><li class="chapter-item expanded "><a href="../ReleaseDeployment/ReleaseDeployment.html"><strong aria-hidden="true">12.</strong> Release Deployment</a></li><li class="chapter-item expanded "><a href="../Migration/Migration.html"><strong aria-hidden="true">13.</strong> Migration</a></li><li class="chapter-item expanded affix "><li class="part-title">Operating Systems/ Virtual Machines</li><li class="chapter-item expanded "><a href="../VSphere/Introduction.html"><strong aria-hidden="true">14.</strong> VSphere</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../VSphere/centOS/centOS.html"><strong aria-hidden="true">14.1.</strong> CentOS</a></li><li class="chapter-item expanded "><a href="../VSphere/nixOS/nixOS.html"><strong aria-hidden="true">14.2.</strong> NixOS</a></li><li class="chapter-item expanded "><a href="../VSphere/arch/arch.html"><strong aria-hidden="true">14.3.</strong> Arch</a></li><li class="chapter-item expanded "><a href="../VSphere/RPIOS/rpios.html"><strong aria-hidden="true">14.4.</strong> Raspberry Pi OS</a></li><li class="chapter-item expanded "><a href="../VSphere/WindowsCoreIoT/WindowsCoreIoT.html"><strong aria-hidden="true">14.5.</strong> Windows Core IoT</a></li></ol></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../Programming_Computers/programming_computers.html"><strong aria-hidden="true">1.</strong> Programming Computers</a></li><li class="chapter-item expanded affix "><li class="part-title">Bourne Again SHell</li><li class="chapter-item expanded "><a href="../Shell/shell.html"><strong aria-hidden="true">2.</strong> Shell</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../Shell/installation.html"><strong aria-hidden="true">2.1.</strong> Installation</a></li><li class="chapter-item expanded "><a href="../Shell/introducing_shell.html"><strong aria-hidden="true">2.2.</strong> Introducing the Shell</a></li><li class="chapter-item expanded "><a href="../Shell/fileDir.html"><strong aria-hidden="true">2.3.</strong> Navigating File and Directories</a></li><li class="chapter-item expanded "><a href="../Shell/create.html"><strong aria-hidden="true">2.4.</strong> Working with FIles and Directories</a></li><li class="chapter-item expanded "><a href="../Shell/pipefilter.html"><strong aria-hidden="true">2.5.</strong> Pipes and Filters</a></li><li class="chapter-item expanded "><a href="../Shell/loops.html"><strong aria-hidden="true">2.6.</strong> Loop</a></li><li class="chapter-item expanded "><a href="../Shell/scripts.html"><strong aria-hidden="true">2.7.</strong> Scripts</a></li><li class="chapter-item expanded "><a href="../Shell/find.html"><strong aria-hidden="true">2.8.</strong> Finding Things</a></li><li class="chapter-item expanded "><a href="../Shell/reference.html"><strong aria-hidden="true">2.9.</strong> Summary of Basic Commands</a></li></ol></li><li class="chapter-item expanded "><a href="../Shell_Extras/introduction.html"><strong aria-hidden="true">3.</strong> Extra Shell</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../Shell_Extras/manfiles.html"><strong aria-hidden="true">3.1.</strong> Manual Pages</a></li><li class="chapter-item expanded "><a href="../Shell_Extras/workremote.html"><strong aria-hidden="true">3.2.</strong> Working Remotely</a></li><li class="chapter-item expanded "><a href="../Shell_Extras/permissions.html"><strong aria-hidden="true">3.3.</strong> Permissions</a></li><li class="chapter-item expanded "><a href="../Shell_Extras/dirstruct.html"><strong aria-hidden="true">3.4.</strong> Working with Files and Directories</a></li><li class="chapter-item expanded "><a href="../Shell_Extras/jobs.html"><strong aria-hidden="true">3.5.</strong> Job Control</a></li><li class="chapter-item expanded "><a href="../Shell_Extras/aliases.html"><strong aria-hidden="true">3.6.</strong> Aliases and bash customisation</a></li><li class="chapter-item expanded "><a href="../Shell_Extras/shellvars.html"><strong aria-hidden="true">3.7.</strong> Shell Variables</a></li><li class="chapter-item expanded "><a href="../Shell_Extras/references.html"><strong aria-hidden="true">3.8.</strong> Summary of Commands</a></li></ol></li><li class="chapter-item expanded "><a href="../Shell_Style_Guide/shellstyleguide.html"><strong aria-hidden="true">4.</strong> Shell Style Guide</a></li><li class="chapter-item expanded "><a href="../System_Statistics_Script/systemStats.html"><strong aria-hidden="true">5.</strong> System Statistics Script</a></li><li class="chapter-item expanded "><a href="../RFC_Logger/rfclogger.html" class="active"><strong aria-hidden="true">6.</strong> RFC Logger Script</a></li><li class="chapter-item expanded "><a href="../ManPages/manexample.html"><strong aria-hidden="true">7.</strong> Man page Example</a></li><li class="chapter-item expanded affix "><li class="part-title">Git</li><li class="chapter-item expanded "><a href="../myFirstRepository/myFirstRepository.html"><strong aria-hidden="true">8.</strong> My First Repository</a></li><li class="chapter-item expanded "><a href="../BranchingModel/BranchingModel.html"><strong aria-hidden="true">9.</strong> Branching-Strategy</a></li><li class="chapter-item expanded "><a href="../OneFlow/OneFlow.html"><strong aria-hidden="true">10.</strong> Git Oneflow</a></li><li class="chapter-item expanded "><a href="../AntiPatterns/AntiPatterns.html"><strong aria-hidden="true">11.</strong> Anti Patterns</a></li><li class="chapter-item expanded "><a href="../ContinousDeployment/ContinousDeployment.html"><strong aria-hidden="true">12.</strong> Continous Deployment</a></li><li class="chapter-item expanded "><a href="../ReleaseDeployment/ReleaseDeployment.html"><strong aria-hidden="true">13.</strong> Release Deployment</a></li><li class="chapter-item expanded "><a href="../Migration/Migration.html"><strong aria-hidden="true">14.</strong> Migration</a></li><li class="chapter-item expanded affix "><li class="part-title">Operating Systems/ Virtual Machines</li><li class="chapter-item expanded "><a href="../VSphere/Introduction.html"><strong aria-hidden="true">15.</strong> VSphere</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../VSphere/centOS/centOS.html"><strong aria-hidden="true">15.1.</strong> CentOS</a></li><li class="chapter-item expanded "><a href="../VSphere/nixOS/nixOS.html"><strong aria-hidden="true">15.2.</strong> NixOS</a></li><li class="chapter-item expanded "><a href="../VSphere/arch/arch.html"><strong aria-hidden="true">15.3.</strong> Arch</a></li><li class="chapter-item expanded "><a href="../VSphere/RPIOS/rpios.html"><strong aria-hidden="true">15.4.</strong> Raspberry Pi OS</a></li><li class="chapter-item expanded "><a href="../VSphere/WindowsCoreIoT/WindowsCoreIoT.html"><strong aria-hidden="true">15.5.</strong> Windows Core IoT</a></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -83,7 +91,7 @@
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
-                <div id="menu-bar-hover-placeholder"></div>
+                                <div id="menu-bar-hover-placeholder"></div>
                 <div id="menu-bar" class="menu-bar sticky bordered">
                     <div class="left-buttons">
                         <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
@@ -93,7 +101,7 @@
                             <i class="fa fa-paint-brush"></i>
                         </button>
                         <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
-                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
@@ -110,6 +118,7 @@
                         <a href="../print.html" title="Print this book" aria-label="Print this book">
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
+
                     </div>
                 </div>
 
@@ -123,8 +132,9 @@
                         </ul>
                     </div>
                 </div>
+
                 <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
-                <script type="text/javascript">
+                <script>
                     document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
                     document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
                     Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
@@ -527,9 +537,11 @@ LOG_RESET() {
                             <a rel="prev" href="../System_Statistics_Script/systemStats.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
+
                             <a rel="next" href="../ManPages/manexample.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
+
                         <div style="clear: both"></div>
                     </nav>
                 </div>
@@ -539,6 +551,7 @@ LOG_RESET() {
                     <a rel="prev" href="../System_Statistics_Script/systemStats.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
+
                     <a rel="next" href="../ManPages/manexample.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
@@ -546,16 +559,25 @@ LOG_RESET() {
 
         </div>
 
-        <script type="text/javascript">
+
+
+
+        <script>
             window.playground_copyable = true;
         </script>
-        <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
 
         <!-- Custom JS scripts -->
+
+
+    </div>
     </body>
 </html>
