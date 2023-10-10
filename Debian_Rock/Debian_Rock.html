@@ -170,6 +170,8 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="introduction"><a class="header" href="#introduction">Introduction</a></h1>
+<p>This page will give useful information for navigating the Debian OS on the Rock C4+.</p>
+<h2 id="getting-started"><a class="header" href="#getting-started">Getting Started</a></h2>
 <p>Once you have managed to get into the Debain OS on the Rock C+, you will need to do a couple of steps to get the OS ready.</p>
 <ol>
 <li>
@@ -197,6 +199,75 @@
 <p>Source: <a href="https://wiki.radxa.com/Rock5/linux/radxa-apt#focal-stable">https://wiki.radxa.com/Rock5/linux/radxa-apt#focal-stable</a></p>
 </li>
 </ol>
+<h2 id="networking"><a class="header" href="#networking">Networking</a></h2>
+<p>The Debain OS for the Rock C4+ uses the <code>NetworkManager</code> package to manage all connections to the network interface chips. </p>
+<p><code>NetworkManager</code> directory is located here -&gt; <code>/etc/NetworkManager</code>, the contents of which is:</p>
+<pre><code class="language-sh">NetworkManager.conf
+conf.d/
+dispatcher.d/
+dnsmasq-shared.d/
+dnsmasq.d/
+system-connections/
+</code></pre>
+<p>All of your Wi-Fi profiles are stored in the <code>system-connections</code> folder, for example:</p>
+<pre><code class="language-sh">$ ls /etc/NetworkManager/system-connections
+&gt; OKdo05.nmconnection
+&gt; eduroam.nmconnection
+</code></pre>
+<blockquote>
+<p><strong>Note:</strong></p>
+<blockquote>
+<p>The file naming convention, <code>&lt;ssid&gt;.nmconnection</code>, this is strict and case-sensitive.</p>
+</blockquote>
+</blockquote>
+<p>Each <code>...nmconnection</code> file has a format and for eduroam, which is an enterprise network it looks like this, you will need to have root level permissions:</p>
+<pre><code class="language-sh">$ sudo cat /etc/NetworkManager/system-connections/eduroam.nmconnection
+</code></pre>
+<p><strong>Output:</strong></p>
+<pre><code class="language-sh">[connection]
+id=eduroam
+uuid=4e3235f7-8387-4102-8a57-dd1120f29ac5
+type=wifi
+interface-name=wlan0
+permissions=user:dev:;
+
+[wifi]
+mac-address-blacklist=
+mode=infrastructure
+ssid=eduroam
+
+[wifi-security]
+auth-alg=open
+key-mmgt=wpa-eap
+
+[802-1x]
+anonymous-identity=username@gre.ac.uk
+eap=ttls;
+identity=username@greenwich.ac.uk
+password=YOURPASSWORD
+phase2-auth=mschapv2
+
+[ipv4]
+dns-search=
+method=auto
+
+[ipv6]
+addr-gen-mode=stable-privacy
+dns-search=
+method=auto
+
+[proxy]
+</code></pre>
+<blockquote>
+<p><strong>Note</strong> </p>
+<blockquote>
+<p>You may need to reload the connection:</p>
+<ul>
+<li><code>nmcli connection reload</code> or you can do this with elevation</li>
+<li><code>sudo ncmli connetion reload</code></li>
+</ul>
+</blockquote>
+</blockquote>
 
                     </main>
 
