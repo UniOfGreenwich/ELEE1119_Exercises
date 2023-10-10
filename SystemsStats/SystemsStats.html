@@ -190,7 +190,7 @@ $ touch systemsStats.sh
 <ul>
 <li>press the lowercase <code>i</code> to enter <strong>INSERT</strong> mode...</li>
 </ul>
-<p>Reproduce the follwing:</p>
+<p>Reproduce the following:</p>
 <pre><code class="language-sh">
 #! /usr/bin/env cat
 
@@ -223,7 +223,7 @@ echo Hello World, Goodbye World!
 <ul>
 <li>user group rest-of-the-world</li>
 <li>rwx r-x r-x</li>
-<li><code>r</code> = read, <code>w</code> = write, <code>x</code> = excute</li>
+<li><code>r</code> = read, <code>w</code> = write, <code>x</code> = execute</li>
 </ul>
 </li>
 </ul>
@@ -244,7 +244,7 @@ $ ls -lah
 &gt;
 &gt;echo Hello World, Goodbye World!
 </code></pre>
-<p>This is because the file is an excutable and the shebang runs the script with the program at the end of the line i.e <code>cat</code></p>
+<p>This is because the file is an executable and the shebang runs the script with the program at the end of the line i.e <code>cat</code></p>
 <p>As proof lets use cat directly:</p>
 <pre><code class="language-sh">$ cat systemStats.sh
 &gt;#! /usr/bin/env cat
@@ -254,17 +254,17 @@ $ ls -lah
 <p>Changing the shebang to <code>bash</code> will ensure the <code>bash</code> program is called instead. </p>
 <pre><code class="language-sh">$ vim ./systemStats.sh
 </code></pre>
-<p>Again remember to press <code>i</code> to enter <strong>INSERT</strong> mode, and reproduce the follwing</p>
+<p>Again remember to press <code>i</code> to enter <strong>INSERT</strong> mode, and reproduce the following</p>
 <pre><code class="language-sh">#! /usr/bin/env bash
 
 echo Hello World, Goodbye World!
 </code></pre>
-<p>Run the program and you will get the same output as <code>bash systemStats.md</code></p>
+<p>Run the program and you will get the same output as <code>bash systemStats.sh</code></p>
 <pre><code class="language-sh">$ ./systemStats.sh
 &gt; Hello World, Goodbye World!
 </code></pre>
 <h2 id="a-more-meaningful-script"><a class="header" href="#a-more-meaningful-script">A more meaningful script</a></h2>
-<p>Scripting is useful for automating process and system admin for example, getting lots of information from all over the OS using one script.</p>
+<p>Scripting is useful for automating process and system admin. For example, getting lots of information from all over the OS using one script.</p>
 <pre><code class="language-sh">$ cat /etc/hostname
 &gt; Rock-c4-plus
 </code></pre>
@@ -283,7 +283,7 @@ hostname
 Rock-c4-plus
 </code></pre>
 <p>This is because we have commented out the <code>echo ...</code> witht the <code>#</code> hash symbol.</p>
-<p>Running <code>cat /etc/os-release</code> will give you the follwing:</p>
+<p>Running <code>cat /etc/os-release</code> will give you the following:</p>
 <pre><code class="language-sh">$ cat /etc/os-release
 PRETTY_NAME=&quot;Debian GNU/Linux 11 (bullseye)&quot;
 NAME=&quot;Debian GNU/Linux&quot;
