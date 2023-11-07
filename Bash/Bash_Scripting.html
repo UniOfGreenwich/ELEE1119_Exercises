@@ -469,20 +469,15 @@ echo &quot;Username: $username&quot;  &quot;Age: $age&quot;  &quot;Full Name: $f
 </code></pre>
 <details>
 <summary>Answer</summary>
-</li>
-<li>
-<pre><code class="language-sh"></code></pre>
+<pre><code class="language-sh">$ bash parameters.sh -U sb7326l -a nonyabusiness -f &quot;Seb Blair&quot;
+parameters.sh: illegal option -- U
+Username:  Age:  Full Name: 
+</code></pre>
+<p>So you see that the <code>getopts</code> deals with illegal options.</p>
+<p>Out of curosity, what happens if you change your parameters orders..?</p>
+</details>
 </li>
 </ul>
-<pre><code>$ bash parameters.sh -U sb7326l -a nonyabusiness -f &quot;Seb Blair&quot;
-  parameters.sh: illegal option -- U
-  Username:  Age:  Full Name: 
-```
-So you see that the `getopts` deals with illegal options.
-
-Out of curosity, what happens if you change your parameters orders..?
-&lt;/details&gt;
-</code></pre>
 <hr />
 <h2 id="task-4-reading-from-stdin"><a class="header" href="#task-4-reading-from-stdin">Task 4. Reading from stdin</a></h2>
 <p>Here you are replicating what was in the lecture using the <code>read</code> command to caputer user input.</p>
