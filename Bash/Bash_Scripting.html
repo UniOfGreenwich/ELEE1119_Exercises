@@ -450,6 +450,8 @@ case &quot;${flag}&quot; in
    u) username=${OPTARG};;
    a) age=${OPTARG};;
    f) fullname=${OPTARG};;
+   ?) echo &quot;Not a recongnised option: ${flag}\n&quot;
+   exit 1;; # this is will catch illegal options
 esac
 done
 echo &quot;Username: $username&quot;  &quot;Age: $age&quot;  &quot;Full Name: $fullname&quot;
