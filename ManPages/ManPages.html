@@ -1,0 +1,414 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Man Pages - Advanced Computer Engineering</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+        <!-- MathJax -->
+        <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    </head>
+    <body class="sidebar-visible no-js">
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('light')
+            html.classList.add(theme);
+            var body = document.querySelector('body');
+            body.classList.remove('no-js')
+            body.classList.add('js');
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var body = document.querySelector('body');
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            body.classList.remove('sidebar-visible');
+            body.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="spacer"></li><li class="spacer"></li><li class="chapter-item affix "><li class="part-title">Main</li><li class="chapter-item "><a href="../Introduction/Introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item "><a href="../Debian_Rock/Debian_Rock.html"><strong aria-hidden="true">2.</strong> Debian Rock C4</a></li><li class="chapter-item "><a href="../SystemsStats/SystemsStats.html"><strong aria-hidden="true">3.</strong> Systems Stats Script</a></li><li class="chapter-item "><a href="../tmux/tmux.html"><strong aria-hidden="true">4.</strong> Terminal Multiplexing</a></li><li class="chapter-item "><a href="../Learning_C/Learning_C.html"><strong aria-hidden="true">5.</strong> Learning C</a></li><li class="chapter-item "><a href="../Programming_Computers/programming_computers.html"><strong aria-hidden="true">6.</strong> Programming Computers</a></li><li class="chapter-item "><a href="../Multi-ThreadedScripting-ProcessManagement/Multi-ThreadedScripting-ProcessManagement.html"><strong aria-hidden="true">7.</strong> Multi-Threading 1</a></li><li class="chapter-item "><a href="../Multi-ThreadedScripting-ProcessManagement/UnderstandingProcess.html"><strong aria-hidden="true">8.</strong> Multi-Threading 2</a></li><li class="chapter-item "><a href="../SystemCalls/SystemCalls.html"><strong aria-hidden="true">9.</strong> System Calls</a></li><li class="chapter-item "><a href="../Bash/Bash_Scripting.html"><strong aria-hidden="true">10.</strong> Bash</a></li><li class="chapter-item "><a href="../RFC_Logger/rfclogger.html"><strong aria-hidden="true">11.</strong> RFC Logger</a></li><li class="chapter-item expanded "><a href="../ManPages/ManPages.html" class="active"><strong aria-hidden="true">12.</strong> Man Pages</a></li><li class="chapter-item "><div><strong aria-hidden="true">13.</strong> Daemons</div></li><li class="chapter-item "><div><strong aria-hidden="true">14.</strong> Nixos Package Manager</div></li><li class="chapter-item "><div><strong aria-hidden="true">15.</strong> Redirection</div></li><li class="chapter-item "><div><strong aria-hidden="true">16.</strong> Shell Commands</div></li><li class="chapter-item "><div><strong aria-hidden="true">17.</strong> UUID</div></li><li class="chapter-item "><div><strong aria-hidden="true">18.</strong> RFC Logger</div></li><li class="spacer"></li><li class="spacer"></li><li class="chapter-item affix "><li class="part-title">Bourne Again SHell</li><li class="chapter-item "><div><strong aria-hidden="true">19.</strong> Shell</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><div><strong aria-hidden="true">19.1.</strong> Installation</div></li><li class="chapter-item "><div><strong aria-hidden="true">19.2.</strong> Introducing the Shell</div></li><li class="chapter-item "><div><strong aria-hidden="true">19.3.</strong> Navigating File and Directories</div></li><li class="chapter-item "><div><strong aria-hidden="true">19.4.</strong> Working with FIles and Directories</div></li><li class="chapter-item "><div><strong aria-hidden="true">19.5.</strong> Pipes and Filters</div></li><li class="chapter-item "><div><strong aria-hidden="true">19.6.</strong> Loop</div></li><li class="chapter-item "><div><strong aria-hidden="true">19.7.</strong> Scripts</div></li><li class="chapter-item "><div><strong aria-hidden="true">19.8.</strong> Finding Things</div></li><li class="chapter-item "><div><strong aria-hidden="true">19.9.</strong> Summary of Basic Commands</div></li></ol></li><li class="chapter-item "><div><strong aria-hidden="true">20.</strong> Extra Shell</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><div><strong aria-hidden="true">20.1.</strong> Manual Pages</div></li><li class="chapter-item "><div><strong aria-hidden="true">20.2.</strong> Working Remotely</div></li><li class="chapter-item "><div><strong aria-hidden="true">20.3.</strong> Permissions</div></li><li class="chapter-item "><div><strong aria-hidden="true">20.4.</strong> Working with Files and Directories</div></li><li class="chapter-item "><div><strong aria-hidden="true">20.5.</strong> Job Control</div></li><li class="chapter-item "><div><strong aria-hidden="true">20.6.</strong> Aliases and bash customisation</div></li><li class="chapter-item "><div><strong aria-hidden="true">20.7.</strong> Shell Variables</div></li><li class="chapter-item "><div><strong aria-hidden="true">20.8.</strong> Summary of Commands</div></li></ol></li><li class="chapter-item "><div><strong aria-hidden="true">21.</strong> Shell Style Guide</div></li><li class="chapter-item "><div><strong aria-hidden="true">22.</strong> System Statistics Script</div></li><li class="chapter-item "><div><strong aria-hidden="true">23.</strong> RFC Logger Script</div></li><li class="chapter-item "><div><strong aria-hidden="true">24.</strong> Man page Example</div></li><li class="spacer"></li><li class="spacer"></li><li class="chapter-item affix "><li class="part-title">Git</li><li class="chapter-item "><a href="../myFirstRepository/myFirstRepository.html"><strong aria-hidden="true">25.</strong> My First Repository</a></li><li class="chapter-item "><a href="../BranchingModel/BranchingModel.html"><strong aria-hidden="true">26.</strong> Branching-Strategy</a></li><li class="chapter-item "><a href="../OneFlow/OneFlow.html"><strong aria-hidden="true">27.</strong> Git Oneflow</a></li><li class="chapter-item "><a href="../AntiPatterns/AntiPatterns.html"><strong aria-hidden="true">28.</strong> Anti Patterns</a></li><li class="chapter-item "><a href="../ContinousDeployment/ContinousDeployment.html"><strong aria-hidden="true">29.</strong> Continous Deployment</a></li><li class="chapter-item "><a href="../ReleaseDeployment/ReleaseDeployment.html"><strong aria-hidden="true">30.</strong> Release Deployment</a></li><li class="chapter-item "><a href="../Migration/Migration.html"><strong aria-hidden="true">31.</strong> Migration</a></li><li class="spacer"></li><li class="spacer"></li><li class="chapter-item affix "><li class="part-title">Operating Systems/ Virtual Machines</li><li class="chapter-item "><a href="../VSphere/Introduction.html"><strong aria-hidden="true">32.</strong> VSphere</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><div><strong aria-hidden="true">32.1.</strong> CentOS</div></li><li class="chapter-item "><div><strong aria-hidden="true">32.2.</strong> NixOS</div></li><li class="chapter-item "><div><strong aria-hidden="true">32.3.</strong> Arch</div></li><li class="chapter-item "><div><strong aria-hidden="true">32.4.</strong> Raspberry Pi OS</div></li><li class="chapter-item "><div><strong aria-hidden="true">32.5.</strong> Windows Core IoT</div></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Advanced Computer Engineering</h1>
+
+                    <div class="right-buttons">
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="writing-man-pages"><a class="header" href="#writing-man-pages">Writing <code>man-pages</code></a></h1>
+<h2 id="introduction"><a class="header" href="#introduction">Introduction</a></h2>
+<p>Manual pages are the canonical type of documentation for Unix systems. They are a bit arcane, but for a technology several decades old, they’ve held up quite well. The arcane bit is the markup language. This is a brief tutorial on writing good manual pages, at least for the typical cases. You’ll be assumed to be familiar with reading manual pages already.</p>
+<p>There are actually many ways to produce manual pages. The <code>man(1)</code> command needs a file using <code>troff(1)</code> formatting commands. <code>troff</code> is a typesetting system from the 1970s, written by the Unix developers. The <code>troff</code> file can be written manually, or generated from other formats, such as <code>DocBook</code> or Perl POD markup. On Linux, <code>groff</code>, the GNU implementation of <code>troff</code>, is used.</p>
+<hr />
+<h2 id="conventions-in-manual-pages"><a class="header" href="#conventions-in-manual-pages">Conventions in manual pages</a></h2>
+<p>The important thing is that the formatted page follows manpage typesetting and other conventions, so that readers can efficiently extract the needed information from them. This bit is important: manpages are <strong>reference documentation</strong>, intended to <strong>quickly answer questions</strong> like &quot;what is the purpose of this command?&quot; or &quot;is there an option to show more information about files?&quot;.</p>
+<p>Here are some of the more important conventions:</p>
+<ul>
+<li>
+<p>the page should be short and to the point, without sacrificing clarity</p>
+</li>
+<li>
+<p>use only the usual sections, in the usual order; see <code>man-pages(7)</code> for details</p>
+</li>
+<li>
+<p>in particular, give a brief, readable summary of command line syntax in <strong>SYNOPSIS</strong>; if there are a lot of options, list them in the <strong>OPTIONS</strong> section</p>
+</li>
+<li>
+<p>format the <strong>OPTIONS</strong> section so that options are in bold and their optional arguments are in italic, to improve fast skimming of the page</p>
+</li>
+<li>
+<p>for anything that is complicated to use, add an <strong>EXAMPLE</strong> section
+add examples for the common cases, not just special ones: you may think your program is obvious to use, but not everyone will find it so... </p>
+</li>
+<li>
+<p>don’t forget <strong>ENVIRONMENT</strong> and <strong>FILES</strong> sections</p>
+</li>
+<li>
+<p>the <strong>SEE ALSO</strong> section is also often useful to add</p>
+</li>
+</ul>
+<hr />
+<h2 id="example-manual-page"><a class="header" href="#example-manual-page">Example manual page</a></h2>
+<blockquote>
+<p>You can complete this on a linux machine or environment.</p>
+</blockquote>
+<p><code>troff</code> is a programming language for typesetting. It has a macro facility, and several macro packages have been written for writing manual pages. The most common of these is the <code>-man</code> one. Here’s an example of a <code>manpage</code>, using that, reproduce this opening a file called <code>corrupt.1</code></p>
+<pre><code>.TH CORRUPT 1
+.SH NAME
+corrupt \- modify files by randomly changing bits
+.SH SYNOPSIS
+.B corrupt
+[\fB\-n\fR \fIBITS\fR]
+[\fB\-\-bits\fR \fIBITS\fR]
+.IR file ...
+.SH DESCRIPTION
+.B corrupt
+modifies files by toggling a randomly chosen bit.
+.SH OPTIONS
+.TP
+.BR \-n &quot;, &quot; \-\-bits =\fIBITS\fR
+Set the number of bits to modify.
+Default is one bit.
+</code></pre>
+<p>Save that in a file, and then view it using the command:</p>
+<pre><code>$ gzip &lt; corrupt.1 &gt; corrupt.1.gz &amp;&amp; man -l corrupt.1.gz
+</code></pre>
+<p>The output should be approximately like this (after a manual conversion to HTML to allow fonts):</p>
+<div align=center>
+<p><img src="./figures/mansyntax.png" alt="center" /></p>
+</div>
+<hr />
+<h2 id="the-title-th"><a class="header" href="#the-title-th">The title: .TH</a></h2>
+<p>Every manual page should start by specifying its title:</p>
+<pre><code>.TH CORRUPT 1
+</code></pre>
+<p>Here, <strong>CORRUPT</strong> is the name of the manual page, and <strong>1</strong> is the section in which the manual page belongs (section 1 for user commands, 2 for system calls, etc; see man-pages(7)` for the whole list).</p>
+<p>You can additionally add three more pieces of information: the date of this revision of the manual page, where the program it documents came from, and the title of the whole book to which this page belongs to. </p>
+<hr />
+<h2 id="name-section"><a class="header" href="#name-section">NAME section</a></h2>
+<pre><code>.SH NAME
+corrupt \- modify files by randomly changing bits
+</code></pre>
+<p>The <strong>NAME</strong> section declares the name of command that is being documented. It also gives a very brief explanation of what it does. These two parts are separated by backslash-dash. That’s a magic combination, the <code>man</code> command requires it.</p>
+<p>This section is the source for data for <code>man -k</code> searches. That’s a useful feature, and it is good to pay a bit of attention to making the brief explanation as useful as possible. However, do keep it brief; having it be broken on several lines looks bad. (It may be a sign of a badly designed program if the brief explanation is hard to write.)</p>
+<p>The Debian and derivatives man implementation comes with <code>lexgrog</code>, which can verify that you get the <strong>NAME</strong> section right.</p>
+<hr />
+<h2 id="synopsis-section"><a class="header" href="#synopsis-section">SYNOPSIS section</a></h2>
+<pre><code>.SH SYNOPSIS
+.B corrupt
+[\fB\-n\fR \fIBITS\fR]
+[\fB\-\-bits\fR \fIBITS\fR]
+.IR file ...
+</code></pre>
+<p>In this section, we give the user a summary of how the command line syntax of the program looks like. Font usage is important here, and carries information. All the parts that are in bold are things that the user is expected to write verbatim. Italic indicates values the user is expected to fill in. Normal font is used for syntax meta-characters: for the brackets that indicate optionality, and the ellipsis that indicates repetition.</p>
+<hr />
+<h2 id="using-fonts"><a class="header" href="#using-fonts">Using fonts</a></h2>
+<p>Fonts can be set in two ways: </p>
+<ul>
+<li>
+<p>either using the dot-commands, or the <code>\</code> <code>-f</code> escapes -&gt; <code>\-f</code>. </p>
+</li>
+<li>
+<p><code>.B</code> command (where the dot is at the beginning of a line) typesets the rest of the line in bold face. </p>
+</li>
+<li>
+<p><code>.I</code> typesets in italics (but terminals show that as underline),</p>
+</li>
+<li>
+<p><code>.R</code> in what <code>troff</code> calls the roman font, and the rest of us call the normal font. </p>
+</li>
+<li>
+<p>You can combine these,</p>
+<ul>
+<li><code>.BR</code> typesets the first word on the line in bold, the second in normal font. The output will have no space between the words: <code>.BR</code> manpagename (7) would be the usual way to refer to another manual page. If a word has spaces in it, use double quotes: <code>.B &quot;far and away&quot;</code> for example.</li>
+</ul>
+</li>
+<li>
+<p><code>\-f</code> escapes work anywhere on a line, and sometimes they’re easier to use than the dot-commands. Their effect also does not end at the end of a line.</p>
+</li>
+</ul>
+<p>An unfortunate bit of arcane syntax is that dashes in options should be prefixed by backslashes. Thus, write <code>\-\-bits</code>, not just <code>--bits</code>. The <strong>Debian</strong> and <strong>Ubuntu</strong> implementation of <code>man</code> treats them the same, for terminal output, but this is not portable. </p>
+<p>Technically a naked <code>-</code> means a hyphen, whereas <code>\-</code> means a minus sign. </p>
+<p>Typographically these are distinct, and they are also distinct in Unicode. The typesetter is free to break a line at a hyphen, but not at a minus. For dashes in options, you should thus use minuses, but in normal text, for normal words, the hyphen.</p>
+<hr />
+<h2 id="description-section"><a class="header" href="#description-section">DESCRIPTION section</a></h2>
+<pre><code>.SH DESCRIPTION
+.B corrupt
+modifies files by toggling a randomly chosen bit.
+</code></pre>
+<p>The <strong>DESCRIPTION</strong> section describes what the program does, in more detail than the <strong>NAME</strong> section. There are no artificial size limits here, but it’s still good style to avoid being long-winded. At the same time, it is perhaps best to not be quite as terse as the example.</p>
+<hr />
+<h2 id="paragraphs-and-line-structure"><a class="header" href="#paragraphs-and-line-structure">Paragraphs and line structure</a></h2>
+<p>If you write more than one paragraph, start the other paragraphs with the <code>.PP</code> command. Do not just leave an empty line; this makes <code>troff</code> sometimes do the wrong thing. In fact, the manual page source should have no empty lines at all.</p>
+<p><code>troff</code> prefers you to start every sentence on a new line. This lets it typeset end-of-sentence whitespace better, when it produces output using proportional fonts. Also, this makes it easier to compare versions of a manpage with <code>diff</code>.</p>
+<hr />
+<h2 id="more-about-fonts"><a class="header" href="#more-about-fonts">More about fonts</a></h2>
+<p>There are some more font convention:</p>
+<ul>
+<li>use bold for the command you are documenting</li>
+<li>refer to other manual pages like this: <strong>man-pages(7)</strong> (easiest to achieve like this: <code>.BR man-pages (7))</code></li>
+<li>filenames in italics</li>
+</ul>
+<p>See <strong>man-pages(7)</strong> for more details.</p>
+<hr />
+<h2 id="options-section"><a class="header" href="#options-section">OPTIONS section</a></h2>
+<pre><code>.SH OPTIONS
+.TP
+.BR \-n &quot;, &quot; \-\-bits =\fIBITS\fR
+Set the number of bits to modify.
+Default is one bit.
+</code></pre>
+<p>Options are perhaps the most tedious part to document. It is also the part where proper formatting gives the most benefit to the reader.</p>
+<p>First, there is the list structure. This is achieved with the <code>.TP</code> command, which is kind of magic. It takes the next line, and does not indent it, and then indents the rest of the paragraph. This gives the nice indented-paragraph style that makes it easy to quickly scan even a long list of options to find the right one.</p>
+<p>That first, un-indented line describes the option, giving its name, and indicates if it gets an argument or not. If there are several names for an option (a long one, and a one-letter one, for example), they should be on the same line, separated by commas. The one-letter option name does not get the option argument, to keep things short.</p>
+<p>Fonts are again used to clarify things:</p>
+<ul>
+<li>the name of the option (including any dashes at the beginning) is in bold</li>
+<li>any argument is in italic, but the equals sign (if any) is in normal font</li>
+<li>the comma between options is in normal font.</li>
+</ul>
+<hr />
+<h2 id="comments-in-troff-source"><a class="header" href="#comments-in-troff-source">Comments in <code>troff</code> source</a></h2>
+<p><code>troff</code> also supports comments: start a line with <code>.\&quot;</code> and it is a comment. You can use them, for example, to add white space between descriptions of options in the <strong>OPTIONS</strong> section (remember, no empty lines).</p>
+<hr />
+<h2 id="marking-up-examples"><a class="header" href="#marking-up-examples">Marking up examples</a></h2>
+<p>Most manual pages benefit from an <strong>EXAMPLES</strong> section, which shows basic use of the command. Sometimes advanced use is also useful to show, but basic use is almost always useful, because that’s what people need most often.</p>
+<p>Marking up examples of command line use is a bit tricky in manual pages. Here’s an example of an example, trt this in a new file called <code>example.1</code>:</p>
+<pre><code>.TH EXAMPLES 1
+.SH EXAMPLES
+To write some text to the standard output, use the
+.BR printf (1)
+command:
+.PP
+.nf
+.RS
+printf &quot;this is a %s format %s\n&quot; \\
+usual string
+.RE
+.fi
+.PP
+Nifty, huh?
+</code></pre>
+<pre><code class="language-sh">$ gzip &lt; example.1 &gt; example.1.gz  &amp;&amp; man -l example.1
+</code></pre>
+<div align=center>
+<p><img src="./figures/example1.png" alt="" /></p>
+</div>
+A few new troff commands:
+<ul>
+<li><code>.nf</code> turns off paragraph filling mode: we don’t want that for showing command lines.</li>
+<li><code>.fi</code> turns it back on.</li>
+<li><code>.RS</code> starts a relative margin indent: examples are more visually distinguishable if they’re indented.</li>
+<li><code>.RE</code> ends the indent.</li>
+<li><code>\\</code> puts a backslash in the output. Since troff uses backslash for fonts and other in-line commands, it needs to be doubled in the manual page source so that the output has one.</li>
+</ul>
+<p>The backslash is used to show that the shell command line is broken into two physical lines, even if it is just one logical command. This is fairly commonly needed in manual pages: the page width is usually only 80 monospace characters wide, and with margins and indentations there’s often only about 60 or 65 characters per line in the example. Command line examples therefore need to be wrapped, and it’s better to be done explicitly in the manual page source than letting the man program do it.</p>
+<hr />
+<h2 id="other-ways-of-creating-manual-pages"><a class="header" href="#other-ways-of-creating-manual-pages">Other ways of creating manual pages</a></h2>
+<p>This example used the -man macros for <code>troff</code>, since that is the most common way to write manual pages. However, they are admittedly arcane at this point in history. They’re pretty easy to write, but not nearly as convenient as, say, Perl POD markup, or DocBook markup (see the refentry element). However, those other markup languages require conversion tools to produce a file that man can actually use, and the tools do not always properly follow the manpage formatting conventions.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../RFC_Logger/rfclogger.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../myFirstRepository/myFirstRepository.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../RFC_Logger/rfclogger.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../myFirstRepository/myFirstRepository.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>
