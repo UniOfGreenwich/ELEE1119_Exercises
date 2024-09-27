@@ -27,6 +27,7 @@
 - [GPIO C Library]()
 - [ADC C Library]()
 - [PWM C Library]()
+- [libioctrl]()
 - [USB Ethernet]()
   - [USB to Ethernet sniffing tool]()
 - [Mounting an SD]()
