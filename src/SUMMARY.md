@@ -22,9 +22,9 @@
 ------------------------------------------------------
 
 # BeagleBoard
-- [Exploring the Chips]()
-- [PinExploration]()
-- [GPIO C Library]()
+- [Exploring the Chips](./ChipExploration/ChipExploration.md)
+- [PinExploration](./PinExploration/PinExploration.md)
+- [GPIO C Library](./GPIOLibrary/GPIOLibrary.md)
 - [ADC C Library]()
 - [PWM C Library]()
 - [USB Ethernet]()
