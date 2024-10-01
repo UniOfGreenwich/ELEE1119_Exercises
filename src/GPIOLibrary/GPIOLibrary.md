@@ -281,7 +281,7 @@ overlay, which will be discussed in detail in a later section.
         {"P8_42", 75}, {"P8_39", 76}, {"P8_40", 77}, {"P8_37", 78},
         {"P8_38", 79}, {"P8_35", 8}, {"P8_36", 80}, {"P8_34", 81},
         {"P8_27", 86}, {"P8_29", 87}, {"P8_28", 88}, {"P8_30", 89},
-        {"P8_33", 9}
+        {"P8_33", 9}, {"P8_27", 17}
     };
 
     // Function prototypes using pin names
