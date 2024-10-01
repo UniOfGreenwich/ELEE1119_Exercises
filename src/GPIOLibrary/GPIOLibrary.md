@@ -531,6 +531,7 @@ overlay, which will be discussed in detail in a later section.
 
     <details>
     <summary>Code here... </summary>
+
     ```makefile
     # Variables
     CC = gcc
@@ -665,6 +666,10 @@ overlay, which will be discussed in detail in a later section.
     ```
 
 13. Alternatively we can use a `Makefile` like before:
+
+    <details>
+    <summary>Code here... </summary>
+
     ```makefile
     # Compiler and flags
     CC = gcc
@@ -699,6 +704,9 @@ overlay, which will be discussed in detail in a later section.
     ```sh
     $ make
     ```
+
+    </details>
+
 14. Use the led and etc to wire up and run the code:
 
     ```sh
