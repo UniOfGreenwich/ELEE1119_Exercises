@@ -281,7 +281,7 @@ overlay, which will be discussed in detail in a later section.
         {"P8_42", 75}, {"P8_39", 76}, {"P8_40", 77}, {"P8_37", 78},
         {"P8_38", 79}, {"P8_35", 8}, {"P8_36", 80}, {"P8_34", 81},
         {"P8_27", 86}, {"P8_29", 87}, {"P8_28", 88}, {"P8_30", 89},
-        {"P8_33", 9}
+        {"P8_33", 9}, {"P8_27", 17}
     };
 
     // Function prototypes using pin names
@@ -531,6 +531,7 @@ overlay, which will be discussed in detail in a later section.
 
     <details>
     <summary>Code here... </summary>
+
     ```makefile
     # Variables
     CC = gcc
@@ -665,6 +666,10 @@ overlay, which will be discussed in detail in a later section.
     ```
 
 13. Alternatively we can use a `Makefile` like before:
+
+    <details>
+    <summary>Code here... </summary>
+
     ```makefile
     # Compiler and flags
     CC = gcc
@@ -699,6 +704,9 @@ overlay, which will be discussed in detail in a later section.
     ```sh
     $ make
     ```
+
+    </details>
+
 14. Use the led and etc to wire up and run the code:
 
     ```sh
