@@ -25,7 +25,7 @@
 - [Exploring the Chips](./ChipExploration/ChipExploration.md)
 - [PinExploration](./PinExploration/PinExploration.md)
 - [GPIO C Library](./GPIOLibrary/GPIOLibrary.md)
-- [ADC C Library]()
+- [ADC C Library](./ADCLibrary/ADCLibrary.md)
 - [PWM C Library]()
 - [USB Ethernet]()
   - [USB to Ethernet sniffing tool]()
