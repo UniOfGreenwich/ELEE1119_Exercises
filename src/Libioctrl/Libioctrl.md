@@ -172,6 +172,10 @@ In this chapter we are going to combine our previous source code into a centeral
 
 ## 2: Make with a Makefile
 
+>**Note:**
+>> - Before running make for libioctrl, we should remove all current libaries from before. For each original library, `adclib`, `gpiolib`, `pwmlib` or whether you made them run make uninstall and make clean in each one: 
+>> ![](./figures/unmakeall.gif)
+
 8. Build a Makefile and fill with the following:
 
     <details>
@@ -304,9 +308,12 @@ In this chapter we are going to combine our previous source code into a centeral
         ```
         sudo ldconfig
         ```
+
+        ![](./figures/makelibioctrl.gif)
+        
 ## Using our new library
 
-12. Update any of the following tests we ran before `adc_read`, `blink` and `pwm_test`:
+12. Update any of the following tests we ran before `acd_continous_read`, `adc_read`, `blink` and `pwm_test`:
 
     In this example I will update the `adc_read.c` headers and part of the `Makefile`:
 
