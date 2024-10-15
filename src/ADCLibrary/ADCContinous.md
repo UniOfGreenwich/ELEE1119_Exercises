@@ -553,13 +553,13 @@ Now we need to update `adc.c` to create the functionality of our new prototypes:
     CFLAGS = -Wall -Werror
 
     # Target executable name
-    TARGET = adc_continous_read
+    TARGET = adc_continuous_read
 
     # Source files
-    SRC = adc_continous_read.c
+    SRC = adc_continuous_read.c
 
     # Library to link against
-    LIBS = -lioctrl
+    LIBS = -ladc
 
     # Default target: build the executable
     all: $(TARGET)

@@ -662,7 +662,7 @@ overlay, which will be discussed in detail in a later section.
 12. We can use this oneliner to compile the code:
 
     ```sh
-    $ gcc 
+    $ gcc gpio.c -lgpio -o blink 
     ```
 
 13. Alternatively we can use a `Makefile` like before:
