@@ -373,8 +373,32 @@ The BeagleBone Black (BBB), however, is more flexible and powerful regarding PWM
         fclose(fp);
         return 0;
     }
-
+    
     // Enable the PWM output
+    int pwm_enable(PWM *pwm) {
+        FILE *fp = fopen(pwm->enable_path, "w");
+        if (fp == NULL) {
+            perror("Error opening enable file");
+            return -1;
+        }
+
+        fprintf(fp, "1");
+        fclose(fp);
+        return 0;
+    }
+
+    // Disable the PWM output
+    int pwm_disable(PWM *pwm) {
+        FILE *fp = fopen(pwm->enable_path, "w");
+        if (fp == NULL) {
+            perror("Error opening enable file");
+            return -1;
+        }
+
+        fprintf(fp, "0");
+        fclose(fp);
+        return 0;
+    }
     ```
 
     </details>
