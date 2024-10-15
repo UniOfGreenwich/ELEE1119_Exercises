@@ -575,6 +575,32 @@ int pwm_set_duty_cycle(PWM *pwm, unsigned int duty_cycle_ns) {
 }
 
 // Enable the PWM output
+
+// Enable the PWM output
+int pwm_enable(PWM *pwm) {
+    FILE *fp = fopen(pwm-&gt;enable_path, "w");
+    if (fp == NULL) {
+        perror("Error opening enable file");
+        return -1;
+    }
+
+    fprintf(fp, "1");
+    fclose(fp);
+    return 0;
+}
+
+// Disable the PWM output
+int pwm_disable(PWM *pwm) {
+    FILE *fp = fopen(pwm-&gt;enable_path, "w");
+    if (fp == NULL) {
+        perror("Error opening enable file");
+        return -1;
+    }
+
+    fprintf(fp, "0");
+    fclose(fp);
+    return 0;
+}
 </code></pre>
   </details>
 </li>
