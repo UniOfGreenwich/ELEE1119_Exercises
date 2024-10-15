@@ -26,7 +26,7 @@
 - [PinExploration](./PinExploration/PinExploration.md)
 - [GPIO C Library](./GPIOLibrary/GPIOLibrary.md)
 - [ADC C Library](./ADCLibrary/ADCLibrary.md)
-  - [ADC Continous ]()
+  - [ADC Continous ](./ADCLibrary/ADCContinous.md)
 - [PWM C Library]()
 - [libioctrl]()
 - [USB Ethernet]()
