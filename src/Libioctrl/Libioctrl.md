@@ -313,7 +313,7 @@ In this chapter we are going to combine our previous source code into a centeral
         
 ## Using our new library
 
-12. Update any of the following tests we ran before `acd_continous_read`, `adc_read`, `blink` and `pwm_test`:
+12. Update any of the following tests we ran before; `adc2pwm.c`, `adc_continous_read`, `adc_read`, `blink` and `pwm_test`:
 
     In this example I will update the `adc_read.c` headers and part of the `Makefile`:
 
@@ -335,3 +335,22 @@ In this chapter we are going to combine our previous source code into a centeral
     ```
 
     You should repeat for the others, and remember to `make clean` before running `make` for each of these programs to remove original exe.
+
+## Published library
+
+13. Now navigate to this repository: [CompEng0001/bb.black_pin_library](https://github.com/CompEng0001/bb.black_pin_library/fork)
+
+14. Clone the forked repo: `git clone git@github.com:YOURUSERNAME/bb.black_pin_library`
+
+15. `cd` to the parent directory of where you cloned the repo using shell copy command, `scp`: 
+
+    ```sh
+    scp -r /path/to/bb.black_pin_library debian@192.168.7.2:c_libraries
+    ```
+    
+    ![](./figures/bb_gif.gif)
+
+16. You should then be able to install the library via the `bash install.sh` script within the repo:
+
+
+    ![](./figures/bb_build.gif)
