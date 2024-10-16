@@ -336,9 +336,9 @@ In this chapter we are going to combine our previous source code into a centeral
 
     You should repeat for the others, and remember to `make clean` before running `make` for each of these programs to remove original exe.
 
-## Published library
+## Fork and Clone Published library
 
-13. Now navigate to this repository: [CompEng0001/bb.black_pin_library](https://github.com/CompEng0001/bb.black_pin_library/fork)
+13. Incase it doesn't work as intended, you can download the libioctrl library from GitHub: [CompEng0001/bb.black_pin_library](https://github.com/CompEng0001/bb.black_pin_library/fork)
 
 14. Clone the forked repo: `git clone git@github.com:YOURUSERNAME/bb.black_pin_library`
 
