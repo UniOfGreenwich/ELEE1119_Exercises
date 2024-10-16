@@ -446,7 +446,7 @@ dev     in_voltage1_raw  in_voltage3_raw  in_voltage5_raw  in_voltage7_raw  of_n
 12. We can use this oneliner to compile the code:
 
     ```sh
-    $ gcc 
+    $ gcc adc_read.c -ladc -o adc_read
     ```
 
 13. Alternatively we can use a `Makefile` like before:
