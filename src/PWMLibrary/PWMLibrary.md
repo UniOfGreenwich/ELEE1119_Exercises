@@ -215,22 +215,22 @@ The BeagleBone Black (BBB), however, is more flexible and powerful regarding PWM
     
     - Mapping of PWM Channels to Physical Pins on the BeagleBone Black, here is a small sample:
 
-        
-| PWM Channel | PWM Chip    | PWM Subsystem | Physical Pin | Pin Description      |
-|-------------|-------------|---------------|--------------|----------------------|
-| pwm-0:0     |  pwmchip0   | eCAP0         | P9_42        | eCAP0_IN_PWM0_OUT    |
-| pwm-1:0     |  pwmchip1   | eHRPWM0A      | P9_22        | eHRPWM0A             |
-| pwm-1:1     |  pwmchip1   | eHRPWM0B      | P9_21        | eHRPWM0B             |
-| pwm-3:0     |  pwmchip3   | eCAP1         | P9_28        | eCAP1_IN_PWM1_OUT    |
-| pwm-4:0     |  pwmchip4   | eHRPWM1A      | P9_14        | eHRPWM1A             |
-| pwm-4:1     |  pwmchip4   | eHRPWM1B      | P9_16        | eHRPWM1B             |
-| pwm-6:0     |  pwmchip6   | eCAP2         | P9_42        | eCAP2_IN_PWM2_OUT    |
-| pwm-7:0     |  pwmchip7   | eHRPWM2A      | P8_19        | eHRPWM2A             |
-| pwm-7:1     |  pwmchip7   | eHRPWM2B      | P8_13        | eHRPWM2B             |
+            
+    | PWM Channel | PWM Chip    | PWM Subsystem | Physical Pin | Pin Description      |
+    |-------------|-------------|---------------|--------------|----------------------|
+    | pwm-0:0     |  pwmchip0   | eCAP0         | P9_42        | eCAP0_IN_PWM0_OUT    |
+    | pwm-1:0     |  pwmchip1   | eHRPWM0A      | P9_22        | eHRPWM0A             |
+    | pwm-1:1     |  pwmchip1   | eHRPWM0B      | P9_21        | eHRPWM0B             |
+    | pwm-3:0     |  pwmchip3   | eCAP1         | P9_28        | eCAP1_IN_PWM1_OUT    |
+    | pwm-4:0     |  pwmchip4   | eHRPWM1A      | P9_14        | eHRPWM1A             |
+    | pwm-4:1     |  pwmchip4   | eHRPWM1B      | P9_16        | eHRPWM1B             |
+    | pwm-6:0     |  pwmchip6   | eCAP2         | P9_42        | eCAP2_IN_PWM2_OUT    |
+    | pwm-7:0     |  pwmchip7   | eHRPWM2A      | P8_19        | eHRPWM2A             |
+    | pwm-7:1     |  pwmchip7   | eHRPWM2B      | P8_13        | eHRPWM2B             |
 
-> **Note**:
->> - paths are `/sys/class/pwm/` and the pwm channel is prepended to the end 
->>   -  i.e. `/sys/class/pwm/pwm-4:0` 
+    > **Note**:
+    >> - paths are `/sys/class/pwm/` and the pwm channel is prepended to the end 
+    >>   -  i.e. `/sys/class/pwm/pwm-4:0` 
         
 ## 2: Building the PWM C library
 
@@ -252,6 +252,7 @@ The BeagleBone Black (BBB), however, is more flexible and powerful regarding PWM
     #define PWM_PERIOD_PATH "/sys/class/pwm/pwm-%s:%s/period"
     #define PWM_DUTY_CYCLE_PATH "/sys/class/pwm/pwm-%s:%s/duty_cycle"
     #define PWM_ENABLE_PATH "/sys/class/pwm/pwm-%s:%s/enable"
+    #define PWM_PIN_MODE_PATH "/sys/devices/platform/ocp/ocp:%s_pinmux/state"
 
     // Default vaules that will be used by pwm_clean_up
     #define PWM_PERIOD_DEFAULT 10000000
@@ -274,6 +275,8 @@ The BeagleBone Black (BBB), however, is more flexible and powerful regarding PWM
         char period_path[128];
         char duty_cycle_path[128];
         char enable_path[128];
+        char pin_mode_path[256];
+        char pin_mode_state[6];
     } PWM;
 
     // Define the pin_map array with physical pins and their corresponding PWM chip:channel
@@ -295,6 +298,9 @@ The BeagleBone Black (BBB), however, is more flexible and powerful regarding PWM
     int pwm_set_duty_cycle(PWM *pwm, unsigned int duty_cycle_ns);
     int pwm_enable(PWM *pwm);
     int pwm_disable(PWM *pwm);
+    int pwm_get_pin_mode(PWM *pwm);
+    int pwm_set_pin_mode(PWM *pwm);
+    int pwm_unset_pin_mode(PWM *pwm);
 
     #endif // PWM_H
     ```
@@ -333,7 +339,13 @@ The BeagleBone Black (BBB), however, is more flexible and powerful regarding PWM
         snprintf(pwm->period_path, sizeof(pwm->period_path), PWM_PERIOD_PATH, pwm_channel, pwm_chip);
         snprintf(pwm->duty_cycle_path, sizeof(pwm->duty_cycle_path), PWM_DUTY_CYCLE_PATH, pwm_channel, pwm_chip);
         snprintf(pwm->enable_path, sizeof(pwm->enable_path), PWM_ENABLE_PATH, pwm_channel, pwm_chip);
+        snprintf(pwm->pin_mode_path, sizeof(pwm->pin_mode_path), PWM_PIN_MODE_PATH, pin_name);
 
+        // Set PWM pin for PWM mode
+        pwm_set_pin_mode(pwm);
+
+        // Get PWM pin state
+        pwm_get_pin_mode(pwm);
 
         return 0;
     }
@@ -344,6 +356,7 @@ The BeagleBone Black (BBB), however, is more flexible and powerful regarding PWM
         pwm_set_period(pwm, PWM_PERIOD_DEFAULT);
         pwm_set_duty_cycle(pwm, PWM_DUTY_CYCLE_DEFAULT);
         pwm_enable(pwm);
+        pwm_unset_pin_mode(pwm);
 
         return 0;
     }
@@ -396,6 +409,56 @@ The BeagleBone Black (BBB), however, is more flexible and powerful regarding PWM
         }
 
         fprintf(fp, "0");
+        fclose(fp);
+        return 0;
+    }
+
+    // Get pin mode current state
+    int pwm_get_pin_mode(PWM *pwm){
+
+        FILE *fp = fopen(pwm->pin_mode_path, "r");
+
+        if (fp == NULL) {
+            perror("Error opening state file");
+            return -1;
+        }
+
+        // Clear the buffer and read up to STATE_BUF - 1 characters
+        memset(pwm->pin_mode_state, 0, sizeof(pwm->pin_mode_state)); // Clear the buffer
+        size_t chars_read = fread(pwm->pin_mode_state, 1, sizeof(pwm->pin_mode_state) - 1, fp);
+
+        // Null-terminate the string to avoid junk data
+        pwm->pin_mode_state[chars_read] = '\0';
+
+        fclose(fp);  // Close the file after reading
+
+        return 0;
+    }
+
+    // Set pin mode to PWM
+    int pwm_set_pin_mode(PWM *pwm) {
+
+        FILE *fp = fopen(pwm->pin_mode_path, "w");
+        if (fp == NULL) {
+            perror("Error opening state file");
+            return -1;
+        }
+
+        fprintf(fp, "pwm");
+        fclose(fp);
+        return 0;
+    }
+
+    // Set pin mode back to default
+    int pwm_unset_pin_mode(PWM *pwm) {
+
+        FILE *fp = fopen(pwm->pin_mode_path, "w");
+        if (fp == NULL) {
+            perror("Error opening state file");
+            return -1;
+        }
+
+        fprintf(fp, "default");
         fclose(fp);
         return 0;
     }
@@ -512,7 +575,7 @@ The BeagleBone Black (BBB), however, is more flexible and powerful regarding PWM
 
 - Create a new .c file called... `pwm_test.c` and chose your preferred editor to open it.
     ```sh
-    $ mkdir ~/pwm_test/ && ~/pwm_test && touch pwm_test.c
+    $ mkdir ~/pwm_test/ && cd ~/pwm_test && touch pwm_test.c
     $ vim pwm_test.c
     ```
 - Now we are going to set up the program to use our system wide library and header with `pwm.h`
@@ -533,7 +596,7 @@ The BeagleBone Black (BBB), however, is more flexible and powerful regarding PWM
         // Initialize the PWM structure for chip 0, channel 0
         pwm_init(&pwm, "P8_13");
 
-        printf("Phy: %s\nChannel: %s\nChip: %s\nPeriod path: %s\nDuty Cycle path: %s\nEnable path: %s\n",pwm.phy_pin,pwm.channel,pwm.chip,pwm.period_path,pwm.duty_cycle_path,pwm.enable_path);
+        printf("Phy: %s\nChannel: %s\nChip: %s\nPeriod path: %s\nDuty Cycle path: %s\nEnable path: %s\nPin Mode Path: %s\nPin Mode Sate: %s\n",pwm.phy_pin,pwm.channel,pwm.chip,pwm.period_path,pwm.duty_cycle_path,pwm.enable_path,pwm.pin_mode_path, pwm.pin_mode_state);
 
         pwm_set_period(&pwm, period);
         pwm_set_duty_cycle(&pwm, duty);
@@ -619,5 +682,6 @@ The BeagleBone Black (BBB), however, is more flexible and powerful regarding PWM
         Period path: /sys/class/pwm/pwm-7:1/period
         Duty Cycle path: /sys/class/pwm/pwm-7:1/duty_cycle
         Enable path: /sys/class/pwm/pwm-7:1/enable
+        Pin Mode Path: /sys/devices/platform/ocp/ocp:P8_13_pinmux/state
+        Pin Mode Sate: pwm
         ```
-
