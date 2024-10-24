@@ -13,7 +13,7 @@ In this chapter we are going to combine our previous source code into a centeral
 1. Create a new directory in home called `libioctrl`:
 
     ```sh
-    $ mkdir -p libioctrl/{src, include}
+    $ mkdir -p ~/libioctrl/{src, include}
     ```
 
 2. We need to copy the `adc.{c/h}` , `gpio.{c/h}` and `pwm.{c/h}` from the respective directories into two new child directories inside of `libioctrl`, `src` and `include`:
@@ -21,7 +21,7 @@ In this chapter we are going to combine our previous source code into a centeral
     For example:
 
     ```sh
-    $ cp adc/adc.c libioctrl/src && cp adc/adc.h libioctrl/include
+    $ cp adc/adc.c ~/libioctrl/src && cp adc/adc.h ~/libioctrl/include
     ```
     
     Repeat for each of the other libraries we had made earlier. 
@@ -29,7 +29,7 @@ In this chapter we are going to combine our previous source code into a centeral
 3. You should have the following structure: 
 
     ```
-    $ ls -l libioctrl/*
+    $ ls -l ~/libioctrl/*
     libioctrl/include:
     total 12
     -rw-r--r-- 1 debian debian  685 Apr 14 19:25 adc.h
@@ -173,7 +173,7 @@ In this chapter we are going to combine our previous source code into a centeral
 ## 2: Make with a Makefile
 
 >**Note:**
->> - Before running make for libioctrl, we should remove all current libaries from before. For each original library, `adclib`, `gpiolib`, `pwmlib` or whether you made them run make uninstall and make clean in each one: 
+>> - Before running make for `libioctrl`, we should remove all current libaries from before. For each original library, `adclib`, `gpiolib`, `pwmlib` or whether you made them run make uninstall and make clean in each one: 
 >> ![](./figures/unmakeall.gif)
 
 8. Build a Makefile and fill with the following:
@@ -336,9 +336,9 @@ In this chapter we are going to combine our previous source code into a centeral
 
     You should repeat for the others, and remember to `make clean` before running `make` for each of these programs to remove original exe.
 
-## Fork and Clone Published library
+## Fork and Clone `Libioctrl` library
 
-13. Incase it doesn't work as intended, you can download the libioctrl library from GitHub: [CompEng0001/bb.black_pin_library](https://github.com/CompEng0001/bb.black_pin_library/fork)
+13. Incase it doesn't work as intended, you can download the `libioctrl` library from GitHub: [CompEng0001/bb.black_pin_library](https://github.com/CompEng0001/bb.black_pin_library/fork)
 
 14. Clone the forked repo: `git clone git@github.com:YOURUSERNAME/bb.black_pin_library`
 
