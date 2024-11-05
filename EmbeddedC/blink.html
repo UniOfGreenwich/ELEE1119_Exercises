@@ -221,6 +221,9 @@ void loop() {
 <li>
 <p>Now it's time start wrighting out the program:</p>
 <pre><code class="language-c">#include &lt;avr/io.h&gt; // provides macros and definitions for accessing registers and hardware-specific functions of AVR microcontrollers
+
+#define F_CPU=16000000UL
+
 #include &lt;util/delay.h&gt; // provides delay functions, including _delay_ms() for millisecond delays
 
 #define BLINK_DELAY_MS 2000
