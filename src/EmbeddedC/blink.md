@@ -1,12 +1,24 @@
 # Blink
 
 >**Note:**
->> - Remember to include in your `PATH` `avr-gcc` and `avrdude`
->>   -  ```sh
+>> - Remember to include in your `PATH` `avr-gcc`, `avrdude` and `make`
+>> - Open `~/.bashrc` and add the following lines, then save and run the command `source ~/.bashrc` to update the current session with the new `PATH`
+>>   -  Uni machines
+>>      ```sh
 >>      # ~/.bashrc
 >>      export PATH=$PATH:"/c/ProgramData/arduino-ide-v2/Local/Arduino15/packages/arduino/tools/avr-gcc/7.3.0-atmel3.6.1-arduino7/bin"
 >>      export PATH=$PATH:"/c/ProgramData/arduino-ide-v2/Local/Arduino15/packages/arduino/tools/avr-dude/6.3.0-arduino17/bin"
+>>      export PATH=$PATH:"/c/Program Files/GCC-Windows-MingW-2.0.0/w64devkit/bin"
 >>      ```
+>>   - Your personal windows machine
+>>      ```sh
+>>      # ~/.bashrc
+>>      export PATH=$PATH:"/c/Users/YOURUSERNAME/AppData/Local/Arduino15/packages/arduino/tools/avr-gcc/7.3.0-atmel3.6.1-arduino7/bin"
+>>      export PATH=$PATH:"/c/Users/YOURUSERNAME/AppDataLocal/Arduino15/packages/arduino/tools/avr-dude/6.3.0-arduino17/bin"
+>>      export PATH=$PATH:"/c/Program Files/w64devkit/bin"
+>>      ```
+>>   - You can install w64devkit from here:
+>>     - [https://github.com/skeeto/w64devkit/releases](https://github.com/skeeto/w64devkit/releases)
 
 So you are no doubt familiar with the well known `blink.ino`:
 
@@ -49,6 +61,9 @@ Let's now turn this into an embedded program!
 
     ```c
     #include <avr/io.h> // provides macros and definitions for accessing registers and hardware-specific functions of AVR microcontrollers
+
+    #define F_CPU 16000000UL
+    
     #include <util/delay.h> // provides delay functions, including _delay_ms() for millisecond delays
 
     #define BLINK_DELAY_MS 2000
@@ -107,7 +122,7 @@ Let's now turn this into an embedded program!
             - `-c` flag tells avr-gcc to compile the source file into an object file (.o) rather than a full executable
             - `-o` specifies the output file for the compilation. `-o` allows you to name the output file, which in this case is `blink.o`
 
-5. Exploring the object file, run the following the command `avr-objdump -d blink.o`:
+5. Exploring the object file, run the following the command `avr-objdump -d -S blink.o`:
 
     ```asm
     avr-objdump.exe -d -S blink.o
@@ -275,7 +290,12 @@ Let's now turn this into an embedded program!
 ## Uploading Blink
 
 10. Now its time to upload the code:
-    -  `avrdude -C "C:\ProgramData\arduino-ide-v2\Local\Arduino15\packages\arduino\tools\avrdude\6.3.0-arduino17\etc\avrdude.conf" -c arduino -p atmega328p -P COM6 -b 115200 -U flash:w:blink.hex`
+    - Uni machine:
+      - `avrdude -C "C:\ProgramData\arduino-ide-v2\Local\Arduino15\packages\arduino\tools\avrdude\6.3.0-arduino17\etc\avrdude.conf" -c arduino -p atmega328p -P COM6 -b 115200 -U flash:w:blink.hex`
+  
+    - Your personal machine:
+      - `avrdude -C "C:\Users\YOURUSERNAME\AppData\Local\Arduino15\packages\arduino\tools\avrdude\6.3.0-arduino17\etc\avrdude.conf" -c arduino -p atmega328p -P COM6 -b 115200 -U flash:w:blink.hex`
+  
 
         ![](./figures/manualburn.gif)
 
@@ -301,7 +321,7 @@ Let's now turn this into an embedded program!
     CFLAGS = -Os -mmcu=$(MCU) -DF_CPU=$(F_CPU)
     OBJCOPY = avr-objcopy
     AVRDUDE = avrdude
-    AVRDUDECONFIG="C:\Users\dev\AppData\Local\Arduino15\packages\arduino\tools\avrdude\6.3.0-arduino17\etc\avrdude.conf"
+    AVRDUDECONFIG = "C:\ProgramData\arduino-ide-v2\Local\Arduino15\packages\arduino\tools\avrdude\6.3.0-arduino17\etc\avrdude.conf"
     PORT = COM6
     BAUD = 115200
     PROGRAMMER = -c arduino -p $(MCU) -P $(PORT) -b $(BAUD)
@@ -324,6 +344,9 @@ Let's now turn this into an embedded program!
             rm -f blink.o blink.elf blink.hex
     ```
 
+    >**Note:**
+    >> If you are on your machine the AVRDUDECONFIG file path will be this format:
+    >> - `AVRDUDECONFIG = "C:\Users\YOURUSERNAME\AppData\Local\Arduino15\packages\arduino\tools\avrdude\6.3.0-arduino17\etc\avrdude.conf"`
 13. Now every time we modify `blink.c` you can use the `Makefile`
 
     - `make clean`

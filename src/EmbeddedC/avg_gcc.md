@@ -13,10 +13,21 @@ To begin programming with `avr-gcc`, ensure the following software is installed:
 2. **avrdude**: A utility for uploading compiled code to the microcontroller.
 3. **Makefile (optional)**: For automating the compilation and uploading process.
 
-#### Example Command to Compile and Upload with avr-gcc and avrdude
-```
+#### Adding avr-gcc and avrdude for compiling and uploading to your PATH
+
+Add either of the following to your `~/.bashrc` file 
+
+If you are on a university PC then:
 
 ```bash
 export PATH=$PATH:"/c/ProgramData/arduino-ide-v2/Local/Arduino15/packages/arduino/tools/avr-gcc/7.3.0-atmel3.6.1-arduino7/bin"
 export PATH=$PATH:"/c/ProgramData/arduino-ide-v2/Local/Arduino15/packages/arduino/tools/avr-dude/6.3.0-arduino17/bin"
+```
+
+If you are on a on your own windows PC then:
+
+
+```bash
+export PATH=$PATH:"/c/users/yourusername/AppData/Local/Arduino15/packages/arduino/tools/avr-gcc/7.3.0-atmel3.6.1-arduino7/bin"
+export PATH=$PATH:"/c/users/yourusername/AppData/Local/Arduino15/packages/arduino/tools/avr-dude/6.3.0-arduino17/bin"
 ```

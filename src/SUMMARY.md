@@ -38,11 +38,11 @@
 ------------------------------------------------------
 
 # C
-- [Learning C]()
-- [Embedded C]()
-  - [atmega328p]()
-  - [avr-gcc]()
-  - [Blink]()
+- [Learning C](./Learning_C/Learning_C.md)
+- [Embedded C](./EmbeddedC/Embedded.md)
+  - [atmega328p](./EmbeddedC/atmega328p.md)
+  - [avr-gcc](./EmbeddedC/avg_gcc.md)
+  - [Blink](./EmbeddedC/blink.md)
   - [UART]()
   - [ADC]() 
 
