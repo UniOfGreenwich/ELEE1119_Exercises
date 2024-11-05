@@ -305,7 +305,7 @@ register_value &amp;= ~(1 &lt;&lt; 2); // 0b11111011
 </ul>
 </li>
 <li>
-<p>Exploring the object file, run the following the command <code>avr-objdump -d blink.o</code>:</p>
+<p>Exploring the object file, run the following the command <code>avr-objdump -d -S blink.o</code>:</p>
 <pre><code class="language-asm">avr-objdump.exe -d -S blink.o
 
 blink.o:     file format elf32-avr
@@ -557,7 +557,7 @@ CC = avr-gcc
 CFLAGS = -Os -mmcu=$(MCU) -DF_CPU=$(F_CPU)
 OBJCOPY = avr-objcopy
 AVRDUDE = avrdude
-AVRDUDECONFIG="C:\Users\dev\AppData\Local\Arduino15\packages\arduino\tools\avrdude\6.3.0-arduino17\etc\avrdude.conf"
+AVRDUDECONFIG="C:\ProgramData\arduino-ide-v2\Local\Arduino15\packages\arduino\tools\avrdude\6.3.0-arduino17\etc\avrdude.conf"
 PORT = COM6
 BAUD = 115200
 PROGRAMMER = -c arduino -p $(MCU) -P $(PORT) -b $(BAUD)
@@ -579,6 +579,15 @@ upload: blink.hex
 clean:
         rm -f blink.o blink.elf blink.hex
 </code></pre>
+<blockquote>
+<p><strong>Note:</strong></p>
+<blockquote>
+<p>If you are on your machine the AVRDUDECONFIG file path will be this format:</p>
+<ul>
+<li><code>AVRDUDECONFIG="C:\Users\YOURUSERNAME\AppData\Local\Arduino15\packages\arduino\tools\avrdude\6.3.0-arduino17\etc\avrdude.conf"</code></li>
+</ul>
+</blockquote>
+</blockquote>
 </li>
 <li>
 <p>Now every time we modify <code>blink.c</code> you can use the <code>Makefile</code></p>
