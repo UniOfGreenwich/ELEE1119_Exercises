@@ -178,11 +178,24 @@
 <ul>
 <li>Remember to include in your <code>PATH</code> <code>avr-gcc</code> and <code>avrdude</code>
 <ul>
-<li>
+<li>Uni machines
 <pre><code class="language-sh"># ~/.bashrc
 export PATH=$PATH:"/c/ProgramData/arduino-ide-v2/Local/Arduino15/packages/arduino/tools/avr-gcc/7.3.0-atmel3.6.1-arduino7/bin"
 export PATH=$PATH:"/c/ProgramData/arduino-ide-v2/Local/Arduino15/packages/arduino/tools/avr-dude/6.3.0-arduino17/bin"
+export PATH=$PATH:"/c/Program Files/GCC-Windows-MingW-2.0.0/w64devkit/bin"
 </code></pre>
+</li>
+<li>Your personal windows machine
+<pre><code class="language-sh"># ~/.bashrc
+export PATH=$PATH:"/c/Users/YOURUSERNAME/AppData/Local/Arduino15/packages/arduino/tools/avr-gcc/7.3.0-atmel3.6.1-arduino7/bin"
+export PATH=$PATH:"/c/Users/YOURUSERNAME/AppDataLocal/Arduino15/packages/arduino/tools/avr-dude/6.3.0-arduino17/bin"
+export PATH=$PATH:"/c/Program Files/w64devkit/bin"
+</code></pre>
+</li>
+<li>You can install w64devkit from here:
+<ul>
+<li><a href="https://github.com/skeeto/w64devkit/releases">https://github.com/skeeto/w64devkit/releases</a></li>
+</ul>
 </li>
 </ul>
 </li>
@@ -523,7 +536,16 @@ Contents of section .sec1:
 <p>Now its time to upload the code:</p>
 <ul>
 <li>
-<p><code>avrdude -C "C:\ProgramData\arduino-ide-v2\Local\Arduino15\packages\arduino\tools\avrdude\6.3.0-arduino17\etc\avrdude.conf" -c arduino -p atmega328p -P COM6 -b 115200 -U flash:w:blink.hex</code></p>
+<p>Uni machine:</p>
+<ul>
+<li><code>avrdude -C "C:\ProgramData\arduino-ide-v2\Local\Arduino15\packages\arduino\tools\avrdude\6.3.0-arduino17\etc\avrdude.conf" -c arduino -p atmega328p -P COM6 -b 115200 -U flash:w:blink.hex</code></li>
+</ul>
+</li>
+<li>
+<p>Your personal machine:</p>
+<ul>
+<li>
+<p><code>avrdude -C "C:\Users\YOURUSERNAME\AppData\Local\Arduino15\packages\arduino\tools\avrdude\6.3.0-arduino17\etc\avrdude.conf" -c arduino -p atmega328p -P COM6 -b 115200 -U flash:w:blink.hex</code></p>
 <p><img src="./figures/manualburn.gif" alt="" /></p>
 <ul>
 <li><code>-C</code>is the path to the configuration file</li>
@@ -542,6 +564,8 @@ Contents of section .sec1:
 </li>
 <li><code>-b</code> specifies the baudrate, overrides default RS-232</li>
 <li><code>-U</code> memory operation, ie, <code>flash</code> is the memtype in which mode, <code>r</code>,<code>w</code>,<code>v</code> and then the file</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
