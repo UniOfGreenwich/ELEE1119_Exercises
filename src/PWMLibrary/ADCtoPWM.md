@@ -1,6 +1,5 @@
 # ADC to PWM functionality
 
-
 ## Updating the PWM library 
 
 We need to add the a new prototype to the `pwm.h` and the body to the `pwm.c` files, that converts the ADC value to a the correct PWM duty cycle against the specified period.
