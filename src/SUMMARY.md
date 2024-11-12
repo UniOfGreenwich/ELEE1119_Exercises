@@ -44,7 +44,7 @@
   - [avr-gcc](./EmbeddedC/avg_gcc.md)
   - [Blink](./EmbeddedC/blink.md)
   - [UART](./EmbeddedC/UART.md)
-  - [ADC]() 
+  - [ADC](./EmbeddedC/adc.md) 
   - [PWM]()
   - [Full program]()
 
