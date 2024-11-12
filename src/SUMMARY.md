@@ -43,7 +43,7 @@
   - [atmega328p](./EmbeddedC/atmega328p.md)
   - [avr-gcc](./EmbeddedC/avg_gcc.md)
   - [Blink](./EmbeddedC/blink.md)
-  - [UART]()
+  - [UART](./EmbeddedC/UART.md)
   - [ADC]() 
   - [PWM]()
   - [Full program]()
