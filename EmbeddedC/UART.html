@@ -477,7 +477,12 @@ int main() {
 <p>Copy the <code>Makefile</code> from <code>../uart/Makefile</code> to <code>uart_two_way/</code> and use the regex <code>:%s/\&lt;uart\&gt;/uart_two_way/g</code></p>
 </li>
 <li>
-<p>Compile and run on both devices, wire up the Tx(board 1) to Rx (board 2) and Rx(Board 1) and Tx (Board 2)</p>
+<p>Compile and run on both devices, wire up the:</p>
+<ul>
+<li>Tx(board 1) to Rx (board 2)</li>
+<li>Rx(Board 1) and Tx (Board 2)</li>
+<li>Ensure the boards ground pins are connected together</li>
+</ul>
 </li>
 <li>
 <p>Launch Putty and see if you can send data to each other</p>
