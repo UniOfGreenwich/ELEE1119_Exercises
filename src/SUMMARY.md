@@ -45,7 +45,7 @@
   - [Blink](./EmbeddedC/blink.md)
   - [UART](./EmbeddedC/UART.md)
   - [ADC](./EmbeddedC/adc.md) 
-  - [PWM]()
+  - [PWM](./EmbeddedC/pwm.md)
   - [Full program]()
 
 ------------------------------------------------------
