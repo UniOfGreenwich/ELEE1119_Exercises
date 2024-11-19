@@ -321,7 +321,15 @@ The USART Transmit Data Buffer (TXB) register and USART receive data buffer regi
 
 11. Copy the `Makefile` from `../uart/Makefile` to `uart_two_way/` and use the regex `:%s/\<uart\>/uart_two_way/g`
 
-12. Compile and run on both devices, wire up the Tx(board 1) to Rx (board 2) and Rx(Board 1) and Tx (Board 2)
+12. Compile and run on both devices, wire up:
+    - First wire up the Tx(board 1) to Rx (board 2)
+    - Ensure the boards ground pins are connected together
+    - Send a message
+    - swap the connections so that Rx(Board 1) and Tx (Board 2)
+    - Send a message
+    
+    >**Note:**
+    >> - 
 
 13. Launch Putty and see if you can send data to each other
 

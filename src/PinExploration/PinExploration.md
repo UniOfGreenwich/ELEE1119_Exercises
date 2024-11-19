@@ -364,7 +364,7 @@ So, `GPIO2_13` corresponds to `gpio77`.
 
     5. Set a Pin Mode:
 
-        ``sh
+        ```sh
         config-pin <pin> <mode>
         ``` 
 
