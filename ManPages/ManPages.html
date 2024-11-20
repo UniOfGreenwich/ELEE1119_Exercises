@@ -28,6 +28,7 @@
         <link rel="stylesheet" href="../ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="../theme/pagetoc.css">
 
         <!-- MathJax -->
         <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
@@ -110,11 +111,18 @@
                             <i class="fa fa-paint-brush"></i>
                         </button>
                         <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
-                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
-                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
-                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
-                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="burgundy">Burgundy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="dracula">Dracula</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ecoFriend">EcoFriend</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="pinkrose">Pinkrose</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="space">Space</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="sustain">Sustain</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="tokyonight">Tokyonight</button></li>
                         </ul>
                         <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
                             <i class="fa fa-search"></i>
@@ -124,6 +132,12 @@
                     <h1 class="menu-title">Advanced Computer Engineering</h1>
 
                     <div class="right-buttons">
+                        <a href="https://github.com/uniofgreenwich/ELEE1119_Exercises" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        <a href="https://github.com/uniofgreenwich/ELEE1119_Exercises/edit/main/src/ManPages/ManPages.md" title="Suggest an edit" aria-label="Suggest an edit">
+                            <i id="git-edit-button" class="fa fa-edit"></i>
+                        </a>
 
                     </div>
                 </div>
@@ -149,7 +163,7 @@
                 </script>
 
                 <div id="content" class="content">
-                    <main>
+                    <main><div class="sidetoc"><nav class="pagetoc"></nav></div>
                         <h1 id="writing-man-pages"><a class="header" href="#writing-man-pages">Writing <code>man-pages</code></a></h1>
 <h2 id="introduction"><a class="header" href="#introduction">Introduction</a></h2>
 <p>Manual pages are the canonical type of documentation for Unix systems. They are a bit arcane, but for a technology several decades old, they’ve held up quite well. The arcane bit is the markup language. This is a brief tutorial on writing good manual pages, at least for the typical cases. You’ll be assumed to be familiar with reading manual pages already.</p>
@@ -343,7 +357,6 @@ A few new troff commands:
 <p>This example used the -man macros for <code>troff</code>, since that is the most common way to write manual pages. However, they are admittedly arcane at this point in history. They’re pretty easy to write, but not nearly as convenient as, say, Perl POD markup, or DocBook markup (see the refentry element). However, those other markup languages require conversion tools to produce a file that man can actually use, and the tools do not always properly follow the manpage formatting conventions.</p>
 
                     </main>
-
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
                             <a rel="prev" href="../Bash/Bash_Scripting.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
@@ -388,6 +401,7 @@ A few new troff commands:
         <script src="../book.js"></script>
 
         <!-- Custom JS scripts -->
+        <script src="../theme/pagetoc.js"></script>
 
 
     </div>

@@ -28,6 +28,7 @@
         <link rel="stylesheet" href="../ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="../theme/pagetoc.css">
 
         <!-- MathJax -->
         <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
@@ -110,11 +111,18 @@
                             <i class="fa fa-paint-brush"></i>
                         </button>
                         <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
-                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
-                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
-                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
-                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="burgundy">Burgundy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="dracula">Dracula</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ecoFriend">EcoFriend</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="pinkrose">Pinkrose</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="space">Space</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="sustain">Sustain</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="tokyonight">Tokyonight</button></li>
                         </ul>
                         <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
                             <i class="fa fa-search"></i>
@@ -124,6 +132,12 @@
                     <h1 class="menu-title">Advanced Computer Engineering</h1>
 
                     <div class="right-buttons">
+                        <a href="https://github.com/uniofgreenwich/ELEE1119_Exercises" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        <a href="https://github.com/uniofgreenwich/ELEE1119_Exercises/edit/main/src/ChipExploration/ChipExploration.md" title="Suggest an edit" aria-label="Suggest an edit">
+                            <i id="git-edit-button" class="fa fa-edit"></i>
+                        </a>
 
                     </div>
                 </div>
@@ -149,7 +163,7 @@
                 </script>
 
                 <div id="content" class="content">
-                    <main>
+                    <main><div class="sidetoc"><nav class="pagetoc"></nav></div>
                         <h1 id="exploring-the-chips"><a class="header" href="#exploring-the-chips">Exploring the Chips</a></h1>
 <h2 id="understanding-the-sysbusi2cdevices-directory-on-the-beagleboard"><a class="header" href="#understanding-the-sysbusi2cdevices-directory-on-the-beagleboard">Understanding the <code>/sys/bus/i2c/devices/</code> Directory on the BeagleBoard</a></h2>
 <p>The BeagleBoard, like other Linux-based embedded systems, utilizes the sysfs interface to provide a standardized way to interact with hardware components, such as I2C devices. The directory <code>/sys/bus/i2c/devices/</code> is specifically related to the I2C (Inter-Integrated Circuit) bus, which is commonly used for connecting low-speed peripherals to the main board's processor.</p>
@@ -429,7 +443,6 @@ You should see <code>0-0024</code> listed again.</li>
 <p>The <code>/sys/bus/i2c/devices/</code> directory on the BeagleBoard provides a powerful interface for managing and interacting with I2C devices. By understanding the structure of this directory and the available commands, you can effectively control I2C peripherals, whether they are sensors, EEPROMs, or other types of devices. This guide has provided the foundational knowledge and practical examples needed to start working with I2C devices on your BeagleBoard.</p>
 
                     </main>
-
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
                             <a rel="prev" href="../vim/vim.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
@@ -474,6 +487,7 @@ You should see <code>0-0024</code> listed again.</li>
         <script src="../book.js"></script>
 
         <!-- Custom JS scripts -->
+        <script src="../theme/pagetoc.js"></script>
 
 
     </div>
