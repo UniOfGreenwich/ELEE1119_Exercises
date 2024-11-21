@@ -30,6 +30,7 @@
     .sidetoc {
         margin-left: auto;
         margin-right: auto;
+        margin-top: auto;
         left: calc(100% + (var(--content-max-width))/4 - 140px);
         position: absolute;
     }
@@ -46,13 +47,16 @@
         color: var(--fg) !important;
         display: block;
         padding-bottom: 5px;
-        padding-top: 5px;
+        padding-top: 10px;
         padding-left: 10px;
         text-align: left;
         text-decoration: none;
     }
     .pagetoc a:last-child {
         border-bottom: 2px solid var(--sidebar-bg);
+    }
+    .pagetoc a:first-child {
+        border-top: 2px solid var(--sidebar-bg);
     }
     .pagetoc a:hover,
     .pagetoc a.active {
