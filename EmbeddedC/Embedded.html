@@ -28,7 +28,11 @@
         <link rel="stylesheet" href="../ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
-        <link rel="stylesheet" href="../theme/pagetoc.css">
+        <link rel="stylesheet" href=".././theme/pagetoc.css">
+        <link rel="stylesheet" href=".././theme/css/mdbook-admonish.css">
+        <link rel="stylesheet" href=".././theme/css/code.css">
+        <link rel="stylesheet" href=".././theme/css/terminal.css">
+        <link rel="stylesheet" href=".././theme/css/output.css">
 
         <!-- MathJax -->
         <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
@@ -274,8 +278,12 @@
 </ol>
 <h3 id="example-data-direction-register-ddr"><a class="header" href="#example-data-direction-register-ddr">Example: Data Direction Register (DDR)</a></h3>
 <p>For example, each GPIO port (like <code>PORTB</code>, <code>PORTC</code>) has an associated Data Direction Register (<code>DDR</code>), which controls whether each pin is an <strong>input</strong> or <strong>output</strong>. Setting a bit in the <code>DDR</code> makes the corresponding pin an output, while clearing a bit makes it an input.</p>
-<pre><code class="language-c">// Example for ATmega328P microcontroller
+<pre><code class="language-admonish code">
+```c
+// Example for ATmega328P microcontroller
 DDRB |= (1 &lt;&lt; PB5);  // Set PB5 as an output (LED pin
+```
+
 </code></pre>
 <p>Here, <code>DDRB</code> is the data direction register for <code>PORTB</code>. By setting the bit corresponding to <code>PB5</code> (Bit 5), we configure it as an output.</p>
 <h2 id="what-are-ports"><a class="header" href="#what-are-ports">What are Ports?</a></h2>
@@ -289,9 +297,13 @@ DDRB |= (1 &lt;&lt; PB5);  // Set PB5 as an output (LED pin
 </li>
 </ul>
 <h3 id="example-configuring-and-controlling-a-port-pin"><a class="header" href="#example-configuring-and-controlling-a-port-pin">Example: Configuring and Controlling a Port Pin</a></h3>
-<pre><code class="language-c">DDRB |= (1 &lt;&lt; PB5);  // Set PB5 as an output (LED connected to Pin 13 on Arduino)
+<pre><code class="language-admonish code">
+```c
+DDRB |= (1 &lt;&lt; PB5);  // Set PB5 as an output (LED connected to Pin 13 on Arduino)
 PORTB |= (1 &lt;&lt; PB5); // Set PB5 high (turn on LED)
 PORTB &amp;= ~(1 &lt;&lt; PB5); // Set PB5 low (turn off LED)
+```
+
 </code></pre>
 <p>In this example:</p>
 <ul>
@@ -346,7 +358,9 @@ PORTB &amp;= ~(1 &lt;&lt; PB5); // Set PB5 low (turn off LED)
 </li>
 </ul>
 <h3 id="example-code"><a class="header" href="#example-code">Example code:</a></h3>
-<pre><code class="language-c">#include &lt;avr/io.h&gt;
+<pre><code class="language-admonish code">
+```c
+#include &lt;avr/io.h&gt;
 #include &lt;util/delay.h&gt;
 
 #define F_CPU 16000000
@@ -367,6 +381,8 @@ int main (void)
     _delay_ms(BLINK_DELAY_MS);
   }
 }
+```
+
 </code></pre>
 <h3 id="why-direct-register-manipulation-is-important-in-embedded-systems"><a class="header" href="#why-direct-register-manipulation-is-important-in-embedded-systems">Why Direct Register Manipulation is Important in Embedded Systems</a></h3>
 <ul>
@@ -378,7 +394,9 @@ int main (void)
 </li>
 <li>
 <p><strong>Reduced Abstraction Layer</strong>: While high-level abstractions (such as those provided in libraries like Arduino) make programming easier, they add layers that slow down processing. Direct register access is essential when maximum efficiency is required, especially in real-time applications.</p>
-<pre><code class="language-C">#include &lt;avr/io.h&gt;
+<pre><code class="language-admonish code">
+```C
+#include &lt;avr/io.h&gt;
 #include &lt;util/delay.h&gt;
 
 #define LED_PIN PB5  // Pin connected to the LED
@@ -394,13 +412,14 @@ int main() {
     }
     return 0;
 }
+```
 </code></pre>
-<p><strong>Explanation:</strong></p>
-<ul>
-<li><code>DDRB |= (1 &lt;&lt; LED_PIN);</code>: Configures <code>PB5</code> (<code>PORTB</code> Pin 5) as an output pin.</li>
-<li><code>PORTB ^= (1 &lt;&lt; LED_PIN);</code>: Toggles the state of the pin, effectively blinking the <code>LED</code>.</li>
-<li><code>_delay_ms(500);</code>: Adds a 500-millisecond delay between toggles, making the <code>LED</code> blink on and off at a 1-second interval.</li>
-</ul>
+<pre><code class="language-admonish example title=&#39;Explanation of code&#39;">
+- `DDRB |= (1 &lt;&lt; LED_PIN);`: Configures `PB5` (`PORTB` Pin 5) as an output pin.
+- `PORTB ^= (1 &lt;&lt; LED_PIN);`: Toggles the state of the pin, effectively blinking the `LED`.
+- `_delay_ms(500);`: Adds a 500-millisecond delay between toggles, making the `LED` blink on and off at a 1-second interval.
+
+</code></pre>
 </li>
 </ul>
 
@@ -449,7 +468,7 @@ int main() {
         <script src="../book.js"></script>
 
         <!-- Custom JS scripts -->
-        <script src="../theme/pagetoc.js"></script>
+        <script src=".././theme/pagetoc.js"></script>
 
 
     </div>

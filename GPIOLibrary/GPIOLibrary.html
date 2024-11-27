@@ -28,7 +28,11 @@
         <link rel="stylesheet" href="../ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
-        <link rel="stylesheet" href="../theme/pagetoc.css">
+        <link rel="stylesheet" href=".././theme/pagetoc.css">
+        <link rel="stylesheet" href=".././theme/css/mdbook-admonish.css">
+        <link rel="stylesheet" href=".././theme/css/code.css">
+        <link rel="stylesheet" href=".././theme/css/terminal.css">
+        <link rel="stylesheet" href=".././theme/css/output.css">
 
         <!-- MathJax -->
         <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
@@ -168,7 +172,7 @@
 <p>This workshop will detail how to set up the BBB’s GPIO pins. General Purpose Input/Output (GPIO) pins are special in that they can be configured at runtime to perform in a variety of ways, ranging from simple i/o to serial interfaces to specialized encoder readings. While the BBB supports up the 69 gpio pins, in reality the majority of the pins are being used by onboard system processes such as the board’s HDMI and LCD abilities. This post will detail the steps necessary to take advantage of these otherwise inaccessible pins, as well as configure a gpio pin to suit the user’s needs.</p>
 <p>This guide walks you through creating a simple GPIO library in C, compiling it into both a static and shared library, and installing it system-wide. We'll start with manual <code>gcc</code> commands and then automate the process using a <code>Makefile</code>.</p>
 <h2 id="linux-kernel-version"><a class="header" href="#linux-kernel-version">Linux Kernel Version</a></h2>
-<p>This guide assumes the user’s BBB is running Linux Kernel 4.1.15. If an earlier version is used, such as 3.8.X, then abundant information on configuring the BBB can be found through google and the procedures listed in this guide will probably not work.</p>
+<p>This guide assumes the BBB is running Linux Kernel 4.1.15. If an earlier version is used, such as 3.8.X, then abundant information on configuring the BBB can be found through google and the procedures listed in this guide will probably not work.</p>
 <h2 id="bbb-headers-and-pinout"><a class="header" href="#bbb-headers-and-pinout">BBB Headers and Pinout</a></h2>
 <p>The BBB has two 23 pin columns on each side of the board, for a total of 92 pins available to the user. The right header is designated as P8 while the left is designated P9. Pay careful attention to the orientation of the BBB in reference to the pinout numbers, else you risk mis-wiring the board and potentially causing irreversible damage. Physical pins are numbered in the following manner, <strong>PX_Y</strong>, where <strong>X</strong> is the header where the pin is located (8 or 9) and <strong>Y</strong> is the location of the pin with that header. Pins <code>P8_1</code> and <code>P9_1</code> are located at the top right of each header. Notice that the left column of each header are all the odd pins while the right column of each header are all the even pins.</p>
 <div align=center>
@@ -195,25 +199,32 @@ pin made in software instead uses its absolute pin number!</em> A gpio's <em>abs
 <h2 id="interacting-with-gpio-pins-on-the-beaglebone-black-bbb-via-sysfs"><a class="header" href="#interacting-with-gpio-pins-on-the-beaglebone-black-bbb-via-sysfs">Interacting with GPIO Pins on the BeagleBone Black (BBB) via Sysfs</a></h2>
 <p>The BeagleBone Black (BBB) and similar Linux-based systems allow you to interact with GPIO (General-Purpose Input/Output) pins using the sysfs interface. This interface exposes GPIO control via a set of files in the <code>/sys/class/gpio</code> directory. Below is an explanation of common GPIO operations using this interface.</p>
 <h3 id="1-change-directory-to-gpio-sysfs-interface"><a class="header" href="#1-change-directory-to-gpio-sysfs-interface">1. Change Directory to GPIO Sysfs Interface</a></h3>
-<pre><code class="language-bash">$ cd /sys/class/gpio
+<pre><code class="language-admonish terminal">
+```sh
+$ cd /sys/class/gpio
+```
 </code></pre>
-<blockquote>
-<p><strong>Explanation:</strong></p>
-<blockquote>
-<ul>
-<li>The <code>/sys</code> directory is a virtual filesystem (<code>sysfs</code>) that the Linux kernel uses to expose information and configuration options for various devices and drivers.
-Within <code>/sys/class/gpio</code>, you'll find files and directories related to the GPIO subsystem, allowing you to interact with GPIO pins directly from the command line or within scripts.</li>
-</ul>
-</blockquote>
-</blockquote>
+<pre><code class="language-admonish example title=&#39;Explanation&#39;">The `/sys` directory is a virtual filesystem (`sysfs`) that the Linux kernel uses to expose information and configuration options for various devices and drivers.
+Within `/sys/class/gpio`, you'll find files and directories related to the GPIO subsystem, allowing you to interact with GPIO pins directly from the command line or within scripts.
+</code></pre>
 <p>Elevate user to super user.</p>
-<pre><code class="language-bash">$ sudo su
+<pre><code class="language-admonish terminal">
+```bash
+$ sudo su
+```
+
 </code></pre>
 <p>We interact with BBB pins via a set of files that are read/written to. To reach the directory where these files are located, enter the following.</p>
-<pre><code class="language-bash">$ cd /sys/class/gpio
+<pre><code class="language-admonish terminal">
+```bash
+$ cd /sys/class/gpio
+```
+
 </code></pre>
-<p>List the directory.</p>
-<pre><code class="language-bash">$ ls -l
+<pre><code class="language-admonish output">List the directory.
+
+```bash
+$ ls -l
 --w--w---- 1 root gpio 4.0K Apr  7 20:17 export
 lrwxrwxrwx 1 root gpio    0 Apr  7 20:17 gpio10 -&gt; ../../devices/platform/ocp/44e07000.gpio/gpiochip0/gpio/gpio10
 lrwxrwxrwx 1 root gpio    0 Apr  7 20:17 gpio11 -&gt; ../../devices/platform/ocp/44e07000.gpio/gpiochip0/gpio/gpio11
@@ -222,11 +233,21 @@ lrwxrwxrwx 1 root gpio    0 Apr  7 20:17 gpio111 -&gt; ../../devices/platform/oc
 lrwxrwxrwx 1 root gpio    0 Apr  7 20:17 gpio112 -&gt; ../../devices/platform/ocp/481ae000.gpio/gpiochip3/gpio/gpio112
 ...
 --w--w---- 1 root gpio 4.0K Apr  7 20:17 unexport
+```
+
 </code></pre>
-<pre><code class="language-bash">$ cd gpio27
+<pre><code class="language-admonish terminal">
+```bash
+$ cd gpio27
+```
+
 </code></pre>
-<p>If you ls the directory you will see the following:</p>
-<pre><code class="language-sh">$ ls
+<p>If you <code>ls</code> the directory you will see the following:</p>
+<pre><code class="language-admonish terminal">
+```sh
+$ ls
+```
+
 </code></pre>
 <h4 id="understanding-files-and-directories-in-the-gpio-directory"><a class="header" href="#understanding-files-and-directories-in-the-gpio-directory">Understanding Files and Directories in the <code>gpio#</code> Directory</a></h4>
 <p>When working with GPIO (General-Purpose Input/Output) pins on a BeagleBone Black (BBB) or similar Linux-based systems, you'll encounter several files and directories within the <code>gpio#</code> directory located in <code>/sys/class/gpio/</code>. Each file or directory serves a specific purpose in controlling and configuring the GPIO pin. Here's what each one does:</p>
@@ -324,52 +345,47 @@ lrwxrwxrwx 1 root gpio    0 Apr  7 20:17 gpio112 -&gt; ../../devices/platform/oc
 </ol>
 <h4 id="set-gpio-pin-27-as-an-output"><a class="header" href="#set-gpio-pin-27-as-an-output">Set GPIO Pin 27 as an Output</a></h4>
 <p>This command sets the direction of GPIO pin 27 to output by writing out to the direction file.</p>
-<pre><code class="language-bash">echo out &gt; direction
+<pre><code class="language-admonish terminal">
+```bash
+echo out &gt; direction
+```
+
 </code></pre>
-<blockquote>
-<p><strong>Explanation:</strong></p>
-<blockquote>
-<ul>
-<li>
-<p>The direction file controls whether the GPIO pin is configured as an input or an output.</p>
-</li>
-<li>
-<p>Writing <code>out</code> to this file configures the pin as an output, meaning you can set the pin's value (high or low) to control external devices (e.g., turning an LED on or off).</p>
-</li>
-<li>
-<p>Alternatively, writing in would configure the pin as an input, allowing the pin to read signals from external devices.</p>
-</li>
-</ul>
-</blockquote>
-</blockquote>
+<pre><code class="language-admonish example title=&#39;Explanation&#39;">
+- The direction file controls whether the GPIO pin is configured as an input or an output.
+
+- Writing `out` to this file configures the pin as an output, meaning you can set the pin's value (high or low) to control external devices (e.g., turning an LED on or off).
+
+- Alternatively, writing in would configure the pin as an input, allowing the pin to read signals from external devices.
+
+</code></pre>
 <h4 id="read-the-current-value-of-gpio-pin-27"><a class="header" href="#read-the-current-value-of-gpio-pin-27">Read the Current Value of GPIO Pin 27</a></h4>
 <p>This command sets GPIO pin 27 to a high state (1) by writing 1 to the value file.</p>
-<pre><code class="language-bash">$ echo 1 &gt; value
+<pre><code class="language-admonish terminal">
+```bash
+$ echo 1 &gt; value
+```
+
 </code></pre>
-<blockquote>
-<p><strong>Explanation:</strong></p>
-<blockquote>
-<ul>
-<li>
-<p>The value file is used to control the state of a GPIO pin when it's configured as an output.</p>
-</li>
-<li>
-<p>Writing <code>1</code> to this file sets the pin to a high state (e.g., 3.3V or 5V, depending on the board), which might turn on an LED or send a signal to another device.</p>
-</li>
-<li>
-<p>Writing <code>0</code> would set the pin to a low state (0V), turning off the LED or signaling a low state to another device.</p>
-</li>
-</ul>
-</blockquote>
-</blockquote>
+<pre><code class="language-admonish example title=&#39;Explanation&#39;">
+- The value file is used to control the state of a GPIO pin when it's configured as an output.
+
+- Writing `1` to this file sets the pin to a high state (e.g., 3.3V or 5V, depending on the board), which might turn on an LED or send a signal to another device.
+
+- Writing `0` would set the pin to a low state (0V), turning off the LED or signaling a low state to another device.
+
+</code></pre>
 <h3 id="access-using-c-library"><a class="header" href="#access-using-c-library">Access using C library</a></h3>
 <p>The <code>gpio.h</code> library will be developed further below.</p>
-<pre><code class="language-c++">#include "gpio.h"
-~~~
-~~~
+<pre><code class="language-admonish code">
+```c++
+#include "gpio.h"
+...
 unsigned int pin = 14;
 gpio_set_dir(pin,OUT);
 gpio_set_value(pin,1);
+```
+
 </code></pre>
 <h2 id="2-accessing-inaccessible-pins"><a class="header" href="#2-accessing-inaccessible-pins">2. Accessing Inaccessible Pins</a></h2>
 <p>Before going into the details of configuring inaccessible pins, it is
@@ -401,9 +417,9 @@ overlay, which will be discussed in detail in a later section.</p>
 <ol>
 <li>
 <p>First, create a header file that declares the functions and defines necessary constants and enums.</p>
- <details>
- <summary>Code here...</summary>
-<pre><code class="language-c">#ifndef GPIO_H
+<pre><code class="language-admonish code collapsible=true title=&#39;Suppressed code here [66 lines]...&#39;">
+```c
+#ifndef GPIO_H
 #define GPIO_H
 
 #define SYSFS_GPIO_DIR "/sys/class/gpio"
@@ -460,17 +476,18 @@ int gpio_fd_open(const char *pin_name);
 int gpio_fd_close(int fd);
 
 #endif /* GPIO_H */
+```
+
 </code></pre>
- </details>
 </li>
 </ol>
-<h2 id="step-3-create-the-implementation-file-gpioc"><a class="header" href="#step-3-create-the-implementation-file-gpioc">Step 3: Create the Implementation File (gpio.c)</a></h2>
+<h2 id="step-2-create-the-implementation-file-gpioc"><a class="header" href="#step-2-create-the-implementation-file-gpioc">Step 2: Create the Implementation File (gpio.c)</a></h2>
 <ol start="2">
 <li>
 <p>Next, create the <code>gpio.c</code> file that implements the functions declared in <code>gpio.h</code>.</p>
- <details>
- <summary>Code here... </summary>
-<pre><code class="language-c">#include "gpio.h"
+<pre><code class="language-admonish code collapsible=true title=&#39;Suppressed code here [170 lines]...&#39;">
+```c
+#include "gpio.h"
 #include &lt;stdio.h&gt;
 #include &lt;stdlib.h&gt;
 #include &lt;string.h&gt;
@@ -636,66 +653,75 @@ int gpio_fd_open(const char *pin_name) {
 int gpio_fd_close(int fd) {
     return close(fd);
 }
+```
+
 </code></pre>
 </li>
 </ol>
-<h2 id="step-4-compile-the-object-file-and-create-libraries"><a class="header" href="#step-4-compile-the-object-file-and-create-libraries">Step 4: Compile the Object File and Create Libraries</a></h2>
+<h2 id="step-3-compile-the-object-file-and-create-libraries"><a class="header" href="#step-3-compile-the-object-file-and-create-libraries">Step 3: Compile the Object File and Create Libraries</a></h2>
 <ol start="3">
 <li>
 <p>Compile gpio.c into an Object File by Using the following command to compile <code>gpio.c</code> into an object file (<code>gpio.o</code>):</p>
-<pre><code class="language-sh">$ gcc -c gpio.c -o gpio.o
+<pre><code class="language-admonish terminal">
+```sh
+$ gcc -c gpio.c -o gpio.o
+```
+
 </code></pre>
 </li>
 <li>
 <p>Create a Static Library (<code>libgpio.a</code>) to create a static library, use the <code>ar</code> command:</p>
-<pre><code class="language-sh">$ ar rcs libgpio.a gpio.o
+<pre><code class="language-admonish terminal">
+```sh
+$ ar rcs libgpio.a gpio.o
+```
+
 </code></pre>
-<ul>
-<li><strong>Command Breakdown:</strong>
-<ul>
-<li><code>ar</code>: The archiver tool used to create and maintain library archives.</li>
-<li><code>rcs</code>: Flags where r inserts the files into the archive, c creates the archive if it doesn't exist, and s creates an index for quick symbol lookup.</li>
-<li><code>libgpio.a</code>: The name of the static library being created.</li>
-<li><code>gpio.o</code>: The object file to be included in the library.</li>
-</ul>
-</li>
-</ul>
-<blockquote>
-<blockquote>
-<p><strong>Explanation: What is a Static Library?</strong></p>
-<p>A static library is a collection of object files that are linked into the final executable at compile time. Once linked, the code from the static library becomes part of the executable binary. This means that the executable will carry a copy of the library's code, making it self-contained and independent of the library file after compilation.</p>
-</blockquote>
-</blockquote>
+<pre><code class="language-admonish exmample title=&#39;Command Breakdown&#39;">
+ - `ar`: The archiver tool used to create and maintain library archives.
+ - `rcs`: Flags where r inserts the files into the archive, c creates the archive if it doesn't exist, and s creates an index for quick symbol lookup.
+ - `libgpio.a`: The name of the static library being created.
+ - `gpio.o`: The object file to be included in the library.
+
+</code></pre>
+<pre><code class="language-admonish example title=&#39;What is a Static Library?&#39;">
+A static library is a collection of object files that are linked into the final executable at compile time. Once linked, the code from the static library becomes part of the executable binary. This means that the executable will carry a copy of the library's code, making it self-contained and independent of the library file after compilation.
+
+</code></pre>
 </li>
 <li>
 <p>Create a Shared Library (<code>libgpio.so</code>) to create a shared library, use the following <code>gcc</code> command:</p>
-<pre><code class="language-sh">$ gcc -shared -o libgpio.so gpio.o
+<pre><code class="language-admonish terminal">
+```sh
+$ gcc -shared -o libgpio.so gpio.o
+```
+
 </code></pre>
-<ul>
-<li><strong>Command Breakdown:</strong>
-<ul>
-<li><code>-shared</code>: Tells gcc to produce a shared library.</li>
-<li><code>-o libgpio.so</code>: Specifies the output filename for the shared library.</li>
-<li><code>gpio.o</code>: The object file to be included in the library.</li>
-</ul>
-</li>
-</ul>
-<blockquote>
-<blockquote>
-<p><strong>Explanation: What is a Shared Library?</strong></p>
-<p>A shared library, on the other hand, is not linked into the final executable at compile time. Instead, it is loaded into memory at runtime. Multiple programs can share a single copy of a shared library, which can save memory and allow updates to the library without recompiling the programs that use it.</p>
-</blockquote>
-</blockquote>
+<pre><code class="language-admonish exmample title=&#39;Command Breakdown&#39;">
+- `-shared`: Tells gcc to produce a shared library.
+
+- `-o libgpio.so`: Specifies the output filename for the shared library.
+
+- `gpio.o`: The object file to be included in the library.
+
+</code></pre>
+<pre><code class="language-admonish example title=&#39;What is a Shared Library?&#39;">
+A shared library, on the other hand, is not linked into the final executable at compile time. Instead, it is loaded into memory at runtime. Multiple programs can share a single copy of a shared library, which can save memory and allow updates to the library without recompiling the programs that use it.
+
+</code></pre>
 </li>
 </ol>
-<h2 id="step-5-install-the-header-and-library-files-system-wide"><a class="header" href="#step-5-install-the-header-and-library-files-system-wide">Step 5: Install the Header and Library Files System-Wide</a></h2>
+<h2 id="step-4-install-the-header-and-library-files-system-wide"><a class="header" href="#step-4-install-the-header-and-library-files-system-wide">Step 4: Install the Header and Library Files System-Wide</a></h2>
 <ol start="6">
 <li>
 <p>You could manually copy the header file to <code>/usr/include</code> and the libraries to <code>/usr/lib</code>, or skip to the next section and create a <code>Makefile</code> to do it for you each time.</p>
-<pre><code class="language-sh">$ sudo cp gpio.h /usr/include/
+<pre><code class="language-admonish terminal">
+```sh
+$ sudo cp gpio.h /usr/include/
 $ sudo cp libgpio.a /usr/lib/
 $ sudo cp libgpio.so /usr/lib/
 $ sudo ldconfig  # Update the shared library cache
+```
 </code></pre>
 </li>
 </ol>
@@ -703,9 +729,9 @@ $ sudo ldconfig  # Update the shared library cache
 <ol start="7">
 <li>
 <p>Instead of running these commands manually, you can automate the build process using a Makefile.</p>
- <details>
- <summary>Code here... </summary>
-<pre><code class="language-makefile"># Variables
+<pre><code class="language-admonish code collapsible=true title=&#39;Suppressed code here [43 lines]...&#39;">
+```makefile
+# Variables
 CC = gcc
 CFLAGS = -Wall -Werror -fPIC  # -fPIC is needed for shared libraries
 AR = ar
@@ -749,33 +775,49 @@ uninstall:
 
 # Phony targets
 .PHONY: all clean install uninstall
+```
 </code></pre>
- </details>
 </li>
 <li>
 <p>As long as the Makefile is within directory with the custom gpio c files you can use the <code>make</code> command:</p>
 <ul>
 <li>
 <p>Remove <code>gpio.h</code>, and static and share libraries from the respective directories</p>
-<pre><code class="language-sh">$ make uninstall
+<pre><code class="language-admonish terminal">
+```sh
+$ make uninstall
+```
+
 </code></pre>
 </li>
 <li>
 <p>To clean up the build artefacts run:</p>
-<pre><code class="language-sh">$ make clean
+<pre><code class="language-admonish terminal">
+```sh
+$ make clean
+```
+
 </code></pre>
 </li>
 <li>
 <p>To build the libraries and object files:</p>
-<pre><code class="language-sh">$ make all
+<pre><code class="language-admonish terminal">
+```sh
+$ make all
+```
+
 </code></pre>
 </li>
 <li>
 <p>Lastly, use the install command to cp libraries and header to respective root directories:</p>
-<pre><code class="language-sh">$ make install
+<pre><code class="language-admonish terminal">
+```sh
+$ make install
 &gt; gcc -Wall -Werror -fPIC   -c gpio.c -o gpio.o
   ar rcs libgpio.a gpio.o
   gcc -shared -o libgpio.so gpio.o
+```
+
 </code></pre>
 </li>
 </ul>
@@ -785,22 +827,29 @@ uninstall:
 <ol start="9">
 <li>
 <p>Change directory and <code>../</code> and make a new directory called <code>blink</code> and navigate into it.</p>
-<pre><code class="language-sh">$ cd ../
+<pre><code class="language-admonish terminal">
+```sh
+$ cd ../
 $ mkdir blink
 $ cd blink
+```
+
 </code></pre>
 </li>
 <li>
 <p>Create a new .c file called... <code>blink.c</code> and chose your preferred editor to open it.</p>
-<pre><code class="language-sh">$ touch blink.c
+<pre><code class="language-admonish terminal">
+```sh
+$ touch blink.c
 $ vim blink.c
+```
 </code></pre>
 </li>
 <li>
 <p>Now we are going to set up the program to use our system wide library and header with <code>gpio.h</code>:</p>
-<details>
-<summary>Code here... </summary>
-<pre><code class="language-c">#include &lt;stdio.h&gt;
+<pre><code class="language-admonish code collapsible=true title=&#39;Suppressed code here [44 lines]...&#39;">
+```c
+#include &lt;stdio.h&gt;
 #include &lt;unistd.h&gt;
 #include "gpio.h"
 
@@ -825,19 +874,24 @@ int main() {
     }
     return 0;
 }
+```
+
 </code></pre>
-</details>
 </li>
 <li>
 <p>We can use this oneliner to compile the code:</p>
-<pre><code class="language-sh">$ gcc gpio.c -lgpio -o blink 
+<pre><code class="language-admonish terminal">
+```sh
+$ gcc gpio.c -lgpio -o blink 
+```
+
 </code></pre>
 </li>
 <li>
 <p>Alternatively we can use a <code>Makefile</code> like before:</p>
-<details>
-<summary>Code here... </summary>
-<pre><code class="language-makefile"># Compiler and flags
+<pre><code class="language-admonish code collapsible=true title=&#39;Suppressed code here [25 lines]...&#39;">
+```makefile
+# Compiler and flags
 CC = gcc
 CFLAGS = -Wall -Werror
 
@@ -863,19 +917,28 @@ clean:
 
 # Phony targets to avoid conflicts with files of the same name
 .PHONY: all clean
+```
+
 </code></pre>
 <p>Invoke make to build the executable:</p>
-<pre><code class="language-sh">$ make
+<pre><code class="language-admonish terminal">
+```sh
+$ make
+```
 </code></pre>
-</details>
 </li>
 <li>
 <p>Use the led and etc to wire up and run the code:</p>
-<pre><code class="language-sh">$ ./blink
+<pre><code class="language-admonish terminal">
+```sh
+$ ./blink
+```
+
 </code></pre>
-<ul>
-<li>If all is well, and you have connected up your led to the correct pin, the light should turn on and then off.</li>
-</ul>
+<pre><code class="language-admonish success">
+If all is well, and you have connected up your led to the correct pin, the light should turn on and then off.
+
+</code></pre>
 </li>
 </ol>
 
@@ -924,7 +987,7 @@ clean:
         <script src="../book.js"></script>
 
         <!-- Custom JS scripts -->
-        <script src="../theme/pagetoc.js"></script>
+        <script src=".././theme/pagetoc.js"></script>
 
 
     </div>

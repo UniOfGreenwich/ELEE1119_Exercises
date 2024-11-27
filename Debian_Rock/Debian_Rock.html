@@ -28,7 +28,11 @@
         <link rel="stylesheet" href="../ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
-        <link rel="stylesheet" href="../theme/pagetoc.css">
+        <link rel="stylesheet" href=".././theme/pagetoc.css">
+        <link rel="stylesheet" href=".././theme/css/mdbook-admonish.css">
+        <link rel="stylesheet" href=".././theme/css/code.css">
+        <link rel="stylesheet" href=".././theme/css/terminal.css">
+        <link rel="stylesheet" href=".././theme/css/output.css">
 
         <!-- MathJax -->
         <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
@@ -172,18 +176,26 @@
 <li>
 <p><code>sudo apt update</code></p>
 <ul>
-<li>This should update the system however you may get a response that says:</li>
-</ul>
-<pre><code class="language-sh">&gt; W: An error occured during the signature verifcation. The repository is not updated and the previous index files will be used. GPG error: http://apt.radxa/com/bullseye-stable bullseye InRelease: The following signatures could not be verified because the public key is not available: NO_PUBKEY 9B98116C9AA302C7
+<li>
+<p>This should update the system however you may get a response that says:</p>
+<pre><code class="language-admonish errror">
+```sh
+&gt; W: An error occured during the signature verifcation. The repository is not updated and the previous index files will be used. GPG error: http://apt.radxa/com/bullseye-stable bullseye InRelease: The following signatures could not be verified because the public key is not available: NO_PUBKEY 9B98116C9AA302C7
 &gt; W: Filed to fetch http://apt.radxa/com/bullseye-stable/dists/bullseye/InRelease The following signatures could not be verified because the public key is not available: NO_PUBKEY 9B98116C9AA302C7
 &gt; W: Some index files failed to download. They have been ignored, or old ones used instead.
+```
+
 </code></pre>
-<ul>
-<li>If that is the case you will need to run the following command:</li>
-</ul>
-<pre><code class="language-sh">$ wget -O - apt.radxa.com/focal-stable/public.key | sudo apt-key add
+</li>
+<li>
+<p>If that is the case you will need to run the following command:</p>
+<pre><code class="language-admonish terminal">
+```sh
+$ wget -O - apt.radxa.com/focal-stable/public.key | sudo apt-key add
+```
+
 </code></pre>
-<ul>
+</li>
 <li>
 <p>You should get some feedback with a HTTP request and a Warning about apt-key is deprecated... this is fine (if only there was a deterministic, declarative system out there we could have used...)</p>
 </li>
@@ -197,29 +209,39 @@
 <h2 id="networking"><a class="header" href="#networking">Networking</a></h2>
 <p>The Debain OS for the Rock C4+ uses the <code>NetworkManager</code> package to manage all connections to the network interface chips.</p>
 <p><code>NetworkManager</code> directory is located here -&gt; <code>/etc/NetworkManager</code>, the contents of which is:</p>
-<pre><code class="language-sh">NetworkManager.conf
+<pre><code class="language-admonish terminal">
+```sh
+NetworkManager.conf
 conf.d/
 dispatcher.d/
 dnsmasq-shared.d/
 dnsmasq.d/
 system-connections/
+```
+
 </code></pre>
 <p>All of your Wi-Fi profiles are stored in the <code>system-connections</code> folder, for example:</p>
-<pre><code class="language-sh">$ ls /etc/NetworkManager/system-connections
+<pre><code class="language-admonish terminal">
+```sh
+$ ls /etc/NetworkManager/system-connections
 &gt; OKdo05.nmconnection
 &gt; eduroam.nmconnection
+```
+
 </code></pre>
-<blockquote>
-<p><strong>Note:</strong></p>
-<blockquote>
-<p>The file naming convention, <code>&lt;ssid&gt;.nmconnection</code>, this is strict and case-sensitive.</p>
-</blockquote>
-</blockquote>
+<pre><code class="language-admonish important">
+The file naming convention, `&lt;ssid&gt;.nmconnection`, this is strict and case-sensitive.
+
+</code></pre>
 <p>Each <code>...nmconnection</code> file has a format and for eduroam, which is an enterprise network it looks like this, you will need to have root level permissions:</p>
-<pre><code class="language-sh">$ sudo cat /etc/NetworkManager/system-connections/eduroam.nmconnection
+<pre><code class="language-admonish terminal">
+```sh
+$ sudo cat /etc/NetworkManager/system-connections/eduroam.nmconnection
+```
 </code></pre>
-<p><strong>Output:</strong></p>
-<pre><code class="language-sh">[connection]
+<pre><code class="language-admonish output">
+```sh
+[connection]
 id=eduroam
 uuid=4e3235f7-8387-4102-8a57-dd1120f29ac5
 type=wifi
@@ -252,17 +274,13 @@ dns-search=
 method=auto
 
 [proxy]
+```
+
 </code></pre>
-<blockquote>
-<p><strong>Note</strong></p>
-<blockquote>
-<p>You may need to reload the connection:</p>
-<ul>
-<li><code>nmcli connection reload</code> or you can do this with elevation</li>
-<li><code>sudo ncmli connetion reload</code></li>
-</ul>
-</blockquote>
-</blockquote>
+<pre><code class="language-admonish important">You may need to reload the connection:
+- `nmcli connection reload` or you can do this with elevation
+- `sudo ncmli connetion reload`
+</code></pre>
 
                     </main>
                     <nav class="nav-wrapper" aria-label="Page navigation">
@@ -309,7 +327,7 @@ method=auto
         <script src="../book.js"></script>
 
         <!-- Custom JS scripts -->
-        <script src="../theme/pagetoc.js"></script>
+        <script src=".././theme/pagetoc.js"></script>
 
 
     </div>

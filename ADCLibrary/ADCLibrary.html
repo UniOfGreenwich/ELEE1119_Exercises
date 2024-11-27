@@ -28,7 +28,11 @@
         <link rel="stylesheet" href="../ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
-        <link rel="stylesheet" href="../theme/pagetoc.css">
+        <link rel="stylesheet" href=".././theme/pagetoc.css">
+        <link rel="stylesheet" href=".././theme/css/mdbook-admonish.css">
+        <link rel="stylesheet" href=".././theme/css/code.css">
+        <link rel="stylesheet" href=".././theme/css/terminal.css">
+        <link rel="stylesheet" href=".././theme/css/output.css">
 
         <!-- MathJax -->
         <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
@@ -191,12 +195,22 @@
 <h2 id="3-interacting-with-adc-on-beaglebone-black-via-sysfs"><a class="header" href="#3-interacting-with-adc-on-beaglebone-black-via-sysfs">3. Interacting with ADC on BeagleBone Black via Sysfs</a></h2>
 <p>To read ADC values on the BBB, you interact with files in the <code>/sys/bus/iio/devices/iio:device0</code> directory. Here’s how to perform common ADC operations using the sysfs interface:</p>
 <h3 id="31-what-is-the-adc-chip"><a class="header" href="#31-what-is-the-adc-chip">3.1 What is the ADC chip?</a></h3>
-<pre><code class="language-sh">$  cat /sys/bus/iio/devices/iio\:device0/name
+<pre><code class="language-admonish terminal">
+```sh
+$  cat /sys/bus/iio/devices/iio\:device0/name
 TI-am336x-adc
+```
+
 </code></pre>
-<p>You can review the documentation here: <a href="https://www.ti.com/lit/an/sprabu5/sprabu5.pdf">https://www.ti.com/lit/an/sprabu5/sprabu5.pdf</a></p>
-<p>Source code for the driver can be found here: <a href="https://github.com/torvalds/linux/blob/master/drivers/iio/adc/ti_am335x_adc.c">https://github.com/torvalds/linux/blob/master/drivers/iio/adc/ti_am335x_adc.c</a></p>
-<p>The BeagleBone Black (BBB) includes an Analog-to-Digital Converter (ADC) subsystem, which allows the board to interface with various analog sensors. This subsystem converts analog voltage signals into digital values that the processor can use.</p>
+<pre><code class="language-admonish info">
+You can review the documentation here: [https://www.ti.com/lit/an/sprabu5/sprabu5.pdf](https://www.ti.com/lit/an/sprabu5/sprabu5.pdf)
+
+Source code for the driver can be found here: [https://github.com/torvalds/linux/blob/master/drivers/iio/adc/ti_am335x_adc.c](https://github.com/torvalds/linux/blob/master/drivers/iio/adc/ti_am335x_adc.c)
+
+
+The BeagleBone Black (BBB) includes an Analog-to-Digital Converter (ADC) subsystem, which allows the board to interface with various analog sensors. This subsystem converts analog voltage signals into digital values that the processor can use.
+
+</code></pre>
 <h3 id="32-key-characteristics-of-the-beaglebone-black-adc"><a class="header" href="#32-key-characteristics-of-the-beaglebone-black-adc">3.2 Key Characteristics of the BeagleBone Black ADC</a></h3>
 <ol>
 <li>
@@ -234,8 +248,12 @@ TI-am336x-adc
 <li>
 <p><strong>Read the Raw ADC Value</strong>:</p>
 <p>Let's assume we want to read from <code>ADC Channel 0</code>. First, navigate to the appropriate directory and read the value:</p>
-<pre><code class="language-bash">$ cd /sys/bus/iio/devices/iio:device0
+<pre><code class="language-admonish terminal">
+```bash
+$ cd /sys/bus/iio/devices/iio:device0
 $ cat in_voltage0_raw
+```
+
 </code></pre>
 <p>Suppose the command returns a value of <code>2048</code>.</p>
 </li>
@@ -250,10 +268,14 @@ $ cat in_voltage0_raw
 </ol>
 <h3 id="5-list-available-adc-channels"><a class="header" href="#5-list-available-adc-channels">5. List Available ADC Channels</a></h3>
 <p>The BeagleBone Black (BBB) allows you to interact with its Analog-to-Digital Converter (ADC) through the sysfs interface, located at <code>/sys/bus/iio/devices/iio:device0</code>. This directory contains various files and subdirectories that provide access to the ADC hardware and its configuration. Below is an explanation of each file and subdirectory you might see when you run ls in this directory:</p>
-<pre><code class="language-bash">$ cd /sys/bus/iio/devices/iio:device0
+<pre><code class="language-admonish terminal">
+```bash
+$ cd /sys/bus/iio/devices/iio:device0
 $ ls -l
 buffer  in_voltage0_raw  in_voltage2_raw  in_voltage4_raw  in_voltage6_raw  name     power          subsystem
 dev     in_voltage1_raw  in_voltage3_raw  in_voltage5_raw  in_voltage7_raw  of_node  scan_elements  uevent
+```
+
 </code></pre>
 <p><strong>Explanation of Files and Directories</strong>:</p>
 <ol>
@@ -390,14 +412,18 @@ dev     in_voltage1_raw  in_voltage3_raw  in_voltage5_raw  in_voltage7_raw  of_n
 <ol>
 <li>
 <p>Create a new directory called adc in home with the following files:</p>
-<pre><code class="language-sh">$ mkdir adc &amp;&amp; cd &amp;&amp; touch adc.c &amp;&amp; touch adc.h &amp;&amp; touch MakeFile
+<pre><code class="language-admonish terminal">
+```sh
+$ mkdir adc &amp;&amp; cd &amp;&amp; touch adc.c &amp;&amp; touch adc.h &amp;&amp; touch MakeFile
+```
+
 </code></pre>
 </li>
 <li>
 <p>Edit the <code>adc.h</code> file:</p>
- <details>
- <summary>Suppressed Code here [24 lines]...</summary>
-<pre><code class="language-h">#ifndef ADC_H_
+<pre><code class="language-admonish code collapsible=true title=&#39;Suppressed code here [15 lines]&#39;">
+```h
+#ifndef ADC_H_
 #define ADC_H_
 
 #define SYSFS_ADC_DIR "/sys/bus/iio/devices/iio:device0"
@@ -413,14 +439,15 @@ int adc_fd_close(unsigned int fd);
 int adc_en(unsigned int adcPin, unsigned int en);
 
 #endif /* ADC_H_*/
+```
+
 </code></pre>
- </details>
 </li>
 <li>
 <p>Now we can modify the <code>adc.c</code> file:</p>
- <details>
- <summary>Suppressed Code here [60 lines]...</summary>
-<pre><code class="language-c">#include "adc.h"
+<pre><code class="language-admonish code collapsible=true title=&#39;Suppressed code here [60 lines]&#39;">
+```c
+#include "adc.h"
 #include &lt;stdio.h&gt;
 #include &lt;stdlib.h&gt;
 #include &lt;string.h&gt;
@@ -477,68 +504,77 @@ int adc_fd_open(unsigned int adcPin){
 int adc_fd_close(unsigned int fd){
     return close(fd);
 }
+```
+
 </code></pre>
- </details>
 </li>
 <li>
 <p>Much like the GPIO library we can build libraries manually, compile <code>adc.c</code> into an Object File by Using the following command to compile <code>adc.c</code> into an object file (<code>adc.o</code>):</p>
-<pre><code class="language-sh">$ gcc -c adc.c -o adc.o
+<pre><code class="language-admonish terminal">
+```sh
+$ gcc -c adc.c -o adc.o
+```
+
 </code></pre>
 </li>
 <li>
 <p>Create a Static Library (<code>libadc.a</code>) to create a static library, use the <code>ar</code> command:</p>
-<pre><code class="language-sh">$ ar rcs libadc.a adc.o
+<pre><code class="language-admonish terminal">
+```sh
+$ ar rcs libadc.a adc.o
+```
+
 </code></pre>
-<ul>
-<li><strong>Command Breakdown:</strong>
-<ul>
-<li><code>ar</code>: The archiver tool used to create and maintain library archives.</li>
-<li><code>rcs</code>: Flags where r inserts the files into the archive, c creates the archive if it doesn't exist, and s creates an index for quick symbol lookup.</li>
-<li><code>libadc.a</code>: The name of the static library being created.</li>
-<li><code>adc.o</code>: The object file to be included in the library.</li>
-</ul>
-</li>
-</ul>
-<blockquote>
-<blockquote>
-<p><strong>Explanation: What is a Static Library?</strong></p>
-<p>A static library is a collection of object files that are linked into the final executable at compile time. Once linked, the code from the static library becomes part of the executable binary. This means that the executable will carry a copy of the library's code, making it self-contained and independent of the library file after compilation.</p>
-</blockquote>
-</blockquote>
+<pre><code class="language-admonish exmample title=&#39;Command Breakdown&#39;">
+ - `ar`: The archiver tool used to create and maintain library archives.
+ - `rcs`: Flags where r inserts the files into the archive, c creates the archive if it doesn't exist, and s creates an index for quick symbol lookup.
+ - `libadc.a`: The name of the static library being created.
+ - `adc.o`: The object file to be included in the library.
+
+</code></pre>
+<pre><code class="language-admonish example title=&#39;What is a Static Library?&#39;">
+A static library is a collection of object files that are linked into the final executable at compile time. Once linked, the code from the static library becomes part of the executable binary. This means that the executable will carry a copy of the library's code, making it self-contained and independent of the library file after compilation.
+
+</code></pre>
 </li>
 <li>
 <p>Create a Shared Library (<code>libadc.so</code>) to create a shared library, use the following <code>gcc</code> command:</p>
-<pre><code class="language-sh">$ gcc -shared -o libadc.so adc.o
+<pre><code class="language-admonish terminal">
+```sh
+$ gcc -shared -o libadc.so adc.o
+```
+
 </code></pre>
-<ul>
-<li><strong>Command Breakdown:</strong>
-<ul>
-<li><code>-shared</code>: Tells gcc to produce a shared library.</li>
-<li><code>-o libadc.so</code>: Specifies the output filename for the shared library.</li>
-<li><code>adc.o</code>: The object file to be included in the library.</li>
-</ul>
-</li>
-</ul>
-<blockquote>
-<blockquote>
-<p><strong>Explanation: What is a Shared Library?</strong></p>
-<p>A shared library, on the other hand, is not linked into the final executable at compile time. Instead, it is loaded into memory at runtime. Multiple programs can share a single copy of a shared library, which can save memory and allow updates to the library without recompiling the programs that use it.</p>
-</blockquote>
-</blockquote>
+<pre><code class="language-admonish example title=&#39;Command Breakdown&#39;">
+- `-shared`: Tells gcc to produce a shared library.
+
+- `-o libadc.so`: Specifies the output filename for the shared library.
+
+- `adc.o`: The object file to be included in the library.
+
+</code></pre>
+<pre><code class="language-admonish example title=&#39;What is a Shared Library?&#39;">
+A shared library, on the other hand, is not linked into the final executable at compile time. Instead, it is loaded into memory at runtime. Multiple programs can share a single copy of a shared library, which can save memory and allow updates to the library without recompiling the programs that use it.
+
+</code></pre>
 </li>
 <li>
 <p>Install the Header and Library Files System-Wide. You could manually copy the header file to <code>/usr/include</code> and the libraries to <code>/usr/lib</code>, or skip to the next section and create a <code>Makefile</code> to do it for you each time.</p>
-<pre><code class="language-sh">$ sudo cp adc.h /usr/include/
+<pre><code class="language-admonish terminal">
+```sh
+$ sudo cp adc.h /usr/include/
 $ sudo cp libadc.a /usr/lib/
 $ sudo cp libadc.so /usr/lib/
 $ sudo ldconfig  # Update the shared library cache
+```
+
 </code></pre>
 </li>
 <li>
 <p>We can do this using a Makefile aswell, edit the <code>Makefile</code>:</p>
- <details>
- <summary>Suppressed code here [43 lines]...</summary>
-<pre><code class="language-makefile"># Variables
+<pre><code class="language-admonish code collapsible=true title=&#39;Suppressed code here [43 lines]&#39;">
+```makefile
+# Variables
 CC = gcc
 CFLAGS = -Wall -Werror -fPIC  # -fPIC is needed for shared libraries
 AR = ar
@@ -582,6 +618,8 @@ uninstall:
 
 # Phony targets
 .PHONY: all clean install uninstall
+```
+
 </code></pre>
 </li>
 <li>
@@ -589,25 +627,41 @@ uninstall:
 <ul>
 <li>
 <p>Remove <code>adc.h</code>, and static and share libraries from the respective directories</p>
-<pre><code class="language-sh">$ make uninstall
+<pre><code class="language-admonish terminal">
+```sh
+$ make uninstall
+```
+
 </code></pre>
 </li>
 <li>
 <p>To clean up the build artefacts run:</p>
-<pre><code class="language-sh">$ make clean
+<pre><code class="language-admonish terminal">
+```sh
+$ make clean
+```
+
 </code></pre>
 </li>
 <li>
 <p>To build the libraries and object files:</p>
-<pre><code class="language-sh">$ make all
+<pre><code class="language-admonish terminal">
+```sh
+$ make all
+```
+
 </code></pre>
 </li>
 <li>
 <p>Lastly, use the install command to <code>cp</code> libraries and header to respective root directories:</p>
-<pre><code class="language-sh">$ make install
+<pre><code class="language-admonish terminal">
+```sh
+$ make install
 &gt; gcc -Wall -Werror -fPIC   -c adc.c -o adc.o
   ar rcs libadc.a adc.o
   gcc -shared -o libadco.so adc.o
+```
+
 </code></pre>
 </li>
 </ul>
@@ -617,22 +671,30 @@ uninstall:
 <ol start="9">
 <li>
 <p>Change directory and <code>../</code> and make a new directory called <code>adc_read</code> and navigate into it.</p>
-<pre><code class="language-sh">$ cd ../
+<pre><code class="language-admonish terminal">
+```sh
+$ cd ../
 $ mkdir adc_read
 $ cd adc_read
+```
+
 </code></pre>
 </li>
 <li>
 <p>Create a new .c file called... <code>adc_read.c</code> and chose your preferred editor to open it.</p>
-<pre><code class="language-sh">$ touch adc_read.c
+<pre><code class="language-admonish terminal">
+```sh
+$ touch adc_read.c
 $ vim adc_read.c
+```
+
 </code></pre>
 </li>
 <li>
 <p>Now we are going to set up the program to use our system wide library and header with <code>adc.h</code>:</p>
-<details>
-<summary>Suppressed code here [17 lines]...</summary>
-<pre><code class="language-c">#include "adc.h"
+<pre><code class="language-admonish code collapsible=true title=&#39;Suppressed code here [16 lines]&#39;">
+```c
+#include "adc.h"
 #include &lt;stdio.h&gt;
 #include &lt;unistd.h&gt;
 
@@ -649,17 +711,24 @@ int main(){
     }
     return 0;
 }
+```
+
 </code></pre>
-</details>
 </li>
 <li>
 <p>We can use this oneliner to compile the code:</p>
-<pre><code class="language-sh">$ gcc adc_read.c -ladc -o adc_read
+<pre><code class="language-admonial terminal">
+```sh
+$ gcc adc_read.c -ladc -o adc_read
+```
+
 </code></pre>
 </li>
 <li>
 <p>Alternatively we can use a <code>Makefile</code> like before:</p>
-<pre><code class="language-makefile"># Compiler and flags
+<pre><code class="language-admonish code collapsible=true title=&#39;Suppressed code here [25 lines]&#39;">
+```makefile
+# Compiler and flags
 CC = gcc
 CFLAGS = -Wall -Werror
 
@@ -685,19 +754,30 @@ clean:
 
 # Phony targets to avoid conflicts with files of the same name
 .PHONY: all clean
+```
+
 </code></pre>
 <p>Invoke make to build the executable:</p>
-<pre><code class="language-sh">$ make
+<pre><code class="language-admonish terminal">
+```sh
+$ make
+```
+
 </code></pre>
 </li>
 <li>
 <p>Use the led and etc to wire up and run the code:</p>
-<pre><code class="language-sh">$ ./adc_read
+<pre><code class="language-admonish terminal">
+```sh
+$ ./adc_read
+```
+
 </code></pre>
 <ul>
-<li>
-<p>If all is well, and you have connected up your potentiometer to the correct pin, and you rotate it you should see the following output:</p>
-<pre><code>ADC: 4019
+<li>If all is well, and you have connected up your potentiometer to the correct pin, and you rotate it you should see the following output:
+<pre><code class="language-admonish output">
+```
+ADC: 4019
 ADC: 4018
 ADC: 4018
 ADC: 3634
@@ -715,6 +795,8 @@ ADC: 1095
 ADC: 681
 ADC: 410
 ... # upto 30 times
+```
+
 </code></pre>
 </li>
 </ul>
@@ -740,10 +822,12 @@ ADC: 410
 </ul>
 </li>
 </ul>
-<p><strong>Example Prototypes:</strong></p>
-<pre><code class="language-h">int adc_start_continuous_sampling(unsigned int channel, size_t buffer_size);
+<pre><code class="language-admonish code title=&#39;Code: Example Prototypes&#39;">
+```h
+int adc_start_continuous_sampling(unsigned int channel, size_t buffer_size);
 void adc_stop_continuous_sampling(void);
 void adc_register_callback(void (*callback)(unsigned int value));
+```
 </code></pre>
 </li>
 </ol>
@@ -793,7 +877,7 @@ void adc_register_callback(void (*callback)(unsigned int value));
         <script src="../book.js"></script>
 
         <!-- Custom JS scripts -->
-        <script src="../theme/pagetoc.js"></script>
+        <script src=".././theme/pagetoc.js"></script>
 
 
     </div>

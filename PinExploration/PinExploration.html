@@ -28,7 +28,11 @@
         <link rel="stylesheet" href="../ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
-        <link rel="stylesheet" href="../theme/pagetoc.css">
+        <link rel="stylesheet" href=".././theme/pagetoc.css">
+        <link rel="stylesheet" href=".././theme/css/mdbook-admonish.css">
+        <link rel="stylesheet" href=".././theme/css/code.css">
+        <link rel="stylesheet" href=".././theme/css/terminal.css">
+        <link rel="stylesheet" href=".././theme/css/output.css">
 
         <!-- MathJax -->
         <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
@@ -172,7 +176,8 @@
 <p>A <code>.dts</code> file contains descriptions of the board's hardware components, including processors, memory, peripherals, and importantly, the General Purpose Input/Output (GPIO) pins.</p>
 <h3 id="2-pin-multiplexing-and-pin-control"><a class="header" href="#2-pin-multiplexing-and-pin-control">2. Pin Multiplexing and Pin Control</a></h3>
 <p><strong>Pin multiplexing</strong> allows a single physical pin on a processor to serve multiple functions, depending on the configuration. The <code>.dts</code> file defines how each pin on the BeagleBoard is multiplexed:</p>
-<pre><code class="language-dts">pinctrl-name = "default";
+<pre><code class="language-admonish code">```dts
+pinctrl-name = "default";
 pinctrl-0 = &lt;&amp;my_pins&gt;;
 
 my_pins: pinmux_my_pins {
@@ -181,6 +186,7 @@ my_pins: pinmux_my_pins {
         0x038 (PIN_INPUT | MUX_MODE7)   /* Pin Y configuration */
     &gt;;
 };
+```
 </code></pre>
 <p>In this example:</p>
 <ul>
@@ -190,11 +196,14 @@ my_pins: pinmux_my_pins {
 </ul>
 <h4 id="21-understanding-beagleboard-dts-file-configuration-for-gpio-pin"><a class="header" href="#21-understanding-beagleboard-dts-file-configuration-for-gpio-pin">2.1 Understanding BeagleBoard DTS File Configuration for GPIO Pin</a></h4>
 <p>In a BeagleBoard Device Tree Source (.dts) file, pin configurations are defined using specific properties that control how each pin operates. Let’s break down the following example to understand what it does:</p>
-<pre><code class="language-dts">8_11_gpio_input_pin: pinmux_P8_11_gpio_input_pin { 
+<pre><code class="language-admonish code">
+```dts
+8_11_gpio_input_pin: pinmux_P8_11_gpio_input_pin { 
     pinctrl-single,pins = &lt;
         ((((0x0834)) &amp; 0xffff) - (0x0800)) (((1 &lt;&lt; 5) | (1 &lt;&lt; 3)) | 7) 
     &gt;; 
 };
+```
 </code></pre>
 <h4 id="22-explanation-of-each-part"><a class="header" href="#22-explanation-of-each-part">2.2 Explanation of Each Part</a></h4>
 <ol>
@@ -214,9 +223,12 @@ my_pins: pinmux_my_pins {
 <li>
 <p><strong>Pin Configuration Value</strong>:</p>
 <ul>
-<li>The value within the <code>pinctrl-single,pins</code> property is given as a tuple of two values: the register offset and the value to be written to that register.</li>
-</ul>
-<pre><code class="language-dts">((((0x0834)) &amp; 0xffff) - (0x0800)) (((1 &lt;&lt; 5) | (1 &lt;&lt; 3)) | 7)
+<li>
+<p>The value within the <code>pinctrl-single,pins</code> property is given as a tuple of two values: the register offset and the value to be written to that register.</p>
+<pre><code class="language-admonish example">
+```dts
+((((0x0834)) &amp; 0xffff) - (0x0800)) (((1 &lt;&lt; 5) | (1 &lt;&lt; 3)) | 7)
+```
 </code></pre>
 <p>This is split into two main parts:</p>
 <ul>
@@ -224,10 +236,14 @@ my_pins: pinmux_my_pins {
 <li><strong>Pin Configuration Value</strong>: <code>(((1 &lt;&lt; 5) | (1 &lt;&lt; 3)) | 7)</code></li>
 </ul>
 </li>
+</ul>
+</li>
 </ol>
 <p>Let's explain these parts in detail:</p>
 <h4 id="23-register-offset-calculation"><a class="header" href="#23-register-offset-calculation">2.3 Register Offset Calculation</a></h4>
-<pre><code class="language-dts">((((0x0834)) &amp; 0xffff) - (0x0800))
+<pre><code class="language-admonish example">```dts
+((((0x0834)) &amp; 0xffff) - (0x0800))
+```
 </code></pre>
 <ul>
 <li>
@@ -245,7 +261,9 @@ my_pins: pinmux_my_pins {
 </li>
 </ul>
 <h4 id="24-pin-configuration-value"><a class="header" href="#24-pin-configuration-value">2.4 Pin Configuration Value</a></h4>
-<pre><code class="language-dts">(((1 &lt;&lt; 5) | (1 &lt;&lt; 3)) | 7)
+<pre><code class="language-admonish example">```dts
+(((1 &lt;&lt; 5) | (1 &lt;&lt; 3)) | 7)
+```
 </code></pre>
 <ul>
 <li>
@@ -313,23 +331,33 @@ my_pins: pinmux_my_pins {
 </ul>
 <p>Each GPIO pin that is controlled by the kernel is represented by a directory named gpioXXX, where XXX is the GPIO number.</p>
 <p>You can access the (gpioX) pins label to map the /sys/class/gpio/gpio to the breackout pin:</p>
-<pre><code class="language-sh">$ cat /sys/class/gpio/gpio115/label
+<pre><code class="language-admonish terminal">
+```sh
+$ cat /sys/class/gpio/gpio115/label
 &gt; P9_27
+```
+
 </code></pre>
 </li>
 <li>
 <p><strong>Build map for the GPIO and Lable</strong></p>
 <p>The provided Bash script is designed to create a CSV file <code>(gpio_map.csv</code>) that maps each GPIO number to its label. Here is what each part of the script does:</p>
-<pre><code class="language-sh">#!/usr/bin/env bash
+<pre><code class="language-admonish code">
+```sh
+#!/usr/bin/env bash
 echo "GPIO,Label" &gt; gpio_map.csv
 for gpio in /sys/class/gpio/gpio*; do
     gpio_num=$(basename "$gpio")
     label=$(cat "$gpio/label")
     echo "$gpio_num,$label" &gt;&gt; gpio_map.csv
 done
+```
+
 </code></pre>
 <p>Run the following now to see the map:</p>
-<pre><code class="language-sh">$ cat gpio_map.csv
+<pre><code class="language-admonish output">
+```sh
+$ cat gpio_map.csv
 &gt; 
 GPIO,Label
 gpio10,P8_31
@@ -347,6 +375,8 @@ gpio13,P9_19
 gpio14,P9_26
 gpio15,P9_24
 ...
+```
+
 </code></pre>
 </li>
 </ol>
@@ -391,27 +421,40 @@ gpio15,P9_24
 <li>
 <p>Check Available Modes for a Pin:</p>
 <p>To see what modes are available for a specific pin:</p>
-<pre><code class="language-sh">config-pin -l &lt;pin&gt;
+<pre><code class="language-admonish terminal">
+```sh
+config-pin -l &lt;pin&gt;
+```
+
 </code></pre>
-<p>Example:</p>
-<pre><code class="language-sh">$ config-pin -l P9.12
+<pre><code class="language-admonish output">
+```sh
+$ config-pin -l P9.12
 &gt; Available modes for P9_12 are: default gpio gpio_pu gpio_pd gpio_input
+```
 </code></pre>
 </li>
 <li>
 <p>Current configured mode:</p>
-<pre><code class="language-sh">config-pin -q &lt;pin&gt;
+<pre><code class="language-admonish example">
+```sh
+config-pin -q &lt;pin&gt;
+```
+
 </code></pre>
-<p>Example:</p>
-<pre><code class="language-sh">$ config-pin -q P9.12
+<pre><code class="language-admonish output">
+```sh
+$ config-pin -q P9.12
 &gt; Current mode for P9_12 is:     default
+```
+
 </code></pre>
 </li>
 <li>
 <p>To check all configurations we can write a script:</p>
- <details>
- <summary>Suppressed code here [52 lines] ... </summary>
-<pre><code class="language-sh">#!/usr/bin/env bash
+<pre><code class="language-admonish code collapsible=true title=&#39;Suppressed code here [52 lines] ...&#39;">
+```sh
+#!/usr/bin/env bash
 
 # Output file
 OUTPUT_FILE="pin_config_report.txt"
@@ -462,16 +505,21 @@ for PIN in "${PINS[@]}"; do
 done
 
 echo "Pin configuration report saved to $OUTPUT_FILE"
+```
+
 </code></pre>
- </details>
 </li>
 <li>
 <p>Run the following to see the report:</p>
-<pre><code class="language-sh">$ less pin_config_report.txt
+<pre><code class="language-admonish terminal">
+```sh
+$ less pin_config_report.txt
+```
+
 </code></pre>
- <details>
- <summary>This is the output...</summary>
-<pre><code>Pin     | Current Mode       | Available Modes
+<pre><code class="language-admonish output collapsible=true">
+```
+Pin     | Current Mode       | Available Modes
 -----------------------------------------------
 P8_3    | -                  | -
 P8_4    | -                  | -
@@ -493,34 +541,42 @@ P8_19   | default            | default gpio gpio_pu gpio_pd gpio_input pwm
 P8_20   | -                  | default gpio gpio_pu gpio_pd gpio_input pruout pruin
 P8_21   | -                  | default gpio gpio_pu gpio_pd gpio_input pruout pruin
 ...
+```
 </code></pre>
- </details>
 </li>
 <li>
 <p>Set a Pin Mode:</p>
-<pre><code class="language-sh">config-pin &lt;pin&gt; &lt;mode&gt;
+<pre><code class="language-admonish example">
+```sh
+config-pin &lt;pin&gt; &lt;mode&gt;
+``` 
+
 </code></pre>
-<p>Example:</p>
-<pre><code class="language-sh">config-pin P9.12 uart
+<pre><code class="language-admonish terminal">
+```sh
+config-pin P9.12 uart
+```
 </code></pre>
 <p>This command sets pin P9.12 to UART mode.</p>
 </li>
 <li>
 <p>Verify current pins</p>
-<pre><code class="language-sh">config-pin -q &lt;pin&gt;
+<pre><code class="language-admonish example">
+```sh
+config-pin -q &lt;pin&gt;
+```
+
 </code></pre>
 </li>
 </ol>
-<blockquote>
-<p><strong>Note:</strong></p>
-<blockquote>
-<ul>
-<li>Any pins you have set manually to do not presist across power cycling.</li>
-<li>You could write a script that configures all the pins after boot, after the kernel has pre-loaded maps.</li>
-<li>Alternatively you could make your own <code>.dts</code>!</li>
-</ul>
-</blockquote>
-</blockquote>
+<pre><code class="language-admonish tip">
+- Any pins you have set manually to do not presist across power cycling. 
+
+- You could write a script that configures all the pins after boot, after the kernel has pre-loaded maps. 
+
+- Alternatively you could make your own `.dts`!
+
+</code></pre>
 </li>
 </ol>
 
@@ -569,7 +625,7 @@ P8_21   | -                  | default gpio gpio_pu gpio_pd gpio_input pruout pr
         <script src="../book.js"></script>
 
         <!-- Custom JS scripts -->
-        <script src="../theme/pagetoc.js"></script>
+        <script src=".././theme/pagetoc.js"></script>
 
 
     </div>

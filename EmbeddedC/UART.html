@@ -28,7 +28,11 @@
         <link rel="stylesheet" href="../ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
-        <link rel="stylesheet" href="../theme/pagetoc.css">
+        <link rel="stylesheet" href=".././theme/pagetoc.css">
+        <link rel="stylesheet" href=".././theme/css/mdbook-admonish.css">
+        <link rel="stylesheet" href=".././theme/css/code.css">
+        <link rel="stylesheet" href=".././theme/css/terminal.css">
+        <link rel="stylesheet" href=".././theme/css/output.css">
 
         <!-- MathJax -->
         <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
@@ -166,7 +170,9 @@
                     <main><div class="sidetoc"><nav class="pagetoc"></nav></div>
                         <h1 id="usart"><a class="header" href="#usart">USART</a></h1>
 <p>So you are no doubt familiar with the well known <code>Serial</code> within the Arduino SDK:</p>
-<pre><code class="language-c">#define BAUDRATE 9600 // Desired Baud Rate
+<pre><code class="language-admonish code">
+```c
+#define BAUDRATE 9600 // Desired Baud Rate
 char name[] = {'H','e','l','l','o',' ','w','o','r','l','d','!','\n'}; 
 
 void setup() {
@@ -180,20 +186,18 @@ void loop() {
     }
 	delay(1000);
 }
+```
+
 </code></pre>
 <p>There is a lot of abstraction happening here, where are the ports/registers?</p>
 <p>Let's now turn this into an embedded program!</p>
 <hr />
 <p>The USART (Universal Synchronous and Asynchronous serial Receiver and Transmitter) module on the ATmega328P is used for serial communication. It allows the microcontroller to send and receive data over a single data line (full-duplex communication) in both synchronous and asynchronous modes.</p>
 <p>In asynchronous mode, which is commonly used for UART, data is transferred in bytes, framed with start and stop bits, and synchronized with a clock frequency derived from the system clock. The USART has several registers to manage transmission, reception, baud rate configuration, and framing.</p>
-<blockquote>
-<p><strong>Note:</strong></p>
-<blockquote>
-<ul>
-<li>All information provided in this chapter is summariesd and expanded upon via: <a href="https://ww1.microchip.com/downloads/aemDocuments/documents/MCU08/ProductDocuments/DataSheets/40001906C.pdf">https://ww1.microchip.com/downloads/aemDocuments/documents/MCU08/ProductDocuments/DataSheets/40001906C.pdf</a> page 264 onwards.</li>
-</ul>
-</blockquote>
-</blockquote>
+<pre><code class="language-admonish info">
+All information provided in this chapter is summariesd and expanded upon via: [https://ww1.microchip.com/downloads/aemDocuments/documents/MCU08/ProductDocuments/DataSheets/40001906C.pdf](https://ww1.microchip.com/downloads/aemDocuments/documents/MCU08/ProductDocuments/DataSheets/40001906C.pdf) page 264 onwards.
+
+</code></pre>
 <hr />
 <h2 id="ubrr0h-and-ubrr0l-usart-baud-rate-registers"><a class="header" href="#ubrr0h-and-ubrr0l-usart-baud-rate-registers">UBRR0H and UBRR0L (USART Baud Rate Registers)</a></h2>
 <p>The UBRR (USART Baud Rate Register) is split into two 8-bit registers:</p>
@@ -207,36 +211,36 @@ void loop() {
 <p>\[ BAUD\ =\ 9600 \Leftarrow \left( \frac{ 16000000 }{ 1664 } \right) - 1 \Leftarrow \left( \frac{16\ \cdot 10^{9}}{16 * 104} \right) \Leftarrow \left( \frac{f_{osc}}{ 16 \cdot (UBRR + 1) } \right) - 1 \]</p>
 </div>
 <p>For example, with a 16 MHz clock and a baud rate of <code>9600</code>, <code>UBRRn</code> will be <code>103</code>.</p>
-<pre><code class="language-c">UBRRn  = (((16000000UL / (9600 * 16UL))) - 1) // 103
+<pre><code class="language-admonish code">
+```c
+UBRRn  = (((16000000UL / (9600 * 16UL))) - 1) // 103
 UBRR0H = (uint8_t)(UBRRn &gt;&gt; 8);  // Set high byte
 UBRR0L = (uint8_t)UBRRn;         // Set low byte
+```
+
 </code></pre>
-<blockquote>
-<p><strong>Note:</strong></p>
-<blockquote>
-<ul>
-<li>You <strong>should</strong> visit here to see the documentation of Baud rate:
-<ul>
-<li><a href="https://onlinedocs.microchip.com/oxy/GUID-ED37252C-1496-4275-BAEF-5152050ED2C2-en-US-2/GUID-65A53416-8DE2-468E-99CF-09F480AEF734.html">https://onlinedocs.microchip.com/oxy/GUID-ED37252C-1496-4275-BAEF-5152050ED2C2-en-US-2/GUID-65A53416-8DE2-468E-99CF-09F480AEF734.html</a></li>
-</ul>
-</li>
-</ul>
-</blockquote>
-</blockquote>
+<pre><code class="language-admonish info">
+You **should** visit here to see the documentation of Baud rate:
+- [https://onlinedocs.microchip.com/oxy/GUID-ED37252C-1496-4275-BAEF-5152050ED2C2-en-US-2/GUID-65A53416-8DE2-468E-99CF-09F480AEF734.html](https://onlinedocs.microchip.com/oxy/GUID-ED37252C-1496-4275-BAEF-5152050ED2C2-en-US-2/GUID-65A53416-8DE2-468E-99CF-09F480AEF734.html)
+
+</code></pre>
 <hr />
 <h2 id="ucsr0a-usart-control-and-status-register-a"><a class="header" href="#ucsr0a-usart-control-and-status-register-a">UCSR0A (USART Control and Status Register A)</a></h2>
 <p><code>UCSR0A</code> is a control and status register for the USART, providing various flags and settings:</p>
 <ul>
 <li>
 <p><code>UDRE0</code> (USART Data Register Empty): This flag indicates that the data register is ready to accept new data for transmission. When <code>UDRE0</code> is set (1), it means the data register is empty and ready for a new byte.</p>
-<pre><code class="language-c">while (!(UCSR0A &amp; (1 &lt;&lt; UDRE0)));  // Wait until UDRE0 is set (data register empty)
+<pre><code class="language-admonish code">
+```c
+while (!(UCSR0A &amp; (1 &lt;&lt; UDRE0)));  // Wait until UDRE0 is set (data register empty)
+```
+
 </code></pre>
-</li>
-<li>
-<p><code>TXC0</code> (Transmit Complete): This flag indicates that the entire frame (including stop bit) has been transmitted.</p>
-</li>
-<li>
-<p><code>RXC0</code> (Receive Complete): This flag indicates that unread data is available in the receive buffer. When <code>RXC0</code> is set (1), the received data is ready to be read from <code>UDR0</code>.</p>
+<pre><code class="language-admonish info">
+- `TXC0` (Transmit Complete): This flag indicates that the entire frame (including stop bit) has been transmitted.
+- `RXC0` (Receive Complete): This flag indicates that unread data is available in the receive buffer. When `RXC0` is set (1), the received data is ready to be read from `UDR0`.
+
+</code></pre>
 </li>
 </ul>
 <hr />
@@ -245,22 +249,28 @@ UBRR0L = (uint8_t)UBRRn;         // Set low byte
 <ul>
 <li>
 <p><code>RXEN0</code> (Receiver Enable): Setting <code>RXEN0</code> to 1 enables the USART receiver. This allows the microcontroller to read data from the RX pin</p>
-<pre><code class="language-c">UCSR0B |= (1 &lt;&lt; RXEN0);  // Enable receiver
+<pre><code class="language-admonish code">
+```c
+UCSR0B |= (1 &lt;&lt; RXEN0);  // Enable receiver
+```
+
 </code></pre>
 </li>
 <li>
 <p><code>TXEN0</code> (Transmitter Enable): Setting <code>TXEN0</code> to 1 enables the USART transmitter. This allows the microcontroller to send data via the TX pin.</p>
-<pre><code class="language-c">UCSR0B |= (1 &lt;&lt; TXEN0);  // Enable transmitter
+<pre><code class="language-admonish code">
+```c
+UCSR0B |= (1 &lt;&lt; TXEN0);  // Enable transmitter
+```
 </code></pre>
-</li>
-<li>
-<p><code>RXCIE0</code> (Receive Complete Interrupt Enable): Enables interrupt on data reception.</p>
-</li>
-<li>
-<p><code>TXCIE0</code> (Transmit Complete Interrupt Enable): Enables interrupt on transmission completion.</p>
-</li>
-<li>
-<p><code>UDRIE0</code> (Data Register Empty Interrupt Enable): Enables interrupt when the data register is empty.</p>
+<pre><code class="language-admonish info">
+- `RXCIE0` (Receive Complete Interrupt Enable): Enables interrupt on data reception.
+
+- `TXCIE0` (Transmit Complete Interrupt Enable): Enables interrupt on transmission completion.
+
+- `UDRIE0` (Data Register Empty Interrupt Enable): Enables interrupt when the data register is empty.
+
+</code></pre>
 </li>
 </ul>
 <hr />
@@ -305,9 +315,13 @@ UBRR0L = (uint8_t)UBRRn;         // Set low byte
 </li>
 <li>
 <p>For an 8-bit data frame, no parity, and 1 stop bit (a typical UART configuration):</p>
-<pre><code class="language-c">UCSR0C |= (1 &lt;&lt; UCSZ01) | (1 &lt;&lt; UCSZ00); // 8 data bits
+<pre><code class="language-admonish code">
+```c
+UCSR0C |= (1 &lt;&lt; UCSZ01) | (1 &lt;&lt; UCSZ00); // 8 data bits
 UCSR0C &amp;= ~(1 &lt;&lt; USBS0);                 // 1 stop bit
 UCSR0C &amp;= ~((1 &lt;&lt; UPM01) | (1 &lt;&lt; UPM00)); // No parity
+```
+
 </code></pre>
 </li>
 </ul>
@@ -317,12 +331,20 @@ UCSR0C &amp;= ~((1 &lt;&lt; UPM01) | (1 &lt;&lt; UPM00)); // No parity
 <ul>
 <li>
 <p>Transmit: To send data, write a byte to <code>UDR0</code>. This byte is then shifted out serially on the TX pin.</p>
-<pre><code class="language-c">UDR0 = data;  // Send a byte of data
+<pre><code class="language-admonish code">
+```c
+UDR0 = data;  // Send a byte of data
+```
+
 </code></pre>
 </li>
 <li>
 <p>Receive: To receive data, read a byte from <code>UDR0</code>. The <code>RXC0</code> flag (in <code>UCSR0A</code>) indicates when unread data is available</p>
-<pre><code class="language-c">data = UDR0;  // Read a byte of received data
+<pre><code class="language-admonish code">
+```c
+data = UDR0;  // Read a byte of received data
+```
+
 </code></pre>
 </li>
 </ul>
@@ -331,19 +353,27 @@ UCSR0C &amp;= ~((1 &lt;&lt; UPM01) | (1 &lt;&lt; UPM00)); // No parity
 <ol>
 <li>
 <p>Change directory to <code>embeddedC</code> that was made last time and create a new child directory <code>uart</code></p>
-<pre><code class="language-sh">$ cd ~/embeddedC &amp;&amp; mkdir uart &amp;&amp; cd uart
+<pre><code class="language-admonish terminal">
+```sh
+$ cd ~/embeddedC &amp;&amp; mkdir uart &amp;&amp; cd uart
+```
+
 </code></pre>
 </li>
 <li>
 <p>Create a new file inside the the <code>uart</code> directory called <code>uart.c</code></p>
-<pre><code class="language-sh">$ touch uart.c
+<pre><code class="language-admonish terminal">
+```sh
+$ touch uart.c
+```
+
 </code></pre>
 </li>
 <li>
 <p>Now it's time start wrighting out the program:</p>
- <details>
- <summary>Code here... [57 lines]</summary>
-<pre><code class="language-c">#include &lt;avr/io.h&gt;      // Contains all the I/O Register Macros
+<pre><code class="language-admonish code collapsible=true title=&#39;Suppressed code here [57 lines]...&#39;">
+```c
+#include &lt;avr/io.h&gt;      // Contains all the I/O Register Macros
 #include &lt;util/delay.h&gt;  // Generates a Blocking Delay
 
 #define USART_BAUDRATE 9600 // Desired Baud Rate (USBRR)
@@ -400,19 +430,29 @@ int main()
         }
         return 0;
 }
+```
+
 </code></pre>
 </li>
 <li>
 <p>We are now going to copy the <code>Makefile</code> from the <code>blink/</code> created last time, and replace all instances of <code>blink</code> with <code>uart</code> using the regex feature:</p>
-<pre><code class="language-sh">$ cp ../blink/Makefile .
+<pre><code class="language-admonish terminal">
+```sh
+$ cp ../blink/Makefile .
 $ vim Makefile
+```
+
 </code></pre>
 </li>
 <li>
 <p>Inside vim type the following an press enter to find all instances of <code>blink</code> with <code>uart</code></p>
-<pre><code class="language-vim">:%s/\&lt;blink\&gt;/uart/g
+<pre><code class="language-admonish terminal">
+```vim
+:%s/\&lt;blink\&gt;/uart/g
+```
+![](./figures/makeuart.gif)
+
 </code></pre>
-<p><img src="./figures/makeuart.gif" alt="" /></p>
 </li>
 <li>
 <p>Remember like with blink we need to compile and upload the code to the board, ensure it is plugged in, to find the com port on windows:</p>
@@ -420,7 +460,11 @@ $ vim Makefile
 </li>
 <li>
 <p>If the COM port has changed remember to change it in the <code>Makefile</code></p>
-<pre><code class="language-Makefile">PORT = COM#
+<pre><code class="language-admonish code">
+```Makefile
+PORT = COM#
+```
+
 </code></pre>
 </li>
 <li>
@@ -452,7 +496,9 @@ $ vim Makefile
 <ul>
 <li>
 <p>Both programs should send and receive data between each other.</p>
-<pre><code class="language-c">#include &lt;avr/io.h&gt;
+<pre><code class="language-admonish code">
+```c
+#include &lt;avr/io.h&gt;
 
 #define USART_BAUDRATE 9600
 #define BAUD_PRESCALER (((16000000UL / (USART_BAUDRATE * 16UL))) - 1)
@@ -483,6 +529,8 @@ int main() {
         USART_Transmit(receivedData); // 
     }
 }
+```
+
 </code></pre>
 </li>
 </ul>
@@ -493,20 +541,26 @@ int main() {
 <li>
 <p>Compile and run on both devices, wire up:</p>
 <ul>
-<li>First wire up the Tx(board 1) to Rx (board 2)</li>
-<li>Ensure the boards ground pins are connected together</li>
-<li>Send a message</li>
-<li>swap the connections so that Rx(Board 1) and Tx (Board 2)</li>
-<li>Send a message</li>
+<li>
+<p>First wire up the Tx(board 1) to Rx (board 2)</p>
+</li>
+<li>
+<p>Ensure the boards ground pins are connected together</p>
+</li>
+<li>
+<p>Send a message</p>
+</li>
+<li>
+<p>swap the connections so that Rx(Board 1) and Tx (Board 2)</p>
+</li>
+<li>
+<p>Send a message</p>
+<pre><code class="language-admonish warning">
+The should be share a common ground
+
+</code></pre>
+</li>
 </ul>
-<blockquote>
-<p><strong>Note:</strong></p>
-<blockquote>
-<ul>
-<li></li>
-</ul>
-</blockquote>
-</blockquote>
 </li>
 <li>
 <p>Launch Putty and see if you can send data to each other</p>
@@ -559,7 +613,7 @@ int main() {
         <script src="../book.js"></script>
 
         <!-- Custom JS scripts -->
-        <script src="../theme/pagetoc.js"></script>
+        <script src=".././theme/pagetoc.js"></script>
 
 
     </div>

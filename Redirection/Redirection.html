@@ -28,7 +28,11 @@
         <link rel="stylesheet" href="../ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
-        <link rel="stylesheet" href="../theme/pagetoc.css">
+        <link rel="stylesheet" href=".././theme/pagetoc.css">
+        <link rel="stylesheet" href=".././theme/css/mdbook-admonish.css">
+        <link rel="stylesheet" href=".././theme/css/code.css">
+        <link rel="stylesheet" href=".././theme/css/terminal.css">
+        <link rel="stylesheet" href=".././theme/css/output.css">
 
         <!-- MathJax -->
         <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
@@ -179,140 +183,225 @@
 <ul>
 <li>
 <p>Type the following:</p>
-<pre><code class="language-sh">$ ls -l /dev/std*
+<pre><code class="language-admonish terminal">
+```sh
+$ ls -l /dev/std*
+```
+
 </code></pre>
 </li>
 <li>
 <p>Ouput:</p>
-<pre><code class="language-sh">lrwxrwxrwx 1 root root 15 Mar  5 20:19 /dev/stderr -&gt; /proc/self/fd/2
+<pre><code class="language-admonish output">
+```sh
+lrwxrwxrwx 1 root root 15 Mar  5 20:19 /dev/stderr -&gt; /proc/self/fd/2
 lrwxrwxrwx 1 root root 15 Mar  5 20:19 /dev/stdin -&gt; /proc/self/fd/0
 lrwxrwxrwx 1 root root 15 Mar  5 20:19 /dev/stdout -&gt; /proc/self/fd/1
+```
+
 </code></pre>
 </li>
 </ul>
 <p>Stdin (FD0) gets input from the keyboard. stdout (FD1) and stderr (FD2) are sent to the terminal. When using Pipes and Redirections, you can change the way where input is passed from and output and errors are sent to.</p>
-<blockquote>
-<p>The <code>proc</code> filesystem is a pseudo-filesystem which provides an
-interface to kernel data structures.  It is commonly mounted at <code>/proc.</code></p>
-</blockquote>
+<pre><code class="language-admonish info">
+The `proc` filesystem is a pseudo-filesystem which provides an interface to kernel data structures.  It is commonly mounted at `/proc.`
+
+</code></pre>
 <hr />
 <h2 id="2-redirecting-output-to-a-file"><a class="header" href="#2-redirecting-output-to-a-file">2. Redirecting output to a file</a></h2>
 <p>As stated earlier, output (<code>stdout</code>) and error (<code>stderr</code>) of any program is sent to the terminal. You can use the redirection operator <code>&gt;</code> to write the <code>stdout</code> and <code>stderr</code> to a file.</p>
 <p>Take a look at the below example. I am running the <code>uname -mrs</code> command and redirecting the output to a file named <code>uname.log</code>.</p>
 <p>Type the following:</p>
-<pre><code class="language-sh">$ uname -mrs &gt; uname.log
+<pre><code class="language-admonish terminal">
+```sh
+$ uname -mrs &gt; uname.log
+```
+
 </code></pre>
 <p>Then type:</p>
-<pre><code class="language-sh">$ cat uname.log
+<pre><code class="language-admonish output">
+```sh
+$ cat uname.log
 Linux 5.10.0-8-amd64 x86_64
+```
+
 </code></pre>
 <p>And then empty the file by using the <code>echo</code> command with no arguments or flags  and <code>&gt;</code>:</p>
-<pre><code class="language-sh">echo &gt; uname.log
+<pre><code class="language-admonish terminal">
+```sh
+echo &gt; uname.log
+```
+
 </code></pre>
-<blockquote>
-<p><strong>Heads Up:</strong> When using <code>&gt;</code> operator, if the file is not available, it will be created. And if the file exists already, it will be overridden with new contents.</p>
-</blockquote>
+<pre><code class="language-admonish info"> 
+When using `&gt;` operator, if the file is not available, it will be created. And if the file exists already, it will be overridden with new contents.
+
+</code></pre>
 <p>You can also use the file descriptor number for stdout(1) before the redirection operator to redirect output to a file.</p>
 <p>Try this too:</p>
-<pre><code class="language-sh">$ uname -mrs 1&gt; uname.log
+<pre><code class="language-admonish terminal">
+```sh
+$ uname -mrs 1&gt; uname.log
+```
+
 </code></pre>
-<blockquote>
-<p>A single redirection operator (<code>&gt;</code>) will only override the contents of a file, if the file already exists. However, if you want to append the contents instead of overwriting to the same file, use double redirection operator (i.e. <code>&gt;&gt;</code>). You can also use stdout file descriptor(1) here too.</p>
-</blockquote>
+<pre><code class="language-admonish info">
+A single redirection operator (`&gt;`) will only override the contents of a file, if the file already exists. However, if you want to append the contents instead of overwriting to the same file, use double redirection operator (i.e. `&gt;&gt;`). You can also use stdout file descriptor(1) here too.
+
+</code></pre>
 <p>Next type:</p>
-<pre><code class="language-sh">$ whoami &gt;&gt; uname.log
+<pre><code class="language-admonish terminal">
+```sh
+$ whoami &gt;&gt; uname.log
+```
+
 </code></pre>
 <p>and:</p>
-<pre><code class="language-sh">$ echo $SHELL 1&gt;&gt; uname.log
+<pre><code class="language-admonish terminal">
+```sh
+$ echo $SHELL 1&gt;&gt; uname.log
+```
+
 </code></pre>
 <p>Finally:</p>
-<pre><code class="language-sh">$ cat uname.log
+<pre><code class="language-admonish terminal">
+```sh
+$ cat uname.log
+```
+
 </code></pre>
-<p><strong>Output:</strong></p>
-<pre><code class="language-sh">Linux 5.4.0-1091-azure x86_64
+<pre><code class="language-admonish output">
+```sh
+Linux 5.4.0-1091-azure x86_64
 jovyan
 /bin/bash
+```
+
 </code></pre>
 <hr />
 <h2 id="3-how-to-handle-stderr"><a class="header" href="#3-how-to-handle-stderr">3. How to handle Stderr</a></h2>
 <p>Every program generates both output and error and both are sent to the terminal. In many cases, you may wish to either ignore the error or isolate the errors and redirect it to a separate file for troubleshooting.</p>
 <p>Let's take a simple example of running the <code>ls</code> command to see how this works.Say you are trying to list two files out of which only one is present.</p>
 <p>Target:</p>
-<pre><code class="language-sh">$ ls -l uname.log u1.log
+<pre><code class="language-admonish terminal">
+```sh
+$ ls -l uname.log u1.log
+```
+
 </code></pre>
 <p>and you will see:</p>
-<pre><code class="language-sh">ls: cannot access 'u1.log': No such file or directory
+<pre><code class="language-admonish error">
+```sh
+ls: cannot access 'u1.log': No such file or directory
 -rw-r--r-- 1 jovyan users 1 Mar  6 14:30 uname.log
+```
+
 </code></pre>
 <p>Here you are getting both error and output in the terminal.</p>
 <p>Now you will use the same <code>ls</code> command again but this time redirecting the output to a file.</p>
-<pre><code class="language-sh">$ ls -l uname.log u1.log &gt; ls.op
+<pre><code class="language-admonish error">
+```sh
+$ ls -l uname.log u1.log &gt; ls.op
 ls: cannot access 'u1.log': No such file or directory
+```
+
 </code></pre>
 <p>As you can see from the output <code>&gt;</code> operator redirects stdout(1) to a file but stderr(2) is sent to the terminal.</p>
 <p>To redirect stderr to a file use the <code>2&gt;</code> operator. It is mandatory to use the file descriptor for stderr(2) before the redirection operator <code>&gt;</code> that will send the error alone to a file.</p>
-<pre><code class="language-sh">ls -l uname.log u1.log &gt; ls.op 2&gt; ls.err
+<pre><code class="language-admonish terminal">
+```sh
+ls -l uname.log u1.log &gt; ls.op 2&gt; ls.err
+```
+
 </code></pre>
 <p>Run the following command to see the contents of <code>ls.op</code> and <code>ls.err</code></p>
-<pre><code class="language-sh">$ cat &lt; ls.err
+<pre><code class="language-admonish error">
+```sh
+$ cat &lt; ls.err
 ls: cannot access 'u1.log': No such file or directory
+```
+
 </code></pre>
 <p>Now, stdout and stderr are written to separate files. You can also send stdout and stderr to a single file too.</p>
-<pre><code class="language-sh">ls -l uname.log u1.log 1&gt; ls.op 2&gt; ls.op
+<pre><code class="language-admonish terminal">
+```sh
+ls -l uname.log u1.log 1&gt; ls.op 2&gt; ls.op
+```
+
 </code></pre>
 <p>From <strong>bash 4.4</strong>, you can also use &amp;&gt; sign to redirect both stdout and stderr to a file.</p>
 <hr />
 <h2 id="4-what-is-devnull"><a class="header" href="#4-what-is-devnull">4. What is /dev/null?</a></h2>
 <p>Null is a character special file that accepts input and discards the input and produces no output. To put this simply, null discards whatever you redirect to it.</p>
 <p>Try:</p>
-<pre><code class="language-sh">$ ls -l /dev/null
+<pre><code class="language-admonial terminal">
+```sh
+$ ls -l /dev/null
+```
+
 </code></pre>
 <p>Output:</p>
-<pre><code class="language-sh">crw-rw-rw- 1 root root 1, 3 Mar  5 20:19 /dev/null
+<pre><code class="language-admonial output">
+```sh
+crw-rw-rw- 1 root root 1, 3 Mar  5 20:19 /dev/null
+```
+
 </code></pre>
 <p>Why does the null matter in redirection? You might wonder. In some cases, you may wish not to print or store stdout or stderr. In that case, you can redirect either stdout or stderr to <code>/dev/null</code> which will discard the stream of input.</p>
-<blockquote>
-<blockquote>
-<p><code>c</code> character device based file Within Linux devices such as hardware are characterised in two ways:
-Character Devices (<code>c</code>) which are devices which transfer data in characters also known as bytes or bits such as mice, speaker etc.</p>
-<p>The file type is one of the following characters:
-?-   <code>-</code>  regular file</p>
-<ul>
-<li><code>b</code>  block special file</li>
-<li><code>c</code>  character special file</li>
-<li><code>C</code>  high performance ("contiguous data") file</li>
-<li><code>d</code>  directory</li>
-<li><code>D</code>  door (Solaris 2.5 and up)</li>
-<li><code>l</code>  symbolic link</li>
-<li><code>M</code>  off-line ("migrated") file (Cray DMF)</li>
-<li><code>n</code>  network special file (HP-UX)</li>
-<li><code>p</code>  FIFO (named pipe)</li>
-<li><code>P</code>  port (Solaris 10 and up)</li>
-<li><code>s</code>  socket</li>
-<li><code>?</code>  some other file type</li>
-</ul>
-</blockquote>
-</blockquote>
+<pre><code class="language-admonish info">
+`c` character device based file Within Linux devices such as hardware are characterised in two ways:
+Character Devices (`c`) which are devices which transfer data in characters also known as bytes or bits such as mice, speaker etc.
+
+The file type is one of the following characters:
+?-   `-`  regular file
+-   `b`  block special file
+-   `c`  character special file
+-   `C`  high performance ("contiguous data") file
+-   `d`  directory
+-   `D`  door (Solaris 2.5 and up)
+-   `l`  symbolic link
+-   `M`  off-line ("migrated") file (Cray DMF)
+-   `n`  network special file (HP-UX)
+-   `p`  FIFO (named pipe)
+-   `P`  port (Solaris 10 and up)
+-   `s`  socket
+-   `?`  some other file type
+
+</code></pre>
 <p>Try the following commands:</p>
 <ul>
 <li>
 <p>Stdout and Stderr to Null</p>
-<pre><code class="language-sh">$ date &gt; /dev/null
+<pre><code class="language-admonish terminal">
+```sh
+$ date &gt; /dev/null
+```
+
 </code></pre>
 </li>
 <li>
 <p>Stdout to Null</p>
-<pre><code class="language-sh">$ date 1&gt; /dev/null    
+<pre><code class="language-admonish terminal">
+```sh
+$ date 1&gt; /dev/null    
+```
+
 </code></pre>
 </li>
 <li>
 <p>WRONG COMMAND, Stderr to Null</p>
-<pre><code class="language-sh">$ dateee 2&gt; /dev/null 
+<pre><code class="language-admonish terminal">```sh
+$ dateee 2&gt; /dev/null 
+```
 </code></pre>
 </li>
 <li>
 <p>Stdout/Stderr to Null</p>
-<pre><code class="language-sh">$ date &amp;&gt; /dev/null    
+<pre><code class="language-admonish error">
+```sh
+$ date &amp;&gt; /dev/null    
+```
+
 </code></pre>
 </li>
 </ul>
@@ -320,33 +409,59 @@ Character Devices (<code>c</code>) which are devices which transfer data in char
 <h2 id="5-input-redirection-in-bash"><a class="header" href="#5-input-redirection-in-bash">5. Input Redirection in Bash</a></h2>
 <p>Similar to how you are redirecting the output and error to a file, you can also pass inputs to a command using input redirection operator (<code>&lt;</code>).</p>
 <p>Let’s start with a simple word count program:</p>
-<pre><code class="language-sh">$ wc -l &lt; uname.log
+<pre><code class="language-admonish terminal">
+```sh
+$ wc -l &lt; uname.log
+```
+
 </code></pre>
 <p>Here, you are redirecting the contents of <code>uname.log</code> file to the word count to find the number of lines.</p>
 <p><strong>Output:</strong></p>
-<pre><code class="language-sh">1
+<pre><code class="language-admonish output">
+```sh
+1
+```
+
 </code></pre>
 <p>You can also pass stdin file descriptor (0) when redirecting the input.</p>
 <p>Try this:</p>
-<pre><code class="language-sh">$ wc -l 0&lt; uname.log
+<pre><code class="language-admonish output">
+```sh
+$ wc -l 0&lt; uname.log
 1
+```
+
 </code></pre>
 <p>You can combine the input and output redirection operators as shown below.</p>
-<pre><code class="language-sh">wc -l &lt; uname.log &amp;&gt; wc.op
+<pre><code class="language-admonish terminal">
+```sh
+wc -l &lt; uname.log &amp;&gt; wc.op
+```
 </code></pre>
 <p><strong>Output:</strong></p>
-<pre><code class="language-sh">$ cat wc.op 
+<pre><code class="language-admonish output">
+```sh
+$ cat wc.op 
 1
+```
+
 </code></pre>
 <p>Input redirection will be used along with a while loop to read the content of a file line by line.</p>
 <hr />
 <h2 id="6-input-redirection-will-be-used-along-with-a-while-loop-to-read-the-content-of-a-file-line-by-line"><a class="header" href="#6-input-redirection-will-be-used-along-with-a-while-loop-to-read-the-content-of-a-file-line-by-line">6. Input redirection will be used along with a while loop to read the content of a file line by line.</a></h2>
 <p>Take a look at the below example. I am passing the <code>/etc/passwd</code> file as the input to the while command. Here the read command will read line by line and store it in the variable <code>VAL</code> and further down in the loop condition is written to check if the user is available.</p>
 <p>Create a bash script called <code>alertUser.sh</code></p>
-<pre><code class="language-sh">nano alertUser.sh
+<pre><code class="language-admonish terminal">
+```sh
+nano alertUser.sh
+```
+
 </code></pre>
 <p>and fill with the following code:</p>
-<pre><code class="language-sh">#! /usr/bin/env bash
+<pre><code class="language-admonish code">
+
+```sh
+#! /usr/bin/env bash
 while read VAL; do   
   NAME=$(echo $VAL | awk -F  ":" '/1/ {print $1}' )
   if [[ $NAME -eq $(cat &lt; uname.log | awk 'NR==2') ]];then
@@ -354,27 +469,33 @@ while read VAL; do
    break
   fi
 done &lt; /etc/passwd
+```
+
 </code></pre>
 <p>If you have followed this lab exactly,  <code>$(cat &lt; uname.log | awk 'NR==2')</code> should contain your system username.</p>
 <p>This is not an optimal way to achieve the task of finding the user but for demonstration purposes, this will do.</p>
 <p>Now, make the script executable and run it:</p>
-<pre><code class="language-sh">$ chmod +x alertUser.sh
+<pre><code class="language-admonish terminal">
+```sh
+$ chmod +x alertUser.sh
+```
+
 </code></pre>
 <p><strong>Ouput:</strong></p>
-<pre><code class="language-sh">$ bash alertUser.sh
+<pre><code class="language-admonish output">
+```sh
+$ bash alertUser.sh
 User spotted
+```
+
 </code></pre>
-<blockquote>
-<p><strong>Exploration</strong></p>
-<blockquote>
-<p>run these commands from the script seperatley to explore what is going on</p>
-<ul>
-<li><code>cat /etc/passwd</code></li>
-<li><code>cat /etc/passwd | awk -F  ":" '/1/ {print $1}'</code></li>
-<li><code>cat &lt; uname.log | awl 'NR==2')</code></li>
-</ul>
-</blockquote>
-</blockquote>
+<pre><code class="language-admonish example title=&#39;Extra&#39;">
+Run these commands from the script seperatley to explore what is going on
+- `cat /etc/passwd`
+- `cat /etc/passwd | awk -F  ":" '/1/ {print $1}'`
+- `cat &lt; uname.log | awl 'NR==2')`
+
+</code></pre>
 
                     </main>
                     <nav class="nav-wrapper" aria-label="Page navigation">
@@ -421,7 +542,7 @@ User spotted
         <script src="../book.js"></script>
 
         <!-- Custom JS scripts -->
-        <script src="../theme/pagetoc.js"></script>
+        <script src=".././theme/pagetoc.js"></script>
 
 
     </div>

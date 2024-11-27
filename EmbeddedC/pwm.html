@@ -28,7 +28,11 @@
         <link rel="stylesheet" href="../ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
-        <link rel="stylesheet" href="../theme/pagetoc.css">
+        <link rel="stylesheet" href=".././theme/pagetoc.css">
+        <link rel="stylesheet" href=".././theme/css/mdbook-admonish.css">
+        <link rel="stylesheet" href=".././theme/css/code.css">
+        <link rel="stylesheet" href=".././theme/css/terminal.css">
+        <link rel="stylesheet" href=".././theme/css/output.css">
 
         <!-- MathJax -->
         <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
@@ -204,22 +208,20 @@
 </tbody></table>
 </div>
 <ul>
-<li><code>COM0A1</code>: Compare Output Mode for <code>OC0A</code>.
+<li>
+<p><code>COM0A1</code>: Compare Output Mode for <code>OC0A</code>.</p>
 <ul>
 <li>Setting <code>COM0A1</code> to 1 enables non-inverting PWM output on <code>OC0A</code> (Pin <code>PD6</code>).
-<blockquote>
-<p>Note:</p>
-<blockquote>
-<ul>
-<li>In non-inverting mode, the output starts high at the beginning of the timer cycle and goes low when the timer reaches the value in <code>OCR0A</code>.</li>
-<li>The duty cycle is therefore determined by the value in <code>OCR0A</code>: a higher value keeps the signal high for a longer portion of the cycle</li>
-</ul>
-</blockquote>
-</blockquote>
+<pre><code class="language-admonish note">
+- In non-inverting mode, the output starts high at the beginning of the timer cycle and goes low when the timer reaches the value in `OCR0A`.
+- The duty cycle is therefore determined by the value in `OCR0A`: a higher value keeps the signal high for a longer portion of the cycle
+
+</code></pre>
 </li>
 </ul>
 </li>
-<li><code>WGM01</code> and <code>WGM00</code>: Waveform Generation Mode.
+<li>
+<p><code>WGM01</code> and <code>WGM00</code>: Waveform Generation Mode.</p>
 <ul>
 <li>Setting both <code>WGM01</code> and <code>WGM00</code> to 1 puts <code>Timer0</code> in <strong>Fast PWM mode</strong>.</li>
 </ul>
@@ -275,49 +277,45 @@
 </tbody></table>
 </div>
 <p>The following code snippets show how to set each prescaler in <code>TCCR0B</code>:</p>
-<pre><code class="language-c">TCCR0B = (1 &lt;&lt; CS01); // Prescaler = 8
+<pre><code class="language-admonish code">
+```c
+TCCR0B = (1 &lt;&lt; CS01); // Prescaler = 8
 
 TCCR0B = (1 &lt;&lt; CS01) | (1 &lt;&lt; CS00); // Prescaler = 64
 
 TCCR0B = (1 &lt;&lt; CS02); // Prescaler = 256
 
 TCCR0B = (1 &lt;&lt; CS02) | (1 &lt;&lt; CS00); // Prescaler = 1024
+```
+
 </code></pre>
 <hr />
 <h2 id="building-the-pwmc-source-code"><a class="header" href="#building-the-pwmc-source-code">Building the <code>pwm.c</code> source code</a></h2>
-<blockquote>
-<p><strong>Note:</strong></p>
-<blockquote>
-<ul>
-<li>Remember to include in your <code>PATH</code> <code>avr-gcc</code>, <code>avrdude</code> and <code>make</code></li>
-<li>Open <code>~/.bashrc</code> and add the following lines, then save and run the command <code>source ~/.bashrc</code> to update the current session with the new <code>PATH</code>
-<ul>
-<li>Uni machines
-<pre><code class="language-sh"># ~/.bashrc
-export PATH=$PATH:"/c/ProgramData/arduino-ide-v2/Local/Arduino15/packages/arduino/tools/avr-gcc/7.3.0-atmel3.6.1-arduino7/bin"
-export PATH=$PATH:"/c/ProgramData/arduino-ide-v2/Local/Arduino15/packages/arduino/tools/avr-dude/6.3.0-arduino17/bin"
-export PATH=$PATH:"/c/Program Files/GCC-Windows-MingW-2.0.0/w64devkit/bin"
+<pre><code class="language-admonish warning">
+- Remember to include in your `PATH` `avr-gcc`, `avrdude` and `make`
+- Open `~/.bashrc` and add the following lines, then save and run the command `source ~/.bashrc` to update the current session with the new `PATH`
+  -  Uni machines
+     ```sh
+     # ~/.bashrc
+     export PATH=$PATH:"/c/ProgramData/arduino-ide-v2/Local/Arduino15/packages/arduino/tools/avr-gcc/7.3.0-atmel3.6.1-arduino7/bin"
+     export PATH=$PATH:"/c/ProgramData/arduino-ide-v2/Local/Arduino15/packages/arduino/tools/avr-dude/6.3.0-arduino17/bin"
+     export PATH=$PATH:"/c/Program Files/GCC-Windows-MingW-2.0.0/w64devkit/bin"
+     ```
+  - Your personal windows machine
+     ```sh
+     # ~/.bashrc
+     export PATH=$PATH:"/c/Users/YOURUSERNAME/AppData/Local/Arduino15/packages/arduino/tools/avr-gcc/7.3.0-atmel3.6.1-arduino7/bin"
+     export PATH=$PATH:"/c/Users/YOURUSERNAME/AppDataLocal/Arduino15/packages/arduino/tools/avr-dude/6.3.0-arduino17/bin"
+     export PATH=$PATH:"/c/Program Files/w64devkit/bin"
+     ```
+  - You can install w64devkit from here:
+    - [https://github.com/skeeto/w64devkit/releases](https://github.com/skeeto/w64devkit/releases)
+
 </code></pre>
-</li>
-<li>Your personal windows machine
-<pre><code class="language-sh"># ~/.bashrc
-export PATH=$PATH:"/c/Users/YOURUSERNAME/AppData/Local/Arduino15/packages/arduino/tools/avr-gcc/7.3.0-atmel3.6.1-arduino7/bin"
-export PATH=$PATH:"/c/Users/YOURUSERNAME/AppDataLocal/Arduino15/packages/arduino/tools/avr-dude/6.3.0-arduino17/bin"
-export PATH=$PATH:"/c/Program Files/w64devkit/bin"
-</code></pre>
-</li>
-<li>You can install w64devkit from here:
-<ul>
-<li><a href="https://github.com/skeeto/w64devkit/releases">https://github.com/skeeto/w64devkit/releases</a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</blockquote>
-</blockquote>
 <p>Now we have an understanding of the what is going on under the hood we can convert this <code>pwm.ino</code> into and embedded version.</p>
-<pre><code class="language-c">int pwmPin = 6;      // LED connected to digital pin 9
+<pre><code class="language-admonish code">
+```c
+int pwmPin = 6;      // LED connected to digital pin 9
 
 void setup() {
     pinMode(pwmPin, OUTPUT);  // sets the pin as output
@@ -325,6 +323,8 @@ void setup() {
 }
 
 void loop(){}
+```
+
 </code></pre>
 <p>Let's have a breakdown of what this is doing incomparison to the embedded version:</p>
 <ul>
@@ -355,17 +355,27 @@ void loop(){}
 <ol>
 <li>
 <p>Create a new directory inside <code>embeddedC</code> called <code>pwm</code></p>
-<pre><code class="language-sh">$ mkdir -p ~/embeddedC/pwm &amp;&amp; cd embeddedC/pwm
+<pre><code class="language-admonish terminal">
+```sh
+$ mkdir -p ~/embeddedC/pwm &amp;&amp; cd embeddedC/pwm
+```
+
 </code></pre>
 </li>
 <li>
 <p>Create a new file inside the the <code>pwm</code> directory called <code>pwm.c</code></p>
-<pre><code class="language-sh">$ touch pwm.c
+<pre><code class="language-admonish code">
+```sh
+$ touch pwm.c
+```
+
 </code></pre>
 </li>
 <li>
 <p>Now it's time start wrighting out the program:</p>
-<pre><code class="language-c">#include &lt;avr/io.h&gt;
+<pre><code class="language-admonish code">
+```c
+#include &lt;avr/io.h&gt;
 
 void PWM_Init()
 {
@@ -391,58 +401,47 @@ int main()
         OCR0A = 127; // Example: 50% duty cycle
     }
 }
+```
+
 </code></pre>
-<blockquote>
-<p><strong>Explanation of Code:</strong></p>
-<blockquote>
-<ol>
-<li><strong>Setting PD6 as Output</strong>:
-<ul>
-<li><code>DDRD |= (1 &lt;&lt; PD6);</code> configures PD6 as an output pin to output the PWM signal.</li>
-</ul>
-</li>
-<li><strong>Configuring Timer0 for Fast PWM Mode</strong>:
-<ul>
-<li><strong>TCCR0A</strong>:
-<ul>
-<li><code>(1 &lt;&lt; COM0A1)</code>: Sets non-inverting mode for PWM on OC0A.</li>
-<li><code>(1 &lt;&lt; WGM01) | (1 &lt;&lt; WGM00)</code>: Sets Fast PWM mode.</li>
-</ul>
-</li>
-<li><strong>TCCR0B</strong>:
-<ul>
-<li><code>(1 &lt;&lt; CS01) | (1 &lt;&lt; CS00)</code>: Sets a prescaler of 64, controlling the PWM frequency.</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><strong>Setting the Duty Cycle</strong>:
-<ul>
-<li><strong>OCR0A</strong>: Controls the duty cycle. A value of 127 provides approximately a 50% duty cycle.</li>
-<li><strong>Range</strong>: <code>OCR0A</code> can range from 0 to 255, where:
-<ul>
-<li><strong>0</strong>: 0% duty cycle (always low)</li>
-<li><strong>127</strong>: 50% duty cycle</li>
-<li><strong>255</strong>: 100% duty cycle (always high)</li>
-</ul>
-</li>
-</ul>
-</li>
-</ol>
-</blockquote>
-</blockquote>
+<pre><code class="language-admonish example title=&#39;Explanation of code&#39;">
+1. **Setting PD6 as Output**:
+     - `DDRD |= (1 &lt;&lt; PD6);` configures PD6 as an output pin to output the PWM signal.
+2. **Configuring Timer0 for Fast PWM Mode**:
+     - **TCCR0A**:
+         - `(1 &lt;&lt; COM0A1)`: Sets non-inverting mode for PWM on OC0A.
+         - `(1 &lt;&lt; WGM01) | (1 &lt;&lt; WGM00)`: Sets Fast PWM mode.
+     - **TCCR0B**:
+         - `(1 &lt;&lt; CS01) | (1 &lt;&lt; CS00)`: Sets a prescaler of 64, controlling the PWM frequency.
+. **Setting the Duty Cycle**:
+     - **OCR0A**: Controls the duty cycle. A value of 127 provides approximately a 50% duty cycle.
+     - **Range**: `OCR0A` can range from 0 to 255, where:
+         - **0**: 0% duty cycle (always low)
+         - **127**: 50% duty cycle
+         - **255**: 100% duty cycle (always high)
+
+</code></pre>
 </li>
 <li>
 <p>We are now going to copy the <code>Makefile</code> from the <code>blink/</code> created last time, and replace all instances of <code>blink</code> with <code>pwm</code> using the regex feature:</p>
-<pre><code class="language-sh">$ cp ../blink/Makefile .
+<pre><code class="language-admonish terminal">
+```sh
+$ cp ../blink/Makefile .
 $ vim Makefile
+```
+
 </code></pre>
 </li>
 <li>
 <p>Inside vim type the following an press enter to find all instances of <code>blink</code> with <code>pwm</code></p>
-<pre><code class="language-vim">:%s/\&lt;blink\&gt;/pwm/g
+<pre><code class="language-admonish terminal">
+```vim
+:%s/\&lt;blink\&gt;/pwm/g
+```
+
+![](./figures/makepwm.gif)
+
 </code></pre>
-<p><img src="./figures/makepwm.gif" alt="" /></p>
 </li>
 <li>
 <p>Remember like with blink we need to compile and upload the code to the board, ensure it is plugged in, to find the com port on windows:</p>
@@ -450,7 +449,11 @@ $ vim Makefile
 </li>
 <li>
 <p>If the COM port has changed remember to change it in the <code>Makefile</code></p>
-<pre><code class="language-Makefile">PORT = COM#
+<pre><code class="language-admonish code">
+```Makefile
+PORT = COM#
+```
+
 </code></pre>
 </li>
 <li>
@@ -484,9 +487,9 @@ $ vim Makefile
 </li>
 <li>
 <p>Then, use another <code>for</code> loop to decrement it from 255 back to 0.</p>
-  <details>
-  <summary>Code here... </summary>
-<pre><code class="language-c">#include &lt;avr/io.h&gt;
+<pre><code class="language-admonish code collapsible=true title=&#39;Suppress code here... [31 lines]&#39;">
+```c
+#include &lt;avr/io.h&gt;
 
 void PWM_Init()
 {
@@ -518,11 +521,11 @@ int main()
         }
     }
 }
+```
 
 </code></pre>
 </li>
 </ul>
-</details>
 <h3 id="exercise-3-changing-the-pwm-frequency"><a class="header" href="#exercise-3-changing-the-pwm-frequency">Exercise 3: Changing the PWM Frequency</a></h3>
 <p>Experiment with different prescaler values to change the PWM frequency. Change the <strong>CS02:CS00</strong> bits in <strong>TCCR0B</strong> to see the effects.</p>
 <p><strong>Task</strong>:</p>
@@ -575,7 +578,7 @@ int main()
         <script src="../book.js"></script>
 
         <!-- Custom JS scripts -->
-        <script src="../theme/pagetoc.js"></script>
+        <script src=".././theme/pagetoc.js"></script>
 
 
     </div>

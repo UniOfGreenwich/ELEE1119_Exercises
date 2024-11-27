@@ -28,7 +28,11 @@
         <link rel="stylesheet" href="../ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
-        <link rel="stylesheet" href="../theme/pagetoc.css">
+        <link rel="stylesheet" href=".././theme/pagetoc.css">
+        <link rel="stylesheet" href=".././theme/css/mdbook-admonish.css">
+        <link rel="stylesheet" href=".././theme/css/code.css">
+        <link rel="stylesheet" href=".././theme/css/terminal.css">
+        <link rel="stylesheet" href=".././theme/css/output.css">
 
         <!-- MathJax -->
         <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
@@ -277,7 +281,9 @@
 <li>
 <p><strong>To set a PWM signal at 1 kHz frequency</strong>:</p>
 <p>Determine the Period in Nanoseconds, for 1 kHz, the period is 1 ms, which is 1,000,000 ns.</p>
-<pre><code class="language-sh"># Set period to 1,000,000 ns (1 ms for 1 kHz)
+<pre><code class="language-admonish terminal">
+```sh
+# Set period to 1,000,000 ns (1 ms for 1 kHz)
 echo 1000000 &gt; /sys/class/pwm/pwmchip1/pwm0/period  
 
 # Set duty cycle to 500,000 ns (50% duty cycle)
@@ -285,12 +291,16 @@ echo 500000 &gt; /sys/class/pwm/pwmchip1/pwm0/duty_cycle
 
 # Enable the PWM output 
 echo 1 &gt; /sys/class/pwm/pwmchip1/pwm0/enable  
+```
+
 </code></pre>
 </li>
 <li>
 <p><strong>Setting a 50 kHz PWM Signal</strong>:</p>
 <p>Determine the Period in Nanoseconds, for 50 kHz, the period is \(\frac{1}{50,000}\) seconds, or 20 microseconds, which is 20,000ns</p>
-<pre><code class="language-sh"># Set period to 20,000 ns (20 us for 50 kHz)
+<pre><code class="language-admonish terminal">
+```sh
+# Set period to 20,000 ns (20 us for 50 kHz)
 echo 20000 &gt; /sys/class/pwm/pwmchip1/pwm0/period 
 
 # Set duty cycle to 10,000 ns (50% duty cycle)
@@ -298,6 +308,8 @@ echo 10000 &gt; /sys/class/pwm/pwmchip1/pwm0/duty_cycle
 
 # Enable the PWM output
 echo 1 &gt; /sys/class/pwm/pwmchip1/pwm0/enable
+```
+
 </code></pre>
 </li>
 </ul>
@@ -305,11 +317,14 @@ echo 1 &gt; /sys/class/pwm/pwmchip1/pwm0/enable
 <li>
 <p>So what pins are capable of being configured to the PWM mode, we wrote a script, <code>config_pin_report.sh</code>, for this earlier that produced an <code>pin_config_report.txt</code></p>
 <p>You can <code>cat</code> this file and <code>grep</code> on <code>pwm</code>...</p>
-<pre><code class="language-sh">$ cat /path/to/pin_config_reprot.txt | grep pwm
+<pre><code class="language-admonish terminal">
+```sh
+$ cat /path/to/pin_config_reprot.txt | grep pwm
+```
 </code></pre>
- <details>
- <summary>Example output...</summary>
-<pre><code>P8_13   | default  | default gpio gpio_pu gpio_pd gpio_input pwm
+<pre><code class="language-admonish output collapsible=true">
+```
+P8_13   | default  | default gpio gpio_pu gpio_pd gpio_input pwm
 P8_14   | default  | default gpio gpio_pu gpio_pd gpio_input pwm
 P8_17   | default  | default gpio gpio_pu gpio_pd gpio_input pwm
 P8_19   | default  | default gpio gpio_pu gpio_pd gpio_input pwm
@@ -334,8 +349,9 @@ P9_29   | -        | default gpio gpio_pu gpio_pd gpio_input spi pwm pruout prui
 P9_30   | default  | default gpio gpio_pu gpio_pd gpio_input spi pwm pruout pruin
 P9_31   | -        | default gpio gpio_pu gpio_pd gpio_input spi_sclk pwm pruout pruin
 P9_42   | default  | default gpio gpio_pu gpio_pd gpio_input spi_cs spi_sclk uart pwm pru_ecap
+```
+
 </code></pre>
- </details>
 </li>
 <li>
 <p>Configuring the pin without <code>config-pin</code></p>
@@ -345,11 +361,15 @@ P9_42   | default  | default gpio gpio_pu gpio_pd gpio_input spi_cs spi_sclk uar
 </li>
 <li>
 <p>Find the Pinmux Helper Directory: The pinmux helper directory is dynamically created based on the device tree overlay. To list the available pinmux helpers:</p>
-<pre><code class="language-sh">$ ls /sys/devices/platform/ocp/ | grep pinmux
+<pre><code class="language-admonish terminal">
+```sh
+$ ls /sys/devices/platform/ocp/ | grep pinmux
+```
+
 </code></pre>
-  <details>
-  <summary>Example output...</summary>
-<pre><code>ocp:A15_pinmux
+<pre><code class="language-admonish output collapsible=true">
+```
+ocp:A15_pinmux
 ocp:P8_07_pinmux
 ocp:P8_08_pinmux
 ocp:P8_09_pinmux
@@ -385,17 +405,22 @@ ocp:P9_41_pinmux
 ocp:P9_42_pinmux
 ocp:P9_91_pinmux
 ocp:P9_92_pinmux
+```
+
 </code></pre>
-  </details>
 </li>
 <li>
 <p>To set the Pinmux Mode write to the state file to set the pin function</p>
-<pre><code class="language-sh">echo pwm &gt; /sys/devices/platform/ocp/ocp\:P9_14_pinmux/state
+<pre><code class="language-admonish terminal">
+```sh
+echo pwm &gt; /sys/devices/platform/ocp/ocp\:P9_14_pinmux/state
 cat /sys/devices/platform/ocp/ocp\:P9_14_pinmux/state
 pwm
 echo default &gt; /sys/devices/platform/ocp/ocp\:P9_14_pinmux/state
 cat /sys/devices/platform/ocp/ocp\:P9_14_pinmux/state
 default
+```
+
 </code></pre>
 </li>
 <li>
@@ -403,8 +428,6 @@ default
 </li>
 <li>
 <p>Mapping of PWM Channels to Physical Pins on the BeagleBone Black, here is a small sample:</p>
-</li>
-</ul>
 <div class="table-wrapper"><table><thead><tr><th>PWM Channel</th><th>PWM Chip</th><th>PWM Subsystem</th><th>Physical Pin</th><th>Pin Description</th></tr></thead><tbody>
 <tr><td>pwm-0:0</td><td>pwmchip0</td><td>eCAP0</td><td>P9_42</td><td>eCAP0_IN_PWM0_OUT</td></tr>
 <tr><td>pwm-1:0</td><td>pwmchip1</td><td>eHRPWM0A</td><td>P9_22</td><td>eHRPWM0A</td></tr>
@@ -417,27 +440,22 @@ default
 <tr><td>pwm-7:1</td><td>pwmchip7</td><td>eHRPWM2B</td><td>P8_13</td><td>eHRPWM2B</td></tr>
 </tbody></table>
 </div>
-<blockquote>
-<p><strong>Note</strong>:</p>
-<blockquote>
-<ul>
-<li>paths are <code>/sys/class/pwm/</code> and the pwm channel is prepended to the end
-<ul>
-<li>i.e. <code>/sys/class/pwm/pwm-4:0</code></li>
-</ul>
+<pre><code class="language-admonish note">
+- paths are `/sys/class/pwm/` and the pwm channel is prepended to the end 
+    -  i.e. `/sys/class/pwm/pwm-4:0` 
+
+</code></pre>
 </li>
 </ul>
-</blockquote>
-</blockquote>
 </li>
 </ol>
 <h2 id="2-building-the-pwm-c-library"><a class="header" href="#2-building-the-pwm-c-library">2: Building the PWM C library</a></h2>
 <ul>
 <li>
 <p>First, create a header file that declares the functions and defines necessary constants and structs, call the file <code>~/pwm/pwm.h</code>:</p>
-  <details>
-  <summary>Suppressed code here [57 lines]...</summary>
-<pre><code class="language-h">#ifndef PWM_H
+<pre><code class="language-admonish code collapsible=true title=&#39;Suppressed code here [57 lines]&#39;">
+```h
+#ifndef PWM_H
 #define PWM_H
 
 #include &lt;stdio.h&gt;
@@ -500,14 +518,15 @@ int pwm_set_pin_mode(PWM *pwm);
 int pwm_unset_pin_mode(PWM *pwm);
 
 #endif // PWM_H
+```
+
 </code></pre>
-  </details>
 </li>
 <li>
 <p>Next, create the <code>pwm.c</code> file that implements the functions declared in <code>pwm.h</code></p>
-  <details>
-  <summary>Suppressed code here [91 lines]...</summary>
-<pre><code class="language-h">#include "pwm.h"
+<pre><code class="language-admonish code collapsible=true title=&#39;Suppressed code here [91 lines]&#39;">
+```h
+#include "pwm.h"
 
 // Initialize PWM structure with precomputed file paths
 int pwm_init(PWM *pwm, const char *pin_name) {
@@ -655,67 +674,74 @@ int pwm_unset_pin_mode(PWM *pwm) {
     fclose(fp);
     return 0;
 }
+```
+
 </code></pre>
-  </details>
 </li>
 </ul>
 <h2 id="3-compile-the-object-file-and-create-libraries"><a class="header" href="#3-compile-the-object-file-and-create-libraries">3: Compile the Object File and Create Libraries</a></h2>
 <ul>
 <li>
 <p>Compile pwm.c into an Object File by Using the following command to compile <code>pwm.c</code> into an object file (<code>pwm.o</code>):</p>
-<pre><code class="language-sh">$ gcc -c pwm.c -o pwm.o
+<pre><code class="language-admonish terminal">
+```sh
+$ gcc -c pwm.c -o pwm.o
+```
+
 </code></pre>
 </li>
 <li>
 <p>Create a Static Library (<code>libpwm.a</code>) to create a static library, use the <code>ar</code> command:</p>
-<pre><code class="language-sh">$ ar rcs libgpwm.a pwm.o
+<pre><code class="language-admonish terminal">
+```sh
+$ ar rcs libgpwm.a pwm.o
+```
 </code></pre>
-<ul>
-<li><strong>Command Breakdown:</strong>
-<ul>
-<li><code>ar</code>: The archiver tool used to create and maintain library archives.</li>
-<li><code>rcs</code>: Flags where r inserts the files into the archive, c creates the archive if it doesn't exist, and s creates an index for quick symbol lookup.</li>
-<li><code>libpwm.a</code>: The name of the static library being created.</li>
-<li><code>pwm.o</code>: The object file to be included in the library.</li>
-</ul>
-</li>
-</ul>
-<blockquote>
-<blockquote>
-<p><strong>Explanation: What is a Static Library?</strong></p>
-<p>A static library is a collection of object files that are linked into the final executable at compile time. Once linked, the code from the static library becomes part of the executable binary. This means that the executable will carry a copy of the library's code, making it self-contained and independent of the library file after compilation.</p>
-</blockquote>
-</blockquote>
+<pre><code class="language-admonish exmample title=&#39;Command Breakdown&#39;">
+ - `ar`: The archiver tool used to create and maintain library archives.
+ - `rcs`: Flags where r inserts the files into the archive, c creates the archive if it doesn't exist, and s creates an index for quick symbol lookup.
+ - `libpwm.a`: The name of the static library being created.
+ - `pwm.o`: The object file to be included in the library.
+
+</code></pre>
+<pre><code class="language-admonish example title=&#39;What is a Static Library?&#39;">
+A static library is a collection of object files that are linked into the final executable at compile time. Once linked, the code from the static library becomes part of the executable binary. This means that the executable will carry a copy of the library's code, making it self-contained and independent of the library file after compilation.
+
+</code></pre>
 </li>
 <li>
 <p>Create a Shared Library (<code>libpwm.so</code>) to create a shared library, use the following <code>gcc</code> command:</p>
-<pre><code class="language-sh">$ gcc -shared -o libpwm.so pwm.o
+<pre><code class="language-admonish terminal">
+```sh
+$ gcc -shared -o libpwm.so pwm.o
+```
 </code></pre>
-<ul>
-<li><strong>Command Breakdown:</strong>
-<ul>
-<li><code>-shared</code>: Tells gcc to produce a shared library.</li>
-<li><code>-o libpwm.so</code>: Specifies the output filename for the shared library.</li>
-<li><code>pwm.o</code>: The object file to be included in the library.</li>
-</ul>
-</li>
-</ul>
-<blockquote>
-<blockquote>
-<p><strong>Explanation: What is a Shared Library?</strong></p>
-<p>A shared library, on the other hand, is not linked into the final executable at compile time. Instead, it is loaded into memory at runtime. Multiple programs can share a single copy of a shared library, which can save memory and allow updates to the library without recompiling the programs that use it.</p>
-</blockquote>
-</blockquote>
+<pre><code class="language-admonish exmample title=&#39;Command Breakdown&#39;">
+- `-shared`: Tells gcc to produce a shared library.
+
+- `-o libpwm.so`: Specifies the output filename for the shared library.
+
+- `pwm.o`: The object file to be included in the library.
+
+</code></pre>
+<pre><code class="language-admonish example title=&#39;What is a Shared Library?&#39;">
+A shared library, on the other hand, is not linked into the final executable at compile time. Instead, it is loaded into memory at runtime. Multiple programs can share a single copy of a shared library, which can save memory and allow updates to the library without recompiling the programs that use it.
+
+</code></pre>
 </li>
 </ul>
 <h2 id="4-install-the-header-and-library-files-system-wide"><a class="header" href="#4-install-the-header-and-library-files-system-wide">4: Install the Header and Library Files System-Wide</a></h2>
 <ul>
 <li>
 <p>You could manually copy the header file to <code>/usr/include</code> and the libraries to <code>/usr/lib</code>, or skip to the next section and create a <code>Makefile</code> to do it for you each time.</p>
-<pre><code class="language-sh">$ sudo cp pwm.h /usr/include/
+<pre><code class="language-admonish terminal">
+```sh
+$ sudo cp pwm.h /usr/include/
 $ sudo cp libpwm.a /usr/lib/
 $ sudo cp libpwm.so /usr/lib/
 $ sudo ldconfig  # Update the shared library cache
+```
+
 </code></pre>
 </li>
 </ul>
@@ -723,9 +749,9 @@ $ sudo ldconfig  # Update the shared library cache
 <ul>
 <li>
 <p>Instead of running these commands manually, you can automate the build process using a Makefile.</p>
-  <details>
-  <summary>Suppressed code here [44 lines]...</summary>
-<pre><code class="language-makefile"># Variables
+<pre><code class="language-admonish code collapsible=true title=&#39;Suppressed code here [44 lines]&#39;">
+```makefile
+# Variables
 CC = gcc
 CFLAGS = -Wall -Werror -fPIC  # -fPIC is needed for shared libraries
 AR = ar
@@ -769,23 +795,28 @@ uninstall:
 
 # Phony targets
 .PHONY: all clean install uninstall
+```
+
 </code></pre>
-  </details>
 </li>
 </ul>
 <h2 id="6-creating-the-pwm_test-program"><a class="header" href="#6-creating-the-pwm_test-program">6: Creating the pwm_test program</a></h2>
 <ul>
 <li>
 <p>Create a new .c file called... <code>pwm_test.c</code> and chose your preferred editor to open it.</p>
-<pre><code class="language-sh">$ mkdir ~/pwm_test/ &amp;&amp; cd ~/pwm_test &amp;&amp; touch pwm_test.c
+<pre><code class="language-admonish terminal">
+```sh
+$ mkdir ~/pwm_test/ &amp;&amp; cd ~/pwm_test &amp;&amp; touch pwm_test.c
 $ vim pwm_test.c
+```
+
 </code></pre>
 </li>
 <li>
 <p>Now we are going to set up the program to use our system wide library and header with <code>pwm.h</code></p>
-  <details>
-  <summary>Suppresses code here [33 lines]...</summary>
-<pre><code class="language-c">#include "pwm.h"
+<pre><code class="language-admonish code collapsible=true title=&#39;Suppressed code here [33 lines]&#39;">
+```c
+#include "pwm.h"
 #include &lt;string.h&gt;
 #include &lt;unistd.h&gt;
 int main() {
@@ -817,19 +848,24 @@ int main() {
 
     return 0;
 }
+```
+
 </code></pre>
-  </details>
 </li>
 <li>
 <p>We can use this oneliner to compile the code:</p>
-<pre><code class="language-sh">$ gcc 
+<pre><code class="language-admonish terminal">
+```sh
+$ gcc &lt;file&gt; ... 
+```
+
 </code></pre>
 </li>
 <li>
 <p>Create the Makefile</p>
-  <details>
-  <summary>Suppressed code here [lines]...</summary>
-<pre><code class="language-makefile"># Compiler and flags
+<pre><code class="language-admonish code collapsible=true title=&#39;Suppressed code here [25 lines]&#39;">
+```makefile
+# Compiler and flags
 CC = gcc
 CFLAGS = -Wall -Werror
 
@@ -855,22 +891,32 @@ clean:
 
 # Phony targets to avoid conflicts with files of the same name
 .PHONY: all clean
+```
+
 </code></pre>
-  </details>
 </li>
 <li>
 <p>Invoke make to build the executable:</p>
-<pre><code class="language-sh">$ make
+<pre><code class="language-admonish terminal">
+```sh
+$ make
+```
+
 </code></pre>
 </li>
 <li>
 <p>Run the code file to see if RGB Led changes colour, remember to wire up:</p>
-<pre><code class="language-sh">$ ./pwm_test
+<pre><code class="language-admonish terminal">
+```sh
+$ ./pwm_test
+```
+
 </code></pre>
 <ul>
-<li>
-<p>If all is well, and you have connected up your circuity correctly, the LED should show 100% then 50% then 10% and off, also this terminal output</p>
-<pre><code>Phy: P8_13
+<li>If all is well, and you have connected up your circuity correctly, the LED should show 100% then 50% then 10% and off, also this terminal output
+<pre><code class="language-admonish output">
+```
+Phy: P8_13
 Channel: 7
 Chip: 1
 Period path: /sys/class/pwm/pwm-7:1/period
@@ -878,6 +924,8 @@ Duty Cycle path: /sys/class/pwm/pwm-7:1/duty_cycle
 Enable path: /sys/class/pwm/pwm-7:1/enable
 Pin Mode Path: /sys/devices/platform/ocp/ocp:P8_13_pinmux/state
 Pin Mode Sate: pwm
+```
+
 </code></pre>
 </li>
 </ul>
@@ -929,7 +977,7 @@ Pin Mode Sate: pwm
         <script src="../book.js"></script>
 
         <!-- Custom JS scripts -->
-        <script src="../theme/pagetoc.js"></script>
+        <script src=".././theme/pagetoc.js"></script>
 
 
     </div>

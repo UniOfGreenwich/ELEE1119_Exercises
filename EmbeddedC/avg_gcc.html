@@ -28,7 +28,11 @@
         <link rel="stylesheet" href="../ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
-        <link rel="stylesheet" href="../theme/pagetoc.css">
+        <link rel="stylesheet" href=".././theme/pagetoc.css">
+        <link rel="stylesheet" href=".././theme/css/mdbook-admonish.css">
+        <link rel="stylesheet" href=".././theme/css/code.css">
+        <link rel="stylesheet" href=".././theme/css/terminal.css">
+        <link rel="stylesheet" href=".././theme/css/output.css">
 
         <!-- MathJax -->
         <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
@@ -177,12 +181,20 @@
 <h4 id="adding-avr-gcc-and-avrdude-for-compiling-and-uploading-to-your-path"><a class="header" href="#adding-avr-gcc-and-avrdude-for-compiling-and-uploading-to-your-path">Adding avr-gcc and avrdude for compiling and uploading to your PATH</a></h4>
 <p>Add either of the following to your <code>~/.bashrc</code> file</p>
 <p>If you are on a university PC then:</p>
-<pre><code class="language-bash">export PATH=$PATH:"/c/ProgramData/arduino-ide-v2/Local/Arduino15/packages/arduino/tools/avr-gcc/7.3.0-atmel3.6.1-arduino7/bin"
+<pre><code class="language-admonish code">
+```bash
+export PATH=$PATH:"/c/ProgramData/arduino-ide-v2/Local/Arduino15/packages/arduino/tools/avr-gcc/7.3.0-atmel3.6.1-arduino7/bin"
 export PATH=$PATH:"/c/ProgramData/arduino-ide-v2/Local/Arduino15/packages/arduino/tools/avr-dude/6.3.0-arduino17/bin"
+```
+
 </code></pre>
 <p>If you are on a on your own windows PC then:</p>
-<pre><code class="language-bash">export PATH=$PATH:"/c/users/yourusername/AppData/Local/Arduino15/packages/arduino/tools/avr-gcc/7.3.0-atmel3.6.1-arduino7/bin"
+<pre><code class="language-admonish code">
+```bash
+export PATH=$PATH:"/c/users/yourusername/AppData/Local/Arduino15/packages/arduino/tools/avr-gcc/7.3.0-atmel3.6.1-arduino7/bin"
 export PATH=$PATH:"/c/users/yourusername/AppData/Local/Arduino15/packages/arduino/tools/avr-dude/6.3.0-arduino17/bin"
+```
+
 </code></pre>
 
                     </main>
@@ -230,7 +242,7 @@ export PATH=$PATH:"/c/users/yourusername/AppData/Local/Arduino15/packages/arduin
         <script src="../book.js"></script>
 
         <!-- Custom JS scripts -->
-        <script src="../theme/pagetoc.js"></script>
+        <script src=".././theme/pagetoc.js"></script>
 
 
     </div>
