@@ -19,12 +19,8 @@ jobs:
         with:
           token: ${{secrets.GITHUB_TOKEN}}
           # Optional Plugins have to be enabled
-          use-linkcheck: true
-          use-mermaid: true
           use-toc: true
-          use-opengh: true
           use-admonish: true
-          use-katex: true
       - name: Show mdbook version
         run: mdbook --version
       - name: Show toc version
