@@ -171,16 +171,29 @@
                         <h1 id="adc-to-pwm-functionality"><a class="header" href="#adc-to-pwm-functionality">ADC to PWM functionality</a></h1>
 <h2 id="updating-the-pwm-library"><a class="header" href="#updating-the-pwm-library">Updating the PWM library</a></h2>
 <p>We need to add the a new prototype to the <code>pwm.h</code> and the body to the <code>pwm.c</code> files, that converts the ADC value to a the correct PWM duty cycle against the specified period.</p>
-<pre><code class="language-admonish note">
-Remember that the Beaglebone blacks ADC chip does not use 8bit levels, i.e 0-255 like you would find on a Arduino board. It uses provides the duty cycle as % of the period.
-
-</code></pre>
+<div id="admonition-note" class="admonition admonish-note" role="note" aria-labelledby="admonition-note-title">
+<div class="admonition-title">
+<div id="admonition-note-title">
+<p>Note</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-note"></a>
+</div>
+<div>
+<p>Remember that the Beaglebone blacks ADC chip does not use 8bit levels, i.e 0-255 like you would find on a Arduino board. It uses provides the duty cycle as % of the period.</p>
+</div>
+</div>
 <ol>
 <li>
 <p>Open the <code>pwm.h</code> file and modify to include the prototype below called <code>map</code>:</p>
-<pre><code class="language-admonish code collapsible=true title=&#39;Suppressed code here [7 lines]&#39;">
-```h
-#ifndef PWM_H
+ <details id="admonition-suppressed-code-here-7-lines" class="admonition admonish-code" role="note" aria-labelledby="admonition-suppressed-code-here-7-lines-title">
+ <summary class="admonition-title">
+ <div id="admonition-suppressed-code-here-7-lines-title">
+<p>Suppressed code here [7 lines]</p>
+ </div>
+ <a class="admonition-anchor-link" href="#admonition-suppressed-code-here-7-lines"></a>
+ </summary>
+ <div>
+<pre><code class="language-h">#ifndef PWM_H
 #define PWM_H
 
 ...
@@ -188,15 +201,21 @@ Remember that the Beaglebone blacks ADC chip does not use 8bit levels, i.e 0-255
 unsigned int map(u_int16_t adc_value, unsigned int period_ns);
 
 #endif
-```
-
 </code></pre>
+ </div>
+ </details>
 </li>
 <li>
 <p>Next we need to modify the <code>pwm.c</code> file to include the body of the previously defined prototype, place the function at the bottom of the file:</p>
-<pre><code class="language-admonish code collapsible=true title=&#39;Suppressed code here [14 lines]&#39;">
-```c
-... 
+ <details id="admonition-suppressed-code-here-14-lines" class="admonition admonish-code" role="note" aria-labelledby="admonition-suppressed-code-here-14-lines-title">
+ <summary class="admonition-title">
+ <div id="admonition-suppressed-code-here-14-lines-title">
+<p>Suppressed code here [14 lines]</p>
+ </div>
+ <a class="admonition-anchor-link" href="#admonition-suppressed-code-here-14-lines"></a>
+ </summary>
+ <div>
+<pre><code class="language-c">... 
 
 // Map ADC value to PWM duty cycle with user-specified period
 unsigned int map(u_int16_t adc_value, unsigned int period_ns) {
@@ -211,9 +230,9 @@ unsigned int map(u_int16_t adc_value, unsigned int period_ns) {
 
     return duty_cycle_ns;
 }
-```
-
 </code></pre>
+ </div>
+ </details>
 </li>
 <li>
 <p>Now you need to remake the library:</p>

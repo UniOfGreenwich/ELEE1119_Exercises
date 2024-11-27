@@ -170,38 +170,59 @@
                     <main><div class="sidetoc"><nav class="pagetoc"></nav></div>
                         <h1 id="full-program"><a class="header" href="#full-program">Full program</a></h1>
 <p>We are now going to put together the adc, uart and pwm functionalities into one script so that the adc value from a potentiometer or voltage divider circuit controls the brightness of an LED.</p>
-<pre><code class="language-admonish warning">
-It is important that you have completed the prerequiste sections:
-- [blink](blink.md)
-- [adc](./adc.md)
-- [uart](./uart.md)
-- [pwm](./pwm.md)
-- Remember to include in your `PATH` `avr-gcc`, `avrdude` and `make`
-- Open `~/.bashrc` and add the following lines, then save and run the command `source ~/.bashrc` to update the current session with the new `PATH`
-  -  Uni machines
-     ```sh
-     # ~/.bashrc
-     export PATH=$PATH:"/c/ProgramData/arduino-ide-v2/Local/Arduino15/packages/arduino/tools/avr-gcc/7.3.0-atmel3.6.1-arduino7/bin"
-     export PATH=$PATH:"/c/ProgramData/arduino-ide-v2/Local/Arduino15/packages/arduino/tools/avr-dude/6.3.0-arduino17/bin"
-     export PATH=$PATH:"/c/Program Files/GCC-Windows-MingW-2.0.0/w64devkit/bin"
-     ```
-  - Your personal windows machine
-     ```sh
-     # ~/.bashrc
-     export PATH=$PATH:"/c/Users/YOURUSERNAME/AppData/Local/Arduino15/packages/arduino/tools/avr-gcc/7.3.0-atmel3.6.1-arduino7/bin"
-     export PATH=$PATH:"/c/Users/YOURUSERNAME/AppDataLocal/Arduino15/packages/arduino/tools/avr-dude/6.3.0-arduino17/bin"
-     export PATH=$PATH:"/c/Program Files/w64devkit/bin"
-     ```
-  - You can install w64devkit from here:
-    - [https://github.com/skeeto/w64devkit/releases](https://github.com/skeeto/w64devkit/releases)
-
+<div id="admonition-warning" class="admonition admonish-warning" role="note" aria-labelledby="admonition-warning-title">
+<div class="admonition-title">
+<div id="admonition-warning-title">
+<p>Warning</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-warning"></a>
+</div>
+<div>
+<p>It is important that you have completed the prerequiste sections:</p>
+<ul>
+<li><a href="blink.html">blink</a></li>
+<li><a href="./adc.html">adc</a></li>
+<li><a href="./uart.html">uart</a></li>
+<li><a href="./pwm.html">pwm</a></li>
+<li>Remember to include in your <code>PATH</code> <code>avr-gcc</code>, <code>avrdude</code> and <code>make</code></li>
+<li>Open <code>~/.bashrc</code> and add the following lines, then save and run the command <code>source ~/.bashrc</code> to update the current session with the new <code>PATH</code>
+<ul>
+<li>Uni machines
+<pre><code class="language-sh"># ~/.bashrc
+export PATH=$PATH:"/c/ProgramData/arduino-ide-v2/Local/Arduino15/packages/arduino/tools/avr-gcc/7.3.0-atmel3.6.1-arduino7/bin"
+export PATH=$PATH:"/c/ProgramData/arduino-ide-v2/Local/Arduino15/packages/arduino/tools/avr-dude/6.3.0-arduino17/bin"
+export PATH=$PATH:"/c/Program Files/GCC-Windows-MingW-2.0.0/w64devkit/bin"
 </code></pre>
+</li>
+<li>Your personal windows machine
+<pre><code class="language-sh"># ~/.bashrc
+export PATH=$PATH:"/c/Users/YOURUSERNAME/AppData/Local/Arduino15/packages/arduino/tools/avr-gcc/7.3.0-atmel3.6.1-arduino7/bin"
+export PATH=$PATH:"/c/Users/YOURUSERNAME/AppDataLocal/Arduino15/packages/arduino/tools/avr-dude/6.3.0-arduino17/bin"
+export PATH=$PATH:"/c/Program Files/w64devkit/bin"
+</code></pre>
+</li>
+<li>You can install w64devkit from here:
+<ul>
+<li><a href="https://github.com/skeeto/w64devkit/releases">https://github.com/skeeto/w64devkit/releases</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
 <hr />
 <h2 id="arduino-c-version-of-adc2pwmino"><a class="header" href="#arduino-c-version-of-adc2pwmino">Arduino C version of adc2pwm.ino</a></h2>
 <p>We are essentially going to be converting the following standard adc to pwm program.</p>
-<pre><code class="language-admonish code">
-```c
-int analogPin = A0;       // Analog input pin connected to a sensor or potentiometer
+<div id="admonition-code" class="admonition admonish-code" role="note" aria-labelledby="admonition-code-title">
+<div class="admonition-title">
+<div id="admonition-code-title">
+<p>Code</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-code"></a>
+</div>
+<div>
+<pre><code class="language-c">int analogPin = A0;       // Analog input pin connected to a sensor or potentiometer
 int pwmPin = 6;           // PWM output pin connected to an LED or other device
 int adcValue = 0;         // Variable to store the ADC value
 int pwmValue = 0;         // Variable to store the mapped PWM value
@@ -230,36 +251,54 @@ void loop() {
   // Delay for stability and readability of the output
   delay(250);
 }
-```
-
 </code></pre>
+</div>
+</div>
 <hr />
 <h2 id="making-our-own-adc2pwmc-program"><a class="header" href="#making-our-own-adc2pwmc-program">Making our own <code>adc2pwm.c</code> program</a></h2>
 <ol>
 <li>
 <p>Create a new directory inside <code>embeddedC</code> called <code>adc2pwm</code></p>
-<pre><code class="language-admonish terminal">
-```sh
-$ mkdir -p ~/embeddedC/adc2pwm &amp;&amp; cd embeddedC/adc2pwm
-```
-
+ <div id="admonition-terminal" class="admonition admonish-terminal" role="note" aria-labelledby="admonition-terminal-title">
+ <div class="admonition-title">
+ <div id="admonition-terminal-title">
+<p>Terminal</p>
+ </div>
+ <a class="admonition-anchor-link" href="#admonition-terminal"></a>
+ </div>
+ <div>
+<pre><code class="language-sh">$ mkdir -p ~/embeddedC/adc2pwm &amp;&amp; cd embeddedC/adc2pwm
 </code></pre>
+ </div>
+ </div>
 </li>
 <li>
 <p>Create a new file inside the the <code>adc2pwm</code> directory called <code>adc2pwm.c</code></p>
-<pre><code class="language-admonish terminal">
-```sh
-$ touch adc2pwm.c
+ <div id="admonition-terminal-1" class="admonition admonish-terminal" role="note" aria-labelledby="admonition-terminal-1-title">
+ <div class="admonition-title">
+ <div id="admonition-terminal-1-title">
+<p>Terminal</p>
+ </div>
+ <a class="admonition-anchor-link" href="#admonition-terminal-1"></a>
+ </div>
+ <div>
+<pre><code class="language-sh">$ touch adc2pwm.c
 $ touch header.{c,h}
-```
-
 </code></pre>
+ </div>
+ </div>
 </li>
 <li>
 <p>Now it's time start wrighting out the <code>header.h</code> file which defines macros and declares functions for UART, ADC, and PWM initialization and operation:</p>
-<pre><code class="language-admonish code collapsible=true title=&#39;Suppressed code here... [20 lines]&#39;">
-```c
-#ifndef _HEADER_H
+ <details id="admonition-suppressed-code-here-20-lines" class="admonition admonish-code" role="note" aria-labelledby="admonition-suppressed-code-here-20-lines-title">
+ <summary class="admonition-title">
+ <div id="admonition-suppressed-code-here-20-lines-title">
+<p>Suppressed code here... [20 lines]</p>
+ </div>
+ <a class="admonition-anchor-link" href="#admonition-suppressed-code-here-20-lines"></a>
+ </summary>
+ <div>
+<pre><code class="language-c">#ifndef _HEADER_H
 #define _HEADER_H
 
 #include &lt;avr/io.h&gt;
@@ -278,15 +317,21 @@ uint16_t ADC_Read(uint8_t channel);
 void PWM_Init(void);
 
 #endif
-```
-
 </code></pre>
+ </div>
+ </details>
 </li>
 <li>
 <p>The <code>header.c</code> file contains the definitions for the functions declared in <code>header.h</code>. These functions include UART initialization, ADC initialization and reading, and PWM configuration:</p>
-<pre><code class="language-admonish code collapsible=true title=&#39;Suppressed code here... [38 lines]&#39;">
-```c
-#include "header.h"
+ <details id="admonition-suppressed-code-here-38-lines" class="admonition admonish-code" role="note" aria-labelledby="admonition-suppressed-code-here-38-lines-title">
+ <summary class="admonition-title">
+ <div id="admonition-suppressed-code-here-38-lines-title">
+<p>Suppressed code here... [38 lines]</p>
+ </div>
+ <a class="admonition-anchor-link" href="#admonition-suppressed-code-here-38-lines"></a>
+ </summary>
+ <div>
+<pre><code class="language-c">#include "header.h"
 
 // UART initialization for serial communication
 void UART_Init(void) {
@@ -324,15 +369,21 @@ void PWM_Init(void) {
     TCCR0A = (1 &lt;&lt; COM0A1) | (1 &lt;&lt; WGM01) | (1 &lt;&lt; WGM00); // Fast PWM mode, non-inverting
     TCCR0B = (1 &lt;&lt; CS01) | (1 &lt;&lt; CS00);   // Prescaler set to 64
 }
-```
-
 </code></pre>
+ </div>
+ </details>
 </li>
 <li>
 <p>The <code>adc2pwm.c</code> file contains the main loop, which reads an ADC value, maps it to a PWM duty cycle, and sends the ADC and PWM values over UART.</p>
-<pre><code class="language-admonish code collapsible=true title=&#39;Suppressed code here... [45 lines]&#39;">
-```c
-#ifndef F_CPU
+ <details id="admonition-suppressed-code-here-45-lines" class="admonition admonish-code" role="note" aria-labelledby="admonition-suppressed-code-here-45-lines-title">
+ <summary class="admonition-title">
+ <div id="admonition-suppressed-code-here-45-lines-title">
+<p>Suppressed code here... [45 lines]</p>
+ </div>
+ <a class="admonition-anchor-link" href="#admonition-suppressed-code-here-45-lines"></a>
+ </summary>
+ <div>
+<pre><code class="language-c">#ifndef F_CPU
 #define F_CPU 16000000UL
 #endif
 
@@ -375,15 +426,21 @@ int main(void) {
         _delay_ms(50);
     }
 }
-```
-
 </code></pre>
+ </div>
+ </details>
 </li>
 <li>
 <p>This <code>Makefile</code> compiles, links, and uploads the program to the ATmega328P.</p>
-<pre><code class="language-admonish code collapsible=true title=&#39;Suppressed code here... [34 lines]&#39;">
-```Makefile
-MCU = atmega328p
+ <details id="admonition-suppressed-code-here-34-lines" class="admonition admonish-code" role="note" aria-labelledby="admonition-suppressed-code-here-34-lines-title">
+ <summary class="admonition-title">
+ <div id="admonition-suppressed-code-here-34-lines-title">
+<p>Suppressed code here... [34 lines]</p>
+ </div>
+ <a class="admonition-anchor-link" href="#admonition-suppressed-code-here-34-lines"></a>
+ </summary>
+ <div>
+<pre><code class="language-Makefile">MCU = atmega328p
 F_CPU = 16000000UL
 CC = avr-gcc
 CFLAGS = -Os -mmcu=$(MCU) -DF_CPU=$(F_CPU)
@@ -414,13 +471,18 @@ upload: $(TARGET).hex
 
 clean:
     rm -f $(OBJECTS) $(TARGET).elf $(TARGET).hex
-```
-
-&gt;**Note:**
-&gt;&gt; If you are on your machine the AVRDUDECONFIG file path will be this format:
-&gt;&gt; - `AVRDUDECONFIG = "C:\Users\YOURUSERNAME\AppData\Local\Arduino15\packages\arduino\tools\avrdude\6.3.0-arduino17\etc\avrdude.conf"`
-
 </code></pre>
+<blockquote>
+<p><strong>Note:</strong></p>
+<blockquote>
+<p>If you are on your machine the AVRDUDECONFIG file path will be this format:</p>
+<ul>
+<li><code>AVRDUDECONFIG = "C:\Users\YOURUSERNAME\AppData\Local\Arduino15\packages\arduino\tools\avrdude\6.3.0-arduino17\etc\avrdude.conf"</code></li>
+</ul>
+</blockquote>
+</blockquote>
+ </div>
+ </details>
 </li>
 <li>
 <p>Now every time we modify <code>adc2read.c</code> or <code>header.{c,h}</code> you can use the <code>Makefile</code></p>
@@ -429,13 +491,26 @@ clean:
 <li><code>make</code></li>
 <li><code>make upload</code></li>
 </ul>
-<pre><code class="language-admonish info">
-- Windows getting the correct port run:
-   - $ wmic path Win32_SerialPort get caption, name, deviceID`
-   
-        ![](./figures/windows_com_ports_list.png)
-
-</code></pre>
+<div id="admonition-info" class="admonition admonish-info" role="note" aria-labelledby="admonition-info-title">
+<div class="admonition-title">
+<div id="admonition-info-title">
+<p>Info</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-info"></a>
+</div>
+<div>
+<ul>
+<li>Windows getting the correct port run:
+<ul>
+<li>
+<p>$ wmic path Win32_SerialPort get caption, name, deviceID`</p>
+<p><img src="./figures/windows_com_ports_list.png" alt="" /></p>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
 <p><img src="./figures/adc2pwm_make.png" alt="" /></p>
 </li>
 </ol>

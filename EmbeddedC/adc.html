@@ -170,12 +170,24 @@
                     <main><div class="sidetoc"><nav class="pagetoc"></nav></div>
                         <h1 id="adc"><a class="header" href="#adc">ADC</a></h1>
 <p>In this chapter, you will learn how to build a script for reading analog values from the ATmega328P using its ADC (Analog-to-Digital Converter) and output these values to the command line using the USART. This guide will explain the necessary registers and ports related to the ADC.</p>
-<pre><code class="language-admonish warning">
-- Make sure you have completed the [UART Chapter](UART.md) as you will need to print out the data for retrieved from the ADC.
-
-- All the information below is synthesised and expanded upon from the [Data sheet](https://ww1.microchip.com/downloads/en/DeviceDoc/Atmel-7810-Automotive-Microcontrollers-ATmega328P_Datasheet.pdf) page 202 onwards.
-
-</code></pre>
+<div id="admonition-warning" class="admonition admonish-warning" role="note" aria-labelledby="admonition-warning-title">
+<div class="admonition-title">
+<div id="admonition-warning-title">
+<p>Warning</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-warning"></a>
+</div>
+<div>
+<ul>
+<li>
+<p>Make sure you have completed the <a href="UART.html">UART Chapter</a> as you will need to print out the data for retrieved from the ADC.</p>
+</li>
+<li>
+<p>All the information below is synthesised and expanded upon from the <a href="https://ww1.microchip.com/downloads/en/DeviceDoc/Atmel-7810-Automotive-Microcontrollers-ATmega328P_Datasheet.pdf">Data sheet</a> page 202 onwards.</p>
+</li>
+</ul>
+</div>
+</div>
 <hr />
 <h2 id="understanding-adc-registers-and-ports"><a class="header" href="#understanding-adc-registers-and-ports">Understanding ADC Registers and Ports</a></h2>
 <p>The ATmega328P has a built-in Analog-to-Digital Converter (ADC) that can convert analog signals to digital values. The ADC uses several registers to configure its operation:</p>
@@ -202,35 +214,54 @@
 </li>
 <li>
 <p><strong>MUX3:MUX0</strong>: Selects the ADC channel to read from. ADC0 is selected when all MUX bits are 0.</p>
-<pre><code class="language-admonish note">
-The MUX3:MUX0 bits in the ADMUX register select the ADC input channel:
-| **MUX3** | **MUX2** | **MUX1** | **MUX0** | **Selected ADC Channel** |
-|----------|----------|----------|----------|-------------------------|
-| 0        | 0        | 0        | 0        | ADC0 (PC0)             |
-| 0        | 0        | 0        | 1        | ADC1 (PC1)             |
-| 0        | 0        | 1        | 0        | ADC2 (PC2)             |
-| 0        | 0        | 1        | 1        | ADC3 (PC3)             |
-| 0        | 1        | 0        | 0        | ADC4 (PC4)             |
-| 0        | 1        | 0        | 1        | ADC5 (PC5)             |
-| 0        | 1        | 1        | 0        | ADC6 (PC6)             |
-| 0        | 1        | 1        | 1        | ADC7 (PC7)             |
-| 1        | 0        | 0        | 0        | Temperature sensor     |
-| 1        | 1        | 0        | 0        | 1.1V internal reference|
-| 1        | 1        | 0        | 1        | GND                    |
-
-- Use these settings to select the appropriate input channel for your ADC conversions.
-
-- We also look at the internal temperature sensor too!
-</code></pre>
+   <div id="admonition-note" class="admonition admonish-note" role="note" aria-labelledby="admonition-note-title">
+   <div class="admonition-title">
+   <div id="admonition-note-title">
+<p>Note</p>
+   </div>
+   <a class="admonition-anchor-link" href="#admonition-note"></a>
+   </div>
+   <div>
+<p>The MUX3:MUX0 bits in the ADMUX register select the ADC input channel:</p>
+<div class="table-wrapper"><table><thead><tr><th><strong>MUX3</strong></th><th><strong>MUX2</strong></th><th><strong>MUX1</strong></th><th><strong>MUX0</strong></th><th><strong>Selected ADC Channel</strong></th></tr></thead><tbody>
+<tr><td>0</td><td>0</td><td>0</td><td>0</td><td>ADC0 (PC0)</td></tr>
+<tr><td>0</td><td>0</td><td>0</td><td>1</td><td>ADC1 (PC1)</td></tr>
+<tr><td>0</td><td>0</td><td>1</td><td>0</td><td>ADC2 (PC2)</td></tr>
+<tr><td>0</td><td>0</td><td>1</td><td>1</td><td>ADC3 (PC3)</td></tr>
+<tr><td>0</td><td>1</td><td>0</td><td>0</td><td>ADC4 (PC4)</td></tr>
+<tr><td>0</td><td>1</td><td>0</td><td>1</td><td>ADC5 (PC5)</td></tr>
+<tr><td>0</td><td>1</td><td>1</td><td>0</td><td>ADC6 (PC6)</td></tr>
+<tr><td>0</td><td>1</td><td>1</td><td>1</td><td>ADC7 (PC7)</td></tr>
+<tr><td>1</td><td>0</td><td>0</td><td>0</td><td>Temperature sensor</td></tr>
+<tr><td>1</td><td>1</td><td>0</td><td>0</td><td>1.1V internal reference</td></tr>
+<tr><td>1</td><td>1</td><td>0</td><td>1</td><td>GND</td></tr>
+</tbody></table>
+</div>
+<ul>
+<li>
+<p>Use these settings to select the appropriate input channel for your ADC conversions.</p>
+</li>
+<li>
+<p>We also look at the internal temperature sensor too!</p>
+</li>
+</ul>
+   </div>
+   </div>
 </li>
 </ul>
 <h3 id="example-1-setting-the-reference-voltage-to-avcc"><a class="header" href="#example-1-setting-the-reference-voltage-to-avcc">Example 1: Setting the Reference Voltage to AVcc</a></h3>
-<pre><code class="language-admonish code">
-```c
-ADMUX = (1 &lt;&lt; REFS0);
-```
-
+<div id="admonition-code" class="admonition admonish-code" role="note" aria-labelledby="admonition-code-title">
+<div class="admonition-title">
+<div id="admonition-code-title">
+<p>Code</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-code"></a>
+</div>
+<div>
+<pre><code class="language-c">ADMUX = (1 &lt;&lt; REFS0);
 </code></pre>
+</div>
+</div>
 <ul>
 <li><strong>Explanation</strong>:
 <ul>
@@ -247,12 +278,18 @@ ADMUX = (1 &lt;&lt; REFS0);
 </li>
 </ul>
 <h3 id="example-2-setting-the-reference-voltage-to-avcc-and-selecting-adc3"><a class="header" href="#example-2-setting-the-reference-voltage-to-avcc-and-selecting-adc3">Example 2: Setting the Reference Voltage to AVcc and Selecting ADC3</a></h3>
-<pre><code class="language-admonish code">
-```c
-ADMUX = (1 &lt;&lt; REFS0) | (1 &lt;&lt; MUX1) | (1 &lt;&lt; MUX0);
-```
-
+<div id="admonition-code-1" class="admonition admonish-code" role="note" aria-labelledby="admonition-code-1-title">
+<div class="admonition-title">
+<div id="admonition-code-1-title">
+<p>Code</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-code-1"></a>
+</div>
+<div>
+<pre><code class="language-c">ADMUX = (1 &lt;&lt; REFS0) | (1 &lt;&lt; MUX1) | (1 &lt;&lt; MUX0);
 </code></pre>
+</div>
+</div>
 <ul>
 <li><strong>Explanation</strong>:
 <ul>
@@ -315,16 +352,25 @@ ADMUX = (1 &lt;&lt; REFS0) | (1 &lt;&lt; MUX1) | (1 &lt;&lt; MUX0);
 </li>
 <li>
 <p><strong>ADC</strong>: This register holds the result of the ADC conversion. It is a 10-bit register divided into two 8-bit registers, ADCL (low byte) and ADCH (high byte).</p>
-<pre><code class="language-admonish info">
-Prescaler: is a factor by which the system clock is divided to obtain the ADC clock. The ADC clock frequency can be calculated using the formula:
-\\[ADC_{Clock}\ =\ \frac{Sytem\ Clock}{Prescaler}\\]
-So \\(\therefore \\)
-\\[125kHz\ =\ \frac{16000000}{128}\\]
-- 125 kHz is within the recommended range of 50 kHz to 200 kHz.
-- A prescaler of 128 ensures that the ADC operates at an optimal frequency for accurate 10-bit conversions.
-- Larger the prescaler the longer for conversions, lower frequencies are faster but are less accurate due to errors
-
-</code></pre>
+   <div id="admonition-info" class="admonition admonish-info" role="note" aria-labelledby="admonition-info-title">
+   <div class="admonition-title">
+   <div id="admonition-info-title">
+<p>Info</p>
+   </div>
+   <a class="admonition-anchor-link" href="#admonition-info"></a>
+   </div>
+   <div>
+<p>Prescaler: is a factor by which the system clock is divided to obtain the ADC clock. The ADC clock frequency can be calculated using the formula:
+\[ADC_{Clock}\ =\ \frac{Sytem\ Clock}{Prescaler}\]
+So \(\therefore \)
+\[125kHz\ =\ \frac{16000000}{128}\]</p>
+<ul>
+<li>125 kHz is within the recommended range of 50 kHz to 200 kHz.</li>
+<li>A prescaler of 128 ensures that the ADC operates at an optimal frequency for accurate 10-bit conversions.</li>
+<li>Larger the prescaler the longer for conversions, lower frequencies are faster but are less accurate due to errors</li>
+</ul>
+   </div>
+   </div>
 </li>
 </ul>
 <hr />
@@ -351,18 +397,30 @@ manufacturing calibration values (<code>TS_GAIN</code>, <code>TS_OFFSET</code>)<
 <ol>
 <li>
 <p>Create a new directory called <code>internalADCTemp</code> and navigate to it and then create a file called <code>internalADCTemp.c</code>:</p>
-<pre><code class="language-admonish terminal">
-```sh
-mkdir ../embeddedc/internalADCTemp &amp;&amp; cd embeddedc/internalADCTemp
-```
-
+ <div id="admonition-terminal" class="admonition admonish-terminal" role="note" aria-labelledby="admonition-terminal-title">
+ <div class="admonition-title">
+ <div id="admonition-terminal-title">
+<p>Terminal</p>
+ </div>
+ <a class="admonition-anchor-link" href="#admonition-terminal"></a>
+ </div>
+ <div>
+<pre><code class="language-sh">mkdir ../embeddedc/internalADCTemp &amp;&amp; cd embeddedc/internalADCTemp
 </code></pre>
+ </div>
+ </div>
 </li>
 <li>
 <p>Modify the <code>internalADCTemp.c</code> file with the following code:</p>
-<pre><code class="language-admonish code collapsible=true title=&#39;Reproduce the code below... [...66 lines]&#39;">
-```c
-#include &lt;avr/io.h&gt;
+ <details id="admonition-reproduce-the-code-below-66-lines" class="admonition admonish-code" role="note" aria-labelledby="admonition-reproduce-the-code-below-66-lines-title">
+ <summary class="admonition-title">
+ <div id="admonition-reproduce-the-code-below-66-lines-title">
+<p>Reproduce the code below... [...66 lines]</p>
+ </div>
+ <a class="admonition-anchor-link" href="#admonition-reproduce-the-code-below-66-lines"></a>
+ </summary>
+ <div>
+<pre><code class="language-c">#include &lt;avr/io.h&gt;
 #include &lt;util/delay.h&gt;
 #include &lt;stdlib.h&gt; // For itoa()
 
@@ -427,15 +485,21 @@ int main() {
         _delay_ms(1000); // Delay for demonstration
     }
 }
-```
-
 </code></pre>
+ </div>
+ </details>
 </li>
 <li>
 <p>Once you have saved the script, you can now make the <code>Makefile</code></p>
-<pre><code class="language-admonish code collapsible=true title=&#39;Reproduce the code below... [...27 lines]&#39;">
-```Makefile
-MCU = atmega328p
+ <details id="admonition-reproduce-the-code-below-27-lines" class="admonition admonish-code" role="note" aria-labelledby="admonition-reproduce-the-code-below-27-lines-title">
+ <summary class="admonition-title">
+ <div id="admonition-reproduce-the-code-below-27-lines-title">
+<p>Reproduce the code below... [...27 lines]</p>
+ </div>
+ <a class="admonition-anchor-link" href="#admonition-reproduce-the-code-below-27-lines"></a>
+ </summary>
+ <div>
+<pre><code class="language-Makefile">MCU = atmega328p
 F_CPU = 16000000UL
 CC = avr-gcc
 CFLAGS = -Os -mmcu=$(MCU) -DF_CPU=$(F_CPU)
@@ -462,15 +526,21 @@ upload: internalADCTemp.hex
 
 clean:
         rm -f internalADCTemp.o internalADCTemp.elf internalADCTemp.hex
-```
-
 </code></pre>
-<pre><code class="language-admonish note">
-Remember to check for the correct port number
-
-![](./figures/windows_com_ports_list.png)
-
-</code></pre>
+ </div>
+ </details>
+ <div id="admonition-note-1" class="admonition admonish-note" role="note" aria-labelledby="admonition-note-1-title">
+ <div class="admonition-title">
+ <div id="admonition-note-1-title">
+<p>Note</p>
+ </div>
+ <a class="admonition-anchor-link" href="#admonition-note-1"></a>
+ </div>
+ <div>
+<p>Remember to check for the correct port number</p>
+<p><img src="./figures/windows_com_ports_list.png" alt="" /></p>
+ </div>
+ </div>
 </li>
 <li>
 <p>You can now compile and upload and use putty like you did in ADC,</p>
@@ -514,18 +584,30 @@ Remember to check for the correct port number
 <ol>
 <li>
 <p>Create a new directory called <code>adcread</code> and navigate to it and then create a file called <code>adcread.c</code>:</p>
-<pre><code class="language-admonish terminal">
-```sh
-mkdir ../embeddedc/adcread &amp;&amp; cd embeddedc/adcread` 
-```
-
+ <div id="admonition-terminal-1" class="admonition admonish-terminal" role="note" aria-labelledby="admonition-terminal-1-title">
+ <div class="admonition-title">
+ <div id="admonition-terminal-1-title">
+<p>Terminal</p>
+ </div>
+ <a class="admonition-anchor-link" href="#admonition-terminal-1"></a>
+ </div>
+ <div>
+<pre><code class="language-sh">mkdir ../embeddedc/adcread &amp;&amp; cd embeddedc/adcread` 
 </code></pre>
+ </div>
+ </div>
 </li>
 <li>
 <p>Modify the <code>adcread.c</code> file with the following code:</p>
-<pre><code class="language-admonish code collapsible=true title=&#39;Reproduce the code below... [...52 lines]&#39;">
-```c
-#include &lt;avr/io.h&gt;
+ <details id="admonition-reproduce-the-code-below-52-lines" class="admonition admonish-code" role="note" aria-labelledby="admonition-reproduce-the-code-below-52-lines-title">
+ <summary class="admonition-title">
+ <div id="admonition-reproduce-the-code-below-52-lines-title">
+<p>Reproduce the code below... [...52 lines]</p>
+ </div>
+ <a class="admonition-anchor-link" href="#admonition-reproduce-the-code-below-52-lines"></a>
+ </summary>
+ <div>
+<pre><code class="language-c">#include &lt;avr/io.h&gt;
 #include &lt;util/delay.h&gt;
 #include &lt;stdlib.h&gt; // For itoa()
 
@@ -576,18 +658,27 @@ int main() {
         _delay_ms(1000); // Delay for demonstration
     }
 }
-```
-
 </code></pre>
-<pre><code class="language-admonish note">
-- `A0` : `ADMUX = (1 &lt;&lt; REFS0);`                             
-- `A1` : `ADMUX = (1 &lt;&lt; REFS0) | (1 &lt;&lt; MUX0);`               
-- `A2` : `ADMUX = (1 &lt;&lt; REFS0) | (1 &lt;&lt; MUX1);`               
-- `A3` : `ADMUX = (1 &lt;&lt; REFS0) | (1 &lt;&lt; MUX1) | (1 &lt;&lt; MUX0);` 
-- `A4` : `ADMUX = (1 &lt;&lt; REFS0) | (1 &lt;&lt; MUX2);`               
-- `A5` : `ADMUX = (1 &lt;&lt; REFS0) | (1 &lt;&lt; MUX2) | (1 &lt;&lt; MUX0);` 
-
-</code></pre>
+ </div>
+ </details>
+ <div id="admonition-note-2" class="admonition admonish-note" role="note" aria-labelledby="admonition-note-2-title">
+ <div class="admonition-title">
+ <div id="admonition-note-2-title">
+<p>Note</p>
+ </div>
+ <a class="admonition-anchor-link" href="#admonition-note-2"></a>
+ </div>
+ <div>
+<ul>
+<li><code>A0</code> : <code>ADMUX = (1 &lt;&lt; REFS0);</code></li>
+<li><code>A1</code> : <code>ADMUX = (1 &lt;&lt; REFS0) | (1 &lt;&lt; MUX0);</code></li>
+<li><code>A2</code> : <code>ADMUX = (1 &lt;&lt; REFS0) | (1 &lt;&lt; MUX1);</code></li>
+<li><code>A3</code> : <code>ADMUX = (1 &lt;&lt; REFS0) | (1 &lt;&lt; MUX1) | (1 &lt;&lt; MUX0);</code></li>
+<li><code>A4</code> : <code>ADMUX = (1 &lt;&lt; REFS0) | (1 &lt;&lt; MUX2);</code></li>
+<li><code>A5</code> : <code>ADMUX = (1 &lt;&lt; REFS0) | (1 &lt;&lt; MUX2) | (1 &lt;&lt; MUX0);</code></li>
+</ul>
+ </div>
+ </div>
 </li>
 <li>
 <p>Copy the <code>Makefile</code> from <code>../internalADCTemp/Makefile</code> to <code>readadc/</code> and use the regex <code>:%s/\&lt;internalADCTemp\&gt;/adcread/g</code></p>

@@ -223,24 +223,43 @@
 <h2 id="using-vim"><a class="header" href="#using-vim">Using vim:</a></h2>
 <h2 id="simple-config-to-make-life-easier"><a class="header" href="#simple-config-to-make-life-easier">Simple config to make life easier:</a></h2>
 <p>You can make a presistent changes to vim using a config file, while we are not using all the features like my system we can make a mini one here that does not depend on 3rd party packages.</p>
-<pre><code class="language-admonish terminal">
-```sh
-$ vim ~/.vimrc
-```
-
+<div id="admonition-terminal" class="admonition admonish-terminal" role="note" aria-labelledby="admonition-terminal-title">
+<div class="admonition-title">
+<div id="admonition-terminal-title">
+<p>Terminal</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-terminal"></a>
+</div>
+<div>
+<pre><code class="language-sh">$ vim ~/.vimrc
 </code></pre>
+</div>
+</div>
 <p>Start off by presistently setting number and relavtivenumber:</p>
-<pre><code class="language-admonish terminal">
-```sh
-set number
+<div id="admonition-terminal-1" class="admonition admonish-terminal" role="note" aria-labelledby="admonition-terminal-1-title">
+<div class="admonition-title">
+<div id="admonition-terminal-1-title">
+<p>Terminal</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-terminal-1"></a>
+</div>
+<div>
+<pre><code class="language-sh">set number
 set relativenumber
-```
-
 </code></pre>
+</div>
+</div>
 <p>Then go to command mode by pressing <kbd>shift</kbd>+<kbd>:</kbd> and type <code>source %</code> and this will live reload the current config. This is because the current session had no config when vim was invoked. You will not have do this again as it <code>.vimrc</code> is sourced when vim is invoked.</p>
 <p>You can add more features and functionality like below:</p>
-<pre><code class="language-admonish code collapsible=true title=&#39;Code: Basic config [67 lines]...&#39;">```vim
-" Enable line numbers
+<details id="admonition-code-basic-config-67-lines" class="admonition admonish-code" role="note" aria-labelledby="admonition-code-basic-config-67-lines-title">
+<summary class="admonition-title">
+<div id="admonition-code-basic-config-67-lines-title">
+<p>Code: Basic config [67 lines]...</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-code-basic-config-67-lines"></a>
+</summary>
+<div>
+<pre><code class="language-vim">" Enable line numbers
 set number
 
 " Enable relative line numbers for easier navigation
@@ -307,9 +326,9 @@ set listchars=tab:&gt;-,trail:·
 
 " Auto save before losing focus or exiting Vim
 autocmd FocusLost,WinLeave * silent! wa
-```
-
 </code></pre>
+</div>
+</details>
 
                     </main>
                     <nav class="nav-wrapper" aria-label="Page navigation">

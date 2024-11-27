@@ -176,8 +176,15 @@
 <p>A <code>.dts</code> file contains descriptions of the board's hardware components, including processors, memory, peripherals, and importantly, the General Purpose Input/Output (GPIO) pins.</p>
 <h3 id="2-pin-multiplexing-and-pin-control"><a class="header" href="#2-pin-multiplexing-and-pin-control">2. Pin Multiplexing and Pin Control</a></h3>
 <p><strong>Pin multiplexing</strong> allows a single physical pin on a processor to serve multiple functions, depending on the configuration. The <code>.dts</code> file defines how each pin on the BeagleBoard is multiplexed:</p>
-<pre><code class="language-admonish code">```dts
-pinctrl-name = "default";
+<div id="admonition-code" class="admonition admonish-code" role="note" aria-labelledby="admonition-code-title">
+<div class="admonition-title">
+<div id="admonition-code-title">
+<p>Code</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-code"></a>
+</div>
+<div>
+<pre><code class="language-dts">pinctrl-name = "default";
 pinctrl-0 = &lt;&amp;my_pins&gt;;
 
 my_pins: pinmux_my_pins {
@@ -186,8 +193,9 @@ my_pins: pinmux_my_pins {
         0x038 (PIN_INPUT | MUX_MODE7)   /* Pin Y configuration */
     &gt;;
 };
-```
 </code></pre>
+</div>
+</div>
 <p>In this example:</p>
 <ul>
 <li><code>0x034</code> and <code>0x038</code> are addresses in the pin control register.</li>
@@ -196,15 +204,22 @@ my_pins: pinmux_my_pins {
 </ul>
 <h4 id="21-understanding-beagleboard-dts-file-configuration-for-gpio-pin"><a class="header" href="#21-understanding-beagleboard-dts-file-configuration-for-gpio-pin">2.1 Understanding BeagleBoard DTS File Configuration for GPIO Pin</a></h4>
 <p>In a BeagleBoard Device Tree Source (.dts) file, pin configurations are defined using specific properties that control how each pin operates. Let’s break down the following example to understand what it does:</p>
-<pre><code class="language-admonish code">
-```dts
-8_11_gpio_input_pin: pinmux_P8_11_gpio_input_pin { 
+<div id="admonition-code-1" class="admonition admonish-code" role="note" aria-labelledby="admonition-code-1-title">
+<div class="admonition-title">
+<div id="admonition-code-1-title">
+<p>Code</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-code-1"></a>
+</div>
+<div>
+<pre><code class="language-dts">8_11_gpio_input_pin: pinmux_P8_11_gpio_input_pin { 
     pinctrl-single,pins = &lt;
         ((((0x0834)) &amp; 0xffff) - (0x0800)) (((1 &lt;&lt; 5) | (1 &lt;&lt; 3)) | 7) 
     &gt;; 
 };
-```
 </code></pre>
+</div>
+</div>
 <h4 id="22-explanation-of-each-part"><a class="header" href="#22-explanation-of-each-part">2.2 Explanation of Each Part</a></h4>
 <ol>
 <li>
@@ -225,11 +240,18 @@ my_pins: pinmux_my_pins {
 <ul>
 <li>
 <p>The value within the <code>pinctrl-single,pins</code> property is given as a tuple of two values: the register offset and the value to be written to that register.</p>
-<pre><code class="language-admonish example">
-```dts
-((((0x0834)) &amp; 0xffff) - (0x0800)) (((1 &lt;&lt; 5) | (1 &lt;&lt; 3)) | 7)
-```
+   <div id="admonition-example" class="admonition admonish-example" role="note" aria-labelledby="admonition-example-title">
+   <div class="admonition-title">
+   <div id="admonition-example-title">
+<p>Example</p>
+   </div>
+   <a class="admonition-anchor-link" href="#admonition-example"></a>
+   </div>
+   <div>
+<pre><code class="language-dts">((((0x0834)) &amp; 0xffff) - (0x0800)) (((1 &lt;&lt; 5) | (1 &lt;&lt; 3)) | 7)
 </code></pre>
+   </div>
+   </div>
 <p>This is split into two main parts:</p>
 <ul>
 <li><strong>Register Offset Calculation</strong>: <code>((((0x0834)) &amp; 0xffff) - (0x0800))</code></li>
@@ -241,10 +263,18 @@ my_pins: pinmux_my_pins {
 </ol>
 <p>Let's explain these parts in detail:</p>
 <h4 id="23-register-offset-calculation"><a class="header" href="#23-register-offset-calculation">2.3 Register Offset Calculation</a></h4>
-<pre><code class="language-admonish example">```dts
-((((0x0834)) &amp; 0xffff) - (0x0800))
-```
+<div id="admonition-example-1" class="admonition admonish-example" role="note" aria-labelledby="admonition-example-1-title">
+<div class="admonition-title">
+<div id="admonition-example-1-title">
+<p>Example</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-example-1"></a>
+</div>
+<div>
+<pre><code class="language-dts">((((0x0834)) &amp; 0xffff) - (0x0800))
 </code></pre>
+</div>
+</div>
 <ul>
 <li>
 <p><strong><code>0x0834</code></strong>: This is the address in the memory-mapped I/O space for the pin's configuration register. It's where the pin configuration settings will be applied.</p>
@@ -261,10 +291,18 @@ my_pins: pinmux_my_pins {
 </li>
 </ul>
 <h4 id="24-pin-configuration-value"><a class="header" href="#24-pin-configuration-value">2.4 Pin Configuration Value</a></h4>
-<pre><code class="language-admonish example">```dts
-(((1 &lt;&lt; 5) | (1 &lt;&lt; 3)) | 7)
-```
+<div id="admonition-example-2" class="admonition admonish-example" role="note" aria-labelledby="admonition-example-2-title">
+<div class="admonition-title">
+<div id="admonition-example-2-title">
+<p>Example</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-example-2"></a>
+</div>
+<div>
+<pre><code class="language-dts">(((1 &lt;&lt; 5) | (1 &lt;&lt; 3)) | 7)
 </code></pre>
+</div>
+</div>
 <ul>
 <li>
 <p><strong><code>1 &lt;&lt; 5</code></strong>: This shifts the binary <code>1</code> five bits to the left, resulting in the binary value <code>0b100000</code> or <code>0x20</code>.</p>
@@ -331,33 +369,51 @@ my_pins: pinmux_my_pins {
 </ul>
 <p>Each GPIO pin that is controlled by the kernel is represented by a directory named gpioXXX, where XXX is the GPIO number.</p>
 <p>You can access the (gpioX) pins label to map the /sys/class/gpio/gpio to the breackout pin:</p>
-<pre><code class="language-admonish terminal">
-```sh
-$ cat /sys/class/gpio/gpio115/label
+ <div id="admonition-terminal" class="admonition admonish-terminal" role="note" aria-labelledby="admonition-terminal-title">
+ <div class="admonition-title">
+ <div id="admonition-terminal-title">
+<p>Terminal</p>
+ </div>
+ <a class="admonition-anchor-link" href="#admonition-terminal"></a>
+ </div>
+ <div>
+<pre><code class="language-sh">$ cat /sys/class/gpio/gpio115/label
 &gt; P9_27
-```
-
 </code></pre>
+ </div>
+ </div>
 </li>
 <li>
 <p><strong>Build map for the GPIO and Lable</strong></p>
 <p>The provided Bash script is designed to create a CSV file <code>(gpio_map.csv</code>) that maps each GPIO number to its label. Here is what each part of the script does:</p>
-<pre><code class="language-admonish code">
-```sh
-#!/usr/bin/env bash
+ <div id="admonition-code-2" class="admonition admonish-code" role="note" aria-labelledby="admonition-code-2-title">
+ <div class="admonition-title">
+ <div id="admonition-code-2-title">
+<p>Code</p>
+ </div>
+ <a class="admonition-anchor-link" href="#admonition-code-2"></a>
+ </div>
+ <div>
+<pre><code class="language-sh">#!/usr/bin/env bash
 echo "GPIO,Label" &gt; gpio_map.csv
 for gpio in /sys/class/gpio/gpio*; do
     gpio_num=$(basename "$gpio")
     label=$(cat "$gpio/label")
     echo "$gpio_num,$label" &gt;&gt; gpio_map.csv
 done
-```
-
 </code></pre>
+ </div>
+ </div>
 <p>Run the following now to see the map:</p>
-<pre><code class="language-admonish output">
-```sh
-$ cat gpio_map.csv
+ <div id="admonition-output" class="admonition admonish-output" role="note" aria-labelledby="admonition-output-title">
+ <div class="admonition-title">
+ <div id="admonition-output-title">
+<p>Output</p>
+ </div>
+ <a class="admonition-anchor-link" href="#admonition-output"></a>
+ </div>
+ <div>
+<pre><code class="language-sh">$ cat gpio_map.csv
 &gt; 
 GPIO,Label
 gpio10,P8_31
@@ -375,9 +431,9 @@ gpio13,P9_19
 gpio14,P9_26
 gpio15,P9_24
 ...
-```
-
 </code></pre>
+ </div>
+ </div>
 </li>
 </ol>
 <h3 id="6-understanding-config-pin-and-the-importance-of-knowing-pin-modes"><a class="header" href="#6-understanding-config-pin-and-the-importance-of-knowing-pin-modes">6. Understanding config-pin and the Importance of Knowing Pin Modes</a></h3>
@@ -421,40 +477,71 @@ gpio15,P9_24
 <li>
 <p>Check Available Modes for a Pin:</p>
 <p>To see what modes are available for a specific pin:</p>
-<pre><code class="language-admonish terminal">
-```sh
-config-pin -l &lt;pin&gt;
-```
-
+ <div id="admonition-terminal-1" class="admonition admonish-terminal" role="note" aria-labelledby="admonition-terminal-1-title">
+ <div class="admonition-title">
+ <div id="admonition-terminal-1-title">
+<p>Terminal</p>
+ </div>
+ <a class="admonition-anchor-link" href="#admonition-terminal-1"></a>
+ </div>
+ <div>
+<pre><code class="language-sh">config-pin -l &lt;pin&gt;
 </code></pre>
-<pre><code class="language-admonish output">
-```sh
-$ config-pin -l P9.12
+ </div>
+ </div>
+ <div id="admonition-output-1" class="admonition admonish-output" role="note" aria-labelledby="admonition-output-1-title">
+ <div class="admonition-title">
+ <div id="admonition-output-1-title">
+<p>Output</p>
+ </div>
+ <a class="admonition-anchor-link" href="#admonition-output-1"></a>
+ </div>
+ <div>
+<pre><code class="language-sh">$ config-pin -l P9.12
 &gt; Available modes for P9_12 are: default gpio gpio_pu gpio_pd gpio_input
-```
 </code></pre>
+ </div>
+ </div>
 </li>
 <li>
 <p>Current configured mode:</p>
-<pre><code class="language-admonish example">
-```sh
-config-pin -q &lt;pin&gt;
-```
-
+ <div id="admonition-example-3" class="admonition admonish-example" role="note" aria-labelledby="admonition-example-3-title">
+ <div class="admonition-title">
+ <div id="admonition-example-3-title">
+<p>Example</p>
+ </div>
+ <a class="admonition-anchor-link" href="#admonition-example-3"></a>
+ </div>
+ <div>
+<pre><code class="language-sh">config-pin -q &lt;pin&gt;
 </code></pre>
-<pre><code class="language-admonish output">
-```sh
-$ config-pin -q P9.12
+ </div>
+ </div>
+ <div id="admonition-output-2" class="admonition admonish-output" role="note" aria-labelledby="admonition-output-2-title">
+ <div class="admonition-title">
+ <div id="admonition-output-2-title">
+<p>Output</p>
+ </div>
+ <a class="admonition-anchor-link" href="#admonition-output-2"></a>
+ </div>
+ <div>
+<pre><code class="language-sh">$ config-pin -q P9.12
 &gt; Current mode for P9_12 is:     default
-```
-
 </code></pre>
+ </div>
+ </div>
 </li>
 <li>
 <p>To check all configurations we can write a script:</p>
-<pre><code class="language-admonish code collapsible=true title=&#39;Suppressed code here [52 lines] ...&#39;">
-```sh
-#!/usr/bin/env bash
+ <details id="admonition-suppressed-code-here-52-lines-" class="admonition admonish-code" role="note" aria-labelledby="admonition-suppressed-code-here-52-lines--title">
+ <summary class="admonition-title">
+ <div id="admonition-suppressed-code-here-52-lines--title">
+<p>Suppressed code here [52 lines] ...</p>
+ </div>
+ <a class="admonition-anchor-link" href="#admonition-suppressed-code-here-52-lines-"></a>
+ </summary>
+ <div>
+<pre><code class="language-sh">#!/usr/bin/env bash
 
 # Output file
 OUTPUT_FILE="pin_config_report.txt"
@@ -505,21 +592,33 @@ for PIN in "${PINS[@]}"; do
 done
 
 echo "Pin configuration report saved to $OUTPUT_FILE"
-```
-
 </code></pre>
+ </div>
+ </details>
 </li>
 <li>
 <p>Run the following to see the report:</p>
-<pre><code class="language-admonish terminal">
-```sh
-$ less pin_config_report.txt
-```
-
+ <div id="admonition-terminal-2" class="admonition admonish-terminal" role="note" aria-labelledby="admonition-terminal-2-title">
+ <div class="admonition-title">
+ <div id="admonition-terminal-2-title">
+<p>Terminal</p>
+ </div>
+ <a class="admonition-anchor-link" href="#admonition-terminal-2"></a>
+ </div>
+ <div>
+<pre><code class="language-sh">$ less pin_config_report.txt
 </code></pre>
-<pre><code class="language-admonish output collapsible=true">
-```
-Pin     | Current Mode       | Available Modes
+ </div>
+ </div>
+ <details id="admonition-output-3" class="admonition admonish-output" role="note" aria-labelledby="admonition-output-3-title">
+ <summary class="admonition-title">
+ <div id="admonition-output-3-title">
+<p>Output</p>
+ </div>
+ <a class="admonition-anchor-link" href="#admonition-output-3"></a>
+ </summary>
+ <div>
+<pre><code>Pin     | Current Mode       | Available Modes
 -----------------------------------------------
 P8_3    | -                  | -
 P8_4    | -                  | -
@@ -541,43 +640,75 @@ P8_19   | default            | default gpio gpio_pu gpio_pd gpio_input pwm
 P8_20   | -                  | default gpio gpio_pu gpio_pd gpio_input pruout pruin
 P8_21   | -                  | default gpio gpio_pu gpio_pd gpio_input pruout pruin
 ...
-```
 </code></pre>
+ </div>
+ </details>
 </li>
 <li>
 <p>Set a Pin Mode:</p>
-<pre><code class="language-admonish example">
-```sh
-config-pin &lt;pin&gt; &lt;mode&gt;
-``` 
-
+ <div id="admonition-example-4" class="admonition admonish-example" role="note" aria-labelledby="admonition-example-4-title">
+ <div class="admonition-title">
+ <div id="admonition-example-4-title">
+<p>Example</p>
+ </div>
+ <a class="admonition-anchor-link" href="#admonition-example-4"></a>
+ </div>
+ <div>
+<pre><code class="language-sh">config-pin &lt;pin&gt; &lt;mode&gt;
 </code></pre>
-<pre><code class="language-admonish terminal">
-```sh
-config-pin P9.12 uart
-```
+ </div>
+ </div>
+ <div id="admonition-terminal-3" class="admonition admonish-terminal" role="note" aria-labelledby="admonition-terminal-3-title">
+ <div class="admonition-title">
+ <div id="admonition-terminal-3-title">
+<p>Terminal</p>
+ </div>
+ <a class="admonition-anchor-link" href="#admonition-terminal-3"></a>
+ </div>
+ <div>
+<pre><code class="language-sh">config-pin P9.12 uart
 </code></pre>
+ </div>
+ </div>
 <p>This command sets pin P9.12 to UART mode.</p>
 </li>
 <li>
 <p>Verify current pins</p>
-<pre><code class="language-admonish example">
-```sh
-config-pin -q &lt;pin&gt;
-```
-
+ <div id="admonition-example-5" class="admonition admonish-example" role="note" aria-labelledby="admonition-example-5-title">
+ <div class="admonition-title">
+ <div id="admonition-example-5-title">
+<p>Example</p>
+ </div>
+ <a class="admonition-anchor-link" href="#admonition-example-5"></a>
+ </div>
+ <div>
+<pre><code class="language-sh">config-pin -q &lt;pin&gt;
 </code></pre>
+ </div>
+ </div>
 </li>
 </ol>
-<pre><code class="language-admonish tip">
-- Any pins you have set manually to do not presist across power cycling. 
-
-- You could write a script that configures all the pins after boot, after the kernel has pre-loaded maps. 
-
-- Alternatively you could make your own `.dts`!
-
-</code></pre>
+ <div id="admonition-tip" class="admonition admonish-tip" role="note" aria-labelledby="admonition-tip-title">
+ <div class="admonition-title">
+ <div id="admonition-tip-title">
+<p>Tip</p>
+ </div>
+ <a class="admonition-anchor-link" href="#admonition-tip"></a>
+ </div>
+ <div>
+<ul>
+<li>
+<p>Any pins you have set manually to do not presist across power cycling.</p>
 </li>
+<li>
+<p>You could write a script that configures all the pins after boot, after the kernel has pre-loaded maps.</p>
+</li>
+<li>
+<p>Alternatively you could make your own <code>.dts</code>!</p>
+</li>
+</ul>
+ </div>
+ </div></li>
 </ol>
 
                     </main>

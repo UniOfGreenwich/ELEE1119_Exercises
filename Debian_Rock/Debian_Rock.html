@@ -178,23 +178,35 @@
 <ul>
 <li>
 <p>This should update the system however you may get a response that says:</p>
-<pre><code class="language-admonish errror">
-```sh
-&gt; W: An error occured during the signature verifcation. The repository is not updated and the previous index files will be used. GPG error: http://apt.radxa/com/bullseye-stable bullseye InRelease: The following signatures could not be verified because the public key is not available: NO_PUBKEY 9B98116C9AA302C7
+  <div id="admonition-note" class="admonition admonish-note" role="note" aria-labelledby="admonition-note-title">
+  <div class="admonition-title">
+  <div id="admonition-note-title">
+<p>Note</p>
+  </div>
+  <a class="admonition-anchor-link" href="#admonition-note"></a>
+  </div>
+  <div>
+<pre><code class="language-sh">&gt; W: An error occured during the signature verifcation. The repository is not updated and the previous index files will be used. GPG error: http://apt.radxa/com/bullseye-stable bullseye InRelease: The following signatures could not be verified because the public key is not available: NO_PUBKEY 9B98116C9AA302C7
 &gt; W: Filed to fetch http://apt.radxa/com/bullseye-stable/dists/bullseye/InRelease The following signatures could not be verified because the public key is not available: NO_PUBKEY 9B98116C9AA302C7
 &gt; W: Some index files failed to download. They have been ignored, or old ones used instead.
-```
-
 </code></pre>
+  </div>
+  </div>
 </li>
 <li>
 <p>If that is the case you will need to run the following command:</p>
-<pre><code class="language-admonish terminal">
-```sh
-$ wget -O - apt.radxa.com/focal-stable/public.key | sudo apt-key add
-```
-
+ <div id="admonition-terminal" class="admonition admonish-terminal" role="note" aria-labelledby="admonition-terminal-title">
+ <div class="admonition-title">
+ <div id="admonition-terminal-title">
+<p>Terminal</p>
+ </div>
+ <a class="admonition-anchor-link" href="#admonition-terminal"></a>
+ </div>
+ <div>
+<pre><code class="language-sh">$ wget -O - apt.radxa.com/focal-stable/public.key | sudo apt-key add
 </code></pre>
+ </div>
+ </div>
 </li>
 <li>
 <p>You should get some feedback with a HTTP request and a Warning about apt-key is deprecated... this is fine (if only there was a deterministic, declarative system out there we could have used...)</p>
@@ -209,39 +221,71 @@ $ wget -O - apt.radxa.com/focal-stable/public.key | sudo apt-key add
 <h2 id="networking"><a class="header" href="#networking">Networking</a></h2>
 <p>The Debain OS for the Rock C4+ uses the <code>NetworkManager</code> package to manage all connections to the network interface chips.</p>
 <p><code>NetworkManager</code> directory is located here -&gt; <code>/etc/NetworkManager</code>, the contents of which is:</p>
-<pre><code class="language-admonish terminal">
-```sh
-NetworkManager.conf
+<div id="admonition-terminal-1" class="admonition admonish-terminal" role="note" aria-labelledby="admonition-terminal-1-title">
+<div class="admonition-title">
+<div id="admonition-terminal-1-title">
+<p>Terminal</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-terminal-1"></a>
+</div>
+<div>
+<pre><code class="language-sh">NetworkManager.conf
 conf.d/
 dispatcher.d/
 dnsmasq-shared.d/
 dnsmasq.d/
 system-connections/
-```
-
 </code></pre>
+</div>
+</div>
 <p>All of your Wi-Fi profiles are stored in the <code>system-connections</code> folder, for example:</p>
-<pre><code class="language-admonish terminal">
-```sh
-$ ls /etc/NetworkManager/system-connections
+<div id="admonition-terminal-2" class="admonition admonish-terminal" role="note" aria-labelledby="admonition-terminal-2-title">
+<div class="admonition-title">
+<div id="admonition-terminal-2-title">
+<p>Terminal</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-terminal-2"></a>
+</div>
+<div>
+<pre><code class="language-sh">$ ls /etc/NetworkManager/system-connections
 &gt; OKdo05.nmconnection
 &gt; eduroam.nmconnection
-```
-
 </code></pre>
-<pre><code class="language-admonish important">
-The file naming convention, `&lt;ssid&gt;.nmconnection`, this is strict and case-sensitive.
-
-</code></pre>
+</div>
+</div>
+<div id="admonition-important" class="admonition admonish-tip" role="note" aria-labelledby="admonition-important-title">
+<div class="admonition-title">
+<div id="admonition-important-title">
+<p>Important</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-important"></a>
+</div>
+<div>
+<p>The file naming convention, <code>&lt;ssid&gt;.nmconnection</code>, this is strict and case-sensitive.</p>
+</div>
+</div>
 <p>Each <code>...nmconnection</code> file has a format and for eduroam, which is an enterprise network it looks like this, you will need to have root level permissions:</p>
-<pre><code class="language-admonish terminal">
-```sh
-$ sudo cat /etc/NetworkManager/system-connections/eduroam.nmconnection
-```
+<div id="admonition-terminal-3" class="admonition admonish-terminal" role="note" aria-labelledby="admonition-terminal-3-title">
+<div class="admonition-title">
+<div id="admonition-terminal-3-title">
+<p>Terminal</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-terminal-3"></a>
+</div>
+<div>
+<pre><code class="language-sh">$ sudo cat /etc/NetworkManager/system-connections/eduroam.nmconnection
 </code></pre>
-<pre><code class="language-admonish output">
-```sh
-[connection]
+</div>
+</div>
+<div id="admonition-output" class="admonition admonish-output" role="note" aria-labelledby="admonition-output-title">
+<div class="admonition-title">
+<div id="admonition-output-title">
+<p>Output</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-output"></a>
+</div>
+<div>
+<pre><code class="language-sh">[connection]
 id=eduroam
 uuid=4e3235f7-8387-4102-8a57-dd1120f29ac5
 type=wifi
@@ -274,14 +318,24 @@ dns-search=
 method=auto
 
 [proxy]
-```
-
 </code></pre>
-<pre><code class="language-admonish important">You may need to reload the connection:
-- `nmcli connection reload` or you can do this with elevation
-- `sudo ncmli connetion reload`
-</code></pre>
-
+</div>
+</div>
+<div id="admonition-important-1" class="admonition admonish-tip" role="note" aria-labelledby="admonition-important-1-title">
+<div class="admonition-title">
+<div id="admonition-important-1-title">
+<p>Important</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-important-1"></a>
+</div>
+<div>
+<p>You may need to reload the connection:</p>
+<ul>
+<li><code>nmcli connection reload</code> or you can do this with elevation</li>
+<li><code>sudo ncmli connetion reload</code></li>
+</ul>
+</div>
+</div>
                     </main>
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->

@@ -169,39 +169,70 @@
                 <div id="content" class="content">
                     <main><div class="sidetoc"><nav class="pagetoc"></nav></div>
                         <h1 id="libioctrl"><a class="header" href="#libioctrl">libioctrl</a></h1>
-<pre><code class="language-admonish warning">
-- Make sure you have completed the following chapters: 
-   - [GPIO Library](../GPIOLibrary/GPIOLibrary.md)
-   - [ADC Library](../ADCLibrary/ADCLibrary.md)
-   - [PWM Library](../PWMLibrary/PWMLibrary.md)
-
-</code></pre>
+<div id="admonition-warning" class="admonition admonish-warning" role="note" aria-labelledby="admonition-warning-title">
+<div class="admonition-title">
+<div id="admonition-warning-title">
+<p>Warning</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-warning"></a>
+</div>
+<div>
+<ul>
+<li>Make sure you have completed the following chapters:
+<ul>
+<li><a href="../GPIOLibrary/GPIOLibrary.html">GPIO Library</a></li>
+<li><a href="../ADCLibrary/ADCLibrary.html">ADC Library</a></li>
+<li><a href="../PWMLibrary/PWMLibrary.html">PWM Library</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
 <p>In this chapter we are going to combine our previous source code into a centeralised directory.</p>
 <h2 id="1-setting-up-the-libioctrl-source-code"><a class="header" href="#1-setting-up-the-libioctrl-source-code">1. Setting up the <code>libioctrl</code> source code:</a></h2>
 <ol>
 <li>
 <p>Create a new directory in home called <code>libioctrl</code>:</p>
-<pre><code class="language-admonish terminal">
-```sh
-$ mkdir -p ~/libioctrl/{src, include}
-```
+ <div id="admonition-terminal" class="admonition admonish-terminal" role="note" aria-labelledby="admonition-terminal-title">
+ <div class="admonition-title">
+ <div id="admonition-terminal-title">
+<p>Terminal</p>
+ </div>
+ <a class="admonition-anchor-link" href="#admonition-terminal"></a>
+ </div>
+ <div>
+<pre><code class="language-sh">$ mkdir -p ~/libioctrl/{src, include}
 </code></pre>
+ </div>
+ </div>
 </li>
 <li>
 <p>We need to copy the <code>adc.{c/h}</code> , <code>gpio.{c/h}</code> and <code>pwm.{c/h}</code> from the respective directories into two new child directories inside of <code>libioctrl</code>, <code>src</code> and <code>include</code>:</p>
-<pre><code class="language-admonish terminal title=&#39;Terminal: Example&#39;">
-```sh
-$ cp adc/adc.c ~/libioctrl/src &amp;&amp; cp adc/adc.h ~/libioctrl/include
-```
-
+ <div id="admonition-terminal-example" class="admonition admonish-terminal" role="note" aria-labelledby="admonition-terminal-example-title">
+ <div class="admonition-title">
+ <div id="admonition-terminal-example-title">
+<p>Terminal: Example</p>
+ </div>
+ <a class="admonition-anchor-link" href="#admonition-terminal-example"></a>
+ </div>
+ <div>
+<pre><code class="language-sh">$ cp adc/adc.c ~/libioctrl/src &amp;&amp; cp adc/adc.h ~/libioctrl/include
 </code></pre>
+ </div>
+ </div>
 <p>Repeat for each of the other libraries we had made earlier.</p>
 </li>
 <li>
 <p>You should have the following structure:</p>
-<pre><code class="language-admonish output">
-```
-$ ls -l ~/libioctrl/*
+ <div id="admonition-output" class="admonition admonish-output" role="note" aria-labelledby="admonition-output-title">
+ <div class="admonition-title">
+ <div id="admonition-output-title">
+<p>Output</p>
+ </div>
+ <a class="admonition-anchor-link" href="#admonition-output"></a>
+ </div>
+ <div>
+<pre><code>$ ls -l ~/libioctrl/*
 libioctrl/include:
 total 12
 -rw-r--r-- 1 debian debian  685 Apr 14 19:25 adc.h
@@ -213,15 +244,21 @@ total 12
 -rw-r--r-- 1 debian debian 1288 Apr 14 19:24 adc.c
 -rw-r--r-- 1 debian debian 3559 Apr 14 19:46 gpio.c
 -rw-r--r-- 1 debian debian 2490 Apr 14 19:24 pwm.c
-```
-
 </code></pre>
+ </div>
+ </div>
 </li>
 <li>
 <p>Now make a new <code>libioctrl.h</code> inside the <code>include/</code> and fill the following:</p>
-<pre><code class="language-admonish code title=&#39;Code: `include/libioctrl.h`&#39;">
-```h
-#ifndef LIBIOCTRL_H
+ <div id="admonition-code-includelibioctrlh" class="admonition admonish-code" role="note" aria-labelledby="admonition-code-includelibioctrlh-title">
+ <div class="admonition-title">
+ <div id="admonition-code-includelibioctrlh-title">
+<p>Code: <code>include/libioctrl.h</code></p>
+ </div>
+ <a class="admonition-anchor-link" href="#admonition-code-includelibioctrlh"></a>
+ </div>
+ <div>
+<pre><code class="language-h">#ifndef LIBIOCTRL_H
 #define LIBIOCTRL_H
 
 #include "gpio.h"
@@ -229,26 +266,38 @@ total 12
 #include "adc.h"
 
 #endif // LIBIOCTRL_H
-```
-
 </code></pre>
+ </div>
+ </div>
 </li>
 <li>
 <p>Replace the <code>#include "adc.h"</code>, <code>#include "gpio.h"</code> and <code>#include "pwm.h"</code> inside the respective <code>.c</code> files:</p>
-<pre><code class="language-admonish code title=&#39;Code:   `src/adc.c`&#39;">
-```c
-# include "../include/adc.h"
-```
-
+ <div id="admonition-code---srcadcc" class="admonition admonish-code" role="note" aria-labelledby="admonition-code---srcadcc-title">
+ <div class="admonition-title">
+ <div id="admonition-code---srcadcc-title">
+<p>Code:   <code>src/adc.c</code></p>
+ </div>
+ <a class="admonition-anchor-link" href="#admonition-code---srcadcc"></a>
+ </div>
+ <div>
+<pre><code class="language-c"># include "../include/adc.h"
 </code></pre>
+ </div>
+ </div>
 <p>Repeat for the other <code>.c</code> files</p>
 </li>
 <li>
 <p>Next we need to update some variable names to deal with the issue of multiple declarations when compiling. Inside <code>include/pwm.h</code> change the following, we are only appending <code>PWM</code> to <code>PinMap</code>:</p>
 <p>Old:</p>
-<pre><code class="language-admonish code collapsible=true title=&#39;Suppressed code [15 lines]...&#39;">
-```h
-// Structure to hold PWM mapping information
+<details id="admonition-suppressed-code-15-lines" class="admonition admonish-code" role="note" aria-labelledby="admonition-suppressed-code-15-lines-title">
+<summary class="admonition-title">
+<div id="admonition-suppressed-code-15-lines-title">
+<p>Suppressed code [15 lines]...</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-suppressed-code-15-lines"></a>
+</summary>
+<div>
+<pre><code class="language-h">// Structure to hold PWM mapping information
 typedef struct {
     char physical_pin[10];  // Physical pin on the BeagleBone Black (e.g., "P9_16")
     char pwm_chip_channel[10]; // PWM chip and channel (e.g., "4:1")
@@ -266,12 +315,19 @@ PinMap phy_pin_map[] = {
     {"P9_42", "0:0"}  // eCAP0
 };
 
-```
 </code></pre>
+</div>
+</details>
 <p>New:</p>
-<pre><code class="language-admonish code collapsible=true title=&#39;Suppressed code [15 lines]...&#39;">
-```h
-// Structure to hold PWM mapping information
+<details id="admonition-suppressed-code-15-lines-1" class="admonition admonish-code" role="note" aria-labelledby="admonition-suppressed-code-15-lines-1-title">
+<summary class="admonition-title">
+<div id="admonition-suppressed-code-15-lines-1-title">
+<p>Suppressed code [15 lines]...</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-suppressed-code-15-lines-1"></a>
+</summary>
+<div>
+<pre><code class="language-h">// Structure to hold PWM mapping information
 typedef struct {
     char physical_pin[10];  // Physical pin on the BeagleBone Black (e.g., "P9_16")
     char pwm_chip_channel[10]; // PWM chip and channel (e.g., "4:1")
@@ -288,27 +344,40 @@ PWMPinMap phy_pin_map[] = {
     {"P9_28", "3:0"},  // eCAP1
     {"P9_42", "0:0"}  // eCAP0
 };
-```
 </code></pre>
+</div>
+</details>
 <p>Update the <code>src/pwm.c</code> to reference the <code>PWMPinMap</code> inside <code>sizeof(...)</code>:</p>
-<pre><code class="language-admonish code">
-```c
-for (int i = 0; i &lt; sizeof(phy_pin_map) / sizeof(PWMPinMap); i++) {
+<div id="admonition-code" class="admonition admonish-code" role="note" aria-labelledby="admonition-code-title">
+<div class="admonition-title">
+<div id="admonition-code-title">
+<p>Code</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-code"></a>
+</div>
+<div>
+<pre><code class="language-c">for (int i = 0; i &lt; sizeof(phy_pin_map) / sizeof(PWMPinMap); i++) {
     if (strcmp(phy_pin_map[i].physical_pin, pin_name) == 0) {
         // Parse the pwmchip and pwm channel
         sscanf(phy_pin_map[i].pwm_chip_channel, "%[^:]:%s", pwm_channel, pwm_chip);
     }
 }
-```
-
 </code></pre>
+</div>
+</div>
 </li>
 <li>
 <p>Next we need to update some variable names to deal with the issue of multiple declarations when compiling. Inside <code>include/gpio.h</code> change the following, we are only appending <code>GPIO</code> to <code>PinMap</code> and <code>gpio_</code> to <code>pin_map</code>:</p>
 <p>Old</p>
-<pre><code class="language-admonish code collapsible=true title=&#39;Suppressed code [10 lines]...&#39;">
-```h
-// Define a simple mapping array for P8 and P9 pin names to GPIO numbers
+ <details id="admonition-suppressed-code-10-lines" class="admonition admonish-code" role="note" aria-labelledby="admonition-suppressed-code-10-lines-title">
+ <summary class="admonition-title">
+ <div id="admonition-suppressed-code-10-lines-title">
+<p>Suppressed code [10 lines]...</p>
+ </div>
+ <a class="admonition-anchor-link" href="#admonition-suppressed-code-10-lines"></a>
+ </summary>
+ <div>
+<pre><code class="language-h">// Define a simple mapping array for P8 and P9 pin names to GPIO numbers
 typedef struct {
     char pin_name[6];
     unsigned int gpio_number;
@@ -319,13 +388,19 @@ PinMap gpio_pin_map[] = {
     {"P8_31", 10}, {"P8_32", 11}, {"P9_31", 110}, {"P9_29", 111},
     ...
 }
-```
-
 </code></pre>
+ </div>
+ </details>
 <p>New</p>
-<pre><code class="language-admonish code collapsible=true title=&#39;Suppressed code [15 lines]...&#39;">
-```h
-// Define a simple mapping array for P8 and P9 pin names to GPIO numbers
+ <details id="admonition-suppressed-code-15-lines-2" class="admonition admonish-code" role="note" aria-labelledby="admonition-suppressed-code-15-lines-2-title">
+ <summary class="admonition-title">
+ <div id="admonition-suppressed-code-15-lines-2-title">
+<p>Suppressed code [15 lines]...</p>
+ </div>
+ <a class="admonition-anchor-link" href="#admonition-suppressed-code-15-lines-2"></a>
+ </summary>
+ <div>
+<pre><code class="language-h">// Define a simple mapping array for P8 and P9 pin names to GPIO numbers
 typedef struct {
     char pin_name[6];
     unsigned int gpio_number;
@@ -336,13 +411,19 @@ GPIOPinMap gpio_pin_map[] = {
     {"P8_31", 10}, {"P8_32", 11}, {"P9_31", 110}, {"P9_29", 111},
     ...
 }
-```
-
 </code></pre>
+ </div>
+ </details>
 <p>Update the <code>src/gpio.c</code> to reference the <code>gpio_pin_map</code> and <code>GPIOPinMap</code> inside <code>sizeof(...)</code>, remember to replace all the instances of <code>pin_map</code> in the below function to <code>gpio_pin_map</code>:</p>
-<pre><code class="language-admonish code">
-```c
-// Function to find GPIO number from pin name
+ <div id="admonition-code-1" class="admonition admonish-code" role="note" aria-labelledby="admonition-code-1-title">
+ <div class="admonition-title">
+ <div id="admonition-code-1-title">
+<p>Code</p>
+ </div>
+ <a class="admonition-anchor-link" href="#admonition-code-1"></a>
+ </div>
+ <div>
+<pre><code class="language-c">// Function to find GPIO number from pin name
 int find_gpio_number(const char *pin_name) {
     for (int i = 0; i &lt; sizeof(gpio_pin_map) / sizeof(GPIOPinMap); i++) {
         if (strcmp(gpio_pin_map[i].pin_name, pin_name) == 0) {
@@ -351,24 +432,40 @@ int find_gpio_number(const char *pin_name) {
     }
     return -1;  // Return -1 if the pin is not found
 }
-```
-
 </code></pre>
+ </div>
+ </div>
 </li>
 </ol>
 <h2 id="2-make-with-a-makefile"><a class="header" href="#2-make-with-a-makefile">2: Make with a Makefile</a></h2>
-<pre><code class="language-admonish warning">
-- Before running make for `libioctrl`, we should remove all current libaries from before. For each original library, `adclib`, `gpiolib`, `pwmlib` or whether you made them run `make uninstall` and `make clean` in each one: 
-
-    ![](./figures/unmakeall.gif)
-
-</code></pre>
+<div id="admonition-warning-1" class="admonition admonish-warning" role="note" aria-labelledby="admonition-warning-1-title">
+<div class="admonition-title">
+<div id="admonition-warning-1-title">
+<p>Warning</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-warning-1"></a>
+</div>
+<div>
+<ul>
+<li>
+<p>Before running make for <code>libioctrl</code>, we should remove all current libaries from before. For each original library, <code>adclib</code>, <code>gpiolib</code>, <code>pwmlib</code> or whether you made them run <code>make uninstall</code> and <code>make clean</code> in each one:</p>
+<p><img src="./figures/unmakeall.gif" alt="" /></p>
+</li>
+</ul>
+</div>
+</div>
 <ol start="8">
 <li>
 <p>Build a Makefile and fill with the following:</p>
-<pre><code class="language-admonish code collapsible=true title=&#39;Suppressed code [55 lines]...&#39;">
-```makefile
-# Compiler and flags
+ <details id="admonition-suppressed-code-55-lines" class="admonition admonish-code" role="note" aria-labelledby="admonition-suppressed-code-55-lines-title">
+ <summary class="admonition-title">
+ <div id="admonition-suppressed-code-55-lines-title">
+<p>Suppressed code [55 lines]...</p>
+ </div>
+ <a class="admonition-anchor-link" href="#admonition-suppressed-code-55-lines"></a>
+ </summary>
+ <div>
+<pre><code class="language-makefile"># Compiler and flags
 CC = gcc
 CFLAGS = -Wall -Werror -fPIC -I./include  # Include headers
 AR = ar
@@ -423,25 +520,37 @@ uninstall:
 
 # Phony targets
 .PHONY: all clean install uninstall
-```
-
 </code></pre>
+ </div>
+ </details>
 </li>
 <li>
 <p>We need to remove all reference to libraries created before, navigate to <code>adc</code>, <code>gpio</code> and <code>pwm</code> directories and run:</p>
-<pre><code class="language-admonish terminal">
-```sh
-path/to/adc$ make uninstall
+ <div id="admonition-terminal-1" class="admonition admonish-terminal" role="note" aria-labelledby="admonition-terminal-1-title">
+ <div class="admonition-title">
+ <div id="admonition-terminal-1-title">
+<p>Terminal</p>
+ </div>
+ <a class="admonition-anchor-link" href="#admonition-terminal-1"></a>
+ </div>
+ <div>
+<pre><code class="language-sh">path/to/adc$ make uninstall
 ...
-```
-
 </code></pre>
+ </div>
+ </div>
 </li>
 <li>
 <p>Go back to the <code>libioctrl</code> and run <code>make</code>:</p>
-<pre><code class="language-admonish output">
-```sh
-path/to/libioctrl$ make install
+<div id="admonition-output-1" class="admonition admonish-output" role="note" aria-labelledby="admonition-output-1-title">
+<div class="admonition-title">
+<div id="admonition-output-1-title">
+<p>Output</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-output-1"></a>
+</div>
+<div>
+<pre><code class="language-sh">path/to/libioctrl$ make install
 gcc -Wall -Werror -fPIC -I./include   -c src/gpio.c -o obj/gpio.o
 gcc -Wall -Werror -fPIC -I./include   -c src/pwm.c -o obj/pwm.o
 gcc -Wall -Werror -fPIC -I./include   -c src/adc.c -o obj/adc.o
@@ -451,9 +560,9 @@ sudo cp include/gpio.h include/pwm.h include/adc.h include/libioctrl.h /usr/incl
 sudo cp libioctrl.a libioctrl.so /usr/lib/
 sudo ldconfig
 ...
-```
-
 </code></pre>
+</div>
+</div>
 </li>
 <li>
 <p>Breaking down the output of <code>make install</code>:</p>
@@ -461,69 +570,105 @@ sudo ldconfig
 <ul>
 <li>
 <p>The <code>gcc</code> command is compiling each source file (<code>src/gpio.c</code>, <code>src/pwm.c</code>, and <code>src/adc.c</code>) into object files (<code>obj/gpio.o</code>, <code>obj/pwm.o</code>, and <code>obj/adc.o</code>), and it uses the appropriate flags (<code>-Wall</code>, <code>-Werror</code>, <code>-fPIC</code>, <code>-I./include</code>).</p>
-<pre><code class="language-admonish terminal">
-```
-gcc -Wall -Werror -fPIC -I./include   -c src/gpio.c -o obj/gpio.o
+  <div id="admonition-terminal-2" class="admonition admonish-terminal" role="note" aria-labelledby="admonition-terminal-2-title">
+  <div class="admonition-title">
+  <div id="admonition-terminal-2-title">
+<p>Terminal</p>
+  </div>
+  <a class="admonition-anchor-link" href="#admonition-terminal-2"></a>
+  </div>
+  <div>
+<pre><code>gcc -Wall -Werror -fPIC -I./include   -c src/gpio.c -o obj/gpio.o
 gcc -Wall -Werror -fPIC -I./include   -c src/pwm.c -o obj/pwm.o
 gcc -Wall -Werror -fPIC -I./include   -c src/adc.c -o obj/adc.o
-```
-
 </code></pre>
+  </div>
+  </div>
 </li>
 </ul>
 <p><strong>Creating the static library</strong>:</p>
 <ul>
 <li>
 <p>The <code>ar rcs</code> command is creating the static library <code>libioctrl.a</code> by combining the compiled object files <code>gpio.o</code>, <code>pwm.o</code>, and <code>adc.o</code>.</p>
-<pre><code class="language-admonish terminal">
-```
-ar rcs libioctrl.a  ./obj/gpio.o  ./obj/pwm.o  ./obj/adc.o
-```
-
+  <div id="admonition-terminal-3" class="admonition admonish-terminal" role="note" aria-labelledby="admonition-terminal-3-title">
+  <div class="admonition-title">
+  <div id="admonition-terminal-3-title">
+<p>Terminal</p>
+  </div>
+  <a class="admonition-anchor-link" href="#admonition-terminal-3"></a>
+  </div>
+  <div>
+<pre><code>ar rcs libioctrl.a  ./obj/gpio.o  ./obj/pwm.o  ./obj/adc.o
 </code></pre>
+  </div>
+  </div>
 </li>
 </ul>
 <p><strong>Creating the shared library</strong>:</p>
 <ul>
-<li>The <code>gcc -shared</code> command is creating the shared library <code>libioctrl.so</code> by linking the same object files <code>gpio.o</code>, <code>pwm.o</code>, and <code>adc.o</code>
-<pre><code class="language-admonish terminal">
-```
-gcc -shared -o libioctrl.so  ./obj/gpio.o  ./obj/pwm.o  ./obj/adc.o
-```
-
+<li>
+<p>The <code>gcc -shared</code> command is creating the shared library <code>libioctrl.so</code> by linking the same object files <code>gpio.o</code>, <code>pwm.o</code>, and <code>adc.o</code></p>
+  <div id="admonition-terminal-4" class="admonition admonish-terminal" role="note" aria-labelledby="admonition-terminal-4-title">
+  <div class="admonition-title">
+  <div id="admonition-terminal-4-title">
+<p>Terminal</p>
+  </div>
+  <a class="admonition-anchor-link" href="#admonition-terminal-4"></a>
+  </div>
+  <div>
+<pre><code>gcc -shared -o libioctrl.so  ./obj/gpio.o  ./obj/pwm.o  ./obj/adc.o
 </code></pre>
+  </div>
+  </div>
 </li>
 </ul>
 <p><strong>System wide availability</strong>:</p>
 <ul>
 <li>
 <p>This command copies the header files (<code>gpio.h</code>, <code>pwm.h</code>, <code>adc.h</code>, and <code>libioctrl.h</code>) to the system's <code>/usr/include/</code> directory. This makes the header files available system-wide, allowing programs to include these headers when building applications that use the library.</p>
-<pre><code class="language-admonish terminal">
-```
-sudo cp include/gpio.h include/pwm.h include/adc.h include/libioctrl.h /usr/include/
-```
-
+  <div id="admonition-terminal-5" class="admonition admonish-terminal" role="note" aria-labelledby="admonition-terminal-5-title">
+  <div class="admonition-title">
+  <div id="admonition-terminal-5-title">
+<p>Terminal</p>
+  </div>
+  <a class="admonition-anchor-link" href="#admonition-terminal-5"></a>
+  </div>
+  <div>
+<pre><code>sudo cp include/gpio.h include/pwm.h include/adc.h include/libioctrl.h /usr/include/
 </code></pre>
+  </div>
+  </div>
 </li>
 <li>
 <p>This command copies the static (<code>libioctrl.a</code>) and shared (<code>libioctrl.so</code>) versions of the libioctrl library to <code>/usr/lib/</code>, which is a standard system library directory. This allows programs to link against the library when building.</p>
-<pre><code class="language-admonish terminal">
-```
-sudo cp libioctrl.a libioctrl.so /usr/lib/:
-```
-
+  <div id="admonition-terminal-6" class="admonition admonish-terminal" role="note" aria-labelledby="admonition-terminal-6-title">
+  <div class="admonition-title">
+  <div id="admonition-terminal-6-title">
+<p>Terminal</p>
+  </div>
+  <a class="admonition-anchor-link" href="#admonition-terminal-6"></a>
+  </div>
+  <div>
+<pre><code>sudo cp libioctrl.a libioctrl.so /usr/lib/:
 </code></pre>
+  </div>
+  </div>
 </li>
 <li>
 <p>This command updates the system's dynamic linker cache. It ensures that the system is aware of the newly installed shared libraries (e.g., libioctrl.so) so that applications can find and use the shared library at runtime</p>
-<pre><code class="language-admonish output">
-```
-sudo ldconfig
-```
- 
-![](./figures/makelibioctrl.gif)
-
+  <div id="admonition-output-2" class="admonition admonish-output" role="note" aria-labelledby="admonition-output-2-title">
+  <div class="admonition-title">
+  <div id="admonition-output-2-title">
+<p>Output</p>
+  </div>
+  <a class="admonition-anchor-link" href="#admonition-output-2"></a>
+  </div>
+  <div>
+<pre><code>sudo ldconfig
 </code></pre>
+<p><img src="./figures/makelibioctrl.gif" alt="" /></p>
+  </div>
+  </div>
 </li>
 </ul>
 </li>
@@ -534,26 +679,37 @@ sudo ldconfig
 <p>Update any of the following tests we ran before; <code>adc2pwm.c</code>, <code>adc_continous_read</code>, <code>adc_read</code>, <code>blink</code> and <code>pwm_test</code>:</p>
 <p>In this example I will update the <code>adc_read.c</code> headers and part of the <code>Makefile</code>:</p>
 <p><code>adc_read.c</code></p>
-<pre><code class="language-admonish code">
-```c
-#include "libioctrl.h" # originally adc.h
+<div id="admonition-code-2" class="admonition admonish-code" role="note" aria-labelledby="admonition-code-2-title">
+<div class="admonition-title">
+<div id="admonition-code-2-title">
+<p>Code</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-code-2"></a>
+</div>
+<div>
+<pre><code class="language-c">#include "libioctrl.h" # originally adc.h
 #include &lt;stdio.h&gt;
 #include &lt;unistd.h&gt;
 ...
-``` 
-
 </code></pre>
+</div>
+</div>
 <p><code>Makefile</code></p>
-<pre><code class="language-admonish code">
-
-```makefile
-...
+<div id="admonition-code-3" class="admonition admonish-code" role="note" aria-labelledby="admonition-code-3-title">
+<div class="admonition-title">
+<div id="admonition-code-3-title">
+<p>Code</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-code-3"></a>
+</div>
+<div>
+<pre><code class="language-makefile">...
 # Library to link against
 LIBS = -lioctrl # originally, ladc
 ...
-```
-
 </code></pre>
+</div>
+</div>
 <p>You should repeat for the others, and remember to <code>make clean</code> before running <code>make</code> for each of these programs to remove original exe.</p>
 </li>
 </ol>
@@ -567,12 +723,18 @@ LIBS = -lioctrl # originally, ladc
 </li>
 <li>
 <p><code>cd</code> to the parent directory of where you cloned the repo using shell copy command, <code>scp</code>:</p>
-<pre><code class="language-admonish terminal">
-```sh
-scp -r /path/to/bb.black_pin_library debian@192.168.7.2:c_libraries
-```
-
+<div id="admonition-terminal-7" class="admonition admonish-terminal" role="note" aria-labelledby="admonition-terminal-7-title">
+<div class="admonition-title">
+<div id="admonition-terminal-7-title">
+<p>Terminal</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-terminal-7"></a>
+</div>
+<div>
+<pre><code class="language-sh">scp -r /path/to/bb.black_pin_library debian@192.168.7.2:c_libraries
 </code></pre>
+</div>
+</div>
 <p><img src="./figures/bb_gif.gif" alt="" /></p>
 </li>
 <li>

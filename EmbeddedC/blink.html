@@ -169,30 +169,52 @@
                 <div id="content" class="content">
                     <main><div class="sidetoc"><nav class="pagetoc"></nav></div>
                         <h1 id="blink"><a class="header" href="#blink">Blink</a></h1>
-<pre><code class="language-admonish warning">- Remember to include in your `PATH` `avr-gcc`, `avrdude` and `make`
-- Open `~/.bashrc` and add the following lines, then save and run the command `source ~/.bashrc` to update the current session with the new `PATH`
-  -  Uni machines
-     ```sh
-     # ~/.bashrc
-     export PATH=$PATH:"/c/ProgramData/arduino-ide-v2/Local/Arduino15/packages/arduino/tools/avr-gcc/7.3.0-atmel3.6.1-arduino7/bin"
-     export PATH=$PATH:"/c/ProgramData/arduino-ide-v2/Local/Arduino15/packages/arduino/tools/avr-dude/6.3.0-arduino17/bin"
-     export PATH=$PATH:"/c/Program Files/GCC-Windows-MingW-2.0.0/w64devkit/bin"
-     ```
-  - Your personal windows machine
-     ```sh
-     # ~/.bashrc
-     export PATH=$PATH:"/c/Users/YOURUSERNAME/AppData/Local/Arduino15/packages/arduino/tools/avr-gcc/7.3.0-atmel3.6.1-arduino7/bin"
-     export PATH=$PATH:"/c/Users/YOURUSERNAME/AppDataLocal/Arduino15/packages/arduino/tools/avr-dude/6.3.0-arduino17/bin"
-     export PATH=$PATH:"/c/Program Files/w64devkit/bin"
-     ```
-  - You can install w64devkit from here:
-    - [https://github.com/skeeto/w64devkit/releases](https://github.com/skeeto/w64devkit/releases)
-
+<div id="admonition-warning" class="admonition admonish-warning" role="note" aria-labelledby="admonition-warning-title">
+<div class="admonition-title">
+<div id="admonition-warning-title">
+<p>Warning</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-warning"></a>
+</div>
+<div>
+<ul>
+<li>Remember to include in your <code>PATH</code> <code>avr-gcc</code>, <code>avrdude</code> and <code>make</code></li>
+<li>Open <code>~/.bashrc</code> and add the following lines, then save and run the command <code>source ~/.bashrc</code> to update the current session with the new <code>PATH</code>
+<ul>
+<li>Uni machines
+<pre><code class="language-sh"># ~/.bashrc
+export PATH=$PATH:"/c/ProgramData/arduino-ide-v2/Local/Arduino15/packages/arduino/tools/avr-gcc/7.3.0-atmel3.6.1-arduino7/bin"
+export PATH=$PATH:"/c/ProgramData/arduino-ide-v2/Local/Arduino15/packages/arduino/tools/avr-dude/6.3.0-arduino17/bin"
+export PATH=$PATH:"/c/Program Files/GCC-Windows-MingW-2.0.0/w64devkit/bin"
 </code></pre>
+</li>
+<li>Your personal windows machine
+<pre><code class="language-sh"># ~/.bashrc
+export PATH=$PATH:"/c/Users/YOURUSERNAME/AppData/Local/Arduino15/packages/arduino/tools/avr-gcc/7.3.0-atmel3.6.1-arduino7/bin"
+export PATH=$PATH:"/c/Users/YOURUSERNAME/AppDataLocal/Arduino15/packages/arduino/tools/avr-dude/6.3.0-arduino17/bin"
+export PATH=$PATH:"/c/Program Files/w64devkit/bin"
+</code></pre>
+</li>
+<li>You can install w64devkit from here:
+<ul>
+<li><a href="https://github.com/skeeto/w64devkit/releases">https://github.com/skeeto/w64devkit/releases</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
 <p>So you are no doubt familiar with the well known <code>blink.ino</code>:</p>
-<pre><code class="language-admonish code">
-```c
-// the setup function runs once when you press reset or power the board
+<div id="admonition-code" class="admonition admonish-code" role="note" aria-labelledby="admonition-code-title">
+<div class="admonition-title">
+<div id="admonition-code-title">
+<p>Code</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-code"></a>
+</div>
+<div>
+<pre><code class="language-c">// the setup function runs once when you press reset or power the board
 void setup() {
   // initialize digital pin LED_BUILTIN as an output.
   pinMode(LED_BUILTIN, OUTPUT);
@@ -205,36 +227,54 @@ void loop() {
   digitalWrite(LED_BUILTIN, LOW);   // turn the LED off by making the voltage LOW
   delay(1000);                      // wait for a second
 }
-```
-
 </code></pre>
+</div>
+</div>
 <p>There is a lot of abstraction happening here, where are the ports/registers?</p>
 <p>Let's now turn this into an embedded program!</p>
 <h2 id="create-blinkc"><a class="header" href="#create-blinkc">Create <code>blink.c</code></a></h2>
 <ol>
 <li>
 <p>Create a new directory called <code>embeddedC</code> and a child directory <code>blink</code></p>
-<pre><code class="language-admonish terminal">
-```sh
-$ mkdir -p ~/embeddedC/blink &amp;&amp; cd embeddedC/blink
-```
-
+ <div id="admonition-terminal" class="admonition admonish-terminal" role="note" aria-labelledby="admonition-terminal-title">
+ <div class="admonition-title">
+ <div id="admonition-terminal-title">
+<p>Terminal</p>
+ </div>
+ <a class="admonition-anchor-link" href="#admonition-terminal"></a>
+ </div>
+ <div>
+<pre><code class="language-sh">$ mkdir -p ~/embeddedC/blink &amp;&amp; cd embeddedC/blink
 </code></pre>
+ </div>
+ </div>
 </li>
 <li>
 <p>Create a new file inside the the <code>blink</code> directory called <code>blink.c</code></p>
-<pre><code class="language-admonish terminal">
-```sh
-$ touch blink.c
-```
-
+ <div id="admonition-terminal-1" class="admonition admonish-terminal" role="note" aria-labelledby="admonition-terminal-1-title">
+ <div class="admonition-title">
+ <div id="admonition-terminal-1-title">
+<p>Terminal</p>
+ </div>
+ <a class="admonition-anchor-link" href="#admonition-terminal-1"></a>
+ </div>
+ <div>
+<pre><code class="language-sh">$ touch blink.c
 </code></pre>
+ </div>
+ </div>
 </li>
 <li>
 <p>Now it's time start wrighting out the program:</p>
-<pre><code class="language-admonish code">
-```c
-#include &lt;avr/io.h&gt; // provides macros and definitions for accessing registers and hardware-specific functions of AVR microcontrollers
+ <div id="admonition-code-1" class="admonition admonish-code" role="note" aria-labelledby="admonition-code-1-title">
+ <div class="admonition-title">
+ <div id="admonition-code-1-title">
+<p>Code</p>
+ </div>
+ <a class="admonition-anchor-link" href="#admonition-code-1"></a>
+ </div>
+ <div>
+<pre><code class="language-c">#include &lt;avr/io.h&gt; // provides macros and definitions for accessing registers and hardware-specific functions of AVR microcontrollers
 
 #define F_CPU 16000000UL
 
@@ -257,27 +297,44 @@ int main (void)
         _delay_ms(BLINK_DELAY_MS);
     }
 }
-```
-
 </code></pre>
-<pre><code class="language-admonish example title=&#39;Explanation bitwise operations&#39;">
-- `|=` operator is used to set (turn on) specific bits without changing others. It performs a bitwise OR operation with the current value of a register, setting only the bits t correspond to 1 in the mask.
-  - ```c
-    // Initial value: all bits are 0
-    uint8_t register_value = 0b00000000; 
-        // Set bit 2
-    register_value |= (1 &lt;&lt; 2); // 0b00000100
-        // Result: register_value = 0b00000100 (Bit 2 is now set)
-      ```
-    - `&amp;= ~` to clear (turn off) a specific bit, we use the &amp;= operator combined with the bitwise NOT `~`. This combination creates a mask where only the desired bit is set to 0, le all other bits are 1. The `&amp;=` operation then turns off the targeted bit without affecting others
-  - ```c
-    // Initial value: all bits are 0
-    uint8_t register_value = 0b00000000; 
-        // Set bit 2
-    register_value &amp;= ~(1 &lt;&lt; 2); // 0b11111011
-        // Result: register_value = 0b00000000 (Bit 2 is now set)
-      ```
+ </div>
+ </div>
+ <div id="admonition-explanation-bitwise-operations" class="admonition admonish-example" role="note" aria-labelledby="admonition-explanation-bitwise-operations-title">
+ <div class="admonition-title">
+ <div id="admonition-explanation-bitwise-operations-title">
+<p>Explanation bitwise operations</p>
+ </div>
+ <a class="admonition-anchor-link" href="#admonition-explanation-bitwise-operations"></a>
+ </div>
+ <div>
+<ul>
+<li><code>|=</code> operator is used to set (turn on) specific bits without changing others. It performs a bitwise OR operation with the current value of a register, setting only the bits t correspond to 1 in the mask.
+<ul>
+<li>
+<pre><code class="language-c">// Initial value: all bits are 0
+uint8_t register_value = 0b00000000; 
+    // Set bit 2
+register_value |= (1 &lt;&lt; 2); // 0b00000100
+    // Result: register_value = 0b00000100 (Bit 2 is now set)
 </code></pre>
+<ul>
+<li><code>&amp;= ~</code> to clear (turn off) a specific bit, we use the &amp;= operator combined with the bitwise NOT <code>~</code>. This combination creates a mask where only the desired bit is set to 0, le all other bits are 1. The <code>&amp;=</code> operation then turns off the targeted bit without affecting others</li>
+</ul>
+</li>
+<li>
+<pre><code class="language-c">// Initial value: all bits are 0
+uint8_t register_value = 0b00000000; 
+    // Set bit 2
+register_value &amp;= ~(1 &lt;&lt; 2); // 0b11111011
+    // Result: register_value = 0b00000000 (Bit 2 is now set)
+</code></pre>
+</li>
+</ul>
+</li>
+</ul>
+ </div>
+ </div>
 </li>
 </ol>
 <hr />
@@ -288,37 +345,72 @@ int main (void)
 <ul>
 <li>we are going to be using the <code>avr-gcc</code> compiler to first create the object file:</li>
 </ul>
-<pre><code class="language-admonish terminal">
-```sh
-$ avr-gcc -Os -mmcu=atmega328p -DF_CPU16000000UL -c -o blink.o blink.c`
-```
-
+ <div id="admonition-terminal-2" class="admonition admonish-terminal" role="note" aria-labelledby="admonition-terminal-2-title">
+ <div class="admonition-title">
+ <div id="admonition-terminal-2-title">
+<p>Terminal</p>
+ </div>
+ <a class="admonition-anchor-link" href="#admonition-terminal-2"></a>
+ </div>
+ <div>
+<pre><code class="language-sh">$ avr-gcc -Os -mmcu=atmega328p -DF_CPU16000000UL -c -o blink.o blink.c`
 </code></pre>
-<pre><code class="language-admonish exmample title=&#39;Command Breakdown&#39;">
-- `-Os`
-
-    - `-mmcu=atmega328p` configures the compilation process to generate code compatible with the ATmega328P's specific architecture, instruction set, and memory layout
-
-    - `-DF_CPU=16000000UL` the `-D` option defines a macro (`F_CPU`) that will be used in the code, similar to adding `#define F_CPU 16000000UL` (16MHz) at the top of `blink.
-
-    - `-c` flag tells avr-gcc to compile the source file into an object file (.o) rather than a full executable
-
-    - `-o` specifies the output file for the compilation. `-o` allows you to name the output file, which in this case is `blink.o`
-
-</code></pre>
+ </div>
+ </div>
+ <div id="admonition-command-breakdown" class="admonition admonish-note" role="note" aria-labelledby="admonition-command-breakdown-title">
+ <div class="admonition-title">
+ <div id="admonition-command-breakdown-title">
+<p>Command Breakdown</p>
+ </div>
+ <a class="admonition-anchor-link" href="#admonition-command-breakdown"></a>
+ </div>
+ <div>
+<ul>
+<li>
+<p><code>-Os</code></p>
+<ul>
+<li>
+<p><code>-mmcu=atmega328p</code> configures the compilation process to generate code compatible with the ATmega328P's specific architecture, instruction set, and memory layout</p>
+</li>
+<li>
+<p><code>-DF_CPU=16000000UL</code> the <code>-D</code> option defines a macro (<code>F_CPU</code>) that will be used in the code, similar to adding <code>#define F_CPU 16000000UL</code> (16MHz) at the top of `blink.</p>
+</li>
+<li>
+<p><code>-c</code> flag tells avr-gcc to compile the source file into an object file (.o) rather than a full executable</p>
+</li>
+<li>
+<p><code>-o</code> specifies the output file for the compilation. <code>-o</code> allows you to name the output file, which in this case is <code>blink.o</code></p>
+</li>
+</ul>
+</li>
+</ul>
+ </div>
+ </div>
 </li>
 <li>
 <p>Exploring the object file, run the following the command <code>avr-objdump -d -S blink.o</code>:</p>
-<pre><code class="language-admonish terminal">
-```sh
-$ avr-objdump -d -S blink.o
-```
-
+ <div id="admonition-terminal-3" class="admonition admonish-terminal" role="note" aria-labelledby="admonition-terminal-3-title">
+ <div class="admonition-title">
+ <div id="admonition-terminal-3-title">
+<p>Terminal</p>
+ </div>
+ <a class="admonition-anchor-link" href="#admonition-terminal-3"></a>
+ </div>
+ <div>
+<pre><code class="language-sh">$ avr-objdump -d -S blink.o
 </code></pre>
+ </div>
+ </div>
 <p>output</p>
-<pre><code class="language-admonish output">
-```asm
-blink.o:     file format elf32-avr
+ <div id="admonition-output" class="admonition admonish-output" role="note" aria-labelledby="admonition-output-title">
+ <div class="admonition-title">
+ <div id="admonition-output-title">
+<p>Output</p>
+ </div>
+ <a class="admonition-anchor-link" href="#admonition-output"></a>
+ </div>
+ <div>
+<pre><code class="language-asm">blink.o:     file format elf32-avr
 
 Disassembly of section .text.startup:
 
@@ -345,31 +437,49 @@ e:    90 40           sbci    r25, 0x00       ; 0
 26:   00 c0           rjmp    .+0             ; 0x28 &lt;main+0x28&gt;
 28:   00 00           nop
 2a:   00 c0           rjmp    .+0             ; 0x2c &lt;__zero_reg__+0x2b&gt;
-```
-
-- `sbi 0x04, 5`: Set bit `5` in the I/O register at address 0x04, typically used to configure a pin as an output. The `sbi` instruction sets a specific bit in an I/O register.
-
-- `ldi r18, 0xFF`: Load the constant `0xFF` (255 in decimal) into register `r18`. This sets up a value, often for delays or looping.
-
-- `subi r18, 0x01`: Subtracts 1 from r18. This, along with the `sbci` instructions, forms a delay loop by decrementing registers `r18`, `r24`, and `r25` until they reach zero.
-
-- `brne .+0`: Branch if not equal (loop back if r18, r24, or r25 is non-zero). The program will keep looping here to create a delay.
-
-- `rjmp .+0`: Relative jump (infinite loop). This is often used to create a long delay or an idle state. The program will stall here until an external reset or interrupt occurs.
-
-- `cbi 0x05, 5`: Clear bit 5 in I/O register `0x05`, likely to turn off the LED.
-
-- `sbi`/`cbi` instructions toggle an LED pin on and off.
-
-- `ldi`, `subi`, `sbci`, and `brne` form delay loops by decrementing registers until they reach zero.
-
-- `rjmp` and `nop` provide additional delays or idle periods
-
 </code></pre>
-<pre><code class="language-admonish info">
-All information can be found here for ISA [AVR Instruction Set](https://ww1.microchip.com/downloads/en/DeviceDoc/AVR-Instruction-Set-Manual-DS40002198A.pdf)
-
-</code></pre>
+<ul>
+<li>
+<p><code>sbi 0x04, 5</code>: Set bit <code>5</code> in the I/O register at address 0x04, typically used to configure a pin as an output. The <code>sbi</code> instruction sets a specific bit in an I/O register.</p>
+</li>
+<li>
+<p><code>ldi r18, 0xFF</code>: Load the constant <code>0xFF</code> (255 in decimal) into register <code>r18</code>. This sets up a value, often for delays or looping.</p>
+</li>
+<li>
+<p><code>subi r18, 0x01</code>: Subtracts 1 from r18. This, along with the <code>sbci</code> instructions, forms a delay loop by decrementing registers <code>r18</code>, <code>r24</code>, and <code>r25</code> until they reach zero.</p>
+</li>
+<li>
+<p><code>brne .+0</code>: Branch if not equal (loop back if r18, r24, or r25 is non-zero). The program will keep looping here to create a delay.</p>
+</li>
+<li>
+<p><code>rjmp .+0</code>: Relative jump (infinite loop). This is often used to create a long delay or an idle state. The program will stall here until an external reset or interrupt occurs.</p>
+</li>
+<li>
+<p><code>cbi 0x05, 5</code>: Clear bit 5 in I/O register <code>0x05</code>, likely to turn off the LED.</p>
+</li>
+<li>
+<p><code>sbi</code>/<code>cbi</code> instructions toggle an LED pin on and off.</p>
+</li>
+<li>
+<p><code>ldi</code>, <code>subi</code>, <code>sbci</code>, and <code>brne</code> form delay loops by decrementing registers until they reach zero.</p>
+</li>
+<li>
+<p><code>rjmp</code> and <code>nop</code> provide additional delays or idle periods</p>
+</li>
+</ul>
+ </div>
+ </div>
+ <div id="admonition-info" class="admonition admonish-info" role="note" aria-labelledby="admonition-info-title">
+ <div class="admonition-title">
+ <div id="admonition-info-title">
+<p>Info</p>
+ </div>
+ <a class="admonition-anchor-link" href="#admonition-info"></a>
+ </div>
+ <div>
+<p>All information can be found here for ISA <a href="https://ww1.microchip.com/downloads/en/DeviceDoc/AVR-Instruction-Set-Manual-DS40002198A.pdf">AVR Instruction Set</a></p>
+ </div>
+ </div>
 </li>
 </ol>
 <hr />
@@ -377,24 +487,42 @@ All information can be found here for ISA [AVR Instruction Set](https://ww1.micr
 <ol start="6">
 <li>
 <p>Now we can make the <code>.elf</code> (Executable and Linkable Format) file, run the following code:</p>
-<pre><code class="language-admonish terminal">
-```sh
-$ avr-gcc -Os -DF_CPU=16000000 -mmcu=atmega328p -o blink.elf blink.o
-```
-
+ <div id="admonition-terminal-4" class="admonition admonish-terminal" role="note" aria-labelledby="admonition-terminal-4-title">
+ <div class="admonition-title">
+ <div id="admonition-terminal-4-title">
+<p>Terminal</p>
+ </div>
+ <a class="admonition-anchor-link" href="#admonition-terminal-4"></a>
+ </div>
+ <div>
+<pre><code class="language-sh">$ avr-gcc -Os -DF_CPU=16000000 -mmcu=atmega328p -o blink.elf blink.o
 </code></pre>
+ </div>
+ </div>
 </li>
 <li>
 <p>Exploring the object file, run the following the command:</p>
-<pre><code class="language-admonish terminal">
-```sh
-$ avr-objdump -h -s blink.elf
-```
-
+ <div id="admonition-terminal-5" class="admonition admonish-terminal" role="note" aria-labelledby="admonition-terminal-5-title">
+ <div class="admonition-title">
+ <div id="admonition-terminal-5-title">
+<p>Terminal</p>
+ </div>
+ <a class="admonition-anchor-link" href="#admonition-terminal-5"></a>
+ </div>
+ <div>
+<pre><code class="language-sh">$ avr-objdump -h -s blink.elf
 </code></pre>
-<pre><code class="language-admonish output">
-```elf
-
+ </div>
+ </div>
+ <div id="admonition-output-1" class="admonition admonish-output" role="note" aria-labelledby="admonition-output-1-title">
+ <div class="admonition-title">
+ <div id="admonition-output-1-title">
+<p>Output</p>
+ </div>
+ <a class="admonition-anchor-link" href="#admonition-output-1"></a>
+ </div>
+ <div>
+<pre><code class="language-elf">
 blink.elf:     file format elf32-avr
 
 Sections:
@@ -434,9 +562,9 @@ Contents of section .debug_line:
 ...
 Contents of section .debug_str:
 ...
-```
-
 </code></pre>
+ </div>
+ </div>
 </li>
 </ol>
 <hr />
@@ -444,29 +572,56 @@ Contents of section .debug_str:
 <ol start="8">
 <li>
 <p>Now we need to create the <code>.hex</code> file to be burned to the atmega328p:</p>
-<pre><code class="language-admonish terminal">
-```sh
-avr-objcopy.exe -O ihex blink.elf blink.hex
-```
-
+ <div id="admonition-terminal-6" class="admonition admonish-terminal" role="note" aria-labelledby="admonition-terminal-6-title">
+ <div class="admonition-title">
+ <div id="admonition-terminal-6-title">
+<p>Terminal</p>
+ </div>
+ <a class="admonition-anchor-link" href="#admonition-terminal-6"></a>
+ </div>
+ <div>
+<pre><code class="language-sh">avr-objcopy.exe -O ihex blink.elf blink.hex
 </code></pre>
-<pre><code class="language-admonish exmample title=&#39;Command Breakdown&#39;">
-- `avr-objcopy` is a tool that copies and converts object files. In AVR development, it’s commonly used to convert compiled `.elf` files into formats suitable for uploading to microcontrollers, such as Intel HEX
-- `-O ihex` option specifies the output format. `-O` stands for "output format," and `ihex` refers to Intel HEX format.
-
-</code></pre>
+ </div>
+ </div>
+ <div id="admonition-command-breakdown-1" class="admonition admonish-note" role="note" aria-labelledby="admonition-command-breakdown-1-title">
+ <div class="admonition-title">
+ <div id="admonition-command-breakdown-1-title">
+<p>Command Breakdown</p>
+ </div>
+ <a class="admonition-anchor-link" href="#admonition-command-breakdown-1"></a>
+ </div>
+ <div>
+<ul>
+<li><code>avr-objcopy</code> is a tool that copies and converts object files. In AVR development, it’s commonly used to convert compiled <code>.elf</code> files into formats suitable for uploading to microcontrollers, such as Intel HEX</li>
+<li><code>-O ihex</code> option specifies the output format. <code>-O</code> stands for "output format," and <code>ihex</code> refers to Intel HEX format.</li>
+</ul>
+ </div>
+ </div>
 </li>
 <li>
 <p>Now you can look inside the hex code:</p>
-<pre><code class="language-admonish terminal">
-```sh
-$ avr-objdump.exe -h -s blink.hex`
-```
-
+ <div id="admonition-terminal-7" class="admonition admonish-terminal" role="note" aria-labelledby="admonition-terminal-7-title">
+ <div class="admonition-title">
+ <div id="admonition-terminal-7-title">
+<p>Terminal</p>
+ </div>
+ <a class="admonition-anchor-link" href="#admonition-terminal-7"></a>
+ </div>
+ <div>
+<pre><code class="language-sh">$ avr-objdump.exe -h -s blink.hex`
 </code></pre>
-<pre><code class="language-admonish output">
-```hex
-blink.hex:     file format ihex
+ </div>
+ </div>
+ <div id="admonition-output-2" class="admonition admonish-output" role="note" aria-labelledby="admonition-output-2-title">
+ <div class="admonition-title">
+ <div id="admonition-output-2-title">
+<p>Output</p>
+ </div>
+ <a class="admonition-anchor-link" href="#admonition-output-2"></a>
+ </div>
+ <div>
+<pre><code class="language-hex">blink.hex:     file format ihex
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
@@ -484,32 +639,60 @@ Contents of section .sec1:
 0080 259a2d9a 2fef87ea 91e62150 80409040  %.-./.....!P.@.@
 0090 e1f700c0 00002d98 2fef87ea 91e62150  ......-./.....!P
 00a0 80409040 e1f700c0 0000ebcf f894ffcf  .@.@............
-```
-
 </code></pre>
-<pre><code class="language-admonish info">
-- **Sections**
-    - **Idx**: Index of the section, here it’s 0 because there’s only one section.
-    - **Name** (.sec1): The name of this section, which is likely used for the program code.
-    - **Size** (000000B0): The size of this section in hexadecimal (0xB0, or 176 bytes).
-    - **VMA** (Virtual Memory Address): The address in memory where this section will be loaded, here it starts at 0x00000000.
-    - **LMA** (Load Memory Address): Where the section is loaded in flash memory, matching the VMA.
-    - **File Offset** (00000000): The offset in the file where this section’s data starts.
-    - **Align**ment (2**0): Specifies that there’s no special alignment needed.
-
-- **sec1**
-    - `0000 0c943400 0c943e00 0c943e00 0c943e00  ..4...&gt;...&gt;...&gt;.`
-        - Address (`0000`): This is the address in memory where the data on this line starts.
-        - (`0c943400 0c943e00 0c943e00 0c943e00`): These are the machine code instructions. Each group of 8 hex characters (4 bytes) represents an instruction
-            - `0c943400`
-                - `0c94`: This is a `JMP` or `RJMP` (Relative Jump) instruction.
-                - `3400`: The address to jump to
-            - `0c943e00`
-                - Each `0c94` prefix also represents an `RJMP` or similar instruction.
-                - `3e00` is the destination address of the jump.
-        - (`..4...&gt;...&gt;...&gt;.`): This shows an ASCII interpretation of the hex bytes, useful in some cases for debugging, though often unreadable
-
-</code></pre>
+ </div>
+ </div>
+ <div id="admonition-info-1" class="admonition admonish-info" role="note" aria-labelledby="admonition-info-1-title">
+ <div class="admonition-title">
+ <div id="admonition-info-1-title">
+<p>Info</p>
+ </div>
+ <a class="admonition-anchor-link" href="#admonition-info-1"></a>
+ </div>
+ <div>
+<ul>
+<li>
+<p><strong>Sections</strong></p>
+<ul>
+<li><strong>Idx</strong>: Index of the section, here it’s 0 because there’s only one section.</li>
+<li><strong>Name</strong> (.sec1): The name of this section, which is likely used for the program code.</li>
+<li><strong>Size</strong> (000000B0): The size of this section in hexadecimal (0xB0, or 176 bytes).</li>
+<li><strong>VMA</strong> (Virtual Memory Address): The address in memory where this section will be loaded, here it starts at 0x00000000.</li>
+<li><strong>LMA</strong> (Load Memory Address): Where the section is loaded in flash memory, matching the VMA.</li>
+<li><strong>File Offset</strong> (00000000): The offset in the file where this section’s data starts.</li>
+<li><strong>Align</strong>ment (2**0): Specifies that there’s no special alignment needed.</li>
+</ul>
+</li>
+<li>
+<p><strong>sec1</strong></p>
+<ul>
+<li><code>0000 0c943400 0c943e00 0c943e00 0c943e00  ..4...&gt;...&gt;...&gt;.</code>
+<ul>
+<li>Address (<code>0000</code>): This is the address in memory where the data on this line starts.</li>
+<li>(<code>0c943400 0c943e00 0c943e00 0c943e00</code>): These are the machine code instructions. Each group of 8 hex characters (4 bytes) represents an instruction
+<ul>
+<li><code>0c943400</code>
+<ul>
+<li><code>0c94</code>: This is a <code>JMP</code> or <code>RJMP</code> (Relative Jump) instruction.</li>
+<li><code>3400</code>: The address to jump to</li>
+</ul>
+</li>
+<li><code>0c943e00</code>
+<ul>
+<li>Each <code>0c94</code> prefix also represents an <code>RJMP</code> or similar instruction.</li>
+<li><code>3e00</code> is the destination address of the jump.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>(<code>..4...&gt;...&gt;...&gt;.</code>): This shows an ASCII interpretation of the hex bytes, useful in some cases for debugging, though often unreadable</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+ </div>
+ </div>
 </li>
 </ol>
 <hr />
@@ -520,47 +703,87 @@ Contents of section .sec1:
 <ul>
 <li>Uni machine:</li>
 </ul>
-<pre><code class="language-admonish terminal">
-```sh
-avrdude -C "C:\ProgramData\arduino-ide-v2\Local\Arduino15\packages\arduino\tools\avrdude\6.3.0-arduino17\etc\avrdude.conf" -c arduino -p atmega328p -P COM6 -b 115200 -U flash:w:blink.hex
-```
-
+<div id="admonition-terminal-8" class="admonition admonish-terminal" role="note" aria-labelledby="admonition-terminal-8-title">
+<div class="admonition-title">
+<div id="admonition-terminal-8-title">
+<p>Terminal</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-terminal-8"></a>
+</div>
+<div>
+<pre><code class="language-sh">avrdude -C "C:\ProgramData\arduino-ide-v2\Local\Arduino15\packages\arduino\tools\avrdude\6.3.0-arduino17\etc\avrdude.conf" -c arduino -p atmega328p -P COM6 -b 115200 -U flash:w:blink.hex
 </code></pre>
+</div>
+</div>
 <ul>
 <li>Your personal machine:</li>
 </ul>
-<pre><code class="language-admonish terminal">
-```sh 
-$ avrdude -C "C:\Users\YOURUSERNAME\AppData\Local\Arduino15\packages\arduino\tools\avrdude\6.3.0-arduino17\etc\avrdude.conf" -c arduino -p atmega328p -P COM6 -b 115200 -U flash:w:blink.hex
-```
-
+<div id="admonition-terminal-9" class="admonition admonish-terminal" role="note" aria-labelledby="admonition-terminal-9-title">
+<div class="admonition-title">
+<div id="admonition-terminal-9-title">
+<p>Terminal</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-terminal-9"></a>
+</div>
+<div>
+<pre><code class="language-sh">$ avrdude -C "C:\Users\YOURUSERNAME\AppData\Local\Arduino15\packages\arduino\tools\avrdude\6.3.0-arduino17\etc\avrdude.conf" -c arduino -p atmega328p -P COM6 -b 115200 -U flash:w:blink.hex
 </code></pre>
-<pre><code class="language-admonish output">
-![](./figures/manualburn.gif)
-
-</code></pre>
-<pre><code class="language-admonish exmample title=&#39;Command Breakdown&#39;">
-- `-C`is the path to the configuration file
-- `-c` specifies the programmer 
-- `-p` specifies the part no, ie the chipset
-- `-P` is the port, COM# (Windows) or /dev/ttyACM# (Linux)
-    - Windows getting the correct port run:
-        - `$ wmic path Win32_SerialPort get caption, name, deviceID`
-        ![](./figures/windows_com_ports_list.png)
-    - Linux use `dmesg` or `lsusb`
-- `-b` specifies the baudrate, overrides default RS-232
-- `-U` memory operation, ie, `flash` is the memtype in which mode, `r`,`w`,`v` and then the file
-
-</code></pre>
+</div>
+</div>
+<div id="admonition-output-3" class="admonition admonish-output" role="note" aria-labelledby="admonition-output-3-title">
+<div class="admonition-title">
+<div id="admonition-output-3-title">
+<p>Output</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-output-3"></a>
+</div>
+<div>
+<p><img src="./figures/manualburn.gif" alt="" /></p>
+</div>
+</div>
+<div id="admonition-command-breakdown-2" class="admonition admonish-note" role="note" aria-labelledby="admonition-command-breakdown-2-title">
+<div class="admonition-title">
+<div id="admonition-command-breakdown-2-title">
+<p>Command Breakdown</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-command-breakdown-2"></a>
+</div>
+<div>
+<ul>
+<li><code>-C</code>is the path to the configuration file</li>
+<li><code>-c</code> specifies the programmer</li>
+<li><code>-p</code> specifies the part no, ie the chipset</li>
+<li><code>-P</code> is the port, COM# (Windows) or /dev/ttyACM# (Linux)
+<ul>
+<li>Windows getting the correct port run:
+<ul>
+<li><code>$ wmic path Win32_SerialPort get caption, name, deviceID</code>
+<img src="./figures/windows_com_ports_list.png" alt="" /></li>
+</ul>
+</li>
+<li>Linux use <code>dmesg</code> or <code>lsusb</code></li>
+</ul>
+</li>
+<li><code>-b</code> specifies the baudrate, overrides default RS-232</li>
+<li><code>-U</code> memory operation, ie, <code>flash</code> is the memtype in which mode, <code>r</code>,<code>w</code>,<code>v</code> and then the file</li>
+</ul>
+</div>
+</div>
 </li>
 <li>
 <p>You should now see the BUILT-IN LED flashing on the board every 2 seconds.</p>
 </li>
 <li>
 <p>To make life easier going forward we should use a Makefile:</p>
-<pre><code class="language-admonish code">
-```makefile
-MCU = atmega328p
+<div id="admonition-code-2" class="admonition admonish-code" role="note" aria-labelledby="admonition-code-2-title">
+<div class="admonition-title">
+<div id="admonition-code-2-title">
+<p>Code</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-code-2"></a>
+</div>
+<div>
+<pre><code class="language-makefile">MCU = atmega328p
 F_CPU = 16000000UL
 CC = avr-gcc
 CFLAGS = -Os -mmcu=$(MCU) -DF_CPU=$(F_CPU)
@@ -587,14 +810,23 @@ upload: blink.hex
 
 clean:
         rm -f blink.o blink.elf blink.hex
-```
-
 </code></pre>
-<pre><code class="language-admonish info">
-If you are on your machine the AVRDUDECONFIG file path will be this format:
-- `AVRDUDECONFIG = "C:\Users\YOURUSERNAME\AppData\Local\Arduino15\packages\arduino\tools\avrdude\6.3.0-arduino17\etc\avrdude.conf"`
-
-</code></pre>
+</div>
+</div>
+<div id="admonition-info-2" class="admonition admonish-info" role="note" aria-labelledby="admonition-info-2-title">
+<div class="admonition-title">
+<div id="admonition-info-2-title">
+<p>Info</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-info-2"></a>
+</div>
+<div>
+<p>If you are on your machine the AVRDUDECONFIG file path will be this format:</p>
+<ul>
+<li><code>AVRDUDECONFIG = "C:\Users\YOURUSERNAME\AppData\Local\Arduino15\packages\arduino\tools\avrdude\6.3.0-arduino17\etc\avrdude.conf"</code></li>
+</ul>
+</div>
+</div>
 </li>
 <li>
 <p>Now every time we modify <code>blink.c</code> you can use the <code>Makefile</code></p>
