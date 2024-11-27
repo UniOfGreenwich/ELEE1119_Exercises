@@ -113,10 +113,14 @@ A **register** is a small, high-speed storage location within a microcontroller,
 
 For example, each GPIO port (like `PORTB`, `PORTC`) has an associated Data Direction Register (`DDR`), which controls whether each pin is an **input** or **output**. Setting a bit in the `DDR` makes the corresponding pin an output, while clearing a bit makes it an input.
 
+~~~admonish code
+
 ```c
 // Example for ATmega328P microcontroller
 DDRB |= (1 << PB5);  // Set PB5 as an output (LED pin
 ```
+
+~~~
 
 Here, `DDRB` is the data direction register for `PORTB`. By setting the bit corresponding to `PB5` (Bit 5), we configure it as an output.
 
@@ -130,11 +134,15 @@ A port in microcontroller terms refers to a group of pins on the microcontroller
 
 ### Example: Configuring and Controlling a Port Pin
 
+~~~admonish code
+
 ```c
 DDRB |= (1 << PB5);  // Set PB5 as an output (LED connected to Pin 13 on Arduino)
 PORTB |= (1 << PB5); // Set PB5 high (turn on LED)
 PORTB &= ~(1 << PB5); // Set PB5 low (turn off LED)
 ```
+
+~~~
 
 In this example:
 
@@ -170,6 +178,8 @@ Let’s take a closer look at some commonly used registers for controlling GPIO,
 
 ### Example code: 
 
+~~~admonish code
+
 ```c
 #include <avr/io.h>
 #include <util/delay.h>
@@ -194,6 +204,8 @@ int main (void)
 }
 ```
 
+~~~
+
 ### Why Direct Register Manipulation is Important in Embedded Systems
 
 - **Efficient Resource Usage**: Microcontrollers typically have limited resources. Accessing registers directly minimizes overhead and ensures efficient use of processing power and memory.
@@ -201,6 +213,8 @@ int main (void)
 - **Precise Timing Control**: Certain applications (e.g., PWM, interrupts) require precise control over timing. Directly setting registers allows you to meet these timing requirements more accurately than using higher-level abstractions.
 
 - **Reduced Abstraction Layer**: While high-level abstractions (such as those provided in libraries like Arduino) make programming easier, they add layers that slow down processing. Direct register access is essential when maximum efficiency is required, especially in real-time applications.
+
+    ~~~admonish code
 
     ```C
     #include <avr/io.h>
@@ -220,8 +234,12 @@ int main (void)
         return 0;
     }
     ```
+    ~~~
+    
+    ~~~admonish example title='Explanation of code'
 
-    **Explanation:**
     - `DDRB |= (1 << LED_PIN);`: Configures `PB5` (`PORTB` Pin 5) as an output pin.
     - `PORTB ^= (1 << LED_PIN);`: Toggles the state of the pin, effectively blinking the `LED`.
     - `_delay_ms(500);`: Adds a 500-millisecond delay between toggles, making the `LED` blink on and off at a 1-second interval.
+
+    ~~~

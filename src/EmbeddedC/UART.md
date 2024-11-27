@@ -2,6 +2,8 @@
 
 So you are no doubt familiar with the well known `Serial` within the Arduino SDK:
 
+~~~admonish code
+
 ```c
 #define BAUDRATE 9600 // Desired Baud Rate
 char name[] = {'H','e','l','l','o',' ','w','o','r','l','d','!','\n'}; 
@@ -18,6 +20,9 @@ void loop() {
 	delay(1000);
 }
 ```
+
+~~~
+
 There is a lot of abstraction happening here, where are the ports/registers? 
 
 Let's now turn this into an embedded program!
@@ -29,8 +34,11 @@ The USART (Universal Synchronous and Asynchronous serial Receiver and Transmitte
 In asynchronous mode, which is commonly used for UART, data is transferred in bytes, framed with start and stop bits, and synchronized with a clock frequency derived from the system clock. The USART has several registers to manage transmission, reception, baud rate configuration, and framing.
 
 
->**Note:** 
->> - All information provided in this chapter is summariesd and expanded upon via: [https://ww1.microchip.com/downloads/aemDocuments/documents/MCU08/ProductDocuments/DataSheets/40001906C.pdf](https://ww1.microchip.com/downloads/aemDocuments/documents/MCU08/ProductDocuments/DataSheets/40001906C.pdf) page 264 onwards.
+~~~admonish info
+
+All information provided in this chapter is summariesd and expanded upon via: [https://ww1.microchip.com/downloads/aemDocuments/documents/MCU08/ProductDocuments/DataSheets/40001906C.pdf](https://ww1.microchip.com/downloads/aemDocuments/documents/MCU08/ProductDocuments/DataSheets/40001906C.pdf) page 264 onwards.
+
+~~~
 
 
 ------------
@@ -55,15 +63,22 @@ The UBRR (USART Baud Rate Register) is split into two 8-bit registers:
 
 For example, with a 16 MHz clock and a baud rate of `9600`, `UBRRn` will be `103`.
 
+~~~admonish code
+
 ```c
 UBRRn  = (((16000000UL / (9600 * 16UL))) - 1) // 103
 UBRR0H = (uint8_t)(UBRRn >> 8);  // Set high byte
 UBRR0L = (uint8_t)UBRRn;         // Set low byte
 ```
 
->**Note:**
->> - You **should** visit here to see the documentation of Baud rate:
->>   - [https://onlinedocs.microchip.com/oxy/GUID-ED37252C-1496-4275-BAEF-5152050ED2C2-en-US-2/GUID-65A53416-8DE2-468E-99CF-09F480AEF734.html](https://onlinedocs.microchip.com/oxy/GUID-ED37252C-1496-4275-BAEF-5152050ED2C2-en-US-2/GUID-65A53416-8DE2-468E-99CF-09F480AEF734.html)
+~~~
+
+~~~admonish info
+
+You **should** visit here to see the documentation of Baud rate:
+- [https://onlinedocs.microchip.com/oxy/GUID-ED37252C-1496-4275-BAEF-5152050ED2C2-en-US-2/GUID-65A53416-8DE2-468E-99CF-09F480AEF734.html](https://onlinedocs.microchip.com/oxy/GUID-ED37252C-1496-4275-BAEF-5152050ED2C2-en-US-2/GUID-65A53416-8DE2-468E-99CF-09F480AEF734.html)
+
+~~~
 
 -------
 
@@ -73,12 +88,20 @@ UBRR0L = (uint8_t)UBRRn;         // Set low byte
 
 - `UDRE0` (USART Data Register Empty): This flag indicates that the data register is ready to accept new data for transmission. When `UDRE0` is set (1), it means the data register is empty and ready for a new byte.
 
+    ~~~admonish code
+
     ```c
     while (!(UCSR0A & (1 << UDRE0)));  // Wait until UDRE0 is set (data register empty)
     ```
 
-- `TXC0` (Transmit Complete): This flag indicates that the entire frame (including stop bit) has been transmitted.
-- `RXC0` (Receive Complete): This flag indicates that unread data is available in the receive buffer. When `RXC0` is set (1), the received data is ready to be read from `UDR0`.
+    ~~~
+
+    ~~~admonish info
+
+    - `TXC0` (Transmit Complete): This flag indicates that the entire frame (including stop bit) has been transmitted.
+    - `RXC0` (Receive Complete): This flag indicates that unread data is available in the receive buffer. When `RXC0` is set (1), the received data is ready to be read from `UDR0`.
+
+    ~~~
 
 -------
 
@@ -88,21 +111,32 @@ The USART Transmit Data Buffer (TXB) register and USART receive data buffer regi
 
 - `RXEN0` (Receiver Enable): Setting `RXEN0` to 1 enables the USART receiver. This allows the microcontroller to read data from the RX pin
 
+    ~~~admonish code
+
     ```c
     UCSR0B |= (1 << RXEN0);  // Enable receiver
     ```
 
+    ~~~
+
 - `TXEN0` (Transmitter Enable): Setting `TXEN0` to 1 enables the USART transmitter. This allows the microcontroller to send data via the TX pin.
+
+    ~~~admonish code
 
     ```c
     UCSR0B |= (1 << TXEN0);  // Enable transmitter
     ```
+    ~~~
 
-- `RXCIE0` (Receive Complete Interrupt Enable): Enables interrupt on data reception.
+    ~~~admonish info
 
-- `TXCIE0` (Transmit Complete Interrupt Enable): Enables interrupt on transmission completion.
+    - `RXCIE0` (Receive Complete Interrupt Enable): Enables interrupt on data reception.
 
-- `UDRIE0` (Data Register Empty Interrupt Enable): Enables interrupt when the data register is empty.
+    - `TXCIE0` (Transmit Complete Interrupt Enable): Enables interrupt on transmission completion.
+
+    - `UDRIE0` (Data Register Empty Interrupt Enable): Enables interrupt when the data register is empty.
+    
+    ~~~
 
 -------
 
@@ -134,11 +168,15 @@ The USART Transmit Data Buffer (TXB) register and USART receive data buffer regi
 
 - For an 8-bit data frame, no parity, and 1 stop bit (a typical UART configuration):
 
+    ~~~admonish code
+
     ```c
     UCSR0C |= (1 << UCSZ01) | (1 << UCSZ00); // 8 data bits
     UCSR0C &= ~(1 << USBS0);                 // 1 stop bit
     UCSR0C &= ~((1 << UPM01) | (1 << UPM00)); // No parity
     ```
+
+    ~~~
 
 -------
 
@@ -148,15 +186,24 @@ The USART Transmit Data Buffer (TXB) register and USART receive data buffer regi
 
 - Transmit: To send data, write a byte to `UDR0`. This byte is then shifted out serially on the TX pin.
 
+    ~~~admonish code
+
     ```c
     UDR0 = data;  // Send a byte of data
     ```
 
+    ~~~
+
 - Receive: To receive data, read a byte from `UDR0`. The `RXC0` flag (in `UCSR0A`) indicates when unread data is available
+
+    ~~~admonish code
 
     ```c
     data = UDR0;  // Read a byte of received data
     ```
+
+    ~~~
+
 ------------
 
 
@@ -164,20 +211,27 @@ The USART Transmit Data Buffer (TXB) register and USART receive data buffer regi
 
 1. Change directory to `embeddedC` that was made last time and create a new child directory `uart`
 
+    ~~~admonish terminal 
+
     ```sh
     $ cd ~/embeddedC && mkdir uart && cd uart
     ```
 
+    ~~~
+
 2. Create a new file inside the the `uart` directory called `uart.c`
+
+    ~~~admonish terminal
 
     ```sh
     $ touch uart.c
     ```
 
+    ~~~
+
 3. Now it's time start wrighting out the program:
 
-    <details>
-    <summary>Code here... [57 lines]</summary>
+    ~~~admonish code collapsible=true title='Suppressed code here [57 lines]...'
 
     ```c
     #include <avr/io.h>      // Contains all the I/O Register Macros
@@ -239,19 +293,31 @@ The USART Transmit Data Buffer (TXB) register and USART receive data buffer regi
     }
     ```
 
+    ~~~
+
 
 4. We are now going to copy the `Makefile` from the `blink/` created last time, and replace all instances of `blink` with `uart` using the regex feature:
+
+    ~~~admonish terminal
 
     ```sh
     $ cp ../blink/Makefile .
     $ vim Makefile
     ```
+    
+    ~~~
+
 5. Inside vim type the following an press enter to find all instances of `blink` with `uart`
+   
+    ~~~admonish terminal
+
     ```vim
     :%s/\<blink\>/uart/g
     ```
-
     ![](./figures/makeuart.gif)
+
+    ~~~
+
 
 6. Remember like with blink we need to compile and upload the code to the board, ensure it is plugged in, to find the com port on windows:
 
@@ -259,9 +325,13 @@ The USART Transmit Data Buffer (TXB) register and USART receive data buffer regi
 
 7. If the COM port has changed remember to change it in the `Makefile`
 
+    ~~~admonish code
+
     ```Makefile
     PORT = COM#
     ```
+
+    ~~~
 
 8. Use `make`:
 
@@ -284,7 +354,9 @@ The USART Transmit Data Buffer (TXB) register and USART receive data buffer regi
 10. Now lets set up the recieving part of the USART, and communicate between to boards, so it is best to pair up for this. Create a new file called `uart_two_way.c`
 
  - Both programs should send and receive data between each other.
- 
+    
+    ~~~admonish code
+
     ```c
     #include <avr/io.h>
 
@@ -318,6 +390,8 @@ The USART Transmit Data Buffer (TXB) register and USART receive data buffer regi
         }
     }
     ```
+    
+    ~~~
 
 11. Copy the `Makefile` from `../uart/Makefile` to `uart_two_way/` and use the regex `:%s/\<uart\>/uart_two_way/g`
 
@@ -328,8 +402,11 @@ The USART Transmit Data Buffer (TXB) register and USART receive data buffer regi
     - swap the connections so that Rx(Board 1) and Tx (Board 2)
     - Send a message
     
-    >**Note:**
-    >> - 
+        ~~~admonish warning
+        
+        The should be share a common ground
+        
+        ~~~
 
 13. Launch Putty and see if you can send data to each other
 

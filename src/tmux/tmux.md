@@ -10,15 +10,23 @@ The `tmux` package enables a number of terminals to be created, accessed and con
 
 First off install tmux from the `apt` repository:
 
+~~~admonish terminal
+
 ```sh
-% sudo apt install tmux
+$ sudo apt install tmux
 ```
 
+~~~
+
 Once installed, you can launch `tmux` from the terminal you are in:
+
+~~~admonish terminal
 
 ```sh
 $ tmux
 ```
+
+~~~
 
 - To split your window horizonally use `ctrl` + `B` then release both keys and press the `%` key
 
@@ -29,6 +37,10 @@ $ tmux
 
 - To close a panel use type:
 
-```sh
-$ exit
-```
+    ~~~admonish terminal
+
+    ```sh
+    $ exit
+    ```
+
+    ~~~

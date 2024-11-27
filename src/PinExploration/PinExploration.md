@@ -14,6 +14,7 @@ A `.dts` file contains descriptions of the board's hardware components, includin
 
 **Pin multiplexing** allows a single physical pin on a processor to serve multiple functions, depending on the configuration. The `.dts` file defines how each pin on the BeagleBoard is multiplexed:
 
+~~~admonish code
 ```dts
 pinctrl-name = "default";
 pinctrl-0 = <&my_pins>;
@@ -25,6 +26,7 @@ my_pins: pinmux_my_pins {
     >;
 };
 ```
+~~~
 
 In this example:
 
@@ -36,6 +38,8 @@ In this example:
 
 In a BeagleBoard Device Tree Source (.dts) file, pin configurations are defined using specific properties that control how each pin operates. Let’s break down the following example to understand what it does:
 
+~~~admonish code
+
 ```dts
 8_11_gpio_input_pin: pinmux_P8_11_gpio_input_pin { 
     pinctrl-single,pins = <
@@ -43,6 +47,7 @@ In a BeagleBoard Device Tree Source (.dts) file, pin configurations are defined 
     >; 
 };
 ```
+~~~
 
 #### 2.2 Explanation of Each Part
 
@@ -55,23 +60,27 @@ In a BeagleBoard Device Tree Source (.dts) file, pin configurations are defined 
 
 3. **Pin Configuration Value**:
    - The value within the `pinctrl-single,pins` property is given as a tuple of two values: the register offset and the value to be written to that register.
+        ~~~admonish example
 
-   ```dts
-   ((((0x0834)) & 0xffff) - (0x0800)) (((1 << 5) | (1 << 3)) | 7)
-   ```
+        ```dts
+        ((((0x0834)) & 0xffff) - (0x0800)) (((1 << 5) | (1 << 3)) | 7)
+        ```
+        ~~~
 
-   This is split into two main parts:
-   
-   - **Register Offset Calculation**: `((((0x0834)) & 0xffff) - (0x0800))`
-   - **Pin Configuration Value**: `(((1 << 5) | (1 << 3)) | 7)`
+        This is split into two main parts:
+        
+        - **Register Offset Calculation**: `((((0x0834)) & 0xffff) - (0x0800))`
+        - **Pin Configuration Value**: `(((1 << 5) | (1 << 3)) | 7)`
 
 Let's explain these parts in detail:
 
 #### 2.3 Register Offset Calculation
 
+~~~admonish example
 ```dts
 ((((0x0834)) & 0xffff) - (0x0800))
 ```
+~~~
 
 - **`0x0834`**: This is the address in the memory-mapped I/O space for the pin's configuration register. It's where the pin configuration settings will be applied.
 
@@ -85,9 +94,11 @@ Let's explain these parts in detail:
 
 #### 2.4 Pin Configuration Value
 
+~~~admonish example
 ```dts
 (((1 << 5) | (1 << 3)) | 7)
 ```
+~~~
 
 - **`1 << 5`**: This shifts the binary `1` five bits to the left, resulting in the binary value `0b100000` or `0x20`.
 
@@ -161,14 +172,20 @@ So, `GPIO2_13` corresponds to `gpio77`.
 
     You can access the (gpioX) pins label to map the /sys/class/gpio/gpio to the breackout pin: 
 
+    ~~~admonish terminal
+
     ```sh
     $ cat /sys/class/gpio/gpio115/label
     > P9_27
     ```
+
+    ~~~
  
 2. **Build map for the GPIO and Lable**
 
     The provided Bash script is designed to create a CSV file `(gpio_map.csv`) that maps each GPIO number to its label. Here is what each part of the script does:
+
+    ~~~admonish code
 
     ```sh
     #!/usr/bin/env bash
@@ -180,7 +197,10 @@ So, `GPIO2_13` corresponds to `gpio77`.
     done
     ```
 
+    ~~~
+
     Run the following now to see the map:
+    ~~~admonish output
 
     ```sh
     $ cat gpio_map.csv
@@ -202,6 +222,8 @@ So, `GPIO2_13` corresponds to `gpio77`.
     gpio15,P9_24
     ...
     ```
+
+    ~~~
 
 ### 6. Understanding config-pin and the Importance of Knowing Pin Modes
 
@@ -241,34 +263,44 @@ So, `GPIO2_13` corresponds to `gpio77`.
 
         To see what modes are available for a specific pin:
         
+        ~~~admonish terminal
+        
         ```sh
         config-pin -l <pin>
         ```
-
-        Example:
+        
+        ~~~
+        
+        ~~~admonish output
 
         ```sh
         $ config-pin -l P9.12
         > Available modes for P9_12 are: default gpio gpio_pu gpio_pd gpio_input
         ```
+        ~~~
+
     2. Current configured mode: 
 
+        ~~~admonish example
+        
         ```sh
         config-pin -q <pin>
         ```
-
-        Example: 
+        
+        ~~~
+        
+        ~~~admonish output
 
         ```sh
         $ config-pin -q P9.12
         > Current mode for P9_12 is:     default
         ```
-
+        
+        ~~~
     
     3. To check all configurations we can write a script:
 
-        <details>
-        <summary>Suppressed code here [52 lines] ... </summary>
+        ~~~admonish code collapsible=true title='Suppressed code here [52 lines] ...'
 
         ```sh
         #!/usr/bin/env bash
@@ -323,17 +355,20 @@ So, `GPIO2_13` corresponds to `gpio77`.
 
         echo "Pin configuration report saved to $OUTPUT_FILE"
         ```
-
-        </details>
+       
+        ~~~
 
     4. Run the following to see the report:
-    
+
+        ~~~admonish terminal
+
         ```sh
         $ less pin_config_report.txt
         ```
         
-        <details>
-        <summary>This is the output...</summary>
+        ~~~
+
+        ~~~admonish output collapsible=true
 
         ```
         Pin     | Current Mode       | Available Modes
@@ -359,30 +394,42 @@ So, `GPIO2_13` corresponds to `gpio77`.
         P8_21   | -                  | default gpio gpio_pu gpio_pd gpio_input pruout pruin
         ...
         ```
-
-        </details>
+        ~~~
 
     5. Set a Pin Mode:
+
+        ~~~admonish example
 
         ```sh
         config-pin <pin> <mode>
         ``` 
 
-        Example:
+        ~~~
+
+        ~~~admonish terminal
 
         ```sh
         config-pin P9.12 uart
         ```
-
+        ~~~
+        
         This command sets pin P9.12 to UART mode.
 
     6. Verify current pins
+        ~~~admonish example
 
         ```sh
         config-pin -q <pin>
         ```
 
-    > **Note:**
-    >> - Any pins you have set manually to do not presist across power cycling. 
-    >> - You could write a script that configures all the pins after boot, after the kernel has pre-loaded maps. 
-    >> - Alternatively you could make your own `.dts`!
+        ~~~
+
+    ~~~admonish tip
+    
+    - Any pins you have set manually to do not presist across power cycling. 
+    
+    - You could write a script that configures all the pins after boot, after the kernel has pre-loaded maps. 
+    
+    - Alternatively you could make your own `.dts`!
+
+    ~~~

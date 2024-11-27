@@ -8,16 +8,26 @@ Once you have managed to get into the Debain OS on the Rock C+, you will need to
 
 1. `sudo apt update`
     - This should update the system however you may get a response that says:
-    ```sh
-    > W: An error occured during the signature verifcation. The repository is not updated and the previous index files will be used. GPG error: http://apt.radxa/com/bullseye-stable bullseye InRelease: The following signatures could not be verified because the public key is not available: NO_PUBKEY 9B98116C9AA302C7
-    > W: Filed to fetch http://apt.radxa/com/bullseye-stable/dists/bullseye/InRelease The following signatures could not be verified because the public key is not available: NO_PUBKEY 9B98116C9AA302C7
-    > W: Some index files failed to download. They have been ignored, or old ones used instead.
-    ```
-    -  If that is the case you will need to run the following command:
-    ```sh
-    $ wget -O - apt.radxa.com/focal-stable/public.key | sudo apt-key add
-    ```
+        ~~~admonish errror
 
+        ```sh
+        > W: An error occured during the signature verifcation. The repository is not updated and the previous index files will be used. GPG error: http://apt.radxa/com/bullseye-stable bullseye InRelease: The following signatures could not be verified because the public key is not available: NO_PUBKEY 9B98116C9AA302C7
+        > W: Filed to fetch http://apt.radxa/com/bullseye-stable/dists/bullseye/InRelease The following signatures could not be verified because the public key is not available: NO_PUBKEY 9B98116C9AA302C7
+        > W: Some index files failed to download. They have been ignored, or old ones used instead.
+        ```
+        
+        ~~~
+    
+    -  If that is the case you will need to run the following command:
+    
+        ~~~admonish terminal
+
+        ```sh
+        $ wget -O - apt.radxa.com/focal-stable/public.key | sudo apt-key add
+        ```
+        
+        ~~~
+    
     - You should get some feedback with a HTTP request and a Warning about apt-key is deprecated... this is fine (if only there was a deterministic, declarative system out there we could have used...)
 
     - Run the `sudo apt update` again and once finished run `sudo apt upgrade` this my take 10 mins.
@@ -30,6 +40,8 @@ The Debain OS for the Rock C4+ uses the `NetworkManager` package to manage all c
 
 `NetworkManager` directory is located here -> `/etc/NetworkManager`, the contents of which is:
 
+~~~admonish terminal 
+
 ```sh
 NetworkManager.conf
 conf.d/
@@ -39,7 +51,11 @@ dnsmasq.d/
 system-connections/
 ```
 
+~~~
+
 All of your Wi-Fi profiles are stored in the `system-connections` folder, for example:
+
+~~~admonish terminal
 
 ```sh
 $ ls /etc/NetworkManager/system-connections
@@ -47,15 +63,25 @@ $ ls /etc/NetworkManager/system-connections
 > eduroam.nmconnection
 ```
 
-> **Note:**
->> The file naming convention, `<ssid>.nmconnection`, this is strict and case-sensitive.
+~~~
+
+~~~admonish important
+
+The file naming convention, `<ssid>.nmconnection`, this is strict and case-sensitive.
+
+~~~
 
 Each `...nmconnection` file has a format and for eduroam, which is an enterprise network it looks like this, you will need to have root level permissions:
+
+~~~admonish terminal
 
 ```sh
 $ sudo cat /etc/NetworkManager/system-connections/eduroam.nmconnection
 ```
-**Output:**
+~~~
+
+~~~admonish output
+
 ```sh
 [connection]
 id=eduroam
@@ -92,7 +118,9 @@ method=auto
 [proxy]
 ```
 
-> **Note** 
->> You may need to reload the connection:
->> - `nmcli connection reload` or you can do this with elevation
->> - `sudo ncmli connetion reload`
+~~~
+
+~~~admonish important 
+You may need to reload the connection:
+- `nmcli connection reload` or you can do this with elevation
+- `sudo ncmli connetion reload`

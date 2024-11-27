@@ -32,10 +32,16 @@ To read ADC values on the BBB, you interact with files in the `/sys/bus/iio/devi
 
 ### 3.1 What is the ADC chip?
 
+~~~admonish terminal
+
 ```sh
 $  cat /sys/bus/iio/devices/iio\:device0/name
 TI-am336x-adc
 ```
+
+~~~
+
+~~~admonish info
 
 You can review the documentation here: [https://www.ti.com/lit/an/sprabu5/sprabu5.pdf](https://www.ti.com/lit/an/sprabu5/sprabu5.pdf)
 
@@ -43,6 +49,8 @@ Source code for the driver can be found here: [https://github.com/torvalds/linux
 
 
 The BeagleBone Black (BBB) includes an Analog-to-Digital Converter (ADC) subsystem, which allows the board to interface with various analog sensors. This subsystem converts analog voltage signals into digital values that the processor can use.
+
+~~~
 
 ### 3.2 Key Characteristics of the BeagleBone Black ADC
 
@@ -75,10 +83,14 @@ Analog-to-Digital Converters (ADCs) work by sampling an analog voltage signal an
 
    Let's assume we want to read from `ADC Channel 0`. First, navigate to the appropriate directory and read the value:
 
+   ~~~admonish terminal
+
    ```bash
    $ cd /sys/bus/iio/devices/iio:device0
    $ cat in_voltage0_raw
    ```
+
+   ~~~
 
    Suppose the command returns a value of `2048`.
 
@@ -97,12 +109,16 @@ Analog-to-Digital Converters (ADCs) work by sampling an analog voltage signal an
 
 The BeagleBone Black (BBB) allows you to interact with its Analog-to-Digital Converter (ADC) through the sysfs interface, located at `/sys/bus/iio/devices/iio:device0`. This directory contains various files and subdirectories that provide access to the ADC hardware and its configuration. Below is an explanation of each file and subdirectory you might see when you run ls in this directory:
 
+~~~admonish terminal
+
 ```bash
 $ cd /sys/bus/iio/devices/iio:device0
 $ ls -l
 buffer  in_voltage0_raw  in_voltage2_raw  in_voltage4_raw  in_voltage6_raw  name     power          subsystem
 dev     in_voltage1_raw  in_voltage3_raw  in_voltage5_raw  in_voltage7_raw  of_node  scan_elements  uevent
 ```
+
+~~~
 
 **Explanation of Files and Directories**:
 
@@ -185,12 +201,17 @@ dev     in_voltage1_raw  in_voltage3_raw  in_voltage5_raw  in_voltage7_raw  of_n
 
 1. Create a new directory called adc in home with the following files: 
 
+    ~~~admonish terminal
+
     ```sh
     $ mkdir adc && cd && touch adc.c && touch adc.h && touch MakeFile
     ```
+    
+    ~~~
+
 2. Edit the `adc.h` file: 
-    <details>
-    <summary>Suppressed Code here [24 lines]...</summary>
+
+    ~~~admonish code collapsible=true title='Suppressed code here [15 lines]'
 
     ```h
     #ifndef ADC_H_
@@ -210,12 +231,12 @@ dev     in_voltage1_raw  in_voltage3_raw  in_voltage5_raw  in_voltage7_raw  of_n
 
     #endif /* ADC_H_*/
     ```
-    </details>
+    
+    ~~~
 
 3. Now we can modify the `adc.c` file:
 
-    <details>
-    <summary>Suppressed Code here [60 lines]...</summary>
+    ~~~admonish code collapsible=true title='Suppressed code here [60 lines]'
 
     ```c
     #include "adc.h"
@@ -276,46 +297,73 @@ dev     in_voltage1_raw  in_voltage3_raw  in_voltage5_raw  in_voltage7_raw  of_n
         return close(fd);
     }
     ```
-    </details>
+   
+    ~~~
 
 4. Much like the GPIO library we can build libraries manually, compile `adc.c` into an Object File by Using the following command to compile `adc.c` into an object file (`adc.o`):
+
+    ~~~admonish terminal
 
     ```sh
     $ gcc -c adc.c -o adc.o
     ```
+    
+    ~~~
 
 4. Create a Static Library (`libadc.a`) to create a static library, use the `ar` command:
+
+    ~~~admonish terminal
 
     ```sh
     $ ar rcs libadc.a adc.o
     ```
+   
+    ~~~
 
-   - **Command Breakdown:**
+    ~~~admonish exmample title='Command Breakdown'
+    
      - `ar`: The archiver tool used to create and maintain library archives.
      - `rcs`: Flags where r inserts the files into the archive, c creates the archive if it doesn't exist, and s creates an index for quick symbol lookup.
      - `libadc.a`: The name of the static library being created.
      - `adc.o`: The object file to be included in the library.
+    
+    ~~~
 
-    >> **Explanation: What is a Static Library?**
-    >>
-    >> A static library is a collection of object files that are linked into the final executable at compile time. Once linked, the code from the static library becomes part of the executable binary. This means that the executable will carry a copy of the library's code, making it self-contained and independent of the library file after compilation.
+    ~~~admonish example title='What is a Static Library?'
+
+    A static library is a collection of object files that are linked into the final executable at compile time. Once linked, the code from the static library becomes part of the executable binary. This means that the executable will carry a copy of the library's code, making it self-contained and independent of the library file after compilation.
+
+    ~~~
 
 5. Create a Shared Library (`libadc.so`) to create a shared library, use the following `gcc` command:
+
+    ~~~admonish terminal
 
     ```sh
     $ gcc -shared -o libadc.so adc.o
     ```
+    
+    ~~~
+    
+    ~~~admonish example title='Command Breakdown'
+    
+    - `-shared`: Tells gcc to produce a shared library.
+    
+    - `-o libadc.so`: Specifies the output filename for the shared library.
+    
+    - `adc.o`: The object file to be included in the library.
+    
+    ~~~
 
-    - **Command Breakdown:**
-      - `-shared`: Tells gcc to produce a shared library.
-      - `-o libadc.so`: Specifies the output filename for the shared library.
-      - `adc.o`: The object file to be included in the library.
-
-    >> **Explanation: What is a Shared Library?**
-    >>
-    >>A shared library, on the other hand, is not linked into the final executable at compile time. Instead, it is loaded into memory at runtime. Multiple programs can share a single copy of a shared library, which can save memory and allow updates to the library without recompiling the programs that use it.
+    ~~~admonish example title='What is a Shared Library?'
+    
+    A shared library, on the other hand, is not linked into the final executable at compile time. Instead, it is loaded into memory at runtime. Multiple programs can share a single copy of a shared library, which can save memory and allow updates to the library without recompiling the programs that use it.
+    
+    ~~~
 
 6. Install the Header and Library Files System-Wide. You could manually copy the header file to `/usr/include` and the libraries to `/usr/lib`, or skip to the next section and create a `Makefile` to do it for you each time.
+
+    ~~~admonish terminal
 
     ```sh
     $ sudo cp adc.h /usr/include/
@@ -323,9 +371,12 @@ dev     in_voltage1_raw  in_voltage3_raw  in_voltage5_raw  in_voltage7_raw  of_n
     $ sudo cp libadc.so /usr/lib/
     $ sudo ldconfig  # Update the shared library cache
     ```
+    
+    ~~~
+
 7. We can do this using a Makefile aswell, edit the `Makefile`:
-    <details>
-    <summary>Suppressed code here [43 lines]...</summary>
+
+    ~~~admonish code collapsible=true title='Suppressed code here [43 lines]'
 
     ```makefile
     # Variables
@@ -374,26 +425,43 @@ dev     in_voltage1_raw  in_voltage3_raw  in_voltage5_raw  in_voltage7_raw  of_n
     .PHONY: all clean install uninstall
     ```
 
+    ~~~
+
 8. As long as the Makefile is within directory with the custom adc c files you can use the `make` command:
    
    -  Remove `adc.h`, and static and share libraries from the respective directories
 
+        ~~~admonish terminal
+
         ```sh
         $ make uninstall
         ```
+        
+        ~~~
 
    - To clean up the build artefacts run: 
     
+        ~~~admonish terminal
+
         ```sh
         $ make clean
         ```
+        
+        ~~~
+
    - To build the libraries and object files:
+
+        ~~~admonish terminal
 
         ```sh
         $ make all
         ```
 
+        ~~~
+
    - Lastly, use the install command to `cp` libraries and header to respective root directories:
+
+        ~~~admonish terminal
 
         ```sh
         $ make install
@@ -401,26 +469,37 @@ dev     in_voltage1_raw  in_voltage3_raw  in_voltage5_raw  in_voltage7_raw  of_n
           ar rcs libadc.a adc.o
           gcc -shared -o libadco.so adc.o
         ```
+
+        ~~~
+
 ## 7: Using the our new libary to control a pin
 
 9. Change directory and `../` and make a new directory called `adc_read` and navigate into it.
     
+    ~~~admonish terminal
+
     ```sh
     $ cd ../
     $ mkdir adc_read
     $ cd adc_read
     ```
 
+    ~~~
+
 10. Create a new .c file called... `adc_read.c` and chose your preferred editor to open it.
+
+    ~~~admonish terminal
+
     ```sh
     $ touch adc_read.c
     $ vim adc_read.c
     ```
 
+    ~~~
+
 11. Now we are going to set up the program to use our system wide library and header with `adc.h`:
-    
-    <details>
-    <summary>Suppressed code here [17 lines]...</summary>
+
+    ~~~admonish code collapsible=true title='Suppressed code here [16 lines]'
 
     ```c
     #include "adc.h"
@@ -441,15 +520,23 @@ dev     in_voltage1_raw  in_voltage3_raw  in_voltage5_raw  in_voltage7_raw  of_n
         return 0;
     }
     ```
-    </details>
+    
+    ~~~
 
 12. We can use this oneliner to compile the code:
+
+    ~~~admonial terminal
 
     ```sh
     $ gcc adc_read.c -ladc -o adc_read
     ```
 
+    ~~~
+
 13. Alternatively we can use a `Makefile` like before:
+
+    ~~~admonish code collapsible=true title='Suppressed code here [25 lines]'
+
     ```makefile
     # Compiler and flags
     CC = gcc
@@ -479,18 +566,30 @@ dev     in_voltage1_raw  in_voltage3_raw  in_voltage5_raw  in_voltage7_raw  of_n
     .PHONY: all clean
     ```
     
-    Invoke make to build the executable:
+    ~~~
 
+    Invoke make to build the executable:
+    
+    ~~~admonish terminal
+    
     ```sh
     $ make
     ```
+
+    ~~~
+
 14. Use the led and etc to wire up and run the code:
+
+    ~~~admonish terminal
 
     ```sh
     $ ./adc_read
     ```
+    
+    ~~~
 
     - If all is well, and you have connected up your potentiometer to the correct pin, and you rotate it you should see the following output:
+        ~~~admonish output
 
         ```
         ADC: 4019
@@ -512,6 +611,8 @@ dev     in_voltage1_raw  in_voltage3_raw  in_voltage5_raw  in_voltage7_raw  of_n
         ADC: 410
         ... # upto 30 times
         ```
+        
+        ~~~
 
 15.  Extra: Continuous Sampling with Buffering
 
@@ -530,9 +631,11 @@ dev     in_voltage1_raw  in_voltage3_raw  in_voltage5_raw  in_voltage7_raw  of_n
             - Use interrupts or polling to read data from the buffer when new samples are available.
             - Implement callback functions to handle the buffered data.
 
-        **Example Prototypes:**
+        ~~~admonish code title='Code: Example Prototypes'
+
         ```h
         int adc_start_continuous_sampling(unsigned int channel, size_t buffer_size);
         void adc_stop_continuous_sampling(void);
         void adc_register_callback(void (*callback)(unsigned int value));
         ```
+        ~~~

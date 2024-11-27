@@ -41,9 +41,13 @@ The ATmega328P has three timers, each with associated TCCR registers:
 
 - `COM0A1`: Compare Output Mode for `OC0A`.
   - Setting `COM0A1` to 1 enables non-inverting PWM output on `OC0A` (Pin `PD6`).
-    > Note:
-    >> - In non-inverting mode, the output starts high at the beginning of the timer cycle and goes low when the timer reaches the value in `OCR0A`.
-    >> - The duty cycle is therefore determined by the value in `OCR0A`: a higher value keeps the signal high for a longer portion of the cycle
+    ~~~admonish note
+
+    - In non-inverting mode, the output starts high at the beginning of the timer cycle and goes low when the timer reaches the value in `OCR0A`.
+    - The duty cycle is therefore determined by the value in `OCR0A`: a higher value keeps the signal high for a longer portion of the cycle
+
+    ~~~
+
 - `WGM01` and `WGM00`: Waveform Generation Mode.
   - Setting both `WGM01` and `WGM00` to 1 puts `Timer0` in **Fast PWM mode**.
 
@@ -113,6 +117,8 @@ To set the prescaler for `Timer0` on the ATmega328P, you configure the `CS00`, `
 
 The following code snippets show how to set each prescaler in `TCCR0B`:
 
+~~~admonish code
+
 ```c
 TCCR0B = (1 << CS01); // Prescaler = 8
 
@@ -123,31 +129,39 @@ TCCR0B = (1 << CS02); // Prescaler = 256
 TCCR0B = (1 << CS02) | (1 << CS00); // Prescaler = 1024
 ```
 
+~~~
+
 ---
 
 ## Building the `pwm.c` source code
 
->**Note:**
->> - Remember to include in your `PATH` `avr-gcc`, `avrdude` and `make`
->> - Open `~/.bashrc` and add the following lines, then save and run the command `source ~/.bashrc` to update the current session with the new `PATH`
->>   -  Uni machines
->>      ```sh
->>      # ~/.bashrc
->>      export PATH=$PATH:"/c/ProgramData/arduino-ide-v2/Local/Arduino15/packages/arduino/tools/avr-gcc/7.3.0-atmel3.6.1-arduino7/bin"
->>      export PATH=$PATH:"/c/ProgramData/arduino-ide-v2/Local/Arduino15/packages/arduino/tools/avr-dude/6.3.0-arduino17/bin"
->>      export PATH=$PATH:"/c/Program Files/GCC-Windows-MingW-2.0.0/w64devkit/bin"
->>      ```
->>   - Your personal windows machine
->>      ```sh
->>      # ~/.bashrc
->>      export PATH=$PATH:"/c/Users/YOURUSERNAME/AppData/Local/Arduino15/packages/arduino/tools/avr-gcc/7.3.0-atmel3.6.1-arduino7/bin"
->>      export PATH=$PATH:"/c/Users/YOURUSERNAME/AppDataLocal/Arduino15/packages/arduino/tools/avr-dude/6.3.0-arduino17/bin"
->>      export PATH=$PATH:"/c/Program Files/w64devkit/bin"
->>      ```
->>   - You can install w64devkit from here:
->>     - [https://github.com/skeeto/w64devkit/releases](https://github.com/skeeto/w64devkit/releases)
+~~~admonish warning
+
+- Remember to include in your `PATH` `avr-gcc`, `avrdude` and `make`
+- Open `~/.bashrc` and add the following lines, then save and run the command `source ~/.bashrc` to update the current session with the new `PATH`
+  -  Uni machines
+     ```sh
+     # ~/.bashrc
+     export PATH=$PATH:"/c/ProgramData/arduino-ide-v2/Local/Arduino15/packages/arduino/tools/avr-gcc/7.3.0-atmel3.6.1-arduino7/bin"
+     export PATH=$PATH:"/c/ProgramData/arduino-ide-v2/Local/Arduino15/packages/arduino/tools/avr-dude/6.3.0-arduino17/bin"
+     export PATH=$PATH:"/c/Program Files/GCC-Windows-MingW-2.0.0/w64devkit/bin"
+     ```
+  - Your personal windows machine
+     ```sh
+     # ~/.bashrc
+     export PATH=$PATH:"/c/Users/YOURUSERNAME/AppData/Local/Arduino15/packages/arduino/tools/avr-gcc/7.3.0-atmel3.6.1-arduino7/bin"
+     export PATH=$PATH:"/c/Users/YOURUSERNAME/AppDataLocal/Arduino15/packages/arduino/tools/avr-dude/6.3.0-arduino17/bin"
+     export PATH=$PATH:"/c/Program Files/w64devkit/bin"
+     ```
+  - You can install w64devkit from here:
+    - [https://github.com/skeeto/w64devkit/releases](https://github.com/skeeto/w64devkit/releases)
+
+~~~
 
 Now we have an understanding of the what is going on under the hood we can convert this `pwm.ino` into and embedded version.
+
+
+~~~admonish code
 
 ```c
 int pwmPin = 6;      // LED connected to digital pin 9
@@ -159,6 +173,8 @@ void setup() {
 
 void loop(){}
 ```
+
+~~~
 
 Let's have a breakdown of what this is doing incomparison to the embedded version:
 
@@ -179,18 +195,27 @@ Let's have a breakdown of what this is doing incomparison to the embedded versio
 ### Create `pwm.c`
 
 1. Create a new directory inside `embeddedC` called `pwm`
+    ~~~admonish terminal
 
     ```sh
     $ mkdir -p ~/embeddedC/pwm && cd embeddedC/pwm
     ```
+    
+    ~~~
 
 2. Create a new file inside the the `pwm` directory called `pwm.c`
+
+    ~~~admonish code
 
     ```sh
     $ touch pwm.c
     ```
 
+    ~~~
+
 3. Now it's time start wrighting out the program:
+
+    ~~~admonish code
 
     ```c
     #include <avr/io.h>
@@ -220,44 +245,64 @@ Let's have a breakdown of what this is doing incomparison to the embedded versio
         }
     }
     ```
-    > **Explanation of Code:**
-    >> 1. **Setting PD6 as Output**:
-    >>      - `DDRD |= (1 << PD6);` configures PD6 as an output pin to output the PWM signal.
-    >> 2. **Configuring Timer0 for Fast PWM Mode**:
-    >>      - **TCCR0A**:
-    >>          - `(1 << COM0A1)`: Sets non-inverting mode for PWM on OC0A.
-    >>          - `(1 << WGM01) | (1 << WGM00)`: Sets Fast PWM mode.
-    >>      - **TCCR0B**:
-    >>          - `(1 << CS01) | (1 << CS00)`: Sets a prescaler of 64, controlling the PWM frequency.
-    >>3. **Setting the Duty Cycle**:
-    >>      - **OCR0A**: Controls the duty cycle. A value of 127 provides approximately a 50% duty cycle.
-    >>      - **Range**: `OCR0A` can range from 0 to 255, where:
-    >>          - **0**: 0% duty cycle (always low)
-    >>          - **127**: 50% duty cycle
-    >>          - **255**: 100% duty cycle (always high)
+
+    ~~~
+
+    ~~~admonish example title='Explanation of code'
+    
+    1. **Setting PD6 as Output**:
+         - `DDRD |= (1 << PD6);` configures PD6 as an output pin to output the PWM signal.
+    2. **Configuring Timer0 for Fast PWM Mode**:
+         - **TCCR0A**:
+             - `(1 << COM0A1)`: Sets non-inverting mode for PWM on OC0A.
+             - `(1 << WGM01) | (1 << WGM00)`: Sets Fast PWM mode.
+         - **TCCR0B**:
+             - `(1 << CS01) | (1 << CS00)`: Sets a prescaler of 64, controlling the PWM frequency.
+    . **Setting the Duty Cycle**:
+         - **OCR0A**: Controls the duty cycle. A value of 127 provides approximately a 50% duty cycle.
+         - **Range**: `OCR0A` can range from 0 to 255, where:
+             - **0**: 0% duty cycle (always low)
+             - **127**: 50% duty cycle
+             - **255**: 100% duty cycle (always high)
+
+    ~~~
 
 4. We are now going to copy the `Makefile` from the `blink/` created last time, and replace all instances of `blink` with `pwm` using the regex feature:
+
+    ~~~admonish terminal
 
     ```sh
     $ cp ../blink/Makefile .
     $ vim Makefile
     ```
+    
+    ~~~
+    
 5. Inside vim type the following an press enter to find all instances of `blink` with `pwm`
+    
+    ~~~admonish terminal
+
     ```vim
     :%s/\<blink\>/pwm/g
     ```
 
     ![](./figures/makepwm.gif)
 
+    ~~~
+
 6. Remember like with blink we need to compile and upload the code to the board, ensure it is plugged in, to find the com port on windows:
 
     ![](./figures/windows_com_ports_list.png)
 
 7. If the COM port has changed remember to change it in the `Makefile`
+    
+    ~~~admonish code
 
     ```Makefile
     PORT = COM#
     ```
+
+    ~~~
 
 8. Use `make`:
 
@@ -286,8 +331,8 @@ Modify the code to gradually increase the duty cycle from 0 to 255 and then decr
 - Use a `for` loop to increment `OCR0A` from 0 to 255, adding a delay between each increment.
 - Then, use another `for` loop to decrement it from 255 back to 0.
 
-    <details>
-    <summary>Code here... </summary>
+
+    ~~~admonish code collapsible=true title='Suppress code here... [31 lines]'
 
     ```c
     #include <avr/io.h>
@@ -322,10 +367,10 @@ Modify the code to gradually increase the duty cycle from 0 to 255 and then decr
             }
         }
     }
-
     ```
 
-</details>
+    ~~~
+    
 
 ### Exercise 3: Changing the PWM Frequency
 Experiment with different prescaler values to change the PWM frequency. Change the **CS02:CS00** bits in **TCCR0B** to see the effects.

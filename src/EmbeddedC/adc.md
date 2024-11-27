@@ -2,9 +2,13 @@
 
 In this chapter, you will learn how to build a script for reading analog values from the ATmega328P using its ADC (Analog-to-Digital Converter) and output these values to the command line using the USART. This guide will explain the necessary registers and ports related to the ADC.
 
->**Note:**
->> - Make sure you have completed the [UART Chapter](UART.md) as you will need to print out the data for retrieved from the ADC.
->> - All the information below is synthesised and expanded upon from the [Data sheet](https://ww1.microchip.com/downloads/en/DeviceDoc/Atmel-7810-Automotive-Microcontrollers-ATmega328P_Datasheet.pdf) page 202 onwards.
+~~~admonish warning
+
+- Make sure you have completed the [UART Chapter](UART.md) as you will need to print out the data for retrieved from the ADC.
+
+- All the information below is synthesised and expanded upon from the [Data sheet](https://ww1.microchip.com/downloads/en/DeviceDoc/Atmel-7810-Automotive-Microcontrollers-ATmega328P_Datasheet.pdf) page 202 onwards.
+
+~~~
 
 --------
 
@@ -31,32 +35,40 @@ The ADMUX register is an 8-bit register, where each bit has a specific purpose:
    - **REFS1:REFS0**: Selects the reference voltage for the ADC. We use AVcc (5V) as the reference in our script.
    - **MUX3:MUX0**: Selects the ADC channel to read from. ADC0 is selected when all MUX bits are 0.
     
-        >>**Note:**
-        >> The MUX3:MUX0 bits in the ADMUX register select the ADC input channel:
-        >>
-        >> | **MUX3** | **MUX2** | **MUX1** | **MUX0** | **Selected ADC Channel** |
-        >> |----------|----------|----------|----------|-------------------------|
-        >> | 0        | 0        | 0        | 0        | ADC0 (PC0)             |
-        >> | 0        | 0        | 0        | 1        | ADC1 (PC1)             |
-        >> | 0        | 0        | 1        | 0        | ADC2 (PC2)             |
-        >> | 0        | 0        | 1        | 1        | ADC3 (PC3)             |
-        >> | 0        | 1        | 0        | 0        | ADC4 (PC4)             |
-        >> | 0        | 1        | 0        | 1        | ADC5 (PC5)             |
-        >> | 0        | 1        | 1        | 0        | ADC6 (PC6)             |
-        >> | 0        | 1        | 1        | 1        | ADC7 (PC7)             |
-        >> | 1        | 0        | 0        | 0        | Temperature sensor     |
-        >> | 1        | 1        | 0        | 0        | 1.1V internal reference|
-        >> | 1        | 1        | 0        | 1        | GND                    |
+        ~~~admonish note
 
-   - Use these settings to select the appropriate input channel for your ADC conversions.
-   - We also look at the internal temperature sensor too!
+        The MUX3:MUX0 bits in the ADMUX register select the ADC input channel:
+        | **MUX3** | **MUX2** | **MUX1** | **MUX0** | **Selected ADC Channel** |
+        |----------|----------|----------|----------|-------------------------|
+        | 0        | 0        | 0        | 0        | ADC0 (PC0)             |
+        | 0        | 0        | 0        | 1        | ADC1 (PC1)             |
+        | 0        | 0        | 1        | 0        | ADC2 (PC2)             |
+        | 0        | 0        | 1        | 1        | ADC3 (PC3)             |
+        | 0        | 1        | 0        | 0        | ADC4 (PC4)             |
+        | 0        | 1        | 0        | 1        | ADC5 (PC5)             |
+        | 0        | 1        | 1        | 0        | ADC6 (PC6)             |
+        | 0        | 1        | 1        | 1        | ADC7 (PC7)             |
+        | 1        | 0        | 0        | 0        | Temperature sensor     |
+        | 1        | 1        | 0        | 0        | 1.1V internal reference|
+        | 1        | 1        | 0        | 1        | GND                    |
+
+        - Use these settings to select the appropriate input channel for your ADC conversions.
+        
+        - We also look at the internal temperature sensor too!
+        ~~~
+
+
 
 
 ### Example 1: Setting the Reference Voltage to AVcc
 
+~~~admonish code
+
 ```c
 ADMUX = (1 << REFS0);
 ```
+
+~~~
 
 - **Explanation**: 
   - `(1 << REFS0)` shifts `1` to the position of the **REFS0** bit (bit 6).
@@ -68,9 +80,13 @@ ADMUX = (1 << REFS0);
 
 ### Example 2: Setting the Reference Voltage to AVcc and Selecting ADC3
 
+~~~admonish code
+
 ```c
 ADMUX = (1 << REFS0) | (1 << MUX1) | (1 << MUX0);
 ```
+
+~~~
 
 - **Explanation**:
   - `(1 << REFS0)`: Sets the **REFS0** bit (bit 6) to `1` (Reference voltage = AVcc).
@@ -107,14 +123,17 @@ ADMUX = (1 << REFS0) | (1 << MUX1) | (1 << MUX0);
    - **ADPS2:ADPS0**: ADC Prescaler Select Bits. These bits determine the division factor between the system clock and the ADC clock. We use a prescaler of 128 for accurate readings.
    - **ADC**: This register holds the result of the ADC conversion. It is a 10-bit register divided into two 8-bit registers, ADCL (low byte) and ADCH (high byte).
         
-        >**Note:**
-        >> Prescaler: is a factor by which the system clock is divided to obtain the ADC clock. The ADC clock frequency can be calculated using the formula:
-        >> \\[ADC_{Clock}\ =\ \frac{Sytem\ Clock}{Prescaler}\\]
-        >> So \\(\therefore \\)
-        >> \\[125kHz\ =\ \frac{16000000}{128}\\]
-        >> - 125 kHz is within the recommended range of 50 kHz to 200 kHz.
-        >> - A prescaler of 128 ensures that the ADC operates at an optimal frequency for accurate 10-bit conversions.
-        >> - Larger the prescaler the longer for conversions, lower frequencies are faster but are less accurate due to errors
+        ~~~admonish info
+        
+        Prescaler: is a factor by which the system clock is divided to obtain the ADC clock. The ADC clock frequency can be calculated using the formula:
+        \\[ADC_{Clock}\ =\ \frac{Sytem\ Clock}{Prescaler}\\]
+        So \\(\therefore \\)
+        \\[125kHz\ =\ \frac{16000000}{128}\\]
+        - 125 kHz is within the recommended range of 50 kHz to 200 kHz.
+        - A prescaler of 128 ensures that the ADC operates at an optimal frequency for accurate 10-bit conversions.
+        - Larger the prescaler the longer for conversions, lower frequencies are faster but are less accurate due to errors
+        
+        ~~~
     
 
 ----
@@ -146,14 +165,19 @@ We can create a linear relationship between the ADC value and the temperature ba
 
 </p>
 
-1. Create a new directory called `internalADCTemp`:
-    -  `mkdir ../embeddedc/internalADCTemp && cd embeddedc/internalADCTemp` 
-    - and navigate to it and then create a file called `internalADCTemp.c`
+1. Create a new directory called `internalADCTemp` and navigate to it and then create a file called `internalADCTemp.c`:
 
+    ~~~admonish terminal
 
-2. Modify the `internalADCTemp.c` file with the following code: 
-    <details>
-    <summary>Reproduce the code below... [...66 lines]</summary>
+    ```sh
+    mkdir ../embeddedc/internalADCTemp && cd embeddedc/internalADCTemp
+    ```
+
+    ~~~
+
+2. Modify the `internalADCTemp.c` file with the following code:
+
+    ~~~admonish code collapsible=true title='Reproduce the code below... [...66 lines]'
 
     ```c
     #include <avr/io.h>
@@ -222,12 +246,13 @@ We can create a linear relationship between the ADC value and the temperature ba
         }
     }
     ```
-    </details>
+    
+    ~~~
+
 
 3. Once you have saved the script, you can now make the `Makefile`
 
-    <details>
-    <summary>Code here...[27 lines]</summary>
+    ~~~admonish code collapsible=true title='Reproduce the code below... [...27 lines]'
 
     ```Makefile
     MCU = atmega328p
@@ -259,11 +284,15 @@ We can create a linear relationship between the ADC value and the temperature ba
             rm -f internalADCTemp.o internalADCTemp.elf internalADCTemp.hex
     ```
 
-    >**Note:**
-    >> - remember to check for the correct port number
-    >>  ![](./figures/windows_com_ports_list.png)
+    ~~~
 
-    </details>
+    ~~~admonish note
+    
+    Remember to check for the correct port number
+    
+    ![](./figures/windows_com_ports_list.png)
+
+    ~~~
 
 4. You can now compile and upload and use putty like you did in ADC,
 
@@ -290,15 +319,19 @@ Now, let's write the script step by step:
    - Convert the ADC value to a string.
    - Send the string over serial communication.
 
-1. Create a new directory called `adcread`:
-    -  `mkdir ../embeddedc/adcread && cd embeddedc/adcread` 
-    - and navigate to it and then create a file called `adcread.c`
+1. Create a new directory called `adcread` and navigate to it and then create a file called `adcread.c`:
 
+    ~~~admonish terminal
+    
+    ```sh
+    mkdir ../embeddedc/adcread && cd embeddedc/adcread` 
+    ```
+
+    ~~~
 
 2. Modify the `adcread.c` file with the following code: 
 
-    <details>
-    <summary>Code here... [52 lines]</summary>
+    ~~~admonish code collapsible=true title='Reproduce the code below... [...52 lines]'
 
     ```c
     #include <avr/io.h>
@@ -354,13 +387,18 @@ Now, let's write the script step by step:
     }
     ```
 
-    >**Note:**
-    >> - `A0` : `ADMUX = (1 << REFS0);`                             
-    >> - `A1` : `ADMUX = (1 << REFS0) | (1 << MUX0);`               
-    >> - `A2` : `ADMUX = (1 << REFS0) | (1 << MUX1);`               
-    >> - `A3` : `ADMUX = (1 << REFS0) | (1 << MUX1) | (1 << MUX0);` 
-    >> - `A4` : `ADMUX = (1 << REFS0) | (1 << MUX2);`               
-    >> - `A5` : `ADMUX = (1 << REFS0) | (1 << MUX2) | (1 << MUX0);` 
+    ~~~
+
+    ~~~admonish note
+
+    - `A0` : `ADMUX = (1 << REFS0);`                             
+    - `A1` : `ADMUX = (1 << REFS0) | (1 << MUX0);`               
+    - `A2` : `ADMUX = (1 << REFS0) | (1 << MUX1);`               
+    - `A3` : `ADMUX = (1 << REFS0) | (1 << MUX1) | (1 << MUX0);` 
+    - `A4` : `ADMUX = (1 << REFS0) | (1 << MUX2);`               
+    - `A5` : `ADMUX = (1 << REFS0) | (1 << MUX2) | (1 << MUX0);` 
+
+    ~~~
     
 
 3. Copy the `Makefile` from `../internalADCTemp/Makefile` to `readadc/` and use the regex `:%s/\<internalADCTemp\>/adcread/g`

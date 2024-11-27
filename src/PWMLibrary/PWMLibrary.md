@@ -82,6 +82,7 @@ The BeagleBone Black (BBB), however, is more flexible and powerful regarding PWM
     - **To set a PWM signal at 1 kHz frequency**:
 
         Determine the Period in Nanoseconds, for 1 kHz, the period is 1 ms, which is 1,000,000 ns.
+        ~~~admonish terminal
 
         ```sh
         # Set period to 1,000,000 ns (1 ms for 1 kHz)
@@ -93,10 +94,15 @@ The BeagleBone Black (BBB), however, is more flexible and powerful regarding PWM
         # Enable the PWM output 
         echo 1 > /sys/class/pwm/pwmchip1/pwm0/enable  
         ```
+
+        ~~~
+
     - **Setting a 50 kHz PWM Signal**:
 
         Determine the Period in Nanoseconds, for 50 kHz, the period is \\(\frac{1}{50,000}\\) seconds, or 20 microseconds, which is 20,000ns
-
+        
+        ~~~admonish terminal
+        
         ```sh
         # Set period to 20,000 ns (20 us for 50 kHz)
         echo 20000 > /sys/class/pwm/pwmchip1/pwm0/period 
@@ -107,15 +113,20 @@ The BeagleBone Black (BBB), however, is more flexible and powerful regarding PWM
         # Enable the PWM output
         echo 1 > /sys/class/pwm/pwmchip1/pwm0/enable
         ```
+
+        ~~~
+
 6. So what pins are capable of being configured to the PWM mode, we wrote a script, `config_pin_report.sh`, for this earlier that produced an `pin_config_report.txt`
 
     You can `cat` this file and `grep` on `pwm`...
+    ~~~admonish terminal
 
     ```sh
     $ cat /path/to/pin_config_reprot.txt | grep pwm
     ```
-    <details>
-    <summary>Example output...</summary>
+    ~~~
+
+    ~~~admonish output collapsible=true
 
     ```
     P8_13   | default  | default gpio gpio_pu gpio_pd gpio_input pwm
@@ -145,7 +156,7 @@ The BeagleBone Black (BBB), however, is more flexible and powerful regarding PWM
     P9_42   | default  | default gpio gpio_pu gpio_pd gpio_input spi_cs spi_sclk uart pwm pru_ecap
     ```
     
-    </details>
+    ~~~
 
 7.  Configuring the pin without `config-pin`
 
@@ -153,13 +164,16 @@ The BeagleBone Black (BBB), however, is more flexible and powerful regarding PWM
 
     - Find the Pinmux Helper Directory: The pinmux helper directory is dynamically created based on the device tree overlay. To list the available pinmux helpers:
 
+        ~~~admonish terminal
+
         ```sh
         $ ls /sys/devices/platform/ocp/ | grep pinmux
         ```
 
-        <details>
-        <summary>Example output...</summary>
+        ~~~
 
+        ~~~admonish output collapsible=true 
+        
         ```
         ocp:A15_pinmux
         ocp:P8_07_pinmux
@@ -199,9 +213,11 @@ The BeagleBone Black (BBB), however, is more flexible and powerful regarding PWM
         ocp:P9_92_pinmux
         ```
         
-        </details>
+       ~~~
 
     - To set the Pinmux Mode write to the state file to set the pin function
+
+        ~~~admonish terminal
 
         ```sh
         echo pwm > /sys/devices/platform/ocp/ocp\:P9_14_pinmux/state
@@ -211,33 +227,38 @@ The BeagleBone Black (BBB), however, is more flexible and powerful regarding PWM
         cat /sys/devices/platform/ocp/ocp\:P9_14_pinmux/state
         default
         ```
+
+        ~~~
+
     - To match the physical pins on the BeagleBone Black (BBB) to the corresponding PWM channels and subsystems, I used the standard documentation provided by Texas Instruments for the AM335x processor, which powers the BeagleBone Black, as well as commonly available pinout diagrams for the BBB.
     
     - Mapping of PWM Channels to Physical Pins on the BeagleBone Black, here is a small sample:
 
             
-    | PWM Channel | PWM Chip    | PWM Subsystem | Physical Pin | Pin Description      |
-    |-------------|-------------|---------------|--------------|----------------------|
-    | pwm-0:0     |  pwmchip0   | eCAP0         | P9_42        | eCAP0_IN_PWM0_OUT    |
-    | pwm-1:0     |  pwmchip1   | eHRPWM0A      | P9_22        | eHRPWM0A             |
-    | pwm-1:1     |  pwmchip1   | eHRPWM0B      | P9_21        | eHRPWM0B             |
-    | pwm-3:0     |  pwmchip3   | eCAP1         | P9_28        | eCAP1_IN_PWM1_OUT    |
-    | pwm-4:0     |  pwmchip4   | eHRPWM1A      | P9_14        | eHRPWM1A             |
-    | pwm-4:1     |  pwmchip4   | eHRPWM1B      | P9_16        | eHRPWM1B             |
-    | pwm-6:0     |  pwmchip6   | eCAP2         | P9_42        | eCAP2_IN_PWM2_OUT    |
-    | pwm-7:0     |  pwmchip7   | eHRPWM2A      | P8_19        | eHRPWM2A             |
-    | pwm-7:1     |  pwmchip7   | eHRPWM2B      | P8_13        | eHRPWM2B             |
+        | PWM Channel | PWM Chip    | PWM Subsystem | Physical Pin | Pin Description      |
+        |-------------|-------------|---------------|--------------|----------------------|
+        | pwm-0:0     |  pwmchip0   | eCAP0         | P9_42        | eCAP0_IN_PWM0_OUT    |
+        | pwm-1:0     |  pwmchip1   | eHRPWM0A      | P9_22        | eHRPWM0A             |
+        | pwm-1:1     |  pwmchip1   | eHRPWM0B      | P9_21        | eHRPWM0B             |
+        | pwm-3:0     |  pwmchip3   | eCAP1         | P9_28        | eCAP1_IN_PWM1_OUT    |
+        | pwm-4:0     |  pwmchip4   | eHRPWM1A      | P9_14        | eHRPWM1A             |
+        | pwm-4:1     |  pwmchip4   | eHRPWM1B      | P9_16        | eHRPWM1B             |
+        | pwm-6:0     |  pwmchip6   | eCAP2         | P9_42        | eCAP2_IN_PWM2_OUT    |
+        | pwm-7:0     |  pwmchip7   | eHRPWM2A      | P8_19        | eHRPWM2A             |
+        | pwm-7:1     |  pwmchip7   | eHRPWM2B      | P8_13        | eHRPWM2B             |
 
-    > **Note**:
-    >> - paths are `/sys/class/pwm/` and the pwm channel is prepended to the end 
-    >>   -  i.e. `/sys/class/pwm/pwm-4:0` 
+        ~~~admonish note
+
+        - paths are `/sys/class/pwm/` and the pwm channel is prepended to the end 
+            -  i.e. `/sys/class/pwm/pwm-4:0` 
+        
+        ~~~
         
 ## 2: Building the PWM C library
 
 - First, create a header file that declares the functions and defines necessary constants and structs, call the file `~/pwm/pwm.h`: 
 
-    <details>
-    <summary>Suppressed code here [57 lines]...</summary>
+    ~~~admonish code collapsible=true title='Suppressed code here [57 lines]' 
 
     ```h
     #ifndef PWM_H
@@ -305,13 +326,12 @@ The BeagleBone Black (BBB), however, is more flexible and powerful regarding PWM
     #endif // PWM_H
     ```
 
-    </details>
+    ~~~
 
 
 - Next, create the `pwm.c` file that implements the functions declared in `pwm.h`
 
-    <details>
-    <summary>Suppressed code here [91 lines]...</summary>
+    ~~~admonish code collapsible=true title='Suppressed code here [91 lines]' 
     
     ```h
     #include "pwm.h"
@@ -464,50 +484,76 @@ The BeagleBone Black (BBB), however, is more flexible and powerful regarding PWM
     }
     ```
 
-    </details>
+    ~~~
 
 ## 3: Compile the Object File and Create Libraries
 
 - Compile pwm.c into an Object File by Using the following command to compile `pwm.c` into an object file (`pwm.o`):
 
+    ~~~admonish terminal
+   
     ```sh
     $ gcc -c pwm.c -o pwm.o
     ```
+   
+    ~~~
 
 - Create a Static Library (`libpwm.a`) to create a static library, use the `ar` command:
+
+    ~~~admonish terminal
 
     ```sh
     $ ar rcs libgpwm.a pwm.o
     ```
+    ~~~
 
-   - **Command Breakdown:**
+    ~~~admonish exmample title='Command Breakdown'
+
      - `ar`: The archiver tool used to create and maintain library archives.
      - `rcs`: Flags where r inserts the files into the archive, c creates the archive if it doesn't exist, and s creates an index for quick symbol lookup.
      - `libpwm.a`: The name of the static library being created.
      - `pwm.o`: The object file to be included in the library.
+    
+    ~~~
+    
 
-    >> **Explanation: What is a Static Library?**
-    >>
-    >> A static library is a collection of object files that are linked into the final executable at compile time. Once linked, the code from the static library becomes part of the executable binary. This means that the executable will carry a copy of the library's code, making it self-contained and independent of the library file after compilation.
+    ~~~admonish example title='What is a Static Library?'
+
+    A static library is a collection of object files that are linked into the final executable at compile time. Once linked, the code from the static library becomes part of the executable binary. This means that the executable will carry a copy of the library's code, making it self-contained and independent of the library file after compilation.
+
+    ~~~
 
 - Create a Shared Library (`libpwm.so`) to create a shared library, use the following `gcc` command:
+
+    ~~~admonish terminal
 
     ```sh
     $ gcc -shared -o libpwm.so pwm.o
     ```
+    ~~~
 
-    - **Command Breakdown:**
-      - `-shared`: Tells gcc to produce a shared library.
-      - `-o libpwm.so`: Specifies the output filename for the shared library.
-      - `pwm.o`: The object file to be included in the library.
+    ~~~admonish exmample title='Command Breakdown'
 
-    >> **Explanation: What is a Shared Library?**
-    >>
-    >>A shared library, on the other hand, is not linked into the final executable at compile time. Instead, it is loaded into memory at runtime. Multiple programs can share a single copy of a shared library, which can save memory and allow updates to the library without recompiling the programs that use it.
+    - `-shared`: Tells gcc to produce a shared library.
+
+    - `-o libpwm.so`: Specifies the output filename for the shared library.
+
+    - `pwm.o`: The object file to be included in the library.
+
+    ~~~
+
+    ~~~admonish example title='What is a Shared Library?'
+
+    A shared library, on the other hand, is not linked into the final executable at compile time. Instead, it is loaded into memory at runtime. Multiple programs can share a single copy of a shared library, which can save memory and allow updates to the library without recompiling the programs that use it.
+
+    ~~~
+
 
 ## 4: Install the Header and Library Files System-Wide
 
 - You could manually copy the header file to `/usr/include` and the libraries to `/usr/lib`, or skip to the next section and create a `Makefile` to do it for you each time.
+
+    ~~~admonish terminal
 
     ```sh
     $ sudo cp pwm.h /usr/include/
@@ -515,11 +561,14 @@ The BeagleBone Black (BBB), however, is more flexible and powerful regarding PWM
     $ sudo cp libpwm.so /usr/lib/
     $ sudo ldconfig  # Update the shared library cache
     ```
+    
+    ~~~
+
 ## 5: Automate with a Makefile
 
 - Instead of running these commands manually, you can automate the build process using a Makefile.
-    <details>
-    <summary>Suppressed code here [44 lines]...</summary>
+
+    ~~~admonish code collapsible=true title='Suppressed code here [44 lines]' 
     
     ```makefile
     # Variables
@@ -568,20 +617,24 @@ The BeagleBone Black (BBB), however, is more flexible and powerful regarding PWM
     .PHONY: all clean install uninstall
     ```
 
-    </details>
+    ~~~
 
 
 ## 6: Creating the pwm_test program
 
 - Create a new .c file called... `pwm_test.c` and chose your preferred editor to open it.
+    ~~~admonish terminal
+
     ```sh
     $ mkdir ~/pwm_test/ && cd ~/pwm_test && touch pwm_test.c
     $ vim pwm_test.c
     ```
+
+    ~~~
+
 - Now we are going to set up the program to use our system wide library and header with `pwm.h`
 
-    <details>
-    <summary>Suppresses code here [33 lines]...</summary>
+    ~~~admonish code collapsible=true title='Suppressed code here [33 lines]' 
 
     ```c
     #include "pwm.h"
@@ -618,18 +671,21 @@ The BeagleBone Black (BBB), however, is more flexible and powerful regarding PWM
     }
     ```
 
-    </details>
+   ~~~
 
 - We can use this oneliner to compile the code:
 
+    ~~~admonish terminal
+
     ```sh
-    $ gcc 
+    $ gcc <file> ... 
     ```
+    
+    ~~~
 
 - Create the Makefile
 
-    <details>
-    <summary>Suppressed code here [lines]...</summary>
+    ~~~admonish code collapsible=true title='Suppressed code here [25 lines]' 
 
     ```makefile
     # Compiler and flags
@@ -659,21 +715,31 @@ The BeagleBone Black (BBB), however, is more flexible and powerful regarding PWM
     # Phony targets to avoid conflicts with files of the same name
     .PHONY: all clean
     ```
-
-    </details>
+    
+    ~~~
 
 - Invoke make to build the executable:
 
+    ~~~admonish terminal
+   
     ```sh
     $ make
     ```
+   
+    ~~~
+
 - Run the code file to see if RGB Led changes colour, remember to wire up:
 
+    ~~~admonish terminal
+    
     ```sh
     $ ./pwm_test
     ```
-
+    
+    ~~~
+    
     - If all is well, and you have connected up your circuity correctly, the LED should show 100% then 50% then 10% and off, also this terminal output
+        ~~~admonish output
 
         ```
         Phy: P8_13
@@ -685,3 +751,5 @@ The BeagleBone Black (BBB), however, is more flexible and powerful regarding PWM
         Pin Mode Path: /sys/devices/platform/ocp/ocp:P8_13_pinmux/state
         Pin Mode Sate: pwm
         ```
+
+        ~~~

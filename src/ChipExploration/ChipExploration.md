@@ -14,17 +14,25 @@ The `/sys/bus/i2c/devices/` directory in Linux contains a list of all the I2C de
 
 Each entry in this directory follows a naming convention based on the bus number and the device address:
 
+~~~admonish terminal
+
 ```
 i2c-<bus number>-<device address>
 ```
+~~~
 
-For example:
+~~~admonish example
+
 ```
 i2c-1-0050
 ```
 
 - **`i2c-1`**: This indicates the I2C bus number (`1` in this case).
 - **`0050`**: This is the hexadecimal address of the device on the I2C bus (`0x50`).
+
+~~~
+
+
 
 ### 3. Interacting with I2C Devices
 
@@ -46,16 +54,20 @@ Within each device directory (e.g., `/sys/bus/i2c/devices/i2c-1-0050/`), you'll 
 1. **Listing I2C Devices**:  
    You can list all I2C devices connected to the BeagleBoard using the following command:
 
+   ~~~admonish terminal
    ```bash
    ls /sys/bus/i2c/devices/
    ```
+   ~~~
 
    This command will output all detected I2C devices with their respective bus numbers and addresses.
 
 2. **Interpreting the I2C Devices Listed in `/sys/bus/i2c/devices/` on the BeagleBoard**
 
     You ran the following command to list all I2C devices on the BeagleBoard:
-
+    
+    ~~~admonish output
+    
     ```sh
     $ tail -v -n +1 /sys/bus/i2c/devices/*/name
     ==> /sys/bus/i2c/devices/0-0024/name <==
@@ -91,6 +103,7 @@ Within each device directory (e.g., `/sys/bus/i2c/devices/i2c-1-0050/`), you'll 
     ==> /sys/bus/i2c/devices/i2c-2/name <==
     OMAP I2C adapter
     ```
+   ~~~
 
  - **Explanation of Each Device:**
 
@@ -136,27 +149,35 @@ Within each device directory (e.g., `/sys/bus/i2c/devices/i2c-1-0050/`), you'll 
 
    You want to read the registers of the `tps65217` power management IC on your BeagleBoard using `i2cdump`. However, you may encounter the error:
 
+   ~~~admonish error
    ```
    $ i2cdump -y 0 0x24 
    > Error: Could not set address to 0x24: Device or resource busy
    ```
 
-   This error occurs because the device is currently in use by another process, typically a kernel driver. The steps below will guide you through unbinding the driver, using i2cdump to read the registers, interpreting the data, and rebinding the driver.
+   This error occurs because the device is currently in use by another process, typically a kernel driver. The steps below will guide you through unbinding the driver, using i2cdump to read the registers, interpreting the data, and rebinding the drive
+
+   ~~~
 
 2. **Check for Loaded Drivers**
    First, verify that the kernel driver managing the `tps65217` device is loaded. Run the following command:
+
+   ~~~admonish terminal
 
    ```bash
    $ ls /sys/bus/i2c/drivers/tps65217
    > 0-0024/ bind    uevent  unbind
    ```
    You should see an entry like 0-0024 (indicating bus 0 and address 0x24).
+   ~~~
 
    Unbind the device by echoing the bus and address to the unbind file:
 
+   ~~~admonish terminal
    ```sh
    $ echo "0-0024" > /sys/bus/i2c/drivers/tps65217/unbind
    ```
+   ~~~
 
 3. **Using i2cdump to Read the Registers**
 
@@ -164,13 +185,15 @@ Within each device directory (e.g., `/sys/bus/i2c/devices/i2c-1-0050/`), you'll 
 
    Run `i2cdump`:
 
+   ~~~admonish terminal
    ```sh
    i2cdump -y 0 0x24 b
    ```
+   ~~~
+
    This command will provide a hex dump of all the registers in the `tps65217` device in byte (`b`) format.
 
-   <details>
-   <summary>Suppressed Output</summary>
+   ~~~admonish output collapsible=true title='Suppressed Output'
 
    ```sh
       0  1  2  3  4  5  6  7  8  9  a  b  c  d  e  f      0123456789abcdef
@@ -191,8 +214,7 @@ Within each device directory (e.g., `/sys/bus/i2c/devices/i2c-1-0050/`), you'll 
    e0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00    ................
    f0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00    ................
    ```
-
-   </details>
+   ~~~
 
 4. **Explaining the `i2cdump` Output**
 
@@ -219,20 +241,33 @@ After you have finished using `i2cdump`, you should rebind the driver to ensure 
 **Steps to Rebind:**
 1. Rebind the Device:
    - Rebind the driver by echoing the bus and address to the `bind` file:
+
+      ~~~admonish terminal
+
       ```sh
       echo "0-0024" > /sys/bus/i2c/drivers/tps65217/bind
       ```
+
+      ~~~
+
 2. **Verify the Binding:**
    - Verify that the driver is correctly bound again
+
+      ~~~admonish terminal
+
       ```sh
       ls /sys/bus/i2c/drivers/tps65217/
       ```
+
+      ~~~
+
    You should see `0-0024` listed again.
 
-
-> **Note:**
->> - Unbinding and rebinding drivers on a BeagleBoard can cause system instability, data loss, or hardware damage. Unbinding stops the driver from managing the device, which might disrupt critical functions or leave devices in unsafe states. It exposes devices for direct user access, which could lead to incorrect configurations or security risks. Always ensure you understand the device and driver, back up data, and have a recovery plan. Rebind drivers promptly after use to restore normal operations.
-
+   ~~~admonish warning
+   
+   Unbinding and rebinding drivers on a BeagleBoard can cause system instability, data loss, or hardware damage. Unbinding stops the driver from managing the device, which might disrupt critical functions or leave devices in unsafe states. It exposes devices for direct user access, which could lead to incorrect configurations or security risks. Always ensure you understand the device and driver, back up data, and have a recovery plan. Rebind drivers promptly after use to restore normal operations.
+   
+   ~~~
 
 ### 9. Explore!
 
@@ -256,5 +291,8 @@ Get a dump from the other I2C devices on your BeagleBoard, you can use the `i2cd
 
 ### 8. Summary
 
+~~~admonish tldr
+
 The `/sys/bus/i2c/devices/` directory on the BeagleBoard provides a powerful interface for managing and interacting with I2C devices. By understanding the structure of this directory and the available commands, you can effectively control I2C peripherals, whether they are sensors, EEPROMs, or other types of devices. This guide has provided the foundational knowledge and practical examples needed to start working with I2C devices on your BeagleBoard.
 
+~~~

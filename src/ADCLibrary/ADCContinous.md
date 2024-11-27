@@ -1,8 +1,10 @@
 # ADC Library - Continous measurements
 
->**Note:**
->> - You need to have finished [ADCLibrary section](./ADCLibrary.md)
+~~~admonish warning
 
+- You need to have finished [ADCLibrary section](./ADCLibrary.md)
+
+~~~
 
 ## 1. Important information
 
@@ -16,16 +18,22 @@ Important folders in the iio:deviceX directory are:
 
 - The buffer can be enabled by doing:
 
+    ~~~admonish terminal
+
     ```
     debian@beaglebone:~# echo 1 > /sys/bus/iio/devices/iio\:device0/scan_elements/in_voltage0_en
     debian@beaglebone:~# echo 100 > /sys/bus/iio/devices/iio\:device0/buffer/length
     debian@beaglebone:~# echo 1 > /sys/bus/iio/devices/iio\:device0/buffer/enable
     ```
 
+    ~~~
+
 The first line tells which analog channel to scan. Just change the x in in_voltagex_en if you need a different analog channel. The second line specifies the length of the buffer and the last line enables the buffer.
 
 
 - `scan_elements` directory contains interfaces for elements that will be captured for a single sample set in the buffer.
+
+    ~~~admonish output
 
     ```bash
     debian@beaglebone:~# ls -al /sys/bus/iio/devices/iio\:device0/scan_elements/
@@ -57,25 +65,32 @@ The first line tells which analog channel to scan. Just change the x in in_volta
     -r--r--r--    1 root     root         4096 Jan  1 00:02 in_voltage7_type
     ```
 
+    ~~~
+
 - `scan_elements` exposes 3 files per channel:
 
     - `in_voltageX_en`: is this channel enabled?
     - `in_voltageX_index`: index of this channel in the buffer’s chunks
     - `in_voltageX_type` : How the ADC stores its data. Reading this file should return you a string something like below:
     
+    ~~~admonish terminal
+
     ```bash
     debian@beaglebone:~# cat /sys/bus/iio/devices/iio\:device0/scan_elements/in_voltage1_type
     le:u12/16>>0
     ```
+    ~~~
+    
+    ~~~admonish example title='Output Explanation'
 
-    - Where:
+    Where:
 
-        - `le` represents the endianness, here little endian
-        - `u` is the sign of the value returned. It could be either `u` (for unsigned) or `s` (for signed)
-        - `12` is the number of relevant bits of information
-        - `16` is the actual number of bits used to store the datum
-        - `0` is the number of right shifts needed.
-
+    - `le` represents the endianness, here little endian
+    - `u` is the sign of the value returned. It could be either `u` (for unsigned) or `s` (for signed)
+    - `12` is the number of relevant bits of information
+    - `16` is the actual number of bits used to store the datum
+    - `0` is the number of right shifts needed.
+    ~~~
 
 When the ADC sequencer finishes cycling through all the enabled channels, the user can decide if the sequencer should stop (one-shot mode), or loop back and schedule again (continuous mode). If one-shot mode is enabled, then the sequencer will only be scheduled one time (the sequencer HW will automatically disable the StepEnable bit after it is scheduled which will guarantee only one sample is taken per channel). When the user wants to continuously take samples, continuous mode needs to be enabled. One cannot read ADC data from one channel operating in One-shot mode and and other in continuous mode at the same time.
 
@@ -85,6 +100,8 @@ When the ADC sequencer finishes cycling through all the enabled channels, the us
 You need to update the adc.h header file to take advantage of the continous mode offered by the ADC chip:
 
 - We are adding adding the following macros:
+
+    ~~~admonish code
 
     ```h
     #define SYSFS_ADC_ENABLE_PATH "/sys/bus/iio/devices/iio:device0/buffer/enable"
@@ -98,7 +115,12 @@ You need to update the adc.h header file to take advantage of the continous mode
     #define MAXADC 4096
     #define MAX_SAMPLE_RATE 2000000 // 200kSPS
     ```
+    
+    ~~~
+
 - Additionally we are adding the following prototypes:
+
+    ~~~admonish code
 
     ```h
     int adc_to_voltage(unsigned int adcValue, float *voltage);
@@ -110,9 +132,9 @@ You need to update the adc.h header file to take advantage of the continous mode
     int set_buffer_length(unsigned int len);
     ```
 
-    <details>
-    <summary>Full code here...</summary>
+    ~~~
 
+    ~~~admonish code collapsible=true title='Complete code here [48 lines]'
     ```h
     #ifndef ADC_H_
     #define ADC_H_
@@ -150,10 +172,9 @@ You need to update the adc.h header file to take advantage of the continous mode
     int set_buffer_length(unsigned int len);
 
     #endif /* ADC_H_*/
-
     ```
     
-    </details>
+    ~~~
 
 ## 3. Updating `adc.c`
 
@@ -163,6 +184,8 @@ Now we need to update `adc.c` to create the functionality of our new prototypes:
 
     Add to the bottom of the `adc.c` file:
     
+    ~~~admonish code collapsible=true title='Suppressed code here [23 lines]'
+
     ```c
     /***************************************************************
     * enable_channel
@@ -189,10 +212,12 @@ Now we need to update `adc.c` to create the functionality of our new prototypes:
 
     }
     ```
+
+    ~~~
+
 2. Likewise of `int disable_channel(...)`, you only need to modify the `write()`... as `write(fd, "0",2);`
 
-    <details>
-    <summary>Code here... </summary>
+    ~~~admonish code collapsible=true title='Suppressed code here [23 lines]'
 
     ```c
     /***************************************************************
@@ -221,14 +246,13 @@ Now we need to update `adc.c` to create the functionality of our new prototypes:
     }
     ```
 
-    </details>
+    ~~~
 
 3. Next we need to do the same for `enable_buffer()` and `disable_buffer()`
     
     - `int enable_buffer(void);`
 
-        <details>
-        <summary>Code here...</summary>
+        ~~~admonish code collapsible=true title='Suppressed code here [23 lines]' 
 
         ```c
         /***************************************************************
@@ -253,16 +277,14 @@ Now we need to update `adc.c` to create the functionality of our new prototypes:
             close(fd);
 
             return 0;
-
         }
         ```
 
-        </details>
+        ~~~
 
     - Likewise of `int disable_buffer(...)`, you only need to modify the `write()`... as `write(fd, "0",2);`:
 
-        <details>
-        <summary>Code here...</summary>
+        ~~~admonish code collapsible=true title='Suppressed code here [23 lines]' 
 
         ```c
         /***************************************************************
@@ -291,12 +313,11 @@ Now we need to update `adc.c` to create the functionality of our new prototypes:
         }
         ```
 
-        </details>
+        ~~~
 
 4. Next we need to set the buffer length as to store *n* values: 
 
-    <details>
-    <summary>Code here...</summary>
+    ~~~admonish code collapsible=true title='Suppressed code here [25 lines]' 
 
     ```c
     /***************************************************************
@@ -327,12 +348,11 @@ Now we need to update `adc.c` to create the functionality of our new prototypes:
     }
     ```
 
-    </details>
+    ~~~
 
 5. Lastly, for the adc continous mode, we need to create the `adc_get_buffer(...)`:
 
-    <details>
-    <summary>Code here...</summary>
+    ~~~admonish code collapsible=true title='Suppressed code here [23 lines]' 
 
     ```c
     /****************************************************************
@@ -369,7 +389,7 @@ Now we need to update `adc.c` to create the functionality of our new prototypes:
     }
     ```
 
-    </details>
+    ~~~
 
 6. We also made a prototype to do the voltage conversion for adc, make the `int adc_to_voltage(unsigned adcValue, float *voltage){}`:
 
@@ -377,22 +397,24 @@ Now we need to update `adc.c` to create the functionality of our new prototypes:
 
         \\[ V_{in} = \frac{adcValue\ \cdot\ V_{ref}}{2^n - 1} \\]
 
-        - >**Note:**
-          >> - Remember that you are peforming mathematical operations on whole numbers and decimals numbers, you may need to `cast`.
+        ~~~admonish code collapsible=true title='Suppressed code here [5 lines]' 
 
-            <details>
-            <summary>Code here...</summary>
+        ```c
+        int adc_to_voltage(unsigned adcValue, float *voltage){
 
-            ```c
-            int adc_to_voltage(unsigned adcValue, float *voltage){
+            *voltage = ( ( (float)adcValue * REFVOLTAGE ) / (float)MAXADC );
 
-                *voltage = ( ( (float)adcValue * REFVOLTAGE ) / (float)MAXADC );
+        return 0;
+        }
+        ```
 
-            return 0;
-            }
-            ```
+        ~~~
 
-            </details>
+        ~~~admonish important
+        
+        Remember that you are peforming mathematical operations on whole numbers and decimals numbers, you may need to `cast`.
+
+        ~~~
 
 7. Remember to use make to update the libraries:
 
@@ -406,8 +428,7 @@ Now we need to update `adc.c` to create the functionality of our new prototypes:
 
 3. We are going to modify the file to take user input, the pin number and the size of the buffer:
 
-    <details>
-    <summary>Code here...</summary>
+    ~~~admonish code collapsible=true title='Suppressed code here [57 lines]' 
 
     ```c
     #include "adc.h"
@@ -469,83 +490,84 @@ Now we need to update `adc.c` to create the functionality of our new prototypes:
         return EXIT_SUCCESS;
     }
     ```
-    </details>
+    
+    ~~~
     
     <p></p>
 
-    - **Explanation of code base:**
-        - Main Function
-            The `main` function begins by checking the arguments. It requires two command-line arguments:
-            1. `adcPin`: The ADC pin number.
-            2. `bufferLength`: Number of samples to read in continuous mode.
+    ~~~admonish example title='Explanation of code'
 
-                ```c
-                int main(int argc, char *argv[]) {
-                    if (argc != 3) {
-                        fprintf(stderr, "Usage: %s <adcPin> <bufferLength>\n", argv[0]);
-                        return EXIT_FAILURE;
-                    }
-                ```
+    Main Function
+    - The `main` function begins by checking the arguments. It requires two command-line arguments:
+        1. `adcPin`: The ADC pin number.
+        2. `bufferLength`: Number of samples to read in continuous mode.
 
-            3. If the correct arguments aren't provided, it outputs an error and exits.
-
-        - Setting Up the ADC
-
-
-            1. The program enables the buffer with `enable_buffer()` and sets the buffer length with `set_buffer_length(bufferLength)`. It then enables the specified ADC channel using `enable_channel(adcPin)`.
-
-
-                ```c
-                if (enable_buffer() < 0) {
-                    fprintf(stderr, "Error enabling buffer.\n");
+            ```c
+            int main(int argc, char *argv[]) {
+                if (argc != 3) {
+                    fprintf(stderr, "Usage: %s <adcPin> <bufferLength>\n", argv[0]);
                     return EXIT_FAILURE;
                 }
+            ```
 
-                if (set_buffer_length(bufferLength) < 0) {
-                    fprintf(stderr, "Error setting buffer length.\n");
-                    disable_buffer();
-                    return EXIT_FAILURE;
-                }
+        3. If the correct arguments aren't provided, it outputs an error and exits.
 
-                if (enable_channel(adcPin) < 0) {
-                    fprintf(stderr, "Error enabling ADC channel %u.\n", adcPin);
-                    disable_buffer();
-                    return EXIT_FAILURE;
-                }
-                ```
+    - Setting Up the ADC
 
-        - Continuous Read Loop
 
-            1. The program enters a loop that iterates `bufferLength` times, reading ADC values using `adc_get_buffer(adcPin, &adcValue)` and converting each to voltage with `adc_to_voltage(adcValue, &voltage)`. Each value is printed with both its ADC and voltage readings.
+        1. The program enables the buffer with `enable_buffer()` and sets the buffer length with `set_buffer_length(bufferLength)`. It then enables the specified ADC channel using `enable_channel(adcPin)`.
 
-                ```c
-                for (int i = 0; i < bufferLength; i++) {
-                    if (adc_get_buffer(adcPin, &adcValue) == 0) {
-                        adc_to_voltage(adcValue, &voltage);
-                        printf("ADC Value: %u, Voltage: %.3f V\n", adcValue, voltage);
-                    } else {
-                        fprintf(stderr, "Error reading buffer for ADC pin %u.\n", adcPin);
-                        break;
-                    }
-                }
-                ```
 
-                >**Note:**
-                >> The `usleep` function is commented out here. In real applications, uncomment and adjust it to control the sample rate, if necessary.
+            ```c
+            if (enable_buffer() < 0) {
+                fprintf(stderr, "Error enabling buffer.\n");
+                return EXIT_FAILURE;
+            }
 
-        -  Cleanup and Exit
-            1. After reading, the program disables the ADC channel and buffer, and then exits.
-                ```c
-                disable_channel(adcPin);
+            if (set_buffer_length(bufferLength) < 0) {
+                fprintf(stderr, "Error setting buffer length.\n");
                 disable_buffer();
-                printf("Continuous ADC read completed.\n");
-                return EXIT_SUCCESS;
-                ```
+                return EXIT_FAILURE;
+            }
+
+            if (enable_channel(adcPin) < 0) {
+                fprintf(stderr, "Error enabling ADC channel %u.\n", adcPin);
+                disable_buffer();
+                return EXIT_FAILURE;
+            }
+            ```
+
+    - Continuous Read Loop
+
+        1. The program enters a loop that iterates `bufferLength` times, reading ADC values using `adc_get_buffer(adcPin, &adcValue)` and converting each to voltage with `adc_to_voltage(adcValue, &voltage)`. Each value is printed with both its ADC and voltage readings.
+
+            ```c
+            for (int i = 0; i < bufferLength; i++) {
+                if (adc_get_buffer(adcPin, &adcValue) == 0) {
+                    adc_to_voltage(adcValue, &voltage);
+                    printf("ADC Value: %u, Voltage: %.3f V\n", adcValue, voltage);
+                } else {
+                    fprintf(stderr, "Error reading buffer for ADC pin %u.\n", adcPin);
+                    break;
+                }
+            }
+            ```
+
+            >**Note:**
+            >> The `usleep` function is commented out here. In real applications, uncomment and adjust it to control the sample rate, if necessary.
+
+    -  Cleanup and Exit
+        1. After reading, the program disables the ADC channel and buffer, and then exits.
+            ```c
+            disable_channel(adcPin);
+            disable_buffer();
+            printf("Continuous ADC read completed.\n");
+            return EXIT_SUCCESS;
+            ```
 
 4. Create a `Makefile` and replicate the code below:
 
-    <details>
-    <summary>Code here...</summary>
+    ~~~admonish code collapsible=true title='Suppressed code here [25 lines]' 
 
     ```Makefile
     # Compiler and flags
@@ -577,7 +599,7 @@ Now we need to update `adc.c` to create the functionality of our new prototypes:
 
     ```
 
-    </details>
+    ~~~
 
     - Now use `make` and compile the code and run: 
 

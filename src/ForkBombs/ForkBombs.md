@@ -1,8 +1,12 @@
 # Fork Bombs 
 
+~~~admonish code
+
 ```sh
 :(){:|:&};:
 ```
+
+~~~
 
 ## Breaking down the oneliner
 
@@ -11,6 +15,8 @@
 The oneliner, designed as a DNS attack, exponentially floods the process tree via recurisive function calls, how?
 
 Well lets break it down:
+
+~~~admonish code
 
 ```sh
 #! /usr/bin/env bash
@@ -24,6 +30,10 @@ Well lets break it down:
 :
 ```
 
+~~~
+
+~~~admonish example title='Explanation'
+
 - `:() { ... }:` This defines a function named `:` (a colon). In Bash, function names can be arbitrary characters, and here `:` is used as the function name.
 
 - Inside the function body:
@@ -32,17 +42,29 @@ Well lets break it down:
         - `|`: The pipe operator. It takes the output of the command on its left (`:`) and uses it as input for the command on its right (another `:`). Since the function `:` is called twice, it creates two processes.
         - `&`: Runs the command in the background. The `&` at the end of the command line means that the function `:` is executed in the background, allowing the script to continue running without waiting for the function to finish.
 
+~~~
+
 ### 2. Function Invocation
+
+~~~admonish code
 
 ```
 :
 ```
+
+~~~
+
+~~~admonish example title='Explanation'
+
 - This line invokes the function `:`. When this is executed, it starts the recursive process of the function `:` calling itself, which rapidly consumes system resources.
 
+~~~
 
 ### 3. Refactoring
 
 We can see below that `myfunc` replaces `:`, so this should be more readable.
+
+~~~admonish code
 
 ```sh
 #! /usr/bin/env bash
@@ -55,9 +77,14 @@ myfunc() {
 my_func
 ```
 
+~~~
+
+
 ### 4. Exploring safely...
 
  - To explore this safely we are going to set limit within our fork bomb, that when it gets to the seventh iteration the fork will stop and close. Terminating all forked processes attached to the parent process, i.e the first time it is called. 
+
+    ~~~admonish code
 
     ```sh
     #! /usr/bin/env bash
@@ -77,13 +104,22 @@ my_func
 
     fork_bomb 0 'none'
     ```
+
+    ~~~
+    
+    ~~~admonish example title='Explanation'
+
     - The two locally defined variables `num` and `name` keep track of the iteration  and weither it was forked left or right of the pipe. This is for our purpose when viewing it in the terminal, as `printf` would indicate.
     - Saftey net is defined in the `if` block, when `num == 6` each process terminates
     - After the safety net we increment the iteration `((num++))`
     - the main part is the `fork_bomb "$num" 'left'...` which essentially replicates the `:|:&` where the `"$num"` and `left/right` is suppied for tracking. 
     - Lastly, the function is invoked for the first time via `fork_bomb 0 'none'`
 
+    ~~~
+
 - The output would look something like:
+
+    ~~~admonish output
 
     ```
     $ bash explainable_fork_bomb.sh
@@ -107,7 +143,12 @@ my_func
     6  right running
     6  left  running # happens 64 times
     ```
+
+    ~~~
+
 - We actually prove that processes are spawned exponentially, following the base 2: 
+
+    ~~~admonish output
 
     ```sh
     $  bash explained_fork_bomb.sh 2>&1 | sort | awk '{print $1}' | uniq -c
@@ -124,6 +165,8 @@ my_func
     - Here you can see the first time around layer 0, there is 1 function call.
     - by the time we reach 6, we have 64 aka $2^6$
 
+    ~~~
+
 ## Differences Between PID Limit, Max User Processes, and Max Threads
 
 ### 1. Process ID (PID) Limit
@@ -134,9 +177,13 @@ my_func
 - **Configuration**:  
     This limit is set by the `max_pid` parameter in `/proc/sys/kernel`. You can view the maximum PID numerical value with:
 
+    ~~~admonish terminal
+
     ```bash
-    cat /proc/sys/kernel/pid_max
+    $ cat /proc/sys/kernel/pid_max
     ```
+
+    ~~~
 
     This value defines the maximum PID number allowed on the system. For example, this means that your a process can have the PID upto the value of `4194304`, this does not mean you can have $2^{22}$ processes.
 
@@ -150,12 +197,19 @@ my_func
 
     The maximum number of processes a single user can create is controlled by the ulimit command. This is a user-level limit that restricts the number of processes that any single user can spawn.
 
+    ~~~admonish output
+
     ```sh
     $ ulimit -a | grep "max user processes"
     >   
     max user processes                  (-u) 63562
     ```
+
+    ~~~
+
     Incidentally, this obtained from the /proc/self/limits file, produce by the kernel:
+
+    ~~~admonish output
 
     ```sh
     $ cat /proc/self/limits | grep "Max processes"
@@ -163,6 +217,8 @@ my_func
     Limit                     Soft Limit           Hard Limit           Units
     Max processes             63562                63562                processes
     ```
+
+    ~~~
 
 - **Why it matters**:
 
@@ -178,10 +234,15 @@ my_func
 
     You can check the current limit with:
 
+    ~~~admonish output
+
     ```sh
     $ cat /proc/sys/kernel/threads-max
     > 127125
+    
     ```
+
+    ~~~
 
 - **Why it matters**:
 

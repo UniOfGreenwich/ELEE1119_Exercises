@@ -2,37 +2,41 @@
 
 We are now going to put together the adc, uart and pwm functionalities into one script so that the adc value from a potentiometer or voltage divider circuit controls the brightness of an LED.
 
->**Note:**
->> It is important that you have completed the prerequiste sections:
->> - [blink](blink.md)
->> - [adc](./adc.md)
->> - [uart](./uart.md)
->> - [pwm](./pwm.md)
->>
->> - Remember to include in your `PATH` `avr-gcc`, `avrdude` and `make`
->> - Open `~/.bashrc` and add the following lines, then save and run the command `source ~/.bashrc` to update the current session with the new `PATH`
->>   -  Uni machines
->>      ```sh
->>      # ~/.bashrc
->>      export PATH=$PATH:"/c/ProgramData/arduino-ide-v2/Local/Arduino15/packages/arduino/tools/avr-gcc/7.3.0-atmel3.6.1-arduino7/bin"
->>      export PATH=$PATH:"/c/ProgramData/arduino-ide-v2/Local/Arduino15/packages/arduino/tools/avr-dude/6.3.0-arduino17/bin"
->>      export PATH=$PATH:"/c/Program Files/GCC-Windows-MingW-2.0.0/w64devkit/bin"
->>      ```
->>   - Your personal windows machine
->>      ```sh
->>      # ~/.bashrc
->>      export PATH=$PATH:"/c/Users/YOURUSERNAME/AppData/Local/Arduino15/packages/arduino/tools/avr-gcc/7.3.0-atmel3.6.1-arduino7/bin"
->>      export PATH=$PATH:"/c/Users/YOURUSERNAME/AppDataLocal/Arduino15/packages/arduino/tools/avr-dude/6.3.0-arduino17/bin"
->>      export PATH=$PATH:"/c/Program Files/w64devkit/bin"
->>      ```
->>   - You can install w64devkit from here:
->>     - [https://github.com/skeeto/w64devkit/releases](https://github.com/skeeto/w64devkit/releases)
+~~~admonish warning
+
+It is important that you have completed the prerequiste sections:
+- [blink](blink.md)
+- [adc](./adc.md)
+- [uart](./uart.md)
+- [pwm](./pwm.md)
+- Remember to include in your `PATH` `avr-gcc`, `avrdude` and `make`
+- Open `~/.bashrc` and add the following lines, then save and run the command `source ~/.bashrc` to update the current session with the new `PATH`
+  -  Uni machines
+     ```sh
+     # ~/.bashrc
+     export PATH=$PATH:"/c/ProgramData/arduino-ide-v2/Local/Arduino15/packages/arduino/tools/avr-gcc/7.3.0-atmel3.6.1-arduino7/bin"
+     export PATH=$PATH:"/c/ProgramData/arduino-ide-v2/Local/Arduino15/packages/arduino/tools/avr-dude/6.3.0-arduino17/bin"
+     export PATH=$PATH:"/c/Program Files/GCC-Windows-MingW-2.0.0/w64devkit/bin"
+     ```
+  - Your personal windows machine
+     ```sh
+     # ~/.bashrc
+     export PATH=$PATH:"/c/Users/YOURUSERNAME/AppData/Local/Arduino15/packages/arduino/tools/avr-gcc/7.3.0-atmel3.6.1-arduino7/bin"
+     export PATH=$PATH:"/c/Users/YOURUSERNAME/AppDataLocal/Arduino15/packages/arduino/tools/avr-dude/6.3.0-arduino17/bin"
+     export PATH=$PATH:"/c/Program Files/w64devkit/bin"
+     ```
+  - You can install w64devkit from here:
+    - [https://github.com/skeeto/w64devkit/releases](https://github.com/skeeto/w64devkit/releases)
+
+~~~
 
 -----------------
 
 ## Arduino C version of adc2pwm.ino
 
 We are essentially going to be converting the following standard adc to pwm program.
+
+~~~admonish code
 
 ```c
 int analogPin = A0;       // Analog input pin connected to a sensor or potentiometer
@@ -65,6 +69,9 @@ void loop() {
   delay(250);
 }
 ```
+
+~~~
+
 -----
 
 ## Making our own `adc2pwm.c` program
@@ -72,21 +79,29 @@ void loop() {
 
 1. Create a new directory inside `embeddedC` called `adc2pwm`
 
+    ~~~admonish terminal
+
     ```sh
     $ mkdir -p ~/embeddedC/adc2pwm && cd embeddedC/adc2pwm
     ```
 
+    ~~~
+
 2. Create a new file inside the the `adc2pwm` directory called `adc2pwm.c`
+
+    ~~~admonish terminal
 
     ```sh
     $ touch adc2pwm.c
     $ touch header.{c,h}
     ```
 
+    ~~~
+
 3. Now it's time start wrighting out the `header.h` file which defines macros and declares functions for UART, ADC, and PWM initialization and operation:
 
-    <details>
-    <summary>Code here... [20 lines]</summary>
+
+    ~~~admonish code collapsible=true title='Suppressed code here... [20 lines]'
 
     ```c
     #ifndef _HEADER_H
@@ -110,13 +125,12 @@ void loop() {
     #endif
     ```
 
-    </details>
+   ~~~
 
 
 4. The `header.c` file contains the definitions for the functions declared in `header.h`. These functions include UART initialization, ADC initialization and reading, and PWM configuration:
 
-    <details>
-    <summary>Code here... [38 lines]</summary>
+    ~~~admonish code collapsible=true title='Suppressed code here... [38 lines]'
 
     ```c
     #include "header.h"
@@ -159,12 +173,11 @@ void loop() {
     }
     ```
 
-    </details>
+   ~~~
 
 4. The `adc2pwm.c` file contains the main loop, which reads an ADC value, maps it to a PWM duty cycle, and sends the ADC and PWM values over UART.
 
-    <details>
-    <summary>Code here... [45 lines]</summary>
+    ~~~admonish code collapsible=true title='Suppressed code here... [45 lines]'
 
     ```c
     #ifndef F_CPU
@@ -212,12 +225,11 @@ void loop() {
     }
     ```
 
-    </details>
+    ~~~
 
 5. This `Makefile` compiles, links, and uploads the program to the ATmega328P.
 
-    <details>
-    <summary>Code here... [34 lines]</summary>
+    ~~~admonish code collapsible=true title='Suppressed code here... [34 lines]'
 
     ```Makefile
     MCU = atmega328p
@@ -257,7 +269,7 @@ void loop() {
     >> If you are on your machine the AVRDUDECONFIG file path will be this format:
     >> - `AVRDUDECONFIG = "C:\Users\YOURUSERNAME\AppData\Local\Arduino15\packages\arduino\tools\avrdude\6.3.0-arduino17\etc\avrdude.conf"`
 
-    </details>
+    ~~~
 
 13. Now every time we modify `adc2read.c` or `header.{c,h}` you can use the `Makefile`
 
@@ -265,11 +277,15 @@ void loop() {
     - `make` 
     - `make upload`
     
-    >**Note:**
-    >> - Windows getting the correct port run:
-    >>     - `$ wmic path Win32_SerialPort get caption, name, deviceID`
-                ![](./figures/windows_com_ports_list.png)
+    ~~~admonish info
+
+    - Windows getting the correct port run:
+       - $ wmic path Win32_SerialPort get caption, name, deviceID`
+       
+            ![](./figures/windows_com_ports_list.png)
     
+    ~~~
+     
     ![](./figures/adc2pwm_make.png)
 
 ------------

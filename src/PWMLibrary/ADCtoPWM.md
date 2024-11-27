@@ -4,13 +4,15 @@
 
 We need to add the a new prototype to the `pwm.h` and the body to the `pwm.c` files, that converts the ADC value to a the correct PWM duty cycle against the specified period.
 
->**Note:** 
->> - Remember that the Beaglebone blacks ADC chip does not use 8bit levels, i.e 0-255 like you would find on a Arduino board. It uses provides the duty cycle as % of the period.
+~~~admonish note
+
+Remember that the Beaglebone blacks ADC chip does not use 8bit levels, i.e 0-255 like you would find on a Arduino board. It uses provides the duty cycle as % of the period.
+
+~~~
 
 1. Open the `pwm.h` file and modify to include the prototype below called `map`: 
 
-    <details>
-    <summary>Code here...</summary>
+    ~~~admonish code collapsible=true title='Suppressed code here [7 lines]' 
 
     ```h
     #ifndef PWM_H
@@ -23,12 +25,11 @@ We need to add the a new prototype to the `pwm.h` and the body to the `pwm.c` fi
     #endif
     ```
 
-    </details>
+    ~~~
 
 2. Next we need to modify the `pwm.c` file to include the body of the previously defined prototype, place the function at the bottom of the file:
 
-    <details>
-    <summary>Code here...</summary>
+    ~~~admonish code collapsible=true title='Suppressed code here [14 lines]' 
 
     ```c
     ... 
@@ -48,7 +49,7 @@ We need to add the a new prototype to the `pwm.h` and the body to the `pwm.c` fi
     }
     ```
 
-    </details>
+    ~~~
 
 3. Now you need to remake the library:
 

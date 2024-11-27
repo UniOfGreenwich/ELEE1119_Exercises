@@ -47,24 +47,30 @@ Vim has a reputation for having a steep learning curve, primarily due to its mod
 
 You can make a presistent changes to vim using a config file, while we are not using all the features like my system we can make a mini one here that does not depend on 3rd party packages.
 
+~~~admonish terminal
+
 ```sh
 $ vim ~/.vimrc
 ```
 
+~~~
+
 Start off by presistently setting number and relavtivenumber:
+
+~~~admonish terminal
 
 ```sh
 set number
 set relativenumber
 ```
 
+~~~
+
 Then go to command mode by pressing <kbd>shift</kbd>+<kbd>:</kbd> and type `source %` and this will live reload the current config. This is because the current session had no config when vim was invoked. You will not have do this again as it `.vimrc` is sourced when vim is invoked.
 
 You can add more features and functionality like below:
 
-<details>
-<summary>Basic config [67 lines]...</summary>
-
+~~~admonish code collapsible=true title='Code: Basic config [67 lines]...'
 ```vim
 " Enable line numbers
 set number
@@ -134,3 +140,5 @@ set listchars=tab:>-,trail:·
 " Auto save before losing focus or exiting Vim
 autocmd FocusLost,WinLeave * silent! wa
 ```
+
+~~~
