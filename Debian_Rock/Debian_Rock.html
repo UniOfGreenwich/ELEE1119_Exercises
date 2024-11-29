@@ -174,16 +174,28 @@
 <p>Once you have managed to get into the Debain OS on the Rock C+, you will need to do a couple of steps to get the OS ready.</p>
 <ol>
 <li>
-<p><code>sudo apt update</code></p>
+<p>Update the system</p>
+  <div id="admonition-terminal" class="admonition admonish-terminal" role="note" aria-labelledby="admonition-terminal-title">
+  <div class="admonition-title">
+  <div id="admonition-terminal-title">
+<p>Terminal</p>
+  </div>
+  <a class="admonition-anchor-link" href="#admonition-terminal"></a>
+  </div>
+  <div>
+<pre><code>sudo apt update
+</code></pre>
+  </div>
+  </div>
 <ul>
 <li>
 <p>This should update the system however you may get a response that says:</p>
-  <div id="admonition-note" class="admonition admonish-note" role="note" aria-labelledby="admonition-note-title">
+  <div id="admonition-error" class="admonition admonish-danger" role="note" aria-labelledby="admonition-error-title">
   <div class="admonition-title">
-  <div id="admonition-note-title">
-<p>Note</p>
+  <div id="admonition-error-title">
+<p>Error</p>
   </div>
-  <a class="admonition-anchor-link" href="#admonition-note"></a>
+  <a class="admonition-anchor-link" href="#admonition-error"></a>
   </div>
   <div>
 <pre><code class="language-sh">&gt; W: An error occured during the signature verifcation. The repository is not updated and the previous index files will be used. GPG error: http://apt.radxa/com/bullseye-stable bullseye InRelease: The following signatures could not be verified because the public key is not available: NO_PUBKEY 9B98116C9AA302C7
@@ -195,12 +207,12 @@
 </li>
 <li>
 <p>If that is the case you will need to run the following command:</p>
- <div id="admonition-terminal" class="admonition admonish-terminal" role="note" aria-labelledby="admonition-terminal-title">
+ <div id="admonition-terminal-1" class="admonition admonish-terminal" role="note" aria-labelledby="admonition-terminal-1-title">
  <div class="admonition-title">
- <div id="admonition-terminal-title">
+ <div id="admonition-terminal-1-title">
 <p>Terminal</p>
  </div>
- <a class="admonition-anchor-link" href="#admonition-terminal"></a>
+ <a class="admonition-anchor-link" href="#admonition-terminal-1"></a>
  </div>
  <div>
 <pre><code class="language-sh">$ wget -O - apt.radxa.com/focal-stable/public.key | sudo apt-key add
@@ -221,12 +233,12 @@
 <h2 id="networking"><a class="header" href="#networking">Networking</a></h2>
 <p>The Debain OS for the Rock C4+ uses the <code>NetworkManager</code> package to manage all connections to the network interface chips.</p>
 <p><code>NetworkManager</code> directory is located here -&gt; <code>/etc/NetworkManager</code>, the contents of which is:</p>
-<div id="admonition-terminal-1" class="admonition admonish-terminal" role="note" aria-labelledby="admonition-terminal-1-title">
+<div id="admonition-terminal-2" class="admonition admonish-terminal" role="note" aria-labelledby="admonition-terminal-2-title">
 <div class="admonition-title">
-<div id="admonition-terminal-1-title">
+<div id="admonition-terminal-2-title">
 <p>Terminal</p>
 </div>
-<a class="admonition-anchor-link" href="#admonition-terminal-1"></a>
+<a class="admonition-anchor-link" href="#admonition-terminal-2"></a>
 </div>
 <div>
 <pre><code class="language-sh">NetworkManager.conf
@@ -239,12 +251,12 @@ system-connections/
 </div>
 </div>
 <p>All of your Wi-Fi profiles are stored in the <code>system-connections</code> folder, for example:</p>
-<div id="admonition-terminal-2" class="admonition admonish-terminal" role="note" aria-labelledby="admonition-terminal-2-title">
+<div id="admonition-terminal-3" class="admonition admonish-terminal" role="note" aria-labelledby="admonition-terminal-3-title">
 <div class="admonition-title">
-<div id="admonition-terminal-2-title">
+<div id="admonition-terminal-3-title">
 <p>Terminal</p>
 </div>
-<a class="admonition-anchor-link" href="#admonition-terminal-2"></a>
+<a class="admonition-anchor-link" href="#admonition-terminal-3"></a>
 </div>
 <div>
 <pre><code class="language-sh">$ ls /etc/NetworkManager/system-connections
@@ -265,12 +277,12 @@ system-connections/
 </div>
 </div>
 <p>Each <code>...nmconnection</code> file has a format and for eduroam, which is an enterprise network it looks like this, you will need to have root level permissions:</p>
-<div id="admonition-terminal-3" class="admonition admonish-terminal" role="note" aria-labelledby="admonition-terminal-3-title">
+<div id="admonition-terminal-4" class="admonition admonish-terminal" role="note" aria-labelledby="admonition-terminal-4-title">
 <div class="admonition-title">
-<div id="admonition-terminal-3-title">
+<div id="admonition-terminal-4-title">
 <p>Terminal</p>
 </div>
-<a class="admonition-anchor-link" href="#admonition-terminal-3"></a>
+<a class="admonition-anchor-link" href="#admonition-terminal-4"></a>
 </div>
 <div>
 <pre><code class="language-sh">$ sudo cat /etc/NetworkManager/system-connections/eduroam.nmconnection
