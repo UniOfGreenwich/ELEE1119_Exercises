@@ -6,9 +6,18 @@ This page will give useful information for navigating the Debian OS on the Rock 
 
 Once you have managed to get into the Debain OS on the Rock C+, you will need to do a couple of steps to get the OS ready.
 
-1. `sudo apt update`
+1. Update the system
+    
+     ~~~admonish terminal
+
+     ```
+     sudo apt update
+     ```
+
+     ~~~
+
     - This should update the system however you may get a response that says:
-        ~~~admonish errror
+        ~~~admonish error
 
         ```sh
         > W: An error occured during the signature verifcation. The repository is not updated and the previous index files will be used. GPG error: http://apt.radxa/com/bullseye-stable bullseye InRelease: The following signatures could not be verified because the public key is not available: NO_PUBKEY 9B98116C9AA302C7
