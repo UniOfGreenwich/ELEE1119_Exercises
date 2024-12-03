@@ -53,8 +53,8 @@
 
 # Rust
 
-- [Intro to Rust]()
-  - [First Program]()
+- [Intro to Rust](./IntroToRust/IntroToRust.md)
+  - [First Program](./IntroToRust/FirstProgram.md)
 
 ------------------------------------------------------
 ------------------------------------------------------
