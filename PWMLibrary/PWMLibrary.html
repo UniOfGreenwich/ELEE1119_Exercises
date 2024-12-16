@@ -1,0 +1,1161 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>PWM C Library - Advanced Computer Engineering</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href=".././theme/pagetoc.css">
+        <link rel="stylesheet" href=".././theme/css/mdbook-admonish.css">
+        <link rel="stylesheet" href=".././theme/css/code.css">
+        <link rel="stylesheet" href=".././theme/css/terminal.css">
+        <link rel="stylesheet" href=".././theme/css/output.css">
+
+        <!-- MathJax -->
+        <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="burgundy">Burgundy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="dracula">Dracula</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ecoFriend">EcoFriend</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="pinkrose">Pinkrose</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="space">Space</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="sustain">Sustain</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="tokyonight">Tokyonight</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Advanced Computer Engineering</h1>
+
+                    <div class="right-buttons">
+                        <a href="https://github.com/uniofgreenwich/ELEE1119_Exercises" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        <a href="https://github.com/uniofgreenwich/ELEE1119_Exercises/edit/main/src/PWMLibrary/PWMLibrary.md" title="Suggest an edit" aria-label="Suggest an edit">
+                            <i id="git-edit-button" class="fa fa-edit"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main><div class="sidetoc"><nav class="pagetoc"></nav></div>
+                        <h1 id="pwm-c-library"><a class="header" href="#pwm-c-library">PWM C Library</a></h1>
+<p>On platforms like the Arduino Uno, the PWM signal typically uses an 8-bit resolution, meaning the duty cycle can range from 0 to 255. This represents the fraction of time the signal is "high" within a given period, where 0 is 0% duty cycle (always off), and 255 is 100% duty cycle (always on).</p>
+<p>The BeagleBone Black (BBB), however, is more flexible and powerful regarding PWM control due to its more advanced processor (AM335x). Let's discuss the differences and what this means for using PWM on the BeagleBone Black.</p>
+<h2 id="1-pwm-on-beaglebone-black"><a class="header" href="#1-pwm-on-beaglebone-black">1: PWM on BeagleBone Black</a></h2>
+<ol>
+<li>
+<p><strong>PWM Period and Duty Cycle on BeagleBone Black</strong>:</p>
+<ul>
+<li>
+<p><strong>Period</strong>: The total duration of one PWM cycle. It is set in nanoseconds (ns) on the BeagleBone Black.</p>
+</li>
+<li>
+<p><strong>Duty Cycle</strong>: The amount of time within the period that the signal is high. This is also set in nanoseconds (ns).</p>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>Setting the PWM Parameters</strong>:</p>
+<ul>
+<li>
+<p>Unlike the Arduino Uno, where the frequency (period) of the PWM signal is generally fixed by the underlying timer hardware (e.g., ~490 Hz for analogWrite() function), the BeagleBone Black allows for explicit control over both the period and the duty cycle.</p>
+</li>
+<li>
+<p><strong>Default Configuration</strong>: You <strong>must</strong> set it explicitly, as the period defines the frequency of the PWM signal. This is crucial because PWM control on the BeagleBone Black is much more versatile and supports a wider range of frequencies, from a few Hz to MHz.</p>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>Frequency and Duty Cycle Range</strong>:</p>
+<ul>
+<li>
+<p><strong>Period (Frequency)</strong>: The BeagleBone Black allows you to set the PWM period to a wide range. The minimum and maximum period (and hence frequency) are determined by the clock settings and the capabilities of the <a href="https://www.ti.com/lit/ug/sprufl3c/sprufl3c.pdf">eHRPWM</a> (enhanced High-Resolution PWM) modules. Common period values range from a few nanoseconds to several milliseconds. Larger frequencies are for motors etc, where as lower frequencies for LEDs etc, it is all about the resistive load.</p>
+  <details>
+  <summary>further examples...</summary>
+<ul>
+<li>
+<p>In motor control applications, a low PWM frequency might cause a whining noise, while a higher frequency (above 20 kHz) would result in quieter operation.</p>
+</li>
+<li>
+<p>In digital audio applications, a higher PWM frequency allows for better reconstruction of an analog waveform from the PWM signal.</p>
+</li>
+<li>
+<p>In a buck converter, a higher PWM frequency can reduce the ripple voltage seen at the output, resulting in a cleaner DC output.</p>
+</li>
+<li>
+<p>In a DC-DC converter, increasing the switching frequency allows for smaller inductors and capacitors, which can reduce the size and cost of the overall design.</p>
+</li>
+<li>
+<p>In high-power applications, engineers balance switching frequency to optimize efficiency, minimize thermal losses, and ensure reliable operation.</p>
+</li>
+<li>
+<p>In sensitive communication systems, switching frequencies are carefully chosen to avoid interfering with data transmission.</p>
+</li>
+<li>
+<p>For an LED dimming application, a frequency of 1 kHz or higher is commonly used to prevent visible flicker</p>
+</li>
+<li>
+<p>In a three-phase motor drive, the PWM signals for each phase must be synchronized at the same frequency to ensure smooth motor operation and prevent electrical noise.</p>
+</li>
+</ul>
+  </details>
+</li>
+<li>
+<p><strong>Duty Cycle Resolution</strong>: The duty cycle is not limited to an 8-bit range like the Arduino Uno's 0-255. Instead, it is specified in nanoseconds and can be any value between 0 and the period value. This allows for a much finer resolution of PWM control.</p>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>BeagleBone Black's PWM DAC-like Behavior</strong>:</p>
+<ul>
+<li>
+<p>The BeagleBone Black does not have a built-in Digital-to-Analog Converter (DAC) like some microcontrollers, but PWM can be used to simulate analog output. By changing the duty cycle of a PWM signal at a high frequency, you can create a voltage level that appears analog when averaged over time.</p>
+</li>
+<li>
+<p>The "DAC" resolution is effectively determined by the timer's clock speed and the period you set for the PWM signal. For example, if you set a period of 1,000,000 ns (1 ms, which corresponds to 1 kHz frequency) and a duty cycle of 500,000 ns (0.5 ms), you get a 50% duty cycle. If you change the period to 2,000,000 ns (2 ms, 500 Hz) while keeping the duty cycle at 1,000,000 ns (1 ms), the perceived output will change.</p>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>Examples</strong></p>
+<ul>
+<li>
+<p><strong>Period (period)</strong>:</p>
+<ul>
+<li>The period of the PWM signal is the total time it takes to complete one cycle (both high and low phases).</li>
+<li>It is specified in nanoseconds (ns) in the sysfs interface.</li>
+<li>For example, a period of 1,000,000 ns corresponds to a 1 ms period, which is equivalent to a 1 kHz frequency.</li>
+</ul>
+</li>
+<li>
+<p><strong>Duty Cycle (duty_cycle)</strong>:</p>
+<ul>
+<li>The duty cycle is the amount of time the signal is high within one period.</li>
+<li>It is also specified in nanoseconds (ns).</li>
+<li>For instance, if the period is 1,000,000 ns and the duty cycle is 500,000 ns, the duty cycle percentage is 50%.</li>
+</ul>
+</li>
+<li>
+<p><strong>Frequency Calculation</strong>:</p>
+<ul>
+<li>The frequency (\(f\)) of the PWM signal is the reciprocal of the period (\(T\)):</li>
+</ul>
+<p>\[ f = \frac{1}{T}\]</p>
+<ul>
+<li>To convert the period from nanoseconds to frequency in Hertz (Hz), use:</li>
+</ul>
+<p>\[ f(Hz) = \frac{1\ second}{T(in\ seconds)}\]</p>
+<p>Since there are \( 1 \cdot 10^9\) nanoseconds in a second, this becomes:</p>
+<p>\[ f(Hz) = \frac{1 \cdot 10^9}{T(in\ ns)}\]</p>
+</li>
+<li>
+<p><strong>To set a PWM signal at 1 kHz frequency</strong>:</p>
+<p>Determine the Period in Nanoseconds, for 1 kHz, the period is 1 ms, which is 1,000,000 ns.</p>
+  <div id="admonition-terminal" class="admonition admonish-terminal" role="note" aria-labelledby="admonition-terminal-title">
+  <div class="admonition-title">
+  <div id="admonition-terminal-title">
+<p>Terminal</p>
+  </div>
+  <a class="admonition-anchor-link" href="#admonition-terminal"></a>
+  </div>
+  <div>
+<pre><code class="language-sh"># Set period to 1,000,000 ns (1 ms for 1 kHz)
+echo 1000000 &gt; /sys/class/pwm/pwmchip1/pwm0/period  
+
+# Set duty cycle to 500,000 ns (50% duty cycle)
+echo 500000 &gt; /sys/class/pwm/pwmchip1/pwm0/duty_cycle 
+
+# Enable the PWM output 
+echo 1 &gt; /sys/class/pwm/pwmchip1/pwm0/enable  
+</code></pre>
+  </div>
+  </div>
+</li>
+<li>
+<p><strong>Setting a 50 kHz PWM Signal</strong>:</p>
+<p>Determine the Period in Nanoseconds, for 50 kHz, the period is \(\frac{1}{50,000}\) seconds, or 20 microseconds, which is 20,000ns</p>
+  <div id="admonition-terminal-1" class="admonition admonish-terminal" role="note" aria-labelledby="admonition-terminal-1-title">
+  <div class="admonition-title">
+  <div id="admonition-terminal-1-title">
+<p>Terminal</p>
+  </div>
+  <a class="admonition-anchor-link" href="#admonition-terminal-1"></a>
+  </div>
+  <div>
+<pre><code class="language-sh"># Set period to 20,000 ns (20 us for 50 kHz)
+echo 20000 &gt; /sys/class/pwm/pwmchip1/pwm0/period 
+
+# Set duty cycle to 10,000 ns (50% duty cycle)
+echo 10000 &gt; /sys/class/pwm/pwmchip1/pwm0/duty_cycle
+
+# Enable the PWM output
+echo 1 &gt; /sys/class/pwm/pwmchip1/pwm0/enable
+</code></pre>
+  </div>
+  </div>
+</li>
+</ul>
+</li>
+<li>
+<p>So what pins are capable of being configured to the PWM mode, we wrote a script, <code>config_pin_report.sh</code>, for this earlier that produced an <code>pin_config_report.txt</code></p>
+<p>You can <code>cat</code> this file and <code>grep</code> on <code>pwm</code>...</p>
+ <div id="admonition-terminal-2" class="admonition admonish-terminal" role="note" aria-labelledby="admonition-terminal-2-title">
+ <div class="admonition-title">
+ <div id="admonition-terminal-2-title">
+<p>Terminal</p>
+ </div>
+ <a class="admonition-anchor-link" href="#admonition-terminal-2"></a>
+ </div>
+ <div>
+<pre><code class="language-sh">$ cat /path/to/pin_config_reprot.txt | grep pwm
+</code></pre>
+ </div>
+ </div>
+ <details id="admonition-output" class="admonition admonish-output" role="note" aria-labelledby="admonition-output-title">
+ <summary class="admonition-title">
+ <div id="admonition-output-title">
+<p>Output</p>
+ </div>
+ <a class="admonition-anchor-link" href="#admonition-output"></a>
+ </summary>
+ <div>
+<pre><code>P8_13   | default  | default gpio gpio_pu gpio_pd gpio_input pwm
+P8_14   | default  | default gpio gpio_pu gpio_pd gpio_input pwm
+P8_17   | default  | default gpio gpio_pu gpio_pd gpio_input pwm
+P8_19   | default  | default gpio gpio_pu gpio_pd gpio_input pwm
+P8_34   | -        | default gpio gpio_pu gpio_pd gpio_input pwm
+P8_36   | -        | default gpio gpio_pu gpio_pd gpio_input pwm
+P8_37   | -        | default gpio gpio_pu gpio_pd gpio_input uart pwm
+P8_38   | -        | default gpio gpio_pu gpio_pd gpio_input uart pwm
+P8_43   | -        | default gpio gpio_pu gpio_pd gpio_input pwm pruout pruin
+P8_44   | -        | default gpio gpio_pu gpio_pd gpio_input pwm pruout pruin
+P8_45   | -        | default gpio gpio_pu gpio_pd gpio_input pwm pruout pruin
+P8_46   | -        | default gpio gpio_pu gpio_pd gpio_input pwm pruout pruin
+P9_14   | default  | default gpio gpio_pu gpio_pd gpio_input pwm
+P9_15   | default  | default gpio gpio_pu gpio_pd gpio_input pwm
+P9_16   | default  | default gpio gpio_pu gpio_pd gpio_input pwm
+P9_17   | default  | default gpio gpio_pu gpio_pd gpio_input spi_cs i2c pwm pru_uart
+P9_18   | default  | default gpio gpio_pu gpio_pd gpio_input spi i2c pwm pru_uart
+P9_21   | default  | default gpio gpio_pu gpio_pd gpio_input spi uart i2c pwm pru_uart
+P9_22   | default  | default gpio gpio_pu gpio_pd gpio_input spi_sclk uart i2c pwm pru_uart
+P9_23   | default  | default gpio gpio_pu gpio_pd gpio_input pwm
+P9_28   | -        | default gpio gpio_pu gpio_pd gpio_input spi_cs pwm pwm2 pruout pruin
+P9_29   | -        | default gpio gpio_pu gpio_pd gpio_input spi pwm pruout pruin
+P9_30   | default  | default gpio gpio_pu gpio_pd gpio_input spi pwm pruout pruin
+P9_31   | -        | default gpio gpio_pu gpio_pd gpio_input spi_sclk pwm pruout pruin
+P9_42   | default  | default gpio gpio_pu gpio_pd gpio_input spi_cs spi_sclk uart pwm pru_ecap
+</code></pre>
+ </div>
+ </details>
+</li>
+<li>
+<p>Configuring the pin without <code>config-pin</code></p>
+<ul>
+<li>
+<p>On the BeagleBone Black, you configure the pinmux settings through the <code>/sys/devices/platform/ocp/</code> directory.</p>
+</li>
+<li>
+<p>Find the Pinmux Helper Directory: The pinmux helper directory is dynamically created based on the device tree overlay. To list the available pinmux helpers:</p>
+  <div id="admonition-terminal-3" class="admonition admonish-terminal" role="note" aria-labelledby="admonition-terminal-3-title">
+  <div class="admonition-title">
+  <div id="admonition-terminal-3-title">
+<p>Terminal</p>
+  </div>
+  <a class="admonition-anchor-link" href="#admonition-terminal-3"></a>
+  </div>
+  <div>
+<pre><code class="language-sh">$ ls /sys/devices/platform/ocp/ | grep pinmux
+</code></pre>
+  </div>
+  </div>
+  <details id="admonition-output-1" class="admonition admonish-output" role="note" aria-labelledby="admonition-output-1-title">
+  <summary class="admonition-title">
+  <div id="admonition-output-1-title">
+<p>Output</p>
+  </div>
+  <a class="admonition-anchor-link" href="#admonition-output-1"></a>
+  </summary>
+  <div>
+<pre><code>ocp:A15_pinmux
+ocp:P8_07_pinmux
+ocp:P8_08_pinmux
+ocp:P8_09_pinmux
+ocp:P8_10_pinmux
+ocp:P8_11_pinmux
+ocp:P8_12_pinmux
+ocp:P8_13_pinmux
+ocp:P8_14_pinmux
+ocp:P8_15_pinmux
+ocp:P8_16_pinmux
+ocp:P8_17_pinmux
+ocp:P8_18_pinmux
+ocp:P8_19_pinmux
+ocp:P8_26_pinmux
+ocp:P9_11_pinmux
+ocp:P9_12_pinmux
+ocp:P9_13_pinmux
+ocp:P9_14_pinmux
+ocp:P9_15_pinmux
+ocp:P9_16_pinmux
+ocp:P9_17_pinmux
+ocp:P9_18_pinmux
+ocp:P9_19_pinmux
+ocp:P9_20_pinmux
+ocp:P9_21_pinmux
+ocp:P9_22_pinmux
+ocp:P9_23_pinmux
+ocp:P9_24_pinmux
+ocp:P9_26_pinmux
+ocp:P9_27_pinmux
+ocp:P9_30_pinmux
+ocp:P9_41_pinmux
+ocp:P9_42_pinmux
+ocp:P9_91_pinmux
+ocp:P9_92_pinmux
+</code></pre>
+  </div>
+  </details>
+</li>
+<li>
+<p>To set the Pinmux Mode write to the state file to set the pin function</p>
+  <div id="admonition-terminal-4" class="admonition admonish-terminal" role="note" aria-labelledby="admonition-terminal-4-title">
+  <div class="admonition-title">
+  <div id="admonition-terminal-4-title">
+<p>Terminal</p>
+  </div>
+  <a class="admonition-anchor-link" href="#admonition-terminal-4"></a>
+  </div>
+  <div>
+<pre><code class="language-sh">echo pwm &gt; /sys/devices/platform/ocp/ocp\:P9_14_pinmux/state
+cat /sys/devices/platform/ocp/ocp\:P9_14_pinmux/state
+pwm
+echo default &gt; /sys/devices/platform/ocp/ocp\:P9_14_pinmux/state
+cat /sys/devices/platform/ocp/ocp\:P9_14_pinmux/state
+default
+</code></pre>
+  </div>
+  </div>
+</li>
+<li>
+<p>To match the physical pins on the BeagleBone Black (BBB) to the corresponding PWM channels and subsystems, I used the standard documentation provided by Texas Instruments for the AM335x processor, which powers the BeagleBone Black, as well as commonly available pinout diagrams for the BBB.</p>
+</li>
+<li>
+<p>Mapping of PWM Channels to Physical Pins on the BeagleBone Black, here is a small sample:</p>
+<div class="table-wrapper"><table><thead><tr><th>PWM Channel</th><th>PWM Chip</th><th>PWM Subsystem</th><th>Physical Pin</th><th>Pin Description</th></tr></thead><tbody>
+<tr><td>pwm-0:0</td><td>pwmchip0</td><td>eCAP0</td><td>P9_42</td><td>eCAP0_IN_PWM0_OUT</td></tr>
+<tr><td>pwm-1:0</td><td>pwmchip1</td><td>eHRPWM0A</td><td>P9_22</td><td>eHRPWM0A</td></tr>
+<tr><td>pwm-1:1</td><td>pwmchip1</td><td>eHRPWM0B</td><td>P9_21</td><td>eHRPWM0B</td></tr>
+<tr><td>pwm-3:0</td><td>pwmchip3</td><td>eCAP1</td><td>P9_28</td><td>eCAP1_IN_PWM1_OUT</td></tr>
+<tr><td>pwm-4:0</td><td>pwmchip4</td><td>eHRPWM1A</td><td>P9_14</td><td>eHRPWM1A</td></tr>
+<tr><td>pwm-4:1</td><td>pwmchip4</td><td>eHRPWM1B</td><td>P9_16</td><td>eHRPWM1B</td></tr>
+<tr><td>pwm-6:0</td><td>pwmchip6</td><td>eCAP2</td><td>P9_42</td><td>eCAP2_IN_PWM2_OUT</td></tr>
+<tr><td>pwm-7:0</td><td>pwmchip7</td><td>eHRPWM2A</td><td>P8_19</td><td>eHRPWM2A</td></tr>
+<tr><td>pwm-7:1</td><td>pwmchip7</td><td>eHRPWM2B</td><td>P8_13</td><td>eHRPWM2B</td></tr>
+</tbody></table>
+</div>  <div id="admonition-note" class="admonition admonish-note" role="note" aria-labelledby="admonition-note-title">
+  <div class="admonition-title">
+  <div id="admonition-note-title">
+<p>Note</p>
+  </div>
+  <a class="admonition-anchor-link" href="#admonition-note"></a>
+  </div>
+  <div>
+<ul>
+<li>paths are <code>/sys/class/pwm/</code> and the pwm channel is prepended to the end
+<ul>
+<li>i.e. <code>/sys/class/pwm/pwm-4:0</code></li>
+</ul>
+</li>
+</ul>
+  </div>
+  </div>
+</li>
+</ul>
+</li>
+</ol>
+<h2 id="2-building-the-pwm-c-library"><a class="header" href="#2-building-the-pwm-c-library">2: Building the PWM C library</a></h2>
+<ul>
+<li>
+<p>First, create a header file that declares the functions and defines necessary constants and structs, call the file <code>~/pwm/pwm.h</code>:</p>
+  <details id="admonition-suppressed-code-here-57-lines" class="admonition admonish-code" role="note" aria-labelledby="admonition-suppressed-code-here-57-lines-title">
+  <summary class="admonition-title">
+  <div id="admonition-suppressed-code-here-57-lines-title">
+<p>Suppressed code here [57 lines]</p>
+  </div>
+  <a class="admonition-anchor-link" href="#admonition-suppressed-code-here-57-lines"></a>
+  </summary>
+  <div>
+<pre><code class="language-h">#ifndef PWM_H
+#define PWM_H
+
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;string.h&gt;
+
+// Base paths for PWM sysfs
+#define PWM_BASE_PATH "/sys/class/pwm"
+#define PWM_PERIOD_PATH "/sys/class/pwm/pwm-%s:%s/period"
+#define PWM_DUTY_CYCLE_PATH "/sys/class/pwm/pwm-%s:%s/duty_cycle"
+#define PWM_ENABLE_PATH "/sys/class/pwm/pwm-%s:%s/enable"
+#define PWM_PIN_MODE_PATH "/sys/devices/platform/ocp/ocp:%s_pinmux/state"
+
+// Default vaules that will be used by pwm_clean_up
+#define PWM_PERIOD_DEFAULT 10000000
+#define PWM_DUTY_CYCLE_DEFAULT 0
+#define PWM_ENABLE_DEFAULT 0
+
+
+// Structure to hold PWM mapping information
+typedef struct {
+    char physical_pin[10];  // Physical pin on the BeagleBone Black (e.g., "P9_16")
+    char pwm_chip_channel[10]; // PWM chip and channel (e.g., "4:1")
+} PinMap;
+
+
+// Define a structure to hold precomputed file paths for PWM control
+typedef struct {
+    char phy_pin[10];
+    char chip[4];
+    char channel[4];
+    char period_path[128];
+    char duty_cycle_path[128];
+    char enable_path[128];
+    char pin_mode_path[256];
+    char pin_mode_state[6];
+} PWM;
+
+// Define the pin_map array with physical pins and their corresponding PWM chip:channel
+PinMap phy_pin_map[] = {
+    {"P9_16", "4:1"},  // eHRPWM1B
+    {"P9_14", "4:0"},  // eHRPWM1A
+    {"P9_21", "1:1"},  // eHRPWM0B
+    {"P9_22", "1:0"},  // eHRPWM0A
+    {"P8_13", "7:1"},  // eHRPWM2B
+    {"P8_19", "7:0"},  // eHRPWM2A
+    {"P9_28", "3:0"},  // eCAP1
+    {"P9_42", "0:0"}  // eCAP0
+};
+
+// Function prototypes
+int pwm_init(PWM *pwm, const char *pin_name);
+int pwm_cleanup(PWM *pwm);
+int pwm_set_period(PWM *pwm, unsigned int period_ns);
+int pwm_set_duty_cycle(PWM *pwm, unsigned int duty_cycle_ns);
+int pwm_enable(PWM *pwm);
+int pwm_disable(PWM *pwm);
+int pwm_get_pin_mode(PWM *pwm);
+int pwm_set_pin_mode(PWM *pwm);
+int pwm_unset_pin_mode(PWM *pwm);
+
+#endif // PWM_H
+</code></pre>
+  </div>
+  </details>
+</li>
+<li>
+<p>Next, create the <code>pwm.c</code> file that implements the functions declared in <code>pwm.h</code></p>
+  <details id="admonition-suppressed-code-here-91-lines" class="admonition admonish-code" role="note" aria-labelledby="admonition-suppressed-code-here-91-lines-title">
+  <summary class="admonition-title">
+  <div id="admonition-suppressed-code-here-91-lines-title">
+<p>Suppressed code here [91 lines]</p>
+  </div>
+  <a class="admonition-anchor-link" href="#admonition-suppressed-code-here-91-lines"></a>
+  </summary>
+  <div>
+<pre><code class="language-h">#include "pwm.h"
+
+// Initialize PWM structure with precomputed file paths
+int pwm_init(PWM *pwm, const char *pin_name) {
+
+    // Parse the pwmchip and pwm channel
+    char pwm_chip[4], pwm_channel[4];
+
+    for (int i = 0; i &lt; sizeof(phy_pin_map) / sizeof(PinMap); i++) {
+        if (strcmp(phy_pin_map[i].physical_pin, pin_name) == 0) {
+            // Parse the pwmchip and pwm channel
+            sscanf(phy_pin_map[i].pwm_chip_channel, "%[^:]:%s", pwm_channel, pwm_chip);
+        }
+    }
+
+    // Store the PWM chip and channel as a string
+
+    strncpy(pwm-&gt;phy_pin, pin_name, sizeof(pwm-&gt;phy_pin));
+    strncpy(pwm-&gt;chip, pwm_chip, sizeof(pwm-&gt;chip));
+    strncpy(pwm-&gt;channel, pwm_channel, sizeof(pwm-&gt;channel));
+
+    // Precompute the file paths using the defined base paths
+    snprintf(pwm-&gt;period_path, sizeof(pwm-&gt;period_path), PWM_PERIOD_PATH, pwm_channel, pwm_chip);
+    snprintf(pwm-&gt;duty_cycle_path, sizeof(pwm-&gt;duty_cycle_path), PWM_DUTY_CYCLE_PATH, pwm_channel, pwm_chip);
+    snprintf(pwm-&gt;enable_path, sizeof(pwm-&gt;enable_path), PWM_ENABLE_PATH, pwm_channel, pwm_chip);
+    snprintf(pwm-&gt;pin_mode_path, sizeof(pwm-&gt;pin_mode_path), PWM_PIN_MODE_PATH, pin_name);
+
+    // Set PWM pin for PWM mode
+    pwm_set_pin_mode(pwm);
+
+    // Get PWM pin state
+    pwm_get_pin_mode(pwm);
+
+    return 0;
+}
+
+// Clean up PWM structure (no-op in this case, but placeholder for future)
+int pwm_cleanup(PWM *pwm) {
+    // No dynamic memory allocation done, so no cleanup needed
+    pwm_set_period(pwm, PWM_PERIOD_DEFAULT);
+    pwm_set_duty_cycle(pwm, PWM_DUTY_CYCLE_DEFAULT);
+    pwm_enable(pwm);
+    pwm_unset_pin_mode(pwm);
+
+    return 0;
+}
+
+// Set the PWM period
+int pwm_set_period(PWM *pwm, unsigned int period_ns) {
+    FILE *fp = fopen(pwm-&gt;period_path, "w");
+    if (fp == NULL) {
+        perror("Error opening period file");
+        return -1;
+    }
+
+    fprintf(fp, "%u", period_ns);
+    fclose(fp);
+    return 0;
+}
+
+// Set the PWM duty cycle
+int pwm_set_duty_cycle(PWM *pwm, unsigned int duty_cycle_ns) {
+    FILE *fp = fopen(pwm-&gt;duty_cycle_path, "w");
+    if (fp == NULL) {
+        perror("Error opening duty_cycle file");
+        return -1;
+    }
+
+    fprintf(fp, "%u", duty_cycle_ns);
+    fclose(fp);
+    return 0;
+}
+
+// Enable the PWM output
+int pwm_enable(PWM *pwm) {
+    FILE *fp = fopen(pwm-&gt;enable_path, "w");
+    if (fp == NULL) {
+        perror("Error opening enable file");
+        return -1;
+    }
+
+    fprintf(fp, "1");
+    fclose(fp);
+    return 0;
+}
+
+// Disable the PWM output
+int pwm_disable(PWM *pwm) {
+    FILE *fp = fopen(pwm-&gt;enable_path, "w");
+    if (fp == NULL) {
+        perror("Error opening enable file");
+        return -1;
+    }
+
+    fprintf(fp, "0");
+    fclose(fp);
+    return 0;
+}
+
+// Get pin mode current state
+int pwm_get_pin_mode(PWM *pwm){
+
+    FILE *fp = fopen(pwm-&gt;pin_mode_path, "r");
+
+    if (fp == NULL) {
+        perror("Error opening state file");
+        return -1;
+    }
+
+    // Clear the buffer and read up to STATE_BUF - 1 characters
+    memset(pwm-&gt;pin_mode_state, 0, sizeof(pwm-&gt;pin_mode_state)); // Clear the buffer
+    size_t chars_read = fread(pwm-&gt;pin_mode_state, 1, sizeof(pwm-&gt;pin_mode_state) - 1, fp);
+
+    // Null-terminate the string to avoid junk data
+    pwm-&gt;pin_mode_state[chars_read] = '\0';
+
+    fclose(fp);  // Close the file after reading
+
+    return 0;
+}
+
+// Set pin mode to PWM
+int pwm_set_pin_mode(PWM *pwm) {
+
+    FILE *fp = fopen(pwm-&gt;pin_mode_path, "w");
+    if (fp == NULL) {
+        perror("Error opening state file");
+        return -1;
+    }
+
+    fprintf(fp, "pwm");
+    fclose(fp);
+    return 0;
+}
+
+// Set pin mode back to default
+int pwm_unset_pin_mode(PWM *pwm) {
+
+    FILE *fp = fopen(pwm-&gt;pin_mode_path, "w");
+    if (fp == NULL) {
+        perror("Error opening state file");
+        return -1;
+    }
+
+    fprintf(fp, "default");
+    fclose(fp);
+    return 0;
+}
+</code></pre>
+  </div>
+  </details>
+</li>
+</ul>
+<h2 id="3-compile-the-object-file-and-create-libraries"><a class="header" href="#3-compile-the-object-file-and-create-libraries">3: Compile the Object File and Create Libraries</a></h2>
+<ul>
+<li>
+<p>Compile pwm.c into an Object File by Using the following command to compile <code>pwm.c</code> into an object file (<code>pwm.o</code>):</p>
+  <div id="admonition-terminal-5" class="admonition admonish-terminal" role="note" aria-labelledby="admonition-terminal-5-title">
+  <div class="admonition-title">
+  <div id="admonition-terminal-5-title">
+<p>Terminal</p>
+  </div>
+  <a class="admonition-anchor-link" href="#admonition-terminal-5"></a>
+  </div>
+  <div>
+<pre><code class="language-sh">$ gcc -c pwm.c -o pwm.o
+</code></pre>
+  </div>
+  </div>
+</li>
+<li>
+<p>Create a Static Library (<code>libpwm.a</code>) to create a static library, use the <code>ar</code> command:</p>
+  <div id="admonition-terminal-6" class="admonition admonish-terminal" role="note" aria-labelledby="admonition-terminal-6-title">
+  <div class="admonition-title">
+  <div id="admonition-terminal-6-title">
+<p>Terminal</p>
+  </div>
+  <a class="admonition-anchor-link" href="#admonition-terminal-6"></a>
+  </div>
+  <div>
+<pre><code class="language-sh">$ ar rcs libgpwm.a pwm.o
+</code></pre>
+  </div>
+  </div>
+  <div id="admonition-command-breakdown" class="admonition admonish-note" role="note" aria-labelledby="admonition-command-breakdown-title">
+  <div class="admonition-title">
+  <div id="admonition-command-breakdown-title">
+<p>Command Breakdown</p>
+  </div>
+  <a class="admonition-anchor-link" href="#admonition-command-breakdown"></a>
+  </div>
+  <div>
+<ul>
+<li><code>ar</code>: The archiver tool used to create and maintain library archives.</li>
+<li><code>rcs</code>: Flags where r inserts the files into the archive, c creates the archive if it doesn't exist, and s creates an index for quick symbol lookup.</li>
+<li><code>libpwm.a</code>: The name of the static library being created.</li>
+<li><code>pwm.o</code>: The object file to be included in the library.</li>
+</ul>
+  </div>
+  </div>
+  <div id="admonition-what-is-a-static-library" class="admonition admonish-example" role="note" aria-labelledby="admonition-what-is-a-static-library-title">
+  <div class="admonition-title">
+  <div id="admonition-what-is-a-static-library-title">
+<p>What is a Static Library?</p>
+  </div>
+  <a class="admonition-anchor-link" href="#admonition-what-is-a-static-library"></a>
+  </div>
+  <div>
+<p>A static library is a collection of object files that are linked into the final executable at compile time. Once linked, the code from the static library becomes part of the executable binary. This means that the executable will carry a copy of the library's code, making it self-contained and independent of the library file after compilation.</p>
+  </div>
+  </div>
+</li>
+<li>
+<p>Create a Shared Library (<code>libpwm.so</code>) to create a shared library, use the following <code>gcc</code> command:</p>
+  <div id="admonition-terminal-7" class="admonition admonish-terminal" role="note" aria-labelledby="admonition-terminal-7-title">
+  <div class="admonition-title">
+  <div id="admonition-terminal-7-title">
+<p>Terminal</p>
+  </div>
+  <a class="admonition-anchor-link" href="#admonition-terminal-7"></a>
+  </div>
+  <div>
+<pre><code class="language-sh">$ gcc -shared -o libpwm.so pwm.o
+</code></pre>
+  </div>
+  </div>
+  <div id="admonition-command-breakdown-1" class="admonition admonish-note" role="note" aria-labelledby="admonition-command-breakdown-1-title">
+  <div class="admonition-title">
+  <div id="admonition-command-breakdown-1-title">
+<p>Command Breakdown</p>
+  </div>
+  <a class="admonition-anchor-link" href="#admonition-command-breakdown-1"></a>
+  </div>
+  <div>
+<ul>
+<li>
+<p><code>-shared</code>: Tells gcc to produce a shared library.</p>
+</li>
+<li>
+<p><code>-o libpwm.so</code>: Specifies the output filename for the shared library.</p>
+</li>
+<li>
+<p><code>pwm.o</code>: The object file to be included in the library.</p>
+</li>
+</ul>
+  </div>
+  </div>
+  <div id="admonition-what-is-a-shared-library" class="admonition admonish-example" role="note" aria-labelledby="admonition-what-is-a-shared-library-title">
+  <div class="admonition-title">
+  <div id="admonition-what-is-a-shared-library-title">
+<p>What is a Shared Library?</p>
+  </div>
+  <a class="admonition-anchor-link" href="#admonition-what-is-a-shared-library"></a>
+  </div>
+  <div>
+<p>A shared library, on the other hand, is not linked into the final executable at compile time. Instead, it is loaded into memory at runtime. Multiple programs can share a single copy of a shared library, which can save memory and allow updates to the library without recompiling the programs that use it.</p>
+  </div>
+  </div>
+</li>
+</ul>
+<h2 id="4-install-the-header-and-library-files-system-wide"><a class="header" href="#4-install-the-header-and-library-files-system-wide">4: Install the Header and Library Files System-Wide</a></h2>
+<ul>
+<li>
+<p>You could manually copy the header file to <code>/usr/include</code> and the libraries to <code>/usr/lib</code>, or skip to the next section and create a <code>Makefile</code> to do it for you each time.</p>
+  <div id="admonition-terminal-8" class="admonition admonish-terminal" role="note" aria-labelledby="admonition-terminal-8-title">
+  <div class="admonition-title">
+  <div id="admonition-terminal-8-title">
+<p>Terminal</p>
+  </div>
+  <a class="admonition-anchor-link" href="#admonition-terminal-8"></a>
+  </div>
+  <div>
+<pre><code class="language-sh">$ sudo cp pwm.h /usr/include/
+$ sudo cp libpwm.a /usr/lib/
+$ sudo cp libpwm.so /usr/lib/
+$ sudo ldconfig  # Update the shared library cache
+</code></pre>
+  </div>
+  </div>
+</li>
+</ul>
+<h2 id="5-automate-with-a-makefile"><a class="header" href="#5-automate-with-a-makefile">5: Automate with a Makefile</a></h2>
+<ul>
+<li>
+<p>Instead of running these commands manually, you can automate the build process using a Makefile.</p>
+  <details id="admonition-suppressed-code-here-44-lines" class="admonition admonish-code" role="note" aria-labelledby="admonition-suppressed-code-here-44-lines-title">
+  <summary class="admonition-title">
+  <div id="admonition-suppressed-code-here-44-lines-title">
+<p>Suppressed code here [44 lines]</p>
+  </div>
+  <a class="admonition-anchor-link" href="#admonition-suppressed-code-here-44-lines"></a>
+  </summary>
+  <div>
+<pre><code class="language-makefile"># Variables
+CC = gcc
+CFLAGS = -Wall -Werror -fPIC  # -fPIC is needed for shared libraries
+AR = ar
+ARFLAGS = rcs
+TARGET_STATIC = libpwm.a
+TARGET_SHARED = libpwm.so
+OBJ = pwm.o
+
+# Default target: Build both libraries
+all: $(TARGET_STATIC) $(TARGET_SHARED)
+
+# Compile the pwm.c into an object file
+$(OBJ): pwm.c
+        $(CC) $(CFLAGS) -c pwm.c -o $(OBJ)
+
+# Create the static library
+$(TARGET_STATIC): $(OBJ)
+        $(AR) $(ARFLAGS) $(TARGET_STATIC) $(OBJ)
+
+# Create the shared library
+$(TARGET_SHARED): $(OBJ)
+        $(CC) -shared -o $(TARGET_SHARED) $(OBJ)
+
+# Clean up build artifacts
+clean:
+        rm -f $(OBJ) $(TARGET_STATIC) $(TARGET_SHARED)
+
+# Install libraries and header
+install: $(TARGET_STATIC) $(TARGET_SHARED)
+        sudo cp pwm.h /usr/include/
+        sudo cp $(TARGET_STATIC) /usr/lib/
+        sudo cp $(TARGET_SHARED) /usr/lib/
+        sudo ldconfig
+
+# Uninstall libraries and header
+uninstall:
+        sudo rm -f /usr/include/pwm.h
+        sudo rm -f /usr/lib/$(TARGET_STATIC)
+        sudo rm -f /usr/lib/$(TARGET_SHARED)
+        sudo ldconfig
+
+# Phony targets
+.PHONY: all clean install uninstall
+</code></pre>
+  </div>
+  </details>
+</li>
+</ul>
+<h2 id="6-creating-the-pwm_test-program"><a class="header" href="#6-creating-the-pwm_test-program">6: Creating the pwm_test program</a></h2>
+<ul>
+<li>
+<p>Create a new .c file called... <code>pwm_test.c</code> and chose your preferred editor to open it.</p>
+  <div id="admonition-terminal-9" class="admonition admonish-terminal" role="note" aria-labelledby="admonition-terminal-9-title">
+  <div class="admonition-title">
+  <div id="admonition-terminal-9-title">
+<p>Terminal</p>
+  </div>
+  <a class="admonition-anchor-link" href="#admonition-terminal-9"></a>
+  </div>
+  <div>
+<pre><code class="language-sh">$ mkdir ~/pwm_test/ &amp;&amp; cd ~/pwm_test &amp;&amp; touch pwm_test.c
+$ vim pwm_test.c
+</code></pre>
+  </div>
+  </div>
+</li>
+<li>
+<p>Now we are going to set up the program to use our system wide library and header with <code>pwm.h</code></p>
+  <details id="admonition-suppressed-code-here-33-lines" class="admonition admonish-code" role="note" aria-labelledby="admonition-suppressed-code-here-33-lines-title">
+  <summary class="admonition-title">
+  <div id="admonition-suppressed-code-here-33-lines-title">
+<p>Suppressed code here [33 lines]</p>
+  </div>
+  <a class="admonition-anchor-link" href="#admonition-suppressed-code-here-33-lines"></a>
+  </summary>
+  <div>
+<pre><code class="language-c">#include "pwm.h"
+#include &lt;string.h&gt;
+#include &lt;unistd.h&gt;
+int main() {
+    PWM pwm;
+
+    int period = 1000000; // Set period to 1 ms (1 kHz)
+    int duty = 1000000; // Set duty cycle to 0.5 ms (50%)
+
+    // Initialize the PWM structure for chip 0, channel 0
+    pwm_init(&amp;pwm, "P8_13");
+
+    printf("Phy: %s\nChannel: %s\nChip: %s\nPeriod path: %s\nDuty Cycle path: %s\nEnable path: %s\nPin Mode Path: %s\nPin Mode Sate: %s\n",pwm.phy_pin,pwm.channel,pwm.chip,pwm.period_path,pwm.duty_cycle_path,pwm.enable_path,pwm.pin_mode_path, pwm.pin_mode_state);
+
+    pwm_set_period(&amp;pwm, period);
+    pwm_set_duty_cycle(&amp;pwm, duty);
+    pwm_enable(&amp;pwm);
+
+    sleep(2);
+    pwm_set_duty_cycle(&amp;pwm, 500000);
+
+    sleep(2);
+    pwm_set_duty_cycle(&amp;pwm, 200000);
+
+    sleep(2);
+    pwm_set_duty_cycle(&amp;pwm, 100000);.
+
+    pwm_disable(&amp;pwm);
+    pwm_cleanup(&amp;pwm);
+
+    return 0;
+}
+</code></pre>
+  </div>
+  </details>
+</li>
+<li>
+<p>We can use this oneliner to compile the code:</p>
+  <div id="admonition-terminal-10" class="admonition admonish-terminal" role="note" aria-labelledby="admonition-terminal-10-title">
+  <div class="admonition-title">
+  <div id="admonition-terminal-10-title">
+<p>Terminal</p>
+  </div>
+  <a class="admonition-anchor-link" href="#admonition-terminal-10"></a>
+  </div>
+  <div>
+<pre><code class="language-sh">$ gcc &lt;file&gt; ... 
+</code></pre>
+  </div>
+  </div>
+</li>
+<li>
+<p>Create the Makefile</p>
+  <details id="admonition-suppressed-code-here-25-lines" class="admonition admonish-code" role="note" aria-labelledby="admonition-suppressed-code-here-25-lines-title">
+  <summary class="admonition-title">
+  <div id="admonition-suppressed-code-here-25-lines-title">
+<p>Suppressed code here [25 lines]</p>
+  </div>
+  <a class="admonition-anchor-link" href="#admonition-suppressed-code-here-25-lines"></a>
+  </summary>
+  <div>
+<pre><code class="language-makefile"># Compiler and flags
+CC = gcc
+CFLAGS = -Wall -Werror
+
+# Target executable name
+TARGET = pwm_test
+
+# Source files
+SRC = pwm_test.c
+
+# Library to link against
+LIBS = -lpwm
+
+# Default target: build the executable
+all: $(TARGET)
+
+# Build the executable
+$(TARGET): $(SRC)
+        $(CC) $(CFLAGS) $(SRC) $(LIBS) -o $(TARGET)
+
+# Clean up build artifacts
+clean:
+        rm -f $(TARGET)
+
+# Phony targets to avoid conflicts with files of the same name
+.PHONY: all clean
+</code></pre>
+  </div>
+  </details>
+</li>
+<li>
+<p>Invoke make to build the executable:</p>
+  <div id="admonition-terminal-11" class="admonition admonish-terminal" role="note" aria-labelledby="admonition-terminal-11-title">
+  <div class="admonition-title">
+  <div id="admonition-terminal-11-title">
+<p>Terminal</p>
+  </div>
+  <a class="admonition-anchor-link" href="#admonition-terminal-11"></a>
+  </div>
+  <div>
+<pre><code class="language-sh">$ make
+</code></pre>
+  </div>
+  </div>
+</li>
+<li>
+<p>Run the code file to see if RGB Led changes colour, remember to wire up:</p>
+  <div id="admonition-terminal-12" class="admonition admonish-terminal" role="note" aria-labelledby="admonition-terminal-12-title">
+  <div class="admonition-title">
+  <div id="admonition-terminal-12-title">
+<p>Terminal</p>
+  </div>
+  <a class="admonition-anchor-link" href="#admonition-terminal-12"></a>
+  </div>
+  <div>
+<pre><code class="language-sh">$ ./pwm_test
+</code></pre>
+  </div>
+  </div>
+<ul>
+<li>
+<p>If all is well, and you have connected up your circuity correctly, the LED should show 100% then 50% then 10% and off, also this terminal output</p>
+  <div id="admonition-output-2" class="admonition admonish-output" role="note" aria-labelledby="admonition-output-2-title">
+  <div class="admonition-title">
+  <div id="admonition-output-2-title">
+<p>Output</p>
+  </div>
+  <a class="admonition-anchor-link" href="#admonition-output-2"></a>
+  </div>
+  <div>
+<pre><code>Phy: P8_13
+Channel: 7
+Chip: 1
+Period path: /sys/class/pwm/pwm-7:1/period
+Duty Cycle path: /sys/class/pwm/pwm-7:1/duty_cycle
+Enable path: /sys/class/pwm/pwm-7:1/enable
+Pin Mode Path: /sys/devices/platform/ocp/ocp:P8_13_pinmux/state
+Pin Mode Sate: pwm
+</code></pre>
+  </div>
+  </div></li>
+</ul>
+</li>
+</ul>
+
+                    </main>
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../ADCLibrary/ADCContinous.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../PWMLibrary/ADCtoPWM.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../ADCLibrary/ADCContinous.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../PWMLibrary/ADCtoPWM.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src=".././theme/pagetoc.js"></script>
+
+
+    </div>
+    </body>
+</html>

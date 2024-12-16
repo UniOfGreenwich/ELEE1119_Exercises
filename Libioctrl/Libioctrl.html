@@ -1,0 +1,796 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>libioctrl - Advanced Computer Engineering</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href=".././theme/pagetoc.css">
+        <link rel="stylesheet" href=".././theme/css/mdbook-admonish.css">
+        <link rel="stylesheet" href=".././theme/css/code.css">
+        <link rel="stylesheet" href=".././theme/css/terminal.css">
+        <link rel="stylesheet" href=".././theme/css/output.css">
+
+        <!-- MathJax -->
+        <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="burgundy">Burgundy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="dracula">Dracula</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ecoFriend">EcoFriend</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="pinkrose">Pinkrose</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="space">Space</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="sustain">Sustain</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="tokyonight">Tokyonight</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Advanced Computer Engineering</h1>
+
+                    <div class="right-buttons">
+                        <a href="https://github.com/uniofgreenwich/ELEE1119_Exercises" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        <a href="https://github.com/uniofgreenwich/ELEE1119_Exercises/edit/main/src/Libioctrl/Libioctrl.md" title="Suggest an edit" aria-label="Suggest an edit">
+                            <i id="git-edit-button" class="fa fa-edit"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main><div class="sidetoc"><nav class="pagetoc"></nav></div>
+                        <h1 id="libioctrl"><a class="header" href="#libioctrl">libioctrl</a></h1>
+<div id="admonition-warning" class="admonition admonish-warning" role="note" aria-labelledby="admonition-warning-title">
+<div class="admonition-title">
+<div id="admonition-warning-title">
+<p>Warning</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-warning"></a>
+</div>
+<div>
+<ul>
+<li>Make sure you have completed the following chapters:
+<ul>
+<li><a href="../GPIOLibrary/GPIOLibrary.html">GPIO Library</a></li>
+<li><a href="../ADCLibrary/ADCLibrary.html">ADC Library</a></li>
+<li><a href="../PWMLibrary/PWMLibrary.html">PWM Library</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<p>In this chapter we are going to combine our previous source code into a centeralised directory.</p>
+<h2 id="1-setting-up-the-libioctrl-source-code"><a class="header" href="#1-setting-up-the-libioctrl-source-code">1. Setting up the <code>libioctrl</code> source code:</a></h2>
+<ol>
+<li>
+<p>Create a new directory in home called <code>libioctrl</code>:</p>
+ <div id="admonition-terminal" class="admonition admonish-terminal" role="note" aria-labelledby="admonition-terminal-title">
+ <div class="admonition-title">
+ <div id="admonition-terminal-title">
+<p>Terminal</p>
+ </div>
+ <a class="admonition-anchor-link" href="#admonition-terminal"></a>
+ </div>
+ <div>
+<pre><code class="language-sh">$ mkdir -p ~/libioctrl/{src, include}
+</code></pre>
+ </div>
+ </div>
+</li>
+<li>
+<p>We need to copy the <code>adc.{c/h}</code> , <code>gpio.{c/h}</code> and <code>pwm.{c/h}</code> from the respective directories into two new child directories inside of <code>libioctrl</code>, <code>src</code> and <code>include</code>:</p>
+ <div id="admonition-terminal-example" class="admonition admonish-terminal" role="note" aria-labelledby="admonition-terminal-example-title">
+ <div class="admonition-title">
+ <div id="admonition-terminal-example-title">
+<p>Terminal: Example</p>
+ </div>
+ <a class="admonition-anchor-link" href="#admonition-terminal-example"></a>
+ </div>
+ <div>
+<pre><code class="language-sh">$ cp adc/adc.c ~/libioctrl/src &amp;&amp; cp adc/adc.h ~/libioctrl/include
+</code></pre>
+ </div>
+ </div>
+<p>Repeat for each of the other libraries we had made earlier.</p>
+</li>
+<li>
+<p>You should have the following structure:</p>
+ <div id="admonition-output" class="admonition admonish-output" role="note" aria-labelledby="admonition-output-title">
+ <div class="admonition-title">
+ <div id="admonition-output-title">
+<p>Output</p>
+ </div>
+ <a class="admonition-anchor-link" href="#admonition-output"></a>
+ </div>
+ <div>
+<pre><code>$ ls -l ~/libioctrl/*
+libioctrl/include:
+total 12
+-rw-r--r-- 1 debian debian  685 Apr 14 19:25 adc.h
+-rw-r--r-- 1 debian debian 2557 Apr 14 20:35 gpio.h
+-rw-r--r-- 1 debian debian 1636 Apr 14 20:35 pwm.h
+
+libioctrl/src:
+total 12
+-rw-r--r-- 1 debian debian 1288 Apr 14 19:24 adc.c
+-rw-r--r-- 1 debian debian 3559 Apr 14 19:46 gpio.c
+-rw-r--r-- 1 debian debian 2490 Apr 14 19:24 pwm.c
+</code></pre>
+ </div>
+ </div>
+</li>
+<li>
+<p>Now make a new <code>libioctrl.h</code> inside the <code>include/</code> and fill the following:</p>
+ <div id="admonition-code-includelibioctrlh" class="admonition admonish-code" role="note" aria-labelledby="admonition-code-includelibioctrlh-title">
+ <div class="admonition-title">
+ <div id="admonition-code-includelibioctrlh-title">
+<p>Code: <code>include/libioctrl.h</code></p>
+ </div>
+ <a class="admonition-anchor-link" href="#admonition-code-includelibioctrlh"></a>
+ </div>
+ <div>
+<pre><code class="language-h">#ifndef LIBIOCTRL_H
+#define LIBIOCTRL_H
+
+#include "gpio.h"
+#include "pwm.h"
+#include "adc.h"
+
+#endif // LIBIOCTRL_H
+</code></pre>
+ </div>
+ </div>
+</li>
+<li>
+<p>Replace the <code>#include "adc.h"</code>, <code>#include "gpio.h"</code> and <code>#include "pwm.h"</code> inside the respective <code>.c</code> files:</p>
+ <div id="admonition-code---srcadcc" class="admonition admonish-code" role="note" aria-labelledby="admonition-code---srcadcc-title">
+ <div class="admonition-title">
+ <div id="admonition-code---srcadcc-title">
+<p>Code:   <code>src/adc.c</code></p>
+ </div>
+ <a class="admonition-anchor-link" href="#admonition-code---srcadcc"></a>
+ </div>
+ <div>
+<pre><code class="language-c"># include "../include/adc.h"
+</code></pre>
+ </div>
+ </div>
+<p>Repeat for the other <code>.c</code> files</p>
+</li>
+<li>
+<p>Next we need to update some variable names to deal with the issue of multiple declarations when compiling. Inside <code>include/pwm.h</code> change the following, we are only appending <code>PWM</code> to <code>PinMap</code>:</p>
+<p>Old:</p>
+<details id="admonition-suppressed-code-15-lines" class="admonition admonish-code" role="note" aria-labelledby="admonition-suppressed-code-15-lines-title">
+<summary class="admonition-title">
+<div id="admonition-suppressed-code-15-lines-title">
+<p>Suppressed code [15 lines]...</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-suppressed-code-15-lines"></a>
+</summary>
+<div>
+<pre><code class="language-h">// Structure to hold PWM mapping information
+typedef struct {
+    char physical_pin[10];  // Physical pin on the BeagleBone Black (e.g., "P9_16")
+    char pwm_chip_channel[10]; // PWM chip and channel (e.g., "4:1")
+} PinMap;
+...
+// Define the pin_map array with physical pins and their corresponding PWM chip:channel
+PinMap phy_pin_map[] = {
+    {"P9_16", "4:1"},  // eHRPWM1B
+    {"P9_14", "4:0"},  // eHRPWM1A
+    {"P9_21", "1:1"},  // eHRPWM0B
+    {"P9_22", "1:0"},  // eHRPWM0A
+    {"P8_13", "7:1"},  // eHRPWM2B
+    {"P8_19", "7:0"},  // eHRPWM2A
+    {"P9_28", "3:0"},  // eCAP1
+    {"P9_42", "0:0"}  // eCAP0
+};
+
+</code></pre>
+</div>
+</details>
+<p>New:</p>
+<details id="admonition-suppressed-code-15-lines-1" class="admonition admonish-code" role="note" aria-labelledby="admonition-suppressed-code-15-lines-1-title">
+<summary class="admonition-title">
+<div id="admonition-suppressed-code-15-lines-1-title">
+<p>Suppressed code [15 lines]...</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-suppressed-code-15-lines-1"></a>
+</summary>
+<div>
+<pre><code class="language-h">// Structure to hold PWM mapping information
+typedef struct {
+    char physical_pin[10];  // Physical pin on the BeagleBone Black (e.g., "P9_16")
+    char pwm_chip_channel[10]; // PWM chip and channel (e.g., "4:1")
+} PWMPinMap;
+...
+// Define the pin_map array with physical pins and their corresponding PWM chip:channel
+PWMPinMap phy_pin_map[] = {
+    {"P9_16", "4:1"},  // eHRPWM1B
+    {"P9_14", "4:0"},  // eHRPWM1A
+    {"P9_21", "1:1"},  // eHRPWM0B
+    {"P9_22", "1:0"},  // eHRPWM0A
+    {"P8_13", "7:1"},  // eHRPWM2B
+    {"P8_19", "7:0"},  // eHRPWM2A
+    {"P9_28", "3:0"},  // eCAP1
+    {"P9_42", "0:0"}  // eCAP0
+};
+</code></pre>
+</div>
+</details>
+<p>Update the <code>src/pwm.c</code> to reference the <code>PWMPinMap</code> inside <code>sizeof(...)</code>:</p>
+<div id="admonition-code" class="admonition admonish-code" role="note" aria-labelledby="admonition-code-title">
+<div class="admonition-title">
+<div id="admonition-code-title">
+<p>Code</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-code"></a>
+</div>
+<div>
+<pre><code class="language-c">for (int i = 0; i &lt; sizeof(phy_pin_map) / sizeof(PWMPinMap); i++) {
+    if (strcmp(phy_pin_map[i].physical_pin, pin_name) == 0) {
+        // Parse the pwmchip and pwm channel
+        sscanf(phy_pin_map[i].pwm_chip_channel, "%[^:]:%s", pwm_channel, pwm_chip);
+    }
+}
+</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Next we need to update some variable names to deal with the issue of multiple declarations when compiling. Inside <code>include/gpio.h</code> change the following, we are only appending <code>GPIO</code> to <code>PinMap</code> and <code>gpio_</code> to <code>pin_map</code>:</p>
+<p>Old</p>
+ <details id="admonition-suppressed-code-10-lines" class="admonition admonish-code" role="note" aria-labelledby="admonition-suppressed-code-10-lines-title">
+ <summary class="admonition-title">
+ <div id="admonition-suppressed-code-10-lines-title">
+<p>Suppressed code [10 lines]...</p>
+ </div>
+ <a class="admonition-anchor-link" href="#admonition-suppressed-code-10-lines"></a>
+ </summary>
+ <div>
+<pre><code class="language-h">// Define a simple mapping array for P8 and P9 pin names to GPIO numbers
+typedef struct {
+    char pin_name[6];
+    unsigned int gpio_number;
+} PinMap;
+...
+// Static array to map pin names to GPIO numbers
+PinMap gpio_pin_map[] = {
+    {"P8_31", 10}, {"P8_32", 11}, {"P9_31", 110}, {"P9_29", 111},
+    ...
+}
+</code></pre>
+ </div>
+ </details>
+<p>New</p>
+ <details id="admonition-suppressed-code-15-lines-2" class="admonition admonish-code" role="note" aria-labelledby="admonition-suppressed-code-15-lines-2-title">
+ <summary class="admonition-title">
+ <div id="admonition-suppressed-code-15-lines-2-title">
+<p>Suppressed code [15 lines]...</p>
+ </div>
+ <a class="admonition-anchor-link" href="#admonition-suppressed-code-15-lines-2"></a>
+ </summary>
+ <div>
+<pre><code class="language-h">// Define a simple mapping array for P8 and P9 pin names to GPIO numbers
+typedef struct {
+    char pin_name[6];
+    unsigned int gpio_number;
+} GPIOPinMap;
+...
+// Static array to map pin names to GPIO numbers
+GPIOPinMap gpio_pin_map[] = {
+    {"P8_31", 10}, {"P8_32", 11}, {"P9_31", 110}, {"P9_29", 111},
+    ...
+}
+</code></pre>
+ </div>
+ </details>
+<p>Update the <code>src/gpio.c</code> to reference the <code>gpio_pin_map</code> and <code>GPIOPinMap</code> inside <code>sizeof(...)</code>, remember to replace all the instances of <code>pin_map</code> in the below function to <code>gpio_pin_map</code>:</p>
+ <div id="admonition-code-1" class="admonition admonish-code" role="note" aria-labelledby="admonition-code-1-title">
+ <div class="admonition-title">
+ <div id="admonition-code-1-title">
+<p>Code</p>
+ </div>
+ <a class="admonition-anchor-link" href="#admonition-code-1"></a>
+ </div>
+ <div>
+<pre><code class="language-c">// Function to find GPIO number from pin name
+int find_gpio_number(const char *pin_name) {
+    for (int i = 0; i &lt; sizeof(gpio_pin_map) / sizeof(GPIOPinMap); i++) {
+        if (strcmp(gpio_pin_map[i].pin_name, pin_name) == 0) {
+            return gpio_pin_map[i].gpio_number;
+        }
+    }
+    return -1;  // Return -1 if the pin is not found
+}
+</code></pre>
+ </div>
+ </div>
+</li>
+</ol>
+<h2 id="2-make-with-a-makefile"><a class="header" href="#2-make-with-a-makefile">2: Make with a Makefile</a></h2>
+<div id="admonition-warning-1" class="admonition admonish-warning" role="note" aria-labelledby="admonition-warning-1-title">
+<div class="admonition-title">
+<div id="admonition-warning-1-title">
+<p>Warning</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-warning-1"></a>
+</div>
+<div>
+<ul>
+<li>
+<p>Before running make for <code>libioctrl</code>, we should remove all current libaries from before. For each original library, <code>adclib</code>, <code>gpiolib</code>, <code>pwmlib</code> or whether you made them run <code>make uninstall</code> and <code>make clean</code> in each one:</p>
+<p><img src="./figures/unmakeall.gif" alt="" /></p>
+</li>
+</ul>
+</div>
+</div>
+<ol start="8">
+<li>
+<p>Build a Makefile and fill with the following:</p>
+ <details id="admonition-suppressed-code-55-lines" class="admonition admonish-code" role="note" aria-labelledby="admonition-suppressed-code-55-lines-title">
+ <summary class="admonition-title">
+ <div id="admonition-suppressed-code-55-lines-title">
+<p>Suppressed code [55 lines]...</p>
+ </div>
+ <a class="admonition-anchor-link" href="#admonition-suppressed-code-55-lines"></a>
+ </summary>
+ <div>
+<pre><code class="language-makefile"># Compiler and flags
+CC = gcc
+CFLAGS = -Wall -Werror -fPIC -I./include  # Include headers
+AR = ar
+ARFLAGS = rcs
+PREFIX = /usr
+INCLUDEDIR = $(PREFIX)/include
+LIBDIR = $(PREFIX)/lib
+
+# Directories
+SRCDIR = ./src
+OBJDIR = ./obj
+
+# Library names
+TARGET_STATIC = libioctrl.a
+TARGET_SHARED = libioctrl.so
+
+# Source files for each component
+SRC = $(SRCDIR)/gpio.c $(SRCDIR)/pwm.c $(SRCDIR)/adc.c
+OBJ = $(patsubst $(SRCDIR)/%.c, $(OBJDIR)/%.o, $(SRC))
+
+# Default target: Build both libraries
+all: $(TARGET_STATIC) $(TARGET_SHARED)
+
+# Compile source files into object files
+$(OBJDIR)/%.o: $(SRCDIR)/%.c
+        @mkdir -p $(OBJDIR)
+        $(CC) $(CFLAGS) -c $&lt; -o $@
+
+# Create the static library
+$(TARGET_STATIC): $(OBJ)
+        $(AR) $(ARFLAGS) $@ $(OBJ)
+
+# Create the shared library
+$(TARGET_SHARED): $(OBJ)
+        $(CC) -shared -o $@ $(OBJ)
+
+# Clean up build artifacts
+clean:
+        rm -rf $(OBJDIR) $(TARGET_STATIC) $(TARGET_SHARED)
+
+# Install libraries and headers
+install: $(TARGET_STATIC) $(TARGET_SHARED)
+        sudo cp include/gpio.h include/pwm.h include/adc.h include/libioctrl.h $(INCLUDEDIR)/
+        sudo cp $(TARGET_STATIC) $(TARGET_SHARED) $(LIBDIR)/
+        sudo ldconfig
+
+# Uninstall libraries and headers
+uninstall:
+        sudo rm -f $(INCLUDEDIR)/gpio.h $(INCLUDEDIR)/pwm.h $(INCLUDEDIR)/adc.h $(INCLUDEDIR)/libioctrl.h
+        sudo rm -f $(LIBDIR)/$(TARGET_STATIC) $(LIBDIR)/$(TARGET_SHARED) $(OBJDIR)
+        sudo ldconfig
+
+# Phony targets
+.PHONY: all clean install uninstall
+</code></pre>
+ </div>
+ </details>
+</li>
+<li>
+<p>We need to remove all reference to libraries created before, navigate to <code>adc</code>, <code>gpio</code> and <code>pwm</code> directories and run:</p>
+ <div id="admonition-terminal-1" class="admonition admonish-terminal" role="note" aria-labelledby="admonition-terminal-1-title">
+ <div class="admonition-title">
+ <div id="admonition-terminal-1-title">
+<p>Terminal</p>
+ </div>
+ <a class="admonition-anchor-link" href="#admonition-terminal-1"></a>
+ </div>
+ <div>
+<pre><code class="language-sh">path/to/adc$ make uninstall
+...
+</code></pre>
+ </div>
+ </div>
+</li>
+<li>
+<p>Go back to the <code>libioctrl</code> and run <code>make</code>:</p>
+<div id="admonition-output-1" class="admonition admonish-output" role="note" aria-labelledby="admonition-output-1-title">
+<div class="admonition-title">
+<div id="admonition-output-1-title">
+<p>Output</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-output-1"></a>
+</div>
+<div>
+<pre><code class="language-sh">path/to/libioctrl$ make install
+gcc -Wall -Werror -fPIC -I./include   -c src/gpio.c -o obj/gpio.o
+gcc -Wall -Werror -fPIC -I./include   -c src/pwm.c -o obj/pwm.o
+gcc -Wall -Werror -fPIC -I./include   -c src/adc.c -o obj/adc.o
+ar rcs libioctrl.a  ./obj/gpio.o  ./obj/pwm.o  ./obj/adc.o
+gcc -shared -o libioctrl.so  ./obj/gpio.o  ./obj/pwm.o  ./obj/adc.o
+sudo cp include/gpio.h include/pwm.h include/adc.h include/libioctrl.h /usr/include/
+sudo cp libioctrl.a libioctrl.so /usr/lib/
+sudo ldconfig
+...
+</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Breaking down the output of <code>make install</code>:</p>
+<p><strong>Object file compilation</strong>:</p>
+<ul>
+<li>
+<p>The <code>gcc</code> command is compiling each source file (<code>src/gpio.c</code>, <code>src/pwm.c</code>, and <code>src/adc.c</code>) into object files (<code>obj/gpio.o</code>, <code>obj/pwm.o</code>, and <code>obj/adc.o</code>), and it uses the appropriate flags (<code>-Wall</code>, <code>-Werror</code>, <code>-fPIC</code>, <code>-I./include</code>).</p>
+  <div id="admonition-terminal-2" class="admonition admonish-terminal" role="note" aria-labelledby="admonition-terminal-2-title">
+  <div class="admonition-title">
+  <div id="admonition-terminal-2-title">
+<p>Terminal</p>
+  </div>
+  <a class="admonition-anchor-link" href="#admonition-terminal-2"></a>
+  </div>
+  <div>
+<pre><code>gcc -Wall -Werror -fPIC -I./include   -c src/gpio.c -o obj/gpio.o
+gcc -Wall -Werror -fPIC -I./include   -c src/pwm.c -o obj/pwm.o
+gcc -Wall -Werror -fPIC -I./include   -c src/adc.c -o obj/adc.o
+</code></pre>
+  </div>
+  </div>
+</li>
+</ul>
+<p><strong>Creating the static library</strong>:</p>
+<ul>
+<li>
+<p>The <code>ar rcs</code> command is creating the static library <code>libioctrl.a</code> by combining the compiled object files <code>gpio.o</code>, <code>pwm.o</code>, and <code>adc.o</code>.</p>
+  <div id="admonition-terminal-3" class="admonition admonish-terminal" role="note" aria-labelledby="admonition-terminal-3-title">
+  <div class="admonition-title">
+  <div id="admonition-terminal-3-title">
+<p>Terminal</p>
+  </div>
+  <a class="admonition-anchor-link" href="#admonition-terminal-3"></a>
+  </div>
+  <div>
+<pre><code>ar rcs libioctrl.a  ./obj/gpio.o  ./obj/pwm.o  ./obj/adc.o
+</code></pre>
+  </div>
+  </div>
+</li>
+</ul>
+<p><strong>Creating the shared library</strong>:</p>
+<ul>
+<li>
+<p>The <code>gcc -shared</code> command is creating the shared library <code>libioctrl.so</code> by linking the same object files <code>gpio.o</code>, <code>pwm.o</code>, and <code>adc.o</code></p>
+  <div id="admonition-terminal-4" class="admonition admonish-terminal" role="note" aria-labelledby="admonition-terminal-4-title">
+  <div class="admonition-title">
+  <div id="admonition-terminal-4-title">
+<p>Terminal</p>
+  </div>
+  <a class="admonition-anchor-link" href="#admonition-terminal-4"></a>
+  </div>
+  <div>
+<pre><code>gcc -shared -o libioctrl.so  ./obj/gpio.o  ./obj/pwm.o  ./obj/adc.o
+</code></pre>
+  </div>
+  </div>
+</li>
+</ul>
+<p><strong>System wide availability</strong>:</p>
+<ul>
+<li>
+<p>This command copies the header files (<code>gpio.h</code>, <code>pwm.h</code>, <code>adc.h</code>, and <code>libioctrl.h</code>) to the system's <code>/usr/include/</code> directory. This makes the header files available system-wide, allowing programs to include these headers when building applications that use the library.</p>
+  <div id="admonition-terminal-5" class="admonition admonish-terminal" role="note" aria-labelledby="admonition-terminal-5-title">
+  <div class="admonition-title">
+  <div id="admonition-terminal-5-title">
+<p>Terminal</p>
+  </div>
+  <a class="admonition-anchor-link" href="#admonition-terminal-5"></a>
+  </div>
+  <div>
+<pre><code>sudo cp include/gpio.h include/pwm.h include/adc.h include/libioctrl.h /usr/include/
+</code></pre>
+  </div>
+  </div>
+</li>
+<li>
+<p>This command copies the static (<code>libioctrl.a</code>) and shared (<code>libioctrl.so</code>) versions of the libioctrl library to <code>/usr/lib/</code>, which is a standard system library directory. This allows programs to link against the library when building.</p>
+  <div id="admonition-terminal-6" class="admonition admonish-terminal" role="note" aria-labelledby="admonition-terminal-6-title">
+  <div class="admonition-title">
+  <div id="admonition-terminal-6-title">
+<p>Terminal</p>
+  </div>
+  <a class="admonition-anchor-link" href="#admonition-terminal-6"></a>
+  </div>
+  <div>
+<pre><code>sudo cp libioctrl.a libioctrl.so /usr/lib/:
+</code></pre>
+  </div>
+  </div>
+</li>
+<li>
+<p>This command updates the system's dynamic linker cache. It ensures that the system is aware of the newly installed shared libraries (e.g., libioctrl.so) so that applications can find and use the shared library at runtime</p>
+  <div id="admonition-output-2" class="admonition admonish-output" role="note" aria-labelledby="admonition-output-2-title">
+  <div class="admonition-title">
+  <div id="admonition-output-2-title">
+<p>Output</p>
+  </div>
+  <a class="admonition-anchor-link" href="#admonition-output-2"></a>
+  </div>
+  <div>
+<pre><code>sudo ldconfig
+</code></pre>
+<p><img src="./figures/makelibioctrl.gif" alt="" /></p>
+  </div>
+  </div>
+</li>
+</ul>
+</li>
+</ol>
+<h2 id="using-our-new-library"><a class="header" href="#using-our-new-library">Using our new library</a></h2>
+<ol start="12">
+<li>
+<p>Update any of the following tests we ran before; <code>adc2pwm.c</code>, <code>adc_continous_read</code>, <code>adc_read</code>, <code>blink</code> and <code>pwm_test</code>:</p>
+<p>In this example I will update the <code>adc_read.c</code> headers and part of the <code>Makefile</code>:</p>
+<p><code>adc_read.c</code></p>
+<div id="admonition-code-2" class="admonition admonish-code" role="note" aria-labelledby="admonition-code-2-title">
+<div class="admonition-title">
+<div id="admonition-code-2-title">
+<p>Code</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-code-2"></a>
+</div>
+<div>
+<pre><code class="language-c">#include "libioctrl.h" # originally adc.h
+#include &lt;stdio.h&gt;
+#include &lt;unistd.h&gt;
+...
+</code></pre>
+</div>
+</div>
+<p><code>Makefile</code></p>
+<div id="admonition-code-3" class="admonition admonish-code" role="note" aria-labelledby="admonition-code-3-title">
+<div class="admonition-title">
+<div id="admonition-code-3-title">
+<p>Code</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-code-3"></a>
+</div>
+<div>
+<pre><code class="language-makefile">...
+# Library to link against
+LIBS = -lioctrl # originally, ladc
+...
+</code></pre>
+</div>
+</div>
+<p>You should repeat for the others, and remember to <code>make clean</code> before running <code>make</code> for each of these programs to remove original exe.</p>
+</li>
+</ol>
+<h2 id="fork-and-clone-libioctrl-library"><a class="header" href="#fork-and-clone-libioctrl-library">Fork and Clone <code>Libioctrl</code> library</a></h2>
+<ol start="13">
+<li>
+<p>Incase it doesn't work as intended, you can download the <code>libioctrl</code> library from GitHub: <a href="https://github.com/CompEng0001/bb.black_pin_library/fork">CompEng0001/bb.black_pin_library</a></p>
+</li>
+<li>
+<p>Clone the forked repo: <code>git clone git@github.com:YOURUSERNAME/bb.black_pin_library</code></p>
+</li>
+<li>
+<p><code>cd</code> to the parent directory of where you cloned the repo using shell copy command, <code>scp</code>:</p>
+<div id="admonition-terminal-7" class="admonition admonish-terminal" role="note" aria-labelledby="admonition-terminal-7-title">
+<div class="admonition-title">
+<div id="admonition-terminal-7-title">
+<p>Terminal</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-terminal-7"></a>
+</div>
+<div>
+<pre><code class="language-sh">scp -r /path/to/bb.black_pin_library debian@192.168.7.2:c_libraries
+</code></pre>
+</div>
+</div>
+<p><img src="./figures/bb_gif.gif" alt="" /></p>
+</li>
+<li>
+<p>You should then be able to install the library via the <code>bash install.sh</code> script within the repo:</p>
+<p><img src="./figures/bb_build.gif" alt="" /></p>
+</li>
+</ol>
+
+                    </main>
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../PWMLibrary/ADCtoPWM.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../Learning_C/Learning_C.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../PWMLibrary/ADCtoPWM.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../Learning_C/Learning_C.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src=".././theme/pagetoc.js"></script>
+
+
+    </div>
+    </body>
+</html>

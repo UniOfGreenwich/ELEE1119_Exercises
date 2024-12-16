@@ -1,0 +1,648 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Full program - Advanced Computer Engineering</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href=".././theme/pagetoc.css">
+        <link rel="stylesheet" href=".././theme/css/mdbook-admonish.css">
+        <link rel="stylesheet" href=".././theme/css/code.css">
+        <link rel="stylesheet" href=".././theme/css/terminal.css">
+        <link rel="stylesheet" href=".././theme/css/output.css">
+
+        <!-- MathJax -->
+        <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="burgundy">Burgundy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="dracula">Dracula</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ecoFriend">EcoFriend</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="pinkrose">Pinkrose</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="space">Space</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="sustain">Sustain</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="tokyonight">Tokyonight</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Advanced Computer Engineering</h1>
+
+                    <div class="right-buttons">
+                        <a href="https://github.com/uniofgreenwich/ELEE1119_Exercises" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        <a href="https://github.com/uniofgreenwich/ELEE1119_Exercises/edit/main/src/EmbeddedC/adc2pwm.md" title="Suggest an edit" aria-label="Suggest an edit">
+                            <i id="git-edit-button" class="fa fa-edit"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main><div class="sidetoc"><nav class="pagetoc"></nav></div>
+                        <h1 id="full-program"><a class="header" href="#full-program">Full program</a></h1>
+<p>We are now going to put together the adc, uart and pwm functionalities into one script so that the adc value from a potentiometer or voltage divider circuit controls the brightness of an LED.</p>
+<div id="admonition-warning" class="admonition admonish-warning" role="note" aria-labelledby="admonition-warning-title">
+<div class="admonition-title">
+<div id="admonition-warning-title">
+<p>Warning</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-warning"></a>
+</div>
+<div>
+<p>It is important that you have completed the prerequiste sections:</p>
+<ul>
+<li><a href="blink.html">blink</a></li>
+<li><a href="./adc.html">adc</a></li>
+<li><a href="./uart.html">uart</a></li>
+<li><a href="./pwm.html">pwm</a></li>
+<li>Remember to include in your <code>PATH</code> <code>avr-gcc</code>, <code>avrdude</code> and <code>make</code></li>
+<li>Open <code>~/.bashrc</code> and add the following lines, then save and run the command <code>source ~/.bashrc</code> to update the current session with the new <code>PATH</code>
+<ul>
+<li>Uni machines
+<pre><code class="language-sh"># ~/.bashrc
+export PATH=$PATH:"/c/ProgramData/arduino-ide-v2/Local/Arduino15/packages/arduino/tools/avr-gcc/7.3.0-atmel3.6.1-arduino7/bin"
+export PATH=$PATH:"/c/ProgramData/arduino-ide-v2/Local/Arduino15/packages/arduino/tools/avr-dude/6.3.0-arduino17/bin"
+export PATH=$PATH:"/c/Program Files/GCC-Windows-MingW-2.0.0/w64devkit/bin"
+</code></pre>
+</li>
+<li>Your personal windows machine
+<pre><code class="language-sh"># ~/.bashrc
+export PATH=$PATH:"/c/Users/YOURUSERNAME/AppData/Local/Arduino15/packages/arduino/tools/avr-gcc/7.3.0-atmel3.6.1-arduino7/bin"
+export PATH=$PATH:"/c/Users/YOURUSERNAME/AppDataLocal/Arduino15/packages/arduino/tools/avr-dude/6.3.0-arduino17/bin"
+export PATH=$PATH:"/c/Program Files/w64devkit/bin"
+</code></pre>
+</li>
+<li>You can install w64devkit from here:
+<ul>
+<li><a href="https://github.com/skeeto/w64devkit/releases">https://github.com/skeeto/w64devkit/releases</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<hr />
+<h2 id="arduino-c-version-of-adc2pwmino"><a class="header" href="#arduino-c-version-of-adc2pwmino">Arduino C version of adc2pwm.ino</a></h2>
+<p>We are essentially going to be converting the following standard adc to pwm program.</p>
+<div id="admonition-code" class="admonition admonish-code" role="note" aria-labelledby="admonition-code-title">
+<div class="admonition-title">
+<div id="admonition-code-title">
+<p>Code</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-code"></a>
+</div>
+<div>
+<pre><code class="language-c">int analogPin = A0;       // Analog input pin connected to a sensor or potentiometer
+int pwmPin = 6;           // PWM output pin connected to an LED or other device
+int adcValue = 0;         // Variable to store the ADC value
+int pwmValue = 0;         // Variable to store the mapped PWM value
+
+void setup() {
+  pinMode(pwmPin, OUTPUT);  // Set the PWM pin as an output
+  Serial.begin(9600);       // Start the serial communication at 9600 baud
+}
+
+void loop() {
+  // Read the analog input (0 to 1023)
+  adcValue = analogRead(analogPin);
+
+  // Map the ADC value (0-1023) to PWM range (0-255)
+  pwmValue = map(adcValue, 0, 1023, 0, 255);
+
+  // Write the PWM value to the PWM pin
+  analogWrite(pwmPin, pwmValue);
+
+  // Print the ADC and PWM values to the Serial Monitor
+  Serial.print("ADC Value: ");
+  Serial.print(adcValue);
+  Serial.print(" | PWM Value: ");
+  Serial.println(pwmValue);
+
+  // Delay for stability and readability of the output
+  delay(250);
+}
+</code></pre>
+</div>
+</div>
+<hr />
+<h2 id="making-our-own-adc2pwmc-program"><a class="header" href="#making-our-own-adc2pwmc-program">Making our own <code>adc2pwm.c</code> program</a></h2>
+<ol>
+<li>
+<p>Create a new directory inside <code>embeddedC</code> called <code>adc2pwm</code></p>
+ <div id="admonition-terminal" class="admonition admonish-terminal" role="note" aria-labelledby="admonition-terminal-title">
+ <div class="admonition-title">
+ <div id="admonition-terminal-title">
+<p>Terminal</p>
+ </div>
+ <a class="admonition-anchor-link" href="#admonition-terminal"></a>
+ </div>
+ <div>
+<pre><code class="language-sh">$ mkdir -p ~/embeddedC/adc2pwm &amp;&amp; cd embeddedC/adc2pwm
+</code></pre>
+ </div>
+ </div>
+</li>
+<li>
+<p>Create a new file inside the the <code>adc2pwm</code> directory called <code>adc2pwm.c</code></p>
+ <div id="admonition-terminal-1" class="admonition admonish-terminal" role="note" aria-labelledby="admonition-terminal-1-title">
+ <div class="admonition-title">
+ <div id="admonition-terminal-1-title">
+<p>Terminal</p>
+ </div>
+ <a class="admonition-anchor-link" href="#admonition-terminal-1"></a>
+ </div>
+ <div>
+<pre><code class="language-sh">$ touch adc2pwm.c
+$ touch header.{c,h}
+</code></pre>
+ </div>
+ </div>
+</li>
+<li>
+<p>Now it's time start wrighting out the <code>header.h</code> file which defines macros and declares functions for UART, ADC, and PWM initialization and operation:</p>
+ <details id="admonition-suppressed-code-here-20-lines" class="admonition admonish-code" role="note" aria-labelledby="admonition-suppressed-code-here-20-lines-title">
+ <summary class="admonition-title">
+ <div id="admonition-suppressed-code-here-20-lines-title">
+<p>Suppressed code here... [20 lines]</p>
+ </div>
+ <a class="admonition-anchor-link" href="#admonition-suppressed-code-here-20-lines"></a>
+ </summary>
+ <div>
+<pre><code class="language-c">#ifndef _HEADER_H
+#define _HEADER_H
+
+#include &lt;avr/io.h&gt;
+
+#ifndef F_CPU
+#define F_CPU 16000000UL
+#endif
+
+#define BAUD 9600                        // Define baud rate
+#define BAUD_PRESCALER (((F_CPU / (BAUD * 16UL))) - 1)
+
+void UART_Init(void);
+void UART_Print(const char* str);
+void ADC_Init(void);
+uint16_t ADC_Read(uint8_t channel);
+void PWM_Init(void);
+
+#endif
+</code></pre>
+ </div>
+ </details>
+</li>
+<li>
+<p>The <code>header.c</code> file contains the definitions for the functions declared in <code>header.h</code>. These functions include UART initialization, ADC initialization and reading, and PWM configuration:</p>
+ <details id="admonition-suppressed-code-here-38-lines" class="admonition admonish-code" role="note" aria-labelledby="admonition-suppressed-code-here-38-lines-title">
+ <summary class="admonition-title">
+ <div id="admonition-suppressed-code-here-38-lines-title">
+<p>Suppressed code here... [38 lines]</p>
+ </div>
+ <a class="admonition-anchor-link" href="#admonition-suppressed-code-here-38-lines"></a>
+ </summary>
+ <div>
+<pre><code class="language-c">#include "header.h"
+
+// UART initialization for serial communication
+void UART_Init(void) {
+    UBRR0H = (BAUD_PRESCALER &gt;&gt; 8);
+    UBRR0L = BAUD_PRESCALER;
+    UCSR0B = (1 &lt;&lt; TXEN0);               // Enable transmitter
+    UCSR0C = (1 &lt;&lt; UCSZ01) | (1 &lt;&lt; UCSZ00); // 8 data bits
+}
+
+// UART Print Function to Send Strings Over UART
+void UART_Print(const char* str) {
+    while (*str) {
+        while (!(UCSR0A &amp; (1 &lt;&lt; UDRE0)));  // Wait until buffer is empty
+        UDR0 = *str++;                     // Send each character
+    }
+}
+
+// ADC initialization for reading analog values
+void ADC_Init(void) {
+    ADMUX = (1 &lt;&lt; REFS0);                // Reference voltage = AVcc, ADC0 selected
+    ADCSRA = (1 &lt;&lt; ADEN) | (1 &lt;&lt; ADPS2) | (1 &lt;&lt; ADPS1) | (1 &lt;&lt; ADPS0); // Enable ADC with prescaler 128
+}
+
+// Read analog value from specified ADC channel
+uint16_t ADC_Read(uint8_t channel) {
+    ADMUX = (ADMUX &amp; 0xF0) | (channel &amp; 0x0F); // Select ADC channel
+    ADCSRA |= (1 &lt;&lt; ADSC);                // Start conversion
+    while (ADCSRA &amp; (1 &lt;&lt; ADSC));         // Wait until conversion completes
+    return ADC;                           // Return ADC result (10-bit value)
+}
+
+// PWM initialization for Timer0
+void PWM_Init(void) {
+    DDRD |= (1 &lt;&lt; DDD6);                  // Set PD6 (OC0A) as output
+    TCCR0A = (1 &lt;&lt; COM0A1) | (1 &lt;&lt; WGM01) | (1 &lt;&lt; WGM00); // Fast PWM mode, non-inverting
+    TCCR0B = (1 &lt;&lt; CS01) | (1 &lt;&lt; CS00);   // Prescaler set to 64
+}
+</code></pre>
+ </div>
+ </details>
+</li>
+<li>
+<p>The <code>adc2pwm.c</code> file contains the main loop, which reads an ADC value, maps it to a PWM duty cycle, and sends the ADC and PWM values over UART.</p>
+ <details id="admonition-suppressed-code-here-45-lines" class="admonition admonish-code" role="note" aria-labelledby="admonition-suppressed-code-here-45-lines-title">
+ <summary class="admonition-title">
+ <div id="admonition-suppressed-code-here-45-lines-title">
+<p>Suppressed code here... [45 lines]</p>
+ </div>
+ <a class="admonition-anchor-link" href="#admonition-suppressed-code-here-45-lines"></a>
+ </summary>
+ <div>
+<pre><code class="language-c">#ifndef F_CPU
+#define F_CPU 16000000UL
+#endif
+
+#include &lt;avr/io.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;util/delay.h&gt;
+#include "header.h"
+
+int main(void) {
+    uint16_t adcValue = 0;               // Variable to store ADC value
+    uint8_t pwmValue = 0;                // Variable to store mapped PWM value
+    char buffer[10]; // Buffer for string conversion for UART
+
+    // Initialize UART, ADC, and PWM
+    UART_Init();
+    ADC_Init();
+    PWM_Init();
+
+    while (1) {
+        // Read the analog input from ADC channel 0
+        adcValue = ADC_Read(0);
+
+        // Map ADC value (0-1023) to PWM range (0-255)
+        pwmValue = ((uint32_t)adcValue * 255) / 1023;
+
+        // Output PWM value on OC0A (PD6)
+        OCR0A = pwmValue;
+
+        UART_Print("ADC Value: ");
+        itoa(adcValue, buffer, 10);       // Convert adcValue to string
+        UART_Print(buffer);
+
+        UART_Print(" | PWM Value: ");
+        itoa(pwmValue, buffer, 10);       // Convert pwmValue to string
+        UART_Print(buffer);
+
+        UART_Print("");                 // Print newline character
+
+        // Delay for stability
+        _delay_ms(50);
+    }
+}
+</code></pre>
+ </div>
+ </details>
+</li>
+<li>
+<p>This <code>Makefile</code> compiles, links, and uploads the program to the ATmega328P.</p>
+ <details id="admonition-suppressed-code-here-34-lines" class="admonition admonish-code" role="note" aria-labelledby="admonition-suppressed-code-here-34-lines-title">
+ <summary class="admonition-title">
+ <div id="admonition-suppressed-code-here-34-lines-title">
+<p>Suppressed code here... [34 lines]</p>
+ </div>
+ <a class="admonition-anchor-link" href="#admonition-suppressed-code-here-34-lines"></a>
+ </summary>
+ <div>
+<pre><code class="language-Makefile">MCU = atmega328p
+F_CPU = 16000000UL
+CC = avr-gcc
+CFLAGS = -Os -mmcu=$(MCU) -DF_CPU=$(F_CPU)
+OBJCOPY = avr-objcopy
+AVRDUDE = avrdude
+AVRDUDECONFIG = "C:\ProgramData\arduino-ide-v2\Local\Arduino15\packages\arduino\tools\avrdude\6.3.0-arduino17\etc\avrdude.conf"
+PORT = COM6
+BAUD = 115200
+PROGRAMMER = -c arduino -p $(MCU) -P $(PORT) -b $(BAUD)
+
+TARGET = adc2pwm
+SOURCES = adc2pwm.c header.c
+OBJECTS = $(SOURCES:.c=.o)
+
+all: $(TARGET).hex
+
+$(TARGET).hex: $(TARGET).elf
+    $(OBJCOPY) -O ihex -R .eeprom $&lt; $@
+
+$(TARGET).elf: $(OBJECTS)
+    $(CC) $(CFLAGS) -o $@ $(OBJECTS)
+
+%.o: %.c
+    $(CC) $(CFLAGS) -c -o $@ $&lt;
+
+upload: $(TARGET).hex
+    $(AVRDUDE) -C $(AVRDUDECONFIG) $(PROGRAMMER) -U flash:w:$(TARGET).hex
+
+clean:
+    rm -f $(OBJECTS) $(TARGET).elf $(TARGET).hex
+</code></pre>
+<blockquote>
+<p><strong>Note:</strong></p>
+<blockquote>
+<p>If you are on your machine the AVRDUDECONFIG file path will be this format:</p>
+<ul>
+<li><code>AVRDUDECONFIG = "C:\Users\YOURUSERNAME\AppData\Local\Arduino15\packages\arduino\tools\avrdude\6.3.0-arduino17\etc\avrdude.conf"</code></li>
+</ul>
+</blockquote>
+</blockquote>
+ </div>
+ </details>
+</li>
+<li>
+<p>Now every time we modify <code>adc2read.c</code> or <code>header.{c,h}</code> you can use the <code>Makefile</code></p>
+<ul>
+<li><code>make clean</code></li>
+<li><code>make</code></li>
+<li><code>make upload</code></li>
+</ul>
+<div id="admonition-info" class="admonition admonish-info" role="note" aria-labelledby="admonition-info-title">
+<div class="admonition-title">
+<div id="admonition-info-title">
+<p>Info</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-info"></a>
+</div>
+<div>
+<ul>
+<li>Windows getting the correct port run:
+<ul>
+<li>
+<p>$ wmic path Win32_SerialPort get caption, name, deviceID`</p>
+<p><img src="./figures/windows_com_ports_list.png" alt="" /></p>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<p><img src="./figures/adc2pwm_make.png" alt="" /></p>
+</li>
+</ol>
+<hr />
+<h2 id="exercise-1-vary-pwm-frequency-with-adc-input"><a class="header" href="#exercise-1-vary-pwm-frequency-with-adc-input">Exercise 1: Vary PWM Frequency with ADC Input</a></h2>
+<p>Objective: Modify the PWM frequency based on the ADC input value.</p>
+<p>Instructions:</p>
+<ol>
+<li>
+<p>Use the ADC value (0–1023) from ADC_Read(0) to control the PWM frequency on Timer0.</p>
+</li>
+<li>
+<p>Modify the TCCR0B register to adjust the prescaler based on ADC readings, switching between prescalers of 8, 64, 256, and 1024. For example:</p>
+<ul>
+<li>
+<p>0–255: Prescaler = 1024</p>
+</li>
+<li>
+<p>256–511: Prescaler = 256</p>
+</li>
+<li>
+<p>512–767: Prescaler = 64</p>
+</li>
+<li>
+<p>768–1023: Prescaler = 8</p>
+</li>
+</ul>
+</li>
+<li>
+<p>Print the current PWM frequency setting to the UART.</p>
+</li>
+</ol>
+<hr />
+<h2 id="exercise-2-implement-uart-commands-to-control-pwm-duty-cycle"><a class="header" href="#exercise-2-implement-uart-commands-to-control-pwm-duty-cycle">Exercise 2: Implement UART Commands to Control PWM Duty Cycle</a></h2>
+<p>Objective: Enable the ATmega328P to receive commands over UART to adjust the PWM duty cycle.</p>
+<p>Instructions:</p>
+<ol>
+<li>
+<p>Implement a function to read a character from UART and interpret it as a command.</p>
+<ul>
+<li>For instance, send + over UART to increase the PWM duty cycle by 10, and - to decrease it by 10.</li>
+</ul>
+</li>
+<li>
+<p>Ensure the PWM duty cycle stays within the range of 0–255.</p>
+</li>
+<li>
+<p>Print the updated PWM value to UART whenever it changes.</p>
+</li>
+</ol>
+<hr />
+<h2 id="exercise-3-use-adc-on-multiple-channels-to-control-multiple-pwms"><a class="header" href="#exercise-3-use-adc-on-multiple-channels-to-control-multiple-pwms">Exercise 3: Use ADC on Multiple Channels to Control Multiple PWMs</a></h2>
+<p>Objective: Expand the program to read multiple ADC channels and use each reading to control a different PWM pin.</p>
+<p>Instructions:</p>
+<ol>
+<li>
+<p>Configure the ADC to read from channels ADC0 and ADC1.</p>
+</li>
+<li>
+<p>Use the reading from ADC0 to control PWM on PD6 (OC0A) and ADC1 to control PWM on PD5 (OC0B).</p>
+</li>
+<li>
+<p>Print both ADC values and both PWM values over UART.</p>
+</li>
+</ol>
+<hr />
+<h2 id="exercise-4-temperature-sensing-with-the-internal-temperature-sensor"><a class="header" href="#exercise-4-temperature-sensing-with-the-internal-temperature-sensor">Exercise 4: Temperature Sensing with the Internal Temperature Sensor</a></h2>
+<p>Objective: Use the ATmega328P’s internal temperature sensor to display temperature readings over UART and change the brightness of the LED</p>
+<p>Instructions:</p>
+<ol>
+<li>
+<p>Set up the ADC to read from the internal temperature sensor (using the appropriate MUX setting).</p>
+</li>
+<li>
+<p>Use the ADC reading to calculate temperature based on the ATmega328P’s temperature sensor calibration (refer to the ATmega328P datasheet for details).</p>
+</li>
+<li>
+<p>Map value for outputting to pwm to change brightness of LED.</p>
+</li>
+<li>
+<p>Print the calculated temperature to UART every second.</p>
+</li>
+</ol>
+
+                    </main>
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../EmbeddedC/pwm.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../IntroToRust/IntroToRust.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../EmbeddedC/pwm.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../IntroToRust/IntroToRust.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src=".././theme/pagetoc.js"></script>
+
+
+    </div>
+    </body>
+</html>

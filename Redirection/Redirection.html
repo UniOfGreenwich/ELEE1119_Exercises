@@ -1,0 +1,768 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Redirection - Advanced Computer Engineering</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href=".././theme/pagetoc.css">
+        <link rel="stylesheet" href=".././theme/css/mdbook-admonish.css">
+        <link rel="stylesheet" href=".././theme/css/code.css">
+        <link rel="stylesheet" href=".././theme/css/terminal.css">
+        <link rel="stylesheet" href=".././theme/css/output.css">
+
+        <!-- MathJax -->
+        <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="burgundy">Burgundy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="dracula">Dracula</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ecoFriend">EcoFriend</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="pinkrose">Pinkrose</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="space">Space</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="sustain">Sustain</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="tokyonight">Tokyonight</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Advanced Computer Engineering</h1>
+
+                    <div class="right-buttons">
+                        <a href="https://github.com/uniofgreenwich/ELEE1119_Exercises" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        <a href="https://github.com/uniofgreenwich/ELEE1119_Exercises/edit/main/src/Redirection/Redirection.md" title="Suggest an edit" aria-label="Suggest an edit">
+                            <i id="git-edit-button" class="fa fa-edit"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main><div class="sidetoc"><nav class="pagetoc"></nav></div>
+                        <h1 id="redirection"><a class="header" href="#redirection">Redirection</a></h1>
+<p>In this lab, we will review redirection operators encountered during bash scripting and their specific meaning.</p>
+<hr />
+<h2 id="1-what-is-a-file-descriptor"><a class="header" href="#1-what-is-a-file-descriptor">1. What is a File descriptor?</a></h2>
+<p>When you open a file in Linux, each file will be assigned with an Integer and this information is stored in the kernel. This way the kernel knows what files are opened and which process has opened the files. The assigned Integer number is what we call file descriptor (shortly FD).</p>
+<p>By default, every program will start with three file descriptors.</p>
+<ul>
+<li>FD 0 -&gt; Standard Input(stdin) -&gt; Keyboard</li>
+<li>FD 1 -&gt; Standard Output(Stdout) -&gt; Display(Terminal)</li>
+<li>FD 2 -&gt; Standard Error(Stderr) -&gt; Display(Terminal)</li>
+</ul>
+<p>You can see the file descriptors in <code>/dev</code> directory:</p>
+<ul>
+<li>
+<p>Type the following:</p>
+<div id="admonition-terminal" class="admonition admonish-terminal" role="note" aria-labelledby="admonition-terminal-title">
+<div class="admonition-title">
+<div id="admonition-terminal-title">
+<p>Terminal</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-terminal"></a>
+</div>
+<div>
+<pre><code class="language-sh">$ ls -l /dev/std*
+</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Ouput:</p>
+<div id="admonition-output" class="admonition admonish-output" role="note" aria-labelledby="admonition-output-title">
+<div class="admonition-title">
+<div id="admonition-output-title">
+<p>Output</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-output"></a>
+</div>
+<div>
+<pre><code class="language-sh">lrwxrwxrwx 1 root root 15 Mar  5 20:19 /dev/stderr -&gt; /proc/self/fd/2
+lrwxrwxrwx 1 root root 15 Mar  5 20:19 /dev/stdin -&gt; /proc/self/fd/0
+lrwxrwxrwx 1 root root 15 Mar  5 20:19 /dev/stdout -&gt; /proc/self/fd/1
+</code></pre>
+</div>
+</div>
+</li>
+</ul>
+<p>Stdin (FD0) gets input from the keyboard. stdout (FD1) and stderr (FD2) are sent to the terminal. When using Pipes and Redirections, you can change the way where input is passed from and output and errors are sent to.</p>
+<div id="admonition-info" class="admonition admonish-info" role="note" aria-labelledby="admonition-info-title">
+<div class="admonition-title">
+<div id="admonition-info-title">
+<p>Info</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-info"></a>
+</div>
+<div>
+<p>The <code>proc</code> filesystem is a pseudo-filesystem which provides an interface to kernel data structures.  It is commonly mounted at <code>/proc.</code></p>
+</div>
+</div>
+<hr />
+<h2 id="2-redirecting-output-to-a-file"><a class="header" href="#2-redirecting-output-to-a-file">2. Redirecting output to a file</a></h2>
+<p>As stated earlier, output (<code>stdout</code>) and error (<code>stderr</code>) of any program is sent to the terminal. You can use the redirection operator <code>&gt;</code> to write the <code>stdout</code> and <code>stderr</code> to a file.</p>
+<p>Take a look at the below example. I am running the <code>uname -mrs</code> command and redirecting the output to a file named <code>uname.log</code>.</p>
+<p>Type the following:</p>
+<div id="admonition-terminal-1" class="admonition admonish-terminal" role="note" aria-labelledby="admonition-terminal-1-title">
+<div class="admonition-title">
+<div id="admonition-terminal-1-title">
+<p>Terminal</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-terminal-1"></a>
+</div>
+<div>
+<pre><code class="language-sh">$ uname -mrs &gt; uname.log
+</code></pre>
+</div>
+</div>
+<p>Then type:</p>
+<div id="admonition-output-1" class="admonition admonish-output" role="note" aria-labelledby="admonition-output-1-title">
+<div class="admonition-title">
+<div id="admonition-output-1-title">
+<p>Output</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-output-1"></a>
+</div>
+<div>
+<pre><code class="language-sh">$ cat uname.log
+Linux 5.10.0-8-amd64 x86_64
+</code></pre>
+</div>
+</div>
+<p>And then empty the file by using the <code>echo</code> command with no arguments or flags  and <code>&gt;</code>:</p>
+<div id="admonition-terminal-2" class="admonition admonish-terminal" role="note" aria-labelledby="admonition-terminal-2-title">
+<div class="admonition-title">
+<div id="admonition-terminal-2-title">
+<p>Terminal</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-terminal-2"></a>
+</div>
+<div>
+<pre><code class="language-sh">echo &gt; uname.log
+</code></pre>
+</div>
+</div>
+<div id="admonition-info-1" class="admonition admonish-info" role="note" aria-labelledby="admonition-info-1-title">
+<div class="admonition-title">
+<div id="admonition-info-1-title">
+<p>Info</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-info-1"></a>
+</div>
+<div>
+<p>When using <code>&gt;</code> operator, if the file is not available, it will be created. And if the file exists already, it will be overridden with new contents.</p>
+</div>
+</div>
+<p>You can also use the file descriptor number for stdout(1) before the redirection operator to redirect output to a file.</p>
+<p>Try this too:</p>
+<div id="admonition-terminal-3" class="admonition admonish-terminal" role="note" aria-labelledby="admonition-terminal-3-title">
+<div class="admonition-title">
+<div id="admonition-terminal-3-title">
+<p>Terminal</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-terminal-3"></a>
+</div>
+<div>
+<pre><code class="language-sh">$ uname -mrs 1&gt; uname.log
+</code></pre>
+</div>
+</div>
+<div id="admonition-info-2" class="admonition admonish-info" role="note" aria-labelledby="admonition-info-2-title">
+<div class="admonition-title">
+<div id="admonition-info-2-title">
+<p>Info</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-info-2"></a>
+</div>
+<div>
+<p>A single redirection operator (<code>&gt;</code>) will only override the contents of a file, if the file already exists. However, if you want to append the contents instead of overwriting to the same file, use double redirection operator (i.e. <code>&gt;&gt;</code>). You can also use stdout file descriptor(1) here too.</p>
+</div>
+</div>
+<p>Next type:</p>
+<div id="admonition-terminal-4" class="admonition admonish-terminal" role="note" aria-labelledby="admonition-terminal-4-title">
+<div class="admonition-title">
+<div id="admonition-terminal-4-title">
+<p>Terminal</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-terminal-4"></a>
+</div>
+<div>
+<pre><code class="language-sh">$ whoami &gt;&gt; uname.log
+</code></pre>
+</div>
+</div>
+<p>and:</p>
+<div id="admonition-terminal-5" class="admonition admonish-terminal" role="note" aria-labelledby="admonition-terminal-5-title">
+<div class="admonition-title">
+<div id="admonition-terminal-5-title">
+<p>Terminal</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-terminal-5"></a>
+</div>
+<div>
+<pre><code class="language-sh">$ echo $SHELL 1&gt;&gt; uname.log
+</code></pre>
+</div>
+</div>
+<p>Finally:</p>
+<div id="admonition-terminal-6" class="admonition admonish-terminal" role="note" aria-labelledby="admonition-terminal-6-title">
+<div class="admonition-title">
+<div id="admonition-terminal-6-title">
+<p>Terminal</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-terminal-6"></a>
+</div>
+<div>
+<pre><code class="language-sh">$ cat uname.log
+</code></pre>
+</div>
+</div>
+<div id="admonition-output-2" class="admonition admonish-output" role="note" aria-labelledby="admonition-output-2-title">
+<div class="admonition-title">
+<div id="admonition-output-2-title">
+<p>Output</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-output-2"></a>
+</div>
+<div>
+<pre><code class="language-sh">Linux 5.4.0-1091-azure x86_64
+jovyan
+/bin/bash
+</code></pre>
+</div>
+</div>
+<hr />
+<h2 id="3-how-to-handle-stderr"><a class="header" href="#3-how-to-handle-stderr">3. How to handle Stderr</a></h2>
+<p>Every program generates both output and error and both are sent to the terminal. In many cases, you may wish to either ignore the error or isolate the errors and redirect it to a separate file for troubleshooting.</p>
+<p>Let's take a simple example of running the <code>ls</code> command to see how this works.Say you are trying to list two files out of which only one is present.</p>
+<p>Target:</p>
+<div id="admonition-terminal-7" class="admonition admonish-terminal" role="note" aria-labelledby="admonition-terminal-7-title">
+<div class="admonition-title">
+<div id="admonition-terminal-7-title">
+<p>Terminal</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-terminal-7"></a>
+</div>
+<div>
+<pre><code class="language-sh">$ ls -l uname.log u1.log
+</code></pre>
+</div>
+</div>
+<p>and you will see:</p>
+<div id="admonition-error" class="admonition admonish-danger" role="note" aria-labelledby="admonition-error-title">
+<div class="admonition-title">
+<div id="admonition-error-title">
+<p>Error</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-error"></a>
+</div>
+<div>
+<pre><code class="language-sh">ls: cannot access 'u1.log': No such file or directory
+-rw-r--r-- 1 jovyan users 1 Mar  6 14:30 uname.log
+</code></pre>
+</div>
+</div>
+<p>Here you are getting both error and output in the terminal.</p>
+<p>Now you will use the same <code>ls</code> command again but this time redirecting the output to a file.</p>
+<div id="admonition-error-1" class="admonition admonish-danger" role="note" aria-labelledby="admonition-error-1-title">
+<div class="admonition-title">
+<div id="admonition-error-1-title">
+<p>Error</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-error-1"></a>
+</div>
+<div>
+<pre><code class="language-sh">$ ls -l uname.log u1.log &gt; ls.op
+ls: cannot access 'u1.log': No such file or directory
+</code></pre>
+</div>
+</div>
+<p>As you can see from the output <code>&gt;</code> operator redirects stdout(1) to a file but stderr(2) is sent to the terminal.</p>
+<p>To redirect stderr to a file use the <code>2&gt;</code> operator. It is mandatory to use the file descriptor for stderr(2) before the redirection operator <code>&gt;</code> that will send the error alone to a file.</p>
+<div id="admonition-terminal-8" class="admonition admonish-terminal" role="note" aria-labelledby="admonition-terminal-8-title">
+<div class="admonition-title">
+<div id="admonition-terminal-8-title">
+<p>Terminal</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-terminal-8"></a>
+</div>
+<div>
+<pre><code class="language-sh">ls -l uname.log u1.log &gt; ls.op 2&gt; ls.err
+</code></pre>
+</div>
+</div>
+<p>Run the following command to see the contents of <code>ls.op</code> and <code>ls.err</code></p>
+<div id="admonition-error-2" class="admonition admonish-danger" role="note" aria-labelledby="admonition-error-2-title">
+<div class="admonition-title">
+<div id="admonition-error-2-title">
+<p>Error</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-error-2"></a>
+</div>
+<div>
+<pre><code class="language-sh">$ cat &lt; ls.err
+ls: cannot access 'u1.log': No such file or directory
+</code></pre>
+</div>
+</div>
+<p>Now, stdout and stderr are written to separate files. You can also send stdout and stderr to a single file too.</p>
+<div id="admonition-terminal-9" class="admonition admonish-terminal" role="note" aria-labelledby="admonition-terminal-9-title">
+<div class="admonition-title">
+<div id="admonition-terminal-9-title">
+<p>Terminal</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-terminal-9"></a>
+</div>
+<div>
+<pre><code class="language-sh">ls -l uname.log u1.log 1&gt; ls.op 2&gt; ls.op
+</code></pre>
+</div>
+</div>
+<p>From <strong>bash 4.4</strong>, you can also use &amp;&gt; sign to redirect both stdout and stderr to a file.</p>
+<hr />
+<h2 id="4-what-is-devnull"><a class="header" href="#4-what-is-devnull">4. What is /dev/null?</a></h2>
+<p>Null is a character special file that accepts input and discards the input and produces no output. To put this simply, null discards whatever you redirect to it.</p>
+<p>Try:</p>
+<pre><code class="language-admonial terminal">
+```sh
+$ ls -l /dev/null
+```
+
+</code></pre>
+<p>Output:</p>
+<pre><code class="language-admonial output">
+```sh
+crw-rw-rw- 1 root root 1, 3 Mar  5 20:19 /dev/null
+```
+
+</code></pre>
+<p>Why does the null matter in redirection? You might wonder. In some cases, you may wish not to print or store stdout or stderr. In that case, you can redirect either stdout or stderr to <code>/dev/null</code> which will discard the stream of input.</p>
+<div id="admonition-info-3" class="admonition admonish-info" role="note" aria-labelledby="admonition-info-3-title">
+<div class="admonition-title">
+<div id="admonition-info-3-title">
+<p>Info</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-info-3"></a>
+</div>
+<div>
+<p><code>c</code> character device based file Within Linux devices such as hardware are characterised in two ways:
+Character Devices (<code>c</code>) which are devices which transfer data in characters also known as bytes or bits such as mice, speaker etc.</p>
+<p>The file type is one of the following characters:
+?-   <code>-</code>  regular file</p>
+<ul>
+<li><code>b</code>  block special file</li>
+<li><code>c</code>  character special file</li>
+<li><code>C</code>  high performance ("contiguous data") file</li>
+<li><code>d</code>  directory</li>
+<li><code>D</code>  door (Solaris 2.5 and up)</li>
+<li><code>l</code>  symbolic link</li>
+<li><code>M</code>  off-line ("migrated") file (Cray DMF)</li>
+<li><code>n</code>  network special file (HP-UX)</li>
+<li><code>p</code>  FIFO (named pipe)</li>
+<li><code>P</code>  port (Solaris 10 and up)</li>
+<li><code>s</code>  socket</li>
+<li><code>?</code>  some other file type</li>
+</ul>
+</div>
+</div>
+<p>Try the following commands:</p>
+<ul>
+<li>
+<p>Stdout and Stderr to Null</p>
+  <div id="admonition-terminal-10" class="admonition admonish-terminal" role="note" aria-labelledby="admonition-terminal-10-title">
+  <div class="admonition-title">
+  <div id="admonition-terminal-10-title">
+<p>Terminal</p>
+  </div>
+  <a class="admonition-anchor-link" href="#admonition-terminal-10"></a>
+  </div>
+  <div>
+<pre><code class="language-sh">$ date &gt; /dev/null
+</code></pre>
+  </div>
+  </div>
+</li>
+<li>
+<p>Stdout to Null</p>
+ <div id="admonition-terminal-11" class="admonition admonish-terminal" role="note" aria-labelledby="admonition-terminal-11-title">
+ <div class="admonition-title">
+ <div id="admonition-terminal-11-title">
+<p>Terminal</p>
+ </div>
+ <a class="admonition-anchor-link" href="#admonition-terminal-11"></a>
+ </div>
+ <div>
+<pre><code class="language-sh">$ date 1&gt; /dev/null    
+</code></pre>
+ </div>
+ </div>
+</li>
+<li>
+<p>WRONG COMMAND, Stderr to Null</p>
+ <div id="admonition-terminal-12" class="admonition admonish-terminal" role="note" aria-labelledby="admonition-terminal-12-title">
+ <div class="admonition-title">
+ <div id="admonition-terminal-12-title">
+<p>Terminal</p>
+ </div>
+ <a class="admonition-anchor-link" href="#admonition-terminal-12"></a>
+ </div>
+ <div>
+<pre><code> ```sh
+</code></pre>
+<p>$ dateee 2&gt; /dev/null</p>
+<pre><code>
+&lt;/div&gt;
+&lt;/div&gt;- Stdout/Stderr to Null
+
+&lt;div id="admonition-error-3" class="admonition admonish-danger" role="note" aria-labelledby="admonition-error-3-title"&gt;
+&lt;div class="admonition-title"&gt;
+&lt;div id="admonition-error-3-title"&gt;
+
+Error
+
+&lt;/div&gt;
+&lt;a class="admonition-anchor-link" href="#admonition-error-3"&gt;&lt;/a&gt;
+&lt;/div&gt;
+&lt;div&gt;
+
+
+```sh
+$ date &amp;&gt; /dev/null    
+</code></pre>
+ </div>
+ </div>
+</li>
+</ul>
+<hr />
+<h2 id="5-input-redirection-in-bash"><a class="header" href="#5-input-redirection-in-bash">5. Input Redirection in Bash</a></h2>
+<p>Similar to how you are redirecting the output and error to a file, you can also pass inputs to a command using input redirection operator (<code>&lt;</code>).</p>
+<p>Let’s start with a simple word count program:</p>
+<div id="admonition-terminal-13" class="admonition admonish-terminal" role="note" aria-labelledby="admonition-terminal-13-title">
+<div class="admonition-title">
+<div id="admonition-terminal-13-title">
+<p>Terminal</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-terminal-13"></a>
+</div>
+<div>
+<pre><code class="language-sh">$ wc -l &lt; uname.log
+</code></pre>
+</div>
+</div>
+<p>Here, you are redirecting the contents of <code>uname.log</code> file to the word count to find the number of lines.</p>
+<p><strong>Output:</strong></p>
+<div id="admonition-output-3" class="admonition admonish-output" role="note" aria-labelledby="admonition-output-3-title">
+<div class="admonition-title">
+<div id="admonition-output-3-title">
+<p>Output</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-output-3"></a>
+</div>
+<div>
+<pre><code class="language-sh">1
+</code></pre>
+</div>
+</div>
+<p>You can also pass stdin file descriptor (0) when redirecting the input.</p>
+<p>Try this:</p>
+<div id="admonition-output-4" class="admonition admonish-output" role="note" aria-labelledby="admonition-output-4-title">
+<div class="admonition-title">
+<div id="admonition-output-4-title">
+<p>Output</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-output-4"></a>
+</div>
+<div>
+<pre><code class="language-sh">$ wc -l 0&lt; uname.log
+1
+</code></pre>
+</div>
+</div>
+<p>You can combine the input and output redirection operators as shown below.</p>
+<div id="admonition-terminal-14" class="admonition admonish-terminal" role="note" aria-labelledby="admonition-terminal-14-title">
+<div class="admonition-title">
+<div id="admonition-terminal-14-title">
+<p>Terminal</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-terminal-14"></a>
+</div>
+<div>
+<pre><code class="language-sh">wc -l &lt; uname.log &amp;&gt; wc.op
+</code></pre>
+</div>
+</div>
+<p><strong>Output:</strong></p>
+<div id="admonition-output-5" class="admonition admonish-output" role="note" aria-labelledby="admonition-output-5-title">
+<div class="admonition-title">
+<div id="admonition-output-5-title">
+<p>Output</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-output-5"></a>
+</div>
+<div>
+<pre><code class="language-sh">$ cat wc.op 
+1
+</code></pre>
+</div>
+</div>
+<p>Input redirection will be used along with a while loop to read the content of a file line by line.</p>
+<hr />
+<h2 id="6-input-redirection-will-be-used-along-with-a-while-loop-to-read-the-content-of-a-file-line-by-line"><a class="header" href="#6-input-redirection-will-be-used-along-with-a-while-loop-to-read-the-content-of-a-file-line-by-line">6. Input redirection will be used along with a while loop to read the content of a file line by line.</a></h2>
+<p>Take a look at the below example. I am passing the <code>/etc/passwd</code> file as the input to the while command. Here the read command will read line by line and store it in the variable <code>VAL</code> and further down in the loop condition is written to check if the user is available.</p>
+<p>Create a bash script called <code>alertUser.sh</code></p>
+<div id="admonition-terminal-15" class="admonition admonish-terminal" role="note" aria-labelledby="admonition-terminal-15-title">
+<div class="admonition-title">
+<div id="admonition-terminal-15-title">
+<p>Terminal</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-terminal-15"></a>
+</div>
+<div>
+<pre><code class="language-sh">nano alertUser.sh
+</code></pre>
+</div>
+</div>
+<p>and fill with the following code:</p>
+<div id="admonition-code" class="admonition admonish-code" role="note" aria-labelledby="admonition-code-title">
+<div class="admonition-title">
+<div id="admonition-code-title">
+<p>Code</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-code"></a>
+</div>
+<div>
+<pre><code class="language-sh">#! /usr/bin/env bash
+while read VAL; do   
+  NAME=$(echo $VAL | awk -F  ":" '/1/ {print $1}' )
+  if [[ $NAME -eq $(cat &lt; uname.log | awk 'NR==2') ]];then
+   echo "User spotted"
+   break
+  fi
+done &lt; /etc/passwd
+</code></pre>
+</div>
+</div>
+<p>If you have followed this lab exactly,  <code>$(cat &lt; uname.log | awk 'NR==2')</code> should contain your system username.</p>
+<p>This is not an optimal way to achieve the task of finding the user but for demonstration purposes, this will do.</p>
+<p>Now, make the script executable and run it:</p>
+<div id="admonition-terminal-16" class="admonition admonish-terminal" role="note" aria-labelledby="admonition-terminal-16-title">
+<div class="admonition-title">
+<div id="admonition-terminal-16-title">
+<p>Terminal</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-terminal-16"></a>
+</div>
+<div>
+<pre><code class="language-sh">$ chmod +x alertUser.sh
+</code></pre>
+</div>
+</div>
+<p><strong>Ouput:</strong></p>
+<div id="admonition-output-6" class="admonition admonish-output" role="note" aria-labelledby="admonition-output-6-title">
+<div class="admonition-title">
+<div id="admonition-output-6-title">
+<p>Output</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-output-6"></a>
+</div>
+<div>
+<pre><code class="language-sh">$ bash alertUser.sh
+User spotted
+</code></pre>
+</div>
+</div>
+<div id="admonition-extra" class="admonition admonish-example" role="note" aria-labelledby="admonition-extra-title">
+<div class="admonition-title">
+<div id="admonition-extra-title">
+<p>Extra</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-extra"></a>
+</div>
+<div>
+<p>Run these commands from the script seperatley to explore what is going on</p>
+<ul>
+<li><code>cat /etc/passwd</code></li>
+<li><code>cat /etc/passwd | awk -F  ":" '/1/ {print $1}'</code></li>
+<li><code>cat &lt; uname.log | awl 'NR==2')</code></li>
+</ul>
+</div>
+</div>
+                    </main>
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../IntroToRust/FirstProgram.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../Bash/Bash_Scripting.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../IntroToRust/FirstProgram.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../Bash/Bash_Scripting.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src=".././theme/pagetoc.js"></script>
+
+
+    </div>
+    </body>
+</html>

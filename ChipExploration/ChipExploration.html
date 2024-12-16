@@ -1,0 +1,623 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Exploring the Chips - Advanced Computer Engineering</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href=".././theme/pagetoc.css">
+        <link rel="stylesheet" href=".././theme/css/mdbook-admonish.css">
+        <link rel="stylesheet" href=".././theme/css/code.css">
+        <link rel="stylesheet" href=".././theme/css/terminal.css">
+        <link rel="stylesheet" href=".././theme/css/output.css">
+
+        <!-- MathJax -->
+        <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="burgundy">Burgundy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="dracula">Dracula</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ecoFriend">EcoFriend</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="pinkrose">Pinkrose</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="space">Space</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="sustain">Sustain</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="tokyonight">Tokyonight</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Advanced Computer Engineering</h1>
+
+                    <div class="right-buttons">
+                        <a href="https://github.com/uniofgreenwich/ELEE1119_Exercises" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        <a href="https://github.com/uniofgreenwich/ELEE1119_Exercises/edit/main/src/ChipExploration/ChipExploration.md" title="Suggest an edit" aria-label="Suggest an edit">
+                            <i id="git-edit-button" class="fa fa-edit"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main><div class="sidetoc"><nav class="pagetoc"></nav></div>
+                        <h1 id="exploring-the-chips"><a class="header" href="#exploring-the-chips">Exploring the Chips</a></h1>
+<h2 id="understanding-the-sysbusi2cdevices-directory-on-the-beagleboard"><a class="header" href="#understanding-the-sysbusi2cdevices-directory-on-the-beagleboard">Understanding the <code>/sys/bus/i2c/devices/</code> Directory on the BeagleBoard</a></h2>
+<p>The BeagleBoard, like other Linux-based embedded systems, utilizes the sysfs interface to provide a standardized way to interact with hardware components, such as I2C devices. The directory <code>/sys/bus/i2c/devices/</code> is specifically related to the I2C (Inter-Integrated Circuit) bus, which is commonly used for connecting low-speed peripherals to the main board's processor.</p>
+<h3 id="1-what-is-i2c"><a class="header" href="#1-what-is-i2c">1. What is I2C?</a></h3>
+<p>I2C is a synchronous, multi-master, multi-slave, packet-switched, single-ended, serial communication bus. It's widely used for attaching lower-speed peripheral ICs to processors and microcontrollers in short-distance, intra-board communication.</p>
+<h3 id="2-structure-of-sysbusi2cdevices"><a class="header" href="#2-structure-of-sysbusi2cdevices">2. Structure of <code>/sys/bus/i2c/devices/</code></a></h3>
+<p>The <code>/sys/bus/i2c/devices/</code> directory in Linux contains a list of all the I2C devices currently recognized by the system. This directory is dynamically populated by the kernel when it detects devices on the I2C buses.</p>
+<p>Each entry in this directory follows a naming convention based on the bus number and the device address:</p>
+<div id="admonition-terminal" class="admonition admonish-terminal" role="note" aria-labelledby="admonition-terminal-title">
+<div class="admonition-title">
+<div id="admonition-terminal-title">
+<p>Terminal</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-terminal"></a>
+</div>
+<div>
+<pre><code>i2c-&lt;bus number&gt;-&lt;device address&gt;
+</code></pre>
+</div>
+</div>
+<div id="admonition-example" class="admonition admonish-example" role="note" aria-labelledby="admonition-example-title">
+<div class="admonition-title">
+<div id="admonition-example-title">
+<p>Example</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-example"></a>
+</div>
+<div>
+<pre><code>i2c-1-0050
+</code></pre>
+<ul>
+<li><strong><code>i2c-1</code></strong>: This indicates the I2C bus number (<code>1</code> in this case).</li>
+<li><strong><code>0050</code></strong>: This is the hexadecimal address of the device on the I2C bus (<code>0x50</code>).</li>
+</ul>
+</div>
+</div>
+<h3 id="3-interacting-with-i2c-devices"><a class="header" href="#3-interacting-with-i2c-devices">3. Interacting with I2C Devices</a></h3>
+<p>To interact with I2C devices through <code>/sys/bus/i2c/devices/</code>, you need to understand the basic components provided in this directory for each device.</p>
+<h4 id="example-structure-for-an-i2c-device"><a class="header" href="#example-structure-for-an-i2c-device">Example Structure for an I2C Device</a></h4>
+<p>Within each device directory (e.g., <code>/sys/bus/i2c/devices/i2c-1-0050/</code>), you'll find several files and subdirectories, such as:</p>
+<ul>
+<li><strong><code>name</code></strong>: This file contains the name of the I2C device.</li>
+<li><strong><code>modalias</code></strong>: This file contains the modalias of the device, used by the kernel to load the appropriate driver.</li>
+<li><strong><code>subsystem</code></strong>: This symlink points to the subsystem (<code>i2c</code> in this case) under which this device is categorized.</li>
+<li><strong><code>uevent</code></strong>: This file contains attributes that the kernel sends to <code>udev</code> when the device is added or removed.</li>
+<li><strong><code>driver</code></strong>: A symlink to the device's driver if it's bound to one.</li>
+<li><strong><code>power</code></strong>: A directory that contains power management information for the device.</li>
+</ul>
+<h3 id="4-common-tasks"><a class="header" href="#4-common-tasks">4. Common Tasks</a></h3>
+<ol>
+<li>
+<p><strong>Listing I2C Devices</strong>:<br />
+You can list all I2C devices connected to the BeagleBoard using the following command:</p>
+<div id="admonition-terminal-1" class="admonition admonish-terminal" role="note" aria-labelledby="admonition-terminal-1-title">
+<div class="admonition-title">
+<div id="admonition-terminal-1-title">
+<p>Terminal</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-terminal-1"></a>
+</div>
+<div>
+<pre><code class="language-bash">ls /sys/bus/i2c/devices/
+</code></pre>
+</div>
+</div>
+<p>This command will output all detected I2C devices with their respective bus numbers and addresses.</p>
+</li>
+<li>
+<p><strong>Interpreting the I2C Devices Listed in <code>/sys/bus/i2c/devices/</code> on the BeagleBoard</strong></p>
+<p>You ran the following command to list all I2C devices on the BeagleBoard:</p>
+ <div id="admonition-output" class="admonition admonish-output" role="note" aria-labelledby="admonition-output-title">
+ <div class="admonition-title">
+ <div id="admonition-output-title">
+<p>Output</p>
+ </div>
+ <a class="admonition-anchor-link" href="#admonition-output"></a>
+ </div>
+ <div>
+<pre><code class="language-sh">$ tail -v -n +1 /sys/bus/i2c/devices/*/name
+==&gt; /sys/bus/i2c/devices/0-0024/name &lt;==
+tps65217
+
+==&gt; /sys/bus/i2c/devices/0-0034/name &lt;==
+tda9950
+
+==&gt; /sys/bus/i2c/devices/0-0050/name &lt;==
+24c256
+
+==&gt; /sys/bus/i2c/devices/0-0070/name &lt;==
+tda998x
+
+==&gt; /sys/bus/i2c/devices/2-0054/name &lt;==
+24c256
+
+==&gt; /sys/bus/i2c/devices/2-0055/name &lt;==
+24c256
+
+==&gt; /sys/bus/i2c/devices/2-0056/name &lt;==
+24c256
+
+==&gt; /sys/bus/i2c/devices/2-0057/name &lt;==
+24c256
+
+==&gt; /sys/bus/i2c/devices/i2c-0/name &lt;==
+OMAP I2C adapter
+
+==&gt; /sys/bus/i2c/devices/i2c-1/name &lt;==
+OMAP I2C adapter
+
+==&gt; /sys/bus/i2c/devices/i2c-2/name &lt;==
+OMAP I2C adapter
+</code></pre>
+ </div>
+ </div>
+</li>
+</ol>
+<ul>
+<li>
+<p><strong>Explanation of Each Device:</strong></p>
+<p>Below is the breakdown of each entry in the output:</p>
+<ol>
+<li>
+<p><strong><code>/sys/bus/i2c/devices/0-0024/name</code></strong></p>
+<ul>
+<li><strong>Device Address</strong>: <code>0x24</code> (hexadecimal)</li>
+<li><strong>Bus Number</strong>: <code>0</code></li>
+<li><strong>Device Name</strong>: <code>tps65217</code></li>
+<li><strong>Description</strong>: The <a href="https://www.ti.com/product/TPS65217"><code>tps65217</code></a> is a power management IC commonly used on BeagleBoards to manage power supplies.</li>
+</ul>
+</li>
+<li>
+<p><strong><code>/sys/bus/i2c/devices/0-0034/name</code></strong></p>
+<ul>
+<li><strong>Device Address</strong>: <code>0x34</code> (hexadecimal)</li>
+<li><strong>Bus Number</strong>: <code>0</code></li>
+<li><strong>Device Name</strong>: <code>tda9950</code></li>
+<li><strong>Description</strong>: The <a href="https://www.digikey.co.uk/en/htmldatasheets/production/667036/0/0/1/tda9950"><code>tda9950</code></a> is an HDMI CEC (Consumer Electronics Control) controller, often used in devices that support HDMI connections.</li>
+</ul>
+</li>
+<li>
+<p><strong><code>/sys/bus/i2c/devices/0-0050/name</code></strong></p>
+<ul>
+<li><strong>Device Address</strong>: <code>0x50</code> (hexadecimal)</li>
+<li><strong>Bus Number</strong>: <code>0</code></li>
+<li><strong>Device Name</strong>: <code>24c256</code></li>
+<li><strong>Description</strong>: []<code>24c256</code>](https://ww1.microchip.com/downloads/en/DeviceDoc/Atmel-8568-SEEPROM-AT24C256C-Datasheet.pdf) refers to an EEPROM (Electrically Erasable Programmable Read-Only Memory) chip with a capacity of 256 kilobits, often used for storing configuration data.</li>
+</ul>
+</li>
+<li>
+<p><strong><code>/sys/bus/i2c/devices/0-0070/name</code></strong></p>
+<ul>
+<li><strong>Device Address</strong>: <code>0x70</code> (hexadecimal)</li>
+<li><strong>Bus Number</strong>: <code>0</code></li>
+<li><strong>Device Name</strong>: <code>tda998x</code></li>
+<li><strong>Description</strong>: <a href="https://media.digikey.com/pdf/Data%20Sheets/NXP%20PDFs/TDA9981B.pdf"><code>tda998x</code></a> is an HDMI transmitter controller used to convert video signals for HDMI output.</li>
+</ul>
+</li>
+<li>
+<p><strong><code>/sys/bus/i2c/devices/2-0054/name</code></strong> to <strong><code>/sys/bus/i2c/devices/2-0057/name</code></strong></p>
+<ul>
+<li><strong>Device Addresses</strong>: <code>0x54</code>, <code>0x55</code>, <code>0x56</code>, <code>0x57</code> (hexadecimal)</li>
+<li><strong>Bus Number</strong>: <code>2</code></li>
+<li><strong>Device Name</strong>: <a href="https://www.microchip.com/en-us/product/AT24C256C"><code>24c256</code></a></li>
+<li><strong>Description</strong>: These are additional EEPROM chips, possibly different banks or sections of memory, all sharing the same I2C bus but with different addresses.</li>
+</ul>
+</li>
+<li>
+<p><strong><code>/sys/bus/i2c/devices/i2c-0/name</code></strong>, <strong><code>/sys/bus/i2c/devices/i2c-1/name</code></strong>, <strong><code>/sys/bus/i2c/devices/i2c-2/name</code></strong></p>
+<ul>
+<li><strong>Device Names</strong>: <code>OMAP I2C adapter</code></li>
+<li><strong>Description</strong>: These entries represent the I2C bus adapters themselves, not specific I2C devices. <a href="https://www.ti.com/lit/ug/sprufl9d/sprufl9d.pdf?ts=1725372142895"><code>OMAP I2C adapter</code></a> refers to the I2C controller on the OMAP processor used in BeagleBoard systems. There are three separate I2C buses (<code>i2c-0</code>, <code>i2c-1</code>, and <code>i2c-2</code>).</li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+<h3 id="5-next-steps"><a class="header" href="#5-next-steps">5. Next Steps</a></h3>
+<ol>
+<li>
+<p><strong>Computer says no...</strong></p>
+<p>You want to read the registers of the <code>tps65217</code> power management IC on your BeagleBoard using <code>i2cdump</code>. However, you may encounter the error:</p>
+<div id="admonition-error" class="admonition admonish-danger" role="note" aria-labelledby="admonition-error-title">
+<div class="admonition-title">
+<div id="admonition-error-title">
+<p>Error</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-error"></a>
+</div>
+<div>
+<pre><code>$ i2cdump -y 0 0x24 
+&gt; Error: Could not set address to 0x24: Device or resource busy
+</code></pre>
+<p>This error occurs because the device is currently in use by another process, typically a kernel driver. The steps below will guide you through unbinding the driver, using i2cdump to read the registers, interpreting the data, and rebinding the drive</p>
+</div>
+</div>
+</li>
+<li>
+<p><strong>Check for Loaded Drivers</strong>
+First, verify that the kernel driver managing the <code>tps65217</code> device is loaded. Run the following command:</p>
+<div id="admonition-terminal-2" class="admonition admonish-terminal" role="note" aria-labelledby="admonition-terminal-2-title">
+<div class="admonition-title">
+<div id="admonition-terminal-2-title">
+<p>Terminal</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-terminal-2"></a>
+</div>
+<div>
+<pre><code class="language-bash">$ ls /sys/bus/i2c/drivers/tps65217
+&gt; 0-0024/ bind    uevent  unbind
+</code></pre>
+<p>You should see an entry like 0-0024 (indicating bus 0 and address 0x24).</p>
+</div>
+</div>
+<p>Unbind the device by echoing the bus and address to the unbind file:</p>
+<div id="admonition-terminal-3" class="admonition admonish-terminal" role="note" aria-labelledby="admonition-terminal-3-title">
+<div class="admonition-title">
+<div id="admonition-terminal-3-title">
+<p>Terminal</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-terminal-3"></a>
+</div>
+<div>
+<pre><code class="language-sh">$ echo "0-0024" &gt; /sys/bus/i2c/drivers/tps65217/unbind
+</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p><strong>Using i2cdump to Read the Registers</strong></p>
+<p>After unbinding, you can use i2cdump to read the registers.</p>
+<p>Run <code>i2cdump</code>:</p>
+<div id="admonition-terminal-4" class="admonition admonish-terminal" role="note" aria-labelledby="admonition-terminal-4-title">
+<div class="admonition-title">
+<div id="admonition-terminal-4-title">
+<p>Terminal</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-terminal-4"></a>
+</div>
+<div>
+<pre><code class="language-sh">i2cdump -y 0 0x24 b
+</code></pre>
+</div>
+</div>
+<p>This command will provide a hex dump of all the registers in the <code>tps65217</code> device in byte (<code>b</code>) format.</p>
+<details id="admonition-suppressed-output" class="admonition admonish-output" role="note" aria-labelledby="admonition-suppressed-output-title">
+<summary class="admonition-title">
+<div id="admonition-suppressed-output-title">
+<p>Suppressed Output</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-suppressed-output"></a>
+</summary>
+<div>
+<pre><code class="language-sh">   0  1  2  3  4  5  6  7  8  9  a  b  c  d  e  f      0123456789abcdef
+00: e2 3f 20 01 b1 80 b2 01 00 00 84 00 7f 0c 18 11    ?? ?????..?.????
+10: 08 06 09 38 26 3f 7f 00 03 15 5f 32 40 20 00 00    ???8&amp;??.??_2@ ..
+20: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00    ................
+30: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00    ................
+40: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00    ................
+50: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00    ................
+60: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00    ................
+70: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00    ................
+80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00    ................
+90: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00    ................
+a0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00    ................
+b0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00    ................
+c0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00    ................
+d0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00    ................
+e0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00    ................
+f0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00    ................
+</code></pre>
+</div>
+</details>
+</li>
+<li>
+<p><strong>Explaining the <code>i2cdump</code> Output</strong></p>
+<p>The i2cdump output shows the register values of the <code>tps65217</code> device. Let's interpret the first few lines:</p>
+<ul>
+<li>
+<p><code>0x00</code> to <code>0x0F</code>: General configuration and status registers.</p>
+<ul>
+<li><code>0x00 (e2)</code>: A possible configuration register controlling power settings.</li>
+<li><code>0x01 (3f)</code>: Might be a status register indicating the current state or fault conditions.</li>
+<li><code>0x02 (20)</code>: Another configuration register, potentially for voltage control.</li>
+</ul>
+</li>
+<li>
+<p><code>0x10 to 0x1F</code>: Power management settings for different regulators.</p>
+<ul>
+<li><code>0x10 (08)</code>: Regulator voltage setting or enable/disable control.</li>
+<li><code>0x11 (06)</code>: Another voltage setting or related control register.</li>
+</ul>
+</li>
+<li>
+<p><code>0x20</code> and beyond: Reserved or additional configuration registers.</p>
+<ul>
+<li>Registers from 0x20 onwards are all 00, indicating they might not be used or are set to a default value.</li>
+</ul>
+</li>
+</ul>
+<p>For detailed interpretation, refer to the <a href="https://www.ti.com/product/TPS65217"><code>tps65217</code></a> datasheet.</p>
+</li>
+</ol>
+<h3 id="6-rebinding-the-driver"><a class="header" href="#6-rebinding-the-driver">6. Rebinding the Driver</a></h3>
+<p>After you have finished using <code>i2cdump</code>, you should rebind the driver to ensure the device continues to function correctly under kernel management.</p>
+<p><strong>Steps to Rebind:</strong></p>
+<ol>
+<li>
+<p>Rebind the Device:</p>
+<ul>
+<li>
+<p>Rebind the driver by echoing the bus and address to the <code>bind</code> file:</p>
+ <div id="admonition-terminal-5" class="admonition admonish-terminal" role="note" aria-labelledby="admonition-terminal-5-title">
+ <div class="admonition-title">
+ <div id="admonition-terminal-5-title">
+<p>Terminal</p>
+ </div>
+ <a class="admonition-anchor-link" href="#admonition-terminal-5"></a>
+ </div>
+ <div>
+<pre><code class="language-sh">echo "0-0024" &gt; /sys/bus/i2c/drivers/tps65217/bind
+</code></pre>
+ </div>
+ </div>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>Verify the Binding:</strong></p>
+<ul>
+<li>
+<p>Verify that the driver is correctly bound again</p>
+ <div id="admonition-terminal-6" class="admonition admonish-terminal" role="note" aria-labelledby="admonition-terminal-6-title">
+ <div class="admonition-title">
+ <div id="admonition-terminal-6-title">
+<p>Terminal</p>
+ </div>
+ <a class="admonition-anchor-link" href="#admonition-terminal-6"></a>
+ </div>
+ <div>
+<pre><code class="language-sh">ls /sys/bus/i2c/drivers/tps65217/
+</code></pre>
+ </div>
+ </div>
+</li>
+</ul>
+<p>You should see <code>0-0024</code> listed again.</p>
+<div id="admonition-warning" class="admonition admonish-warning" role="note" aria-labelledby="admonition-warning-title">
+<div class="admonition-title">
+<div id="admonition-warning-title">
+<p>Warning</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-warning"></a>
+</div>
+<div>
+<p>Unbinding and rebinding drivers on a BeagleBoard can cause system instability, data loss, or hardware damage. Unbinding stops the driver from managing the device, which might disrupt critical functions or leave devices in unsafe states. It exposes devices for direct user access, which could lead to incorrect configurations or security risks. Always ensure you understand the device and driver, back up data, and have a recovery plan. Rebind drivers promptly after use to restore normal operations.</p>
+</div>
+</div>
+</li>
+</ol>
+<h3 id="9-explore"><a class="header" href="#9-explore">9. Explore!</a></h3>
+<p>Get a dump from the other I2C devices on your BeagleBoard, you can use the <code>i2cdump</code> command similarly to how you did with the <code>tps65217</code> device. Below are the steps for each device listed in your output:</p>
+<ol>
+<li>
+<p><strong>Identifying Other I2C Devices</strong></p>
+<p>From your previous output, you have several I2C devices on different buses. Here is a list of devices we can check:</p>
+<ul>
+<li>
+<p>Bus 0:</p>
+<ul>
+<li><code>0x34</code> - <code>tda9950</code> (HDMI CEC controller)</li>
+<li><code>0x50</code> - <code>24c256</code> (EEPROM)</li>
+<li><code>0x70</code> - <code>tda998x</code> (HDMI transmitter)</li>
+</ul>
+</li>
+<li>
+<p>Bus 2:</p>
+<ul>
+<li><code>0x54</code> to <code>0x57</code> - <code>24c256</code> (EEPROMs)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>Remember the i2cdump command will only work if you unbind each driver.</p>
+</li>
+<li>
+<p>Use the documentation for each chip to understand the output produced.</p>
+</li>
+</ol>
+<h3 id="8-summary"><a class="header" href="#8-summary">8. Summary</a></h3>
+<div id="admonition-tldr" class="admonition admonish-abstract" role="note" aria-labelledby="admonition-tldr-title">
+<div class="admonition-title">
+<div id="admonition-tldr-title">
+<p>TL;DR</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-tldr"></a>
+</div>
+<div>
+<p>The <code>/sys/bus/i2c/devices/</code> directory on the BeagleBoard provides a powerful interface for managing and interacting with I2C devices. By understanding the structure of this directory and the available commands, you can effectively control I2C peripherals, whether they are sensors, EEPROMs, or other types of devices. This guide has provided the foundational knowledge and practical examples needed to start working with I2C devices on your BeagleBoard.</p>
+</div>
+</div>
+
+                    </main>
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../vim/vim.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../PinExploration/PinExploration.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../vim/vim.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../PinExploration/PinExploration.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src=".././theme/pagetoc.js"></script>
+
+
+    </div>
+    </body>
+</html>

@@ -1,0 +1,383 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>vim - Advanced Computer Engineering</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href=".././theme/pagetoc.css">
+        <link rel="stylesheet" href=".././theme/css/mdbook-admonish.css">
+        <link rel="stylesheet" href=".././theme/css/code.css">
+        <link rel="stylesheet" href=".././theme/css/terminal.css">
+        <link rel="stylesheet" href=".././theme/css/output.css">
+
+        <!-- MathJax -->
+        <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="burgundy">Burgundy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="dracula">Dracula</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ecoFriend">EcoFriend</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="pinkrose">Pinkrose</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="space">Space</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="sustain">Sustain</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="tokyonight">Tokyonight</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Advanced Computer Engineering</h1>
+
+                    <div class="right-buttons">
+                        <a href="https://github.com/uniofgreenwich/ELEE1119_Exercises" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        <a href="https://github.com/uniofgreenwich/ELEE1119_Exercises/edit/main/src/vim/vim.md" title="Suggest an edit" aria-label="Suggest an edit">
+                            <i id="git-edit-button" class="fa fa-edit"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main><div class="sidetoc"><nav class="pagetoc"></nav></div>
+                        <h1 id="vim"><a class="header" href="#vim">vim</a></h1>
+<p>Vim (Vi IMproved) is a highly configurable text editor designed for efficient text editing. It is an enhanced version of the original Unix editor Vi, with many additional features. Vim is known for its powerful capabilities, flexibility, and steep learning curve.</p>
+<h2 id="key-features"><a class="header" href="#key-features">Key features:</a></h2>
+<ol>
+<li>
+<p><strong>Modes</strong>: Vim operates in several modes, the most common being:</p>
+<ul>
+<li><strong>Normal Mode</strong>: For navigating and manipulating text. <kbd>ESC</kbd></li>
+<li><strong>Insert Mode</strong>: For inserting text. In <strong>Normal</strong> mode press <kbd>i</kbd></li>
+<li><strong>Visual Mode</strong>: For selecting and manipulating text. In <strong>Normal</strong> mode press <kbd>shift</kbd>+<kbd>v</kbd></li>
+<li><strong>Command-Line Mode</strong>: For running Vim commands and configuring settings. In <strong>Normal</strong> mode press <kbd>shift</kbd>+<kbd>:</kbd></li>
+</ul>
+</li>
+<li>
+<p><strong>Keyboard-Based Editing</strong>: Vim is designed to be used primarily with the keyboard, allowing for rapid and precise text manipulation without needing a mouse. This makes editing fast and efficient once the commands are mastered.</p>
+</li>
+<li>
+<p><strong>Customizability</strong>: Vim can be heavily customized using configuration files (.vimrc). Users can set their own key mappings, create macros, and install plugins to extend Vim’s functionality.</p>
+</li>
+<li>
+<p><strong>Extensibility</strong>: Vim supports plugins, which can add new features such as syntax highlighting, code completion, file browsing, and version control integration. Popular plugin managers like Vim-Plug or Pathogen make it easy to install and manage these plugins.</p>
+</li>
+<li>
+<p><strong>Powerful Search and Replace</strong>: Vim offers robust search and replace functionality with support for regular expressions, allowing complex text manipulation tasks to be performed with ease.</p>
+</li>
+<li>
+<p><strong>Multiple Buffers, Windows, and Tabs</strong>: Vim supports working with multiple files in a single session using buffers (files in memory), split windows (multiple views in the same window), and tabs (multiple editing sessions).</p>
+</li>
+<li>
+<p><strong>Lightweight and Portable</strong>: Vim is lightweight and can run in a terminal or graphical user interface (GUI), making it suitable for use on remote servers or local machines. It is available on most Unix-like systems, as well as on Windows and macOS.</p>
+</li>
+<li>
+<p><strong>Wide Language Support</strong>: Vim supports syntax highlighting and editing features for many programming languages, making it a popular choice among programmers and system administrators.</p>
+</li>
+</ol>
+<h2 id="why-use-vim"><a class="header" href="#why-use-vim">Why Use Vim?</a></h2>
+<ul>
+<li>
+<p><strong>Efficiency</strong>: Once you learn Vim's commands and shortcuts, you can navigate and edit text much faster than with a standard text editor.</p>
+</li>
+<li>
+<p><strong>Customizability</strong>: It can be tailored to fit personal workflows and preferences.</p>
+</li>
+<li>
+<p><strong>Versatility</strong>: Suitable for a wide range of tasks, from simple text editing to complex programming projects.</p>
+</li>
+<li>
+<p><strong>Community and Support</strong>: Vim has a large, active community and extensive documentation and resources available online.</p>
+</li>
+</ul>
+<h2 id="learning-curve"><a class="header" href="#learning-curve">Learning Curve</a></h2>
+<p>Vim has a reputation for having a steep learning curve, primarily due to its modal nature and reliance on keyboard shortcuts. However, the time invested in learning Vim can pay off in terms of increased productivity and efficiency in text editing.</p>
+<h2 id="using-vim"><a class="header" href="#using-vim">Using vim:</a></h2>
+<h2 id="simple-config-to-make-life-easier"><a class="header" href="#simple-config-to-make-life-easier">Simple config to make life easier:</a></h2>
+<p>You can make a presistent changes to vim using a config file, while we are not using all the features like my system we can make a mini one here that does not depend on 3rd party packages.</p>
+<div id="admonition-terminal" class="admonition admonish-terminal" role="note" aria-labelledby="admonition-terminal-title">
+<div class="admonition-title">
+<div id="admonition-terminal-title">
+<p>Terminal</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-terminal"></a>
+</div>
+<div>
+<pre><code class="language-sh">$ vim ~/.vimrc
+</code></pre>
+</div>
+</div>
+<p>Start off by presistently setting number and relavtivenumber:</p>
+<div id="admonition-terminal-1" class="admonition admonish-terminal" role="note" aria-labelledby="admonition-terminal-1-title">
+<div class="admonition-title">
+<div id="admonition-terminal-1-title">
+<p>Terminal</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-terminal-1"></a>
+</div>
+<div>
+<pre><code class="language-sh">set number
+set relativenumber
+</code></pre>
+</div>
+</div>
+<p>Then go to command mode by pressing <kbd>shift</kbd>+<kbd>:</kbd> and type <code>source %</code> and this will live reload the current config. This is because the current session had no config when vim was invoked. You will not have do this again as it <code>.vimrc</code> is sourced when vim is invoked.</p>
+<p>You can add more features and functionality like below:</p>
+<details id="admonition-code-basic-config-67-lines" class="admonition admonish-code" role="note" aria-labelledby="admonition-code-basic-config-67-lines-title">
+<summary class="admonition-title">
+<div id="admonition-code-basic-config-67-lines-title">
+<p>Code: Basic config [67 lines]...</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-code-basic-config-67-lines"></a>
+</summary>
+<div>
+<pre><code class="language-vim">" Enable line numbers
+set number
+
+" Enable relative line numbers for easier navigation
+set relativenumber
+
+" Enable syntax highlighting
+syntax on
+
+" Enable auto-indentation and smart indentation
+set autoindent
+set smartindent
+
+" Set tabs and indentation
+set tabstop=4       " Number of spaces that a &lt;Tab&gt; counts for
+set shiftwidth=4    " Number of spaces to use for each step of (auto)indent
+set expandtab       " Convert tabs to spaces
+
+" Enable incremental search
+set incsearch
+
+" Enable search highlighting and ignore case by default
+set hlsearch
+set ignorecase
+set smartcase       " Override 'ignorecase' if search pattern contains uppercase
+
+" Show matching brackets
+set showmatch
+
+" Set a more user-friendly status line
+set laststatus=2
+
+" Enable line wrapping and set wrap options
+set wrap
+set linebreak
+
+" Set file encoding
+set encoding=utf-8
+
+" Better command-line completion
+set wildmenu
+
+" Enable persistent undo so you can undo changes after closing and reopening files
+set undofile
+
+" Allow backspacing over everything in insert mode
+set backspace=indent,eol,start
+
+" Show incomplete commands in the status line
+set showcmd
+
+" Disable audible bell and enable visual bell instead
+set noerrorbells
+set visualbell
+
+" Improve the command-line experience
+set cmdheight=2
+
+" Remember the last editing position
+au BufReadPost * if line("'\"") &gt; 0 &amp;&amp; line("'\"") &lt;= line("$") | exe "normal! g'\"" | endif
+
+" Display whitespace characters (tabs, trailing spaces)
+set list
+set listchars=tab:&gt;-,trail:·
+
+" Auto save before losing focus or exiting Vim
+autocmd FocusLost,WinLeave * silent! wa
+</code></pre>
+</div>
+</details>
+
+                    </main>
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../tmux/tmux.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../ChipExploration/ChipExploration.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../tmux/tmux.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../ChipExploration/ChipExploration.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src=".././theme/pagetoc.js"></script>
+
+
+    </div>
+    </body>
+</html>

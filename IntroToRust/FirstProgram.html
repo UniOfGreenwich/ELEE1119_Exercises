@@ -1,0 +1,643 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>First Program - Advanced Computer Engineering</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href=".././theme/pagetoc.css">
+        <link rel="stylesheet" href=".././theme/css/mdbook-admonish.css">
+        <link rel="stylesheet" href=".././theme/css/code.css">
+        <link rel="stylesheet" href=".././theme/css/terminal.css">
+        <link rel="stylesheet" href=".././theme/css/output.css">
+
+        <!-- MathJax -->
+        <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="burgundy">Burgundy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="dracula">Dracula</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ecoFriend">EcoFriend</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="pinkrose">Pinkrose</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="space">Space</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="sustain">Sustain</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="tokyonight">Tokyonight</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Advanced Computer Engineering</h1>
+
+                    <div class="right-buttons">
+                        <a href="https://github.com/uniofgreenwich/ELEE1119_Exercises" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        <a href="https://github.com/uniofgreenwich/ELEE1119_Exercises/edit/main/src/IntroToRust/FirstProgram.md" title="Suggest an edit" aria-label="Suggest an edit">
+                            <i id="git-edit-button" class="fa fa-edit"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main><div class="sidetoc"><nav class="pagetoc"></nav></div>
+                        <h1 id="first-program"><a class="header" href="#first-program">First Program</a></h1>
+<h2 id="git-fork"><a class="header" href="#git-fork">Git fork....</a></h2>
+<p>Go to here and fork the follow repo :</p>
+<ul>
+<li><a href="https://github.com/UniOfGreenwich/learn-rust-with-github-codespaces/fork">https://github.com/UniOfGreenwich/learn-rust-with-github-codespaces/fork</a></li>
+</ul>
+<p>Working together we play with the initial code.</p>
+<h2 id="rust-lab-mocking-text-input"><a class="header" href="#rust-lab-mocking-text-input">Rust Lab: Mocking Text Input</a></h2>
+<p>This lab introduces students to fundamental Rust concepts such as input handling, string manipulation, and control flow. We'll break down the code below step-by-step.</p>
+<hr />
+<h2 id="step-by-step-breakdown"><a class="header" href="#step-by-step-breakdown">Step-by-Step Breakdown</a></h2>
+<h3 id="1-importing-modules"><a class="header" href="#1-importing-modules">1. <strong>Importing Modules</strong></a></h3>
+<p>Modify  <code>src/main.rs</code> by importing the following modules at the top of script:</p>
+<div id="admonition-code" class="admonition admonish-code" role="note" aria-labelledby="admonition-code-title">
+<div class="admonition-title">
+<div id="admonition-code-title">
+<p>Code</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-code"></a>
+</div>
+<div>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>use std::io;
+use std::env;
+<span class="boring">}</span></code></pre></pre>
+</div>
+</div>
+<div id="admonition-explanation" class="admonition admonish-example" role="note" aria-labelledby="admonition-explanation-title">
+<div class="admonition-title">
+<div id="admonition-explanation-title">
+<p>Explanation</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-explanation"></a>
+</div>
+<div>
+<ul>
+<li><code>std::io</code>: Provides tools for input/output operations, such as reading user input.</li>
+<li><code>std::env</code>: Gives access to environment variables and command-line arguments.</li>
+<li><code>::</code> : operator is used to access an item inside a module</li>
+</ul>
+</div>
+</div>
+<h3 id="2-main-function"><a class="header" href="#2-main-function">2. <strong>Main Function</strong></a></h3>
+<p>Continue into the <code>main</code> block, removing the <code>println!</code> macro.</p>
+<div id="admonition-code-1" class="admonition admonish-code" role="note" aria-labelledby="admonition-code-1-title">
+<div class="admonition-title">
+<div id="admonition-code-1-title">
+<p>Code</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-code-1"></a>
+</div>
+<div>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    let mut input = String::new();
+    let mut mock = String::new();</code></pre></pre>
+</div>
+</div>
+<div id="admonition-explanation-1" class="admonition admonish-example" role="note" aria-labelledby="admonition-explanation-1-title">
+<div class="admonition-title">
+<div id="admonition-explanation-1-title">
+<p>Explanation</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-explanation-1"></a>
+</div>
+<div>
+<ul>
+<li><code>main</code>: Entry point of the program.</li>
+<li><code>input</code>: A mutable <code>String</code> variable to store user or argument input.</li>
+<li><code>mock</code>: A mutable <code>String</code> to build the "mocked" output.</li>
+</ul>
+</div>
+</div>
+<hr />
+<h3 id="3-getting-command-line-arguments"><a class="header" href="#3-getting-command-line-arguments">3. <strong>Getting Command-Line Arguments</strong></a></h3>
+<p>Now on a new line after the above variables, add a <code>Vec</code> with type <code>String</code>, that collects the the arguments passed to the program via the command line</p>
+<div id="admonition-code-2" class="admonition admonish-code" role="note" aria-labelledby="admonition-code-2-title">
+<div class="admonition-title">
+<div id="admonition-code-2-title">
+<p>Code</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-code-2"></a>
+</div>
+<div>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let args: Vec&lt;String&gt; = env::args().collect();
+<span class="boring">}</span></code></pre></pre>
+</div>
+</div>
+<div id="admonition-explanation-2" class="admonition admonish-example" role="note" aria-labelledby="admonition-explanation-2-title">
+<div class="admonition-title">
+<div id="admonition-explanation-2-title">
+<p>Explanation</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-explanation-2"></a>
+</div>
+<div>
+<ul>
+<li>Collects command-line arguments into a <code>Vec&lt;String&gt;</code>.</li>
+<li><code>args[0]</code> is always the name of the program, so we check for additional arguments.</li>
+</ul>
+</div>
+</div>
+<hr />
+<h3 id="4-handling-input"><a class="header" href="#4-handling-input">4. <strong>Handling Input</strong></a></h3>
+<p>Now that there is functionality to collect the arguments to the program into a vector of strings. We want to create functionality to read the arguments directly when the program is invoked via the CLI, or if not present then request input from the user.</p>
+<div id="admonition-code-3" class="admonition admonish-code" role="note" aria-labelledby="admonition-code-3-title">
+<div class="admonition-title">
+<div id="admonition-code-3-title">
+<p>Code</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-code-3"></a>
+</div>
+<div>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>input = match args.get(1) {
+    Some(value) =&gt; value.to_string(),
+    None =&gt; {
+        println!("What would you like to mock?");
+
+        io::stdin().read_line(&amp;mut input)
+            .expect("fAiLeD tO rEaD LiNe");
+        input
+    },
+};
+<span class="boring">}</span></code></pre></pre>
+</div>
+</div>
+<div id="admonition-explanation-3" class="admonition admonish-example" role="note" aria-labelledby="admonition-explanation-3-title">
+<div class="admonition-title">
+<div id="admonition-explanation-3-title">
+<p>Explanation</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-explanation-3"></a>
+</div>
+<div>
+<ul>
+<li><strong>If argument exists</strong>: Assign it to <code>input</code>.</li>
+<li><strong>If argument doesn't exist</strong>: Prompt the user for input and read it from standard input.</li>
+<li><code>expect</code>: Halts the program with a custom error message if reading input fails.</li>
+<li><code>match</code> is a powerful pattern matching construct in Rust. It allows you to <code>match</code> a value against different patterns and execute corresponding code blocks based on which pattern matches. It's similar to a switch statement in other languages but more flexible.</li>
+<li><code>Some(value)</code> is a variant of the <code>Option</code> <code>enum</code> in Rust, which represents the presence of a value. In this case, if <code>args.get(1)</code> returns <code>Some(value)</code>, it means a command-line argument was passed</li>
+<li><code>None</code> is another variant of the <code>Option</code> <code>enum</code>, representing the absence of a value. If no command-line argument was passed (i.e., <code>args.get(1)</code> returns <code>None</code>), the code inside the <code>None</code> branch will be executed. In this case, it will ask the user for input.</li>
+<li><code>expect()</code> is a method on <code>Result</code> that either returns the <code>Ok</code> value or <code>panics</code> with the provided message if it encounters an <code>Err</code> variant. This method is used here to ensure that if reading from stdin fails (for example, due to an I/O error), the program will panic with the message <code>"fAiLeD tO rEaD LiNe"</code>. This is a somewhat humorous or exaggerated way of indicating an error</li>
+</ul>
+</div>
+</div>
+<hr />
+<h3 id="5-normalizing-input"><a class="header" href="#5-normalizing-input">5. <strong>Normalizing Input</strong></a></h3>
+<p>To normalize the the inputted string, we can set the string to all lowercase.</p>
+<div id="admonition-code-4" class="admonition admonish-code" role="note" aria-labelledby="admonition-code-4-title">
+<div class="admonition-title">
+<div id="admonition-code-4-title">
+<p>Code</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-code-4"></a>
+</div>
+<div>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let input = input.trim().to_ascii_lowercase();
+<span class="boring">}</span></code></pre></pre>
+</div>
+</div>
+<div id="admonition-explanation-4" class="admonition admonish-example" role="note" aria-labelledby="admonition-explanation-4-title">
+<div class="admonition-title">
+<div id="admonition-explanation-4-title">
+<p>Explanation</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-explanation-4"></a>
+</div>
+<div>
+<ul>
+<li><code>trim</code>: Removes leading and trailing whitespace.</li>
+<li><code>to_ascii_lowercase</code>: Converts the string to lowercase.</li>
+</ul>
+</div>
+</div>
+<hr />
+<h3 id="6-setting-up-state-variable"><a class="header" href="#6-setting-up-state-variable">6. <strong>Setting Up State Variable</strong></a></h3>
+<p>To keep track of the the type of letter case we are using at anyone time we have a boolean</p>
+<div id="admonition-code-5" class="admonition admonish-code" role="note" aria-labelledby="admonition-code-5-title">
+<div class="admonition-title">
+<div id="admonition-code-5-title">
+<p>Code</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-code-5"></a>
+</div>
+<div>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let mut is_uppercase = false;
+<span class="boring">}</span></code></pre></pre>
+</div>
+</div>
+<div id="admonition-explanation-5" class="admonition admonish-example" role="note" aria-labelledby="admonition-explanation-5-title">
+<div class="admonition-title">
+<div id="admonition-explanation-5-title">
+<p>Explanation</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-explanation-5"></a>
+</div>
+<div>
+<ul>
+<li>Tracks whether the next letter should be uppercase.</li>
+</ul>
+</div>
+</div>
+<hr />
+<h3 id="7-transforming-input"><a class="header" href="#7-transforming-input">7. <strong>Transforming Input</strong></a></h3>
+<p>Underneath the code above add the functionality to loop over every letter in the vector <code>input</code> and change it to upper or keep as lower case. We need to check if the index value of the string <code>input</code>  is of type alpha, rather than numeric in order to convert the value to upper case too.</p>
+<div id="admonition-code-6" class="admonition admonish-code" role="note" aria-labelledby="admonition-code-6-title">
+<div class="admonition-title">
+<div id="admonition-code-6-title">
+<p>Code</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-code-6"></a>
+</div>
+<div>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>for c in input.chars() {
+    if c.is_alphabetic() &amp; is_uppercase {
+        mock.push(c.to_uppercase().collect::&lt;Vec&lt;_&gt;&gt;()[0]);
+        is_uppercase = false;
+    } else {
+        mock.push(c);
+        if c.is_alphabetic() {
+            is_uppercase = true;
+        }
+    }
+}
+<span class="boring">}</span></code></pre></pre>
+</div>
+</div>
+<div id="admonition-explanation-6" class="admonition admonish-example" role="note" aria-labelledby="admonition-explanation-6-title">
+<div class="admonition-title">
+<div id="admonition-explanation-6-title">
+<p>Explanation</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-explanation-6"></a>
+</div>
+<div>
+<ul>
+<li><strong>Loop through each character (<code>c</code>) in <code>input</code></strong>:
+<ul>
+<li>If <code>c</code> is alphabetic and <code>is_uppercase</code> is <code>true</code>:
+<ul>
+<li>Convert to uppercase and append to <code>mock</code>.</li>
+<li>Reset <code>is_uppercase</code> to <code>false</code>.</li>
+</ul>
+</li>
+<li>Otherwise, append <code>c</code> as-is and toggle <code>is_uppercase</code> if it's alphabetic.</li>
+</ul>
+</li>
+<li><strong>Purpose</strong>: Alternate between uppercase and lowercase letters for alphabetic characters.</li>
+</ul>
+</div>
+</div>
+<hr />
+<h3 id="8-output-the-result"><a class="header" href="#8-output-the-result">8. <strong>Output the Result</strong></a></h3>
+<p>Once all conversions have happened the program should return the output to the user via standard out.</p>
+<div id="admonition-code-7" class="admonition admonish-code" role="note" aria-labelledby="admonition-code-7-title">
+<div class="admonition-title">
+<div id="admonition-code-7-title">
+<p>Code</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-code-7"></a>
+</div>
+<div>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>println!("{}", mock);
+<span class="boring">}</span></code></pre></pre>
+</div>
+</div>
+<div id="admonition-explanation-7" class="admonition admonish-example" role="note" aria-labelledby="admonition-explanation-7-title">
+<div class="admonition-title">
+<div id="admonition-explanation-7-title">
+<p>Explanation</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-explanation-7"></a>
+</div>
+<div>
+<ul>
+<li>Print the transformed <code>mock</code> string.</li>
+<li><code>println!</code> is a macro used to print text to the console.</li>
+</ul>
+</div>
+</div>
+<hr />
+<h2 id="compile"><a class="header" href="#compile">Compile</a></h2>
+<p>To compile the code:</p>
+<div id="admonition-terminal" class="admonition admonish-terminal" role="note" aria-labelledby="admonition-terminal-title">
+<div class="admonition-title">
+<div id="admonition-terminal-title">
+<p>Terminal</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-terminal"></a>
+</div>
+<div>
+<pre><code class="language-sh">$ cargo build
+</code></pre>
+</div>
+</div>
+<hr />
+<h2 id="example-execution"><a class="header" href="#example-execution">Example Execution</a></h2>
+<h3 id="case-1-with-argument"><a class="header" href="#case-1-with-argument">Case 1: With Argument</a></h3>
+<div id="admonition-terminal-1" class="admonition admonish-terminal" role="note" aria-labelledby="admonition-terminal-1-title">
+<div class="admonition-title">
+<div id="admonition-terminal-1-title">
+<p>Terminal</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-terminal-1"></a>
+</div>
+<div>
+<pre><code class="language-sh">$ ./target/debug/hello "hello world"
+hElLo WoRlD
+</code></pre>
+</div>
+</div>
+<h3 id="case-2-without-argument"><a class="header" href="#case-2-without-argument">Case 2: Without Argument</a></h3>
+<div id="admonition-terminal-2" class="admonition admonish-terminal" role="note" aria-labelledby="admonition-terminal-2-title">
+<div class="admonition-title">
+<div id="admonition-terminal-2-title">
+<p>Terminal</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-terminal-2"></a>
+</div>
+<div>
+<pre><code class="language-sh">$ ./target/debug/hello
+What would you like to mock?
+hello world
+hElLo WoRlD
+</code></pre>
+</div>
+</div>
+<hr />
+<h2 id="concepts-covered"><a class="header" href="#concepts-covered">Concepts Covered</a></h2>
+<ol>
+<li>Command-line arguments.</li>
+<li>Reading user input.</li>
+<li>String manipulation.</li>
+<li>Control flow with <code>match</code> and <code>for</code> loops.</li>
+<li>Rust's ownership and mutability rules.</li>
+</ol>
+<hr />
+<details id="admonition-full-code" class="admonition admonish-code" role="note" aria-labelledby="admonition-full-code-title">
+<summary class="admonition-title">
+<div id="admonition-full-code-title">
+<p>Full Code</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-full-code"></a>
+</summary>
+<div>
+<pre><pre class="playground"><code class="language-rust">use std::io;
+use std::env;
+
+fn main() {
+    let mut input = String::new();
+    let mut mock = String::new();
+
+    let args: Vec&lt;String&gt; = env::args().collect();
+
+    input = match args.get(1) {
+        Some(value) =&gt; value.to_string(),
+        None =&gt; {
+            println!("What would you like to mock?");
+
+            io::stdin().read_line(&amp;mut input)
+                .expect("fAiLeD tO rEaD LiNe");
+            input
+        },
+    };
+
+    let input = input.trim().to_ascii_lowercase();
+
+    let mut is_uppercase = false;
+
+    for c in input.chars() {
+        if c.is_alphabetic() &amp; is_uppercase {
+            mock.push(c.to_uppercase().collect::&lt;Vec&lt;_&gt;&gt;()[0]);
+            is_uppercase = false;
+        } else {
+            mock.push(c);
+            if c.is_alphabetic() {
+                is_uppercase = true;
+            }
+        }
+    }
+
+    println!("{}", mock)
+}</code></pre></pre>
+</div>
+</details>
+<hr />
+<div id="admonition-extra-exercises" class="admonition admonish-tip" role="note" aria-labelledby="admonition-extra-exercises-title">
+<div class="admonition-title">
+<div id="admonition-extra-exercises-title">
+<p>Extra Exercises:</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-extra-exercises"></a>
+</div>
+<div>
+<ol>
+<li>
+<p>Modify the code to toggle letters only for vowels.</p>
+</li>
+<li>
+<p>Change the code to handle multiple command-line arguments.</p>
+</li>
+<li>
+<p>You can explore further concepts via rust doc:</p>
+<ul>
+<li><a href="https://doc.rust-lang.org/stable/rust-by-example/index.html">https://doc.rust-lang.org/stable/rust-by-example/index.html</a></li>
+</ul>
+</li>
+</ol>
+</div>
+</div>
+                    </main>
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../IntroToRust/IntroToRust.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../Redirection/Redirection.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../IntroToRust/IntroToRust.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../Redirection/Redirection.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src=".././theme/pagetoc.js"></script>
+
+
+    </div>
+    </body>
+</html>
