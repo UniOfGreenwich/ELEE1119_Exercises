@@ -2,7 +2,7 @@
 authors = ["CompEng0001"]
 language = "en"
 multilingual = false
-src = "src"
+src = "content"
 title = "Advanced Computer Engineering"
 
 [output.html.search]
