@@ -2,6 +2,18 @@
 
 This page will give useful information for navigating the Debian OS on the Rock C4+.
 
+~~~admonish important title="Login information"
+
+- Username: `rock`
+- Password: `toor`
+
+Or
+
+- Username: `radxa`
+- Password: `toor`
+
+~~~
+
 ## Getting Started
 
 Once you have managed to get into the Debain OS on the Rock C+, you will need to do a couple of steps to get the OS ready.
