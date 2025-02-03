@@ -1,5 +1,9 @@
 # Exploring the Chips
 
+<!--
+https://www.manualslib.com/manual/2120132/Texas-Instruments-Am335-Series.html?page=158#manual
+-->
+
 ## Understanding the `/sys/bus/i2c/devices/` Directory on the BeagleBoard
 
 The BeagleBoard, like other Linux-based embedded systems, utilizes the sysfs interface to provide a standardized way to interact with hardware components, such as I2C devices. The directory `/sys/bus/i2c/devices/` is specifically related to the I2C (Inter-Integrated Circuit) bus, which is commonly used for connecting low-speed peripherals to the main board's processor.
