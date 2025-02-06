@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Debian Rock C4 - Advanced Computer Engineering</title>
+        <title>Rustlings - Advanced Computer Engineering</title>
 
 
         <!-- Custom HTML head -->
@@ -139,7 +139,7 @@
                         <a href="https://github.com/uniofgreenwich/ELEE1119_Exercises" title="Git repository" aria-label="Git repository">
                             <i id="git-repository-button" class="fa fa-github"></i>
                         </a>
-                        <a href="https://github.com/uniofgreenwich/ELEE1119_Exercises/edit/main/content/Debian_Rock/Debian_Rock.md" title="Suggest an edit" aria-label="Suggest an edit">
+                        <a href="https://github.com/uniofgreenwich/ELEE1119_Exercises/edit/main/content/IntroToRust/rustlings.md" title="Suggest an edit" aria-label="Suggest an edit">
                             <i id="git-edit-button" class="fa fa-edit"></i>
                         </a>
 
@@ -168,194 +168,18 @@
 
                 <div id="content" class="content">
                     <main><div class="sidetoc"><nav class="pagetoc"></nav></div>
-                        <h1 id="introduction"><a class="header" href="#introduction">Introduction</a></h1>
-<p>This page will give useful information for navigating the Debian OS on the Rock C4+.</p>
-<h2 id="getting-started"><a class="header" href="#getting-started">Getting Started</a></h2>
-<p>Once you have managed to get into the Debain OS on the Rock C+, you will need to do a couple of steps to get the OS ready.</p>
-<ol>
-<li>
-<p>Update the system</p>
-  <div id="admonition-terminal" class="admonition admonish-terminal" role="note" aria-labelledby="admonition-terminal-title">
-  <div class="admonition-title">
-  <div id="admonition-terminal-title">
-<p>Terminal</p>
-  </div>
-  <a class="admonition-anchor-link" href="#admonition-terminal"></a>
-  </div>
-  <div>
-<pre><code>sudo apt update
-</code></pre>
-  </div>
-  </div>
-<ul>
-<li>
-<p>This should update the system however you may get a response that says:</p>
-  <div id="admonition-error" class="admonition admonish-danger" role="note" aria-labelledby="admonition-error-title">
-  <div class="admonition-title">
-  <div id="admonition-error-title">
-<p>Error</p>
-  </div>
-  <a class="admonition-anchor-link" href="#admonition-error"></a>
-  </div>
-  <div>
-<pre><code class="language-sh">&gt; W: An error occured during the signature verifcation. The repository is not updated and the previous index files will be used. GPG error: http://apt.radxa/com/bullseye-stable bullseye InRelease: The following signatures could not be verified because the public key is not available: NO_PUBKEY 9B98116C9AA302C7
-&gt; W: Filed to fetch http://apt.radxa/com/bullseye-stable/dists/bullseye/InRelease The following signatures could not be verified because the public key is not available: NO_PUBKEY 9B98116C9AA302C7
-&gt; W: Some index files failed to download. They have been ignored, or old ones used instead.
-</code></pre>
-  </div>
-  </div>
-</li>
-<li>
-<p>If that is the case you will need to run the following command:</p>
- <div id="admonition-terminal-1" class="admonition admonish-terminal" role="note" aria-labelledby="admonition-terminal-1-title">
- <div class="admonition-title">
- <div id="admonition-terminal-1-title">
-<p>Terminal</p>
- </div>
- <a class="admonition-anchor-link" href="#admonition-terminal-1"></a>
- </div>
- <div>
-<pre><code class="language-sh">$ wget -O - apt.radxa.com/focal-stable/public.key | sudo apt-key add
-</code></pre>
- </div>
- </div>
-</li>
-<li>
-<p>You should get some feedback with a HTTP request and a Warning about apt-key is deprecated... this is fine (if only there was a deterministic, declarative system out there we could have used...)</p>
-</li>
-<li>
-<p>Run the <code>sudo apt update</code> again and once finished run <code>sudo apt upgrade</code> this my take 10 mins.</p>
-</li>
-</ul>
-<p>Source: <a href="https://wiki.radxa.com/Rock5/linux/radxa-apt#focal-stable">https://wiki.radxa.com/Rock5/linux/radxa-apt#focal-stable</a></p>
-</li>
-</ol>
-<h2 id="networking"><a class="header" href="#networking">Networking</a></h2>
-<p>The Debain OS for the Rock C4+ uses the <code>NetworkManager</code> package to manage all connections to the network interface chips.</p>
-<p><code>NetworkManager</code> directory is located here -&gt; <code>/etc/NetworkManager</code>, the contents of which is:</p>
-<div id="admonition-terminal-2" class="admonition admonish-terminal" role="note" aria-labelledby="admonition-terminal-2-title">
-<div class="admonition-title">
-<div id="admonition-terminal-2-title">
-<p>Terminal</p>
-</div>
-<a class="admonition-anchor-link" href="#admonition-terminal-2"></a>
-</div>
-<div>
-<pre><code class="language-sh">NetworkManager.conf
-conf.d/
-dispatcher.d/
-dnsmasq-shared.d/
-dnsmasq.d/
-system-connections/
-</code></pre>
-</div>
-</div>
-<p>All of your Wi-Fi profiles are stored in the <code>system-connections</code> folder, for example:</p>
-<div id="admonition-terminal-3" class="admonition admonish-terminal" role="note" aria-labelledby="admonition-terminal-3-title">
-<div class="admonition-title">
-<div id="admonition-terminal-3-title">
-<p>Terminal</p>
-</div>
-<a class="admonition-anchor-link" href="#admonition-terminal-3"></a>
-</div>
-<div>
-<pre><code class="language-sh">$ ls /etc/NetworkManager/system-connections
-&gt; OKdo05.nmconnection
-&gt; eduroam.nmconnection
-</code></pre>
-</div>
-</div>
-<div id="admonition-important" class="admonition admonish-tip" role="note" aria-labelledby="admonition-important-title">
-<div class="admonition-title">
-<div id="admonition-important-title">
-<p>Important</p>
-</div>
-<a class="admonition-anchor-link" href="#admonition-important"></a>
-</div>
-<div>
-<p>The file naming convention, <code>&lt;ssid&gt;.nmconnection</code>, this is strict and case-sensitive.</p>
-</div>
-</div>
-<p>Each <code>...nmconnection</code> file has a format and for eduroam, which is an enterprise network it looks like this, you will need to have root level permissions:</p>
-<div id="admonition-terminal-4" class="admonition admonish-terminal" role="note" aria-labelledby="admonition-terminal-4-title">
-<div class="admonition-title">
-<div id="admonition-terminal-4-title">
-<p>Terminal</p>
-</div>
-<a class="admonition-anchor-link" href="#admonition-terminal-4"></a>
-</div>
-<div>
-<pre><code class="language-sh">$ sudo cat /etc/NetworkManager/system-connections/eduroam.nmconnection
-</code></pre>
-</div>
-</div>
-<div id="admonition-output" class="admonition admonish-output" role="note" aria-labelledby="admonition-output-title">
-<div class="admonition-title">
-<div id="admonition-output-title">
-<p>Output</p>
-</div>
-<a class="admonition-anchor-link" href="#admonition-output"></a>
-</div>
-<div>
-<pre><code class="language-sh">[connection]
-id=eduroam
-uuid=4e3235f7-8387-4102-8a57-dd1120f29ac5
-type=wifi
-interface-name=wlan0
-permissions=user:dev:;
+                        <h1 id="rustlings"><a class="header" href="#rustlings">Rustlings</a></h1>
+<p>Visit the <a href="https://github.com/rust-lang/rustlings">https://github.com/rust-lang/rustlings</a> repo and follow the instructions to clone and run <code>rustlings</code>.</p>
+<p><img src="./figures/rustlings1.png" alt="" /></p>
 
-[wifi]
-mac-address-blacklist=
-mode=infrastructure
-ssid=eduroam
-
-[wifi-security]
-auth-alg=open
-key-mmgt=wpa-eap
-
-[802-1x]
-anonymous-identity=username@gre.ac.uk
-eap=ttls;
-identity=username@greenwich.ac.uk
-password=YOURPASSWORD
-phase2-auth=mschapv2
-
-[ipv4]
-dns-search=
-method=auto
-
-[ipv6]
-addr-gen-mode=stable-privacy
-dns-search=
-method=auto
-
-[proxy]
-</code></pre>
-</div>
-</div>
-<div id="admonition-important-1" class="admonition admonish-tip" role="note" aria-labelledby="admonition-important-1-title">
-<div class="admonition-title">
-<div id="admonition-important-1-title">
-<p>Important</p>
-</div>
-<a class="admonition-anchor-link" href="#admonition-important-1"></a>
-</div>
-<div>
-<p>You may need to reload the connection:</p>
-<ul>
-<li><code>nmcli connection reload</code> or you can do this with elevation</li>
-<li><code>sudo ncmli connetion reload</code></li>
-</ul>
-</div>
-</div>
                     </main>
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../Introduction/Introduction.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../IntroToRust/FirstProgram.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="../tmux/tmux.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../Redirection/Redirection.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -365,11 +189,11 @@ method=auto
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../Introduction/Introduction.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../IntroToRust/FirstProgram.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="../tmux/tmux.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../Redirection/Redirection.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>
