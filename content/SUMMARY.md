@@ -55,6 +55,7 @@
 
 - [Intro to Rust](./IntroToRust/IntroToRust.md)
   - [First Program](./IntroToRust/FirstProgram.md)
+  - [Rustlings](./IntroToRust/rustlings.md)
 
 ------------------------------------------------------
 ------------------------------------------------------
