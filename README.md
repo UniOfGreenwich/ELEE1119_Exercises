@@ -1,7 +1,7 @@
 # University of Greenwich - MD_Book_Template
 
 > [!NOTE]
-> - Version: 1.0.0
+> - Version: 1.1.0
 > - View the deployment for a rendered documentation:
 >   - [https://uniofgreenwich.github.io/MD_Book_Template](https://uniofgreenwich.github.io/MD_Book_Template)
 
@@ -28,6 +28,8 @@ This template includes the following tech stack:
 - [GitHub mdbook-pagtoc](https://github.com/slowsage/mdbook-pagetoc)
   - [mdbook-pagtoc Documentation](https://jorel.dev/mdBook-pagetoc/)
 
+- [GitHub mdbook-quiz](https://github.com/cognitive-engineering-lab/mdbook-quiz)
+  - [mdbook-quiz Documentation](https://github.com/cognitive-engineering-lab/mdbook-quiz)
 
 ## Contribution
 

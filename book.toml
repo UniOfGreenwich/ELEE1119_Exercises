@@ -1,9 +1,19 @@
 [book]
-authors = ["CompEng0001"]
+authors = ["Seb Blair (CompEng0001)"]
 language = "en"
 multilingual = false
 src = "content"
 title = "Advanced Computer Engineering"
+
+[output.html]
+mathjax-support = true
+git-repository-url = "https://github.com/uniofgreenwich/ELEE1119_Exercises"
+edit-url-template = "https://github.com/uniofgreenwich/ELEE1119_Exercises/edit/main/{path}"
+additional-css = ["./theme/pagetoc.css", "./theme/css/mdbook-admonish.css", "./theme/css/code.css","./theme/css/terminal.css","./theme/css/output.css"]
+additional-js  = ["./theme/pagetoc.js"]
+
+[output.html.print]
+enable = false
 
 [output.html.search]
 limit-results = 20
@@ -37,14 +47,9 @@ aliases = ["cli","cmd"]
 icon = "./theme/output.svg"
 color = "#72879C"
 
-[preprocessor.pagetoc]
-[output.html]
-mathjax-support = true
-input-404 = "404/404.md"
-git-repository-url = "https://github.com/uniofgreenwich/ELEE1119_Exercises"
-edit-url-template = "https://github.com/uniofgreenwich/ELEE1119_Exercises/edit/main/{path}"
-additional-css = ["./theme/pagetoc.css", "./theme/css/mdbook-admonish.css", "./theme/css/code.css","./theme/css/terminal.css","./theme/css/output.css"]
-additional-js  = ["./theme/pagetoc.js"]
+[preprocessor.quiz]
+before = ["admonish"]
+fullscreen = false
+show-bug-reporter = true
 
-[output.html.print]
-enable = false
+[preprocessor.pagetoc]
