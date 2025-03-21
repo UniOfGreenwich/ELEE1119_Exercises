@@ -53,11 +53,15 @@ Remember that the Beaglebone blacks ADC chip does not use 8bit levels, i.e 0-255
 
 3. Now you need to remake the library:
 
+    ~~~admonish terminal
+
     ```sh
     $ make clean
     $ make uninstall
     $ make install
     ```
+
+    ~~~
 
 ---------
 
@@ -66,8 +70,7 @@ Remember that the Beaglebone blacks ADC chip does not use 8bit levels, i.e 0-255
 
 4.  We are going to create a script that utlises what we did for `adc_read.c` and `pwm_test.c`, by utilising both libraries `pwm.h` and `adc.h`.
 
-    <details>
-    <summary>Code here...</summary>
+    ~~~admonish code collapsible=true title='Suppressed code here [61 lines]' 
 
     ```c
     #include "pwm.h"
@@ -113,14 +116,12 @@ Remember that the Beaglebone blacks ADC chip does not use 8bit levels, i.e 0-255
         return 0;
     }
     ```
-
-    </details>
-
+    
+    ~~~
 
 5. Remember to create a `Makefile` file:
 
-    <details>
-    <summary>Code here...</summary>
+    ~~~admonish code collapsible=true title='Suppressed code here [25 lines]' 
 
     ```makefile
     # Compiler and flags
@@ -151,13 +152,12 @@ Remember that the Beaglebone blacks ADC chip does not use 8bit levels, i.e 0-255
     .PHONY: all clean
     ```
 
-    </details>
+    ~~~
 
 
 6.  If all is well, and you have connected up your circuity correctly, the LED should change it's brightness based on the resistance from the potentiometer, for example you may see this terminal output:
 
-    <details>
-    <summary>Output here...</summary>
+    ~~~admonish output collapsible=true 
 
     ```
     PWM initialized with:
@@ -189,4 +189,4 @@ Remember that the Beaglebone blacks ADC chip does not use 8bit levels, i.e 0-255
     ...
     ```
 
-    </details>
+    ~~~

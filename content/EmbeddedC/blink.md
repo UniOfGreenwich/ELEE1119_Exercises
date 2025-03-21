@@ -22,34 +22,36 @@
 
 ~~~
 
-So you are no doubt familiar with the well known `blink.ino`:
+## 1. `blink.ino`
 
-~~~admonish code
+1. So you are no doubt familiar with the well known `blink.ino`:
 
-```c
-// the setup function runs once when you press reset or power the board
-void setup() {
-  // initialize digital pin LED_BUILTIN as an output.
-  pinMode(LED_BUILTIN, OUTPUT);
-}
+    ~~~admonish code
 
-// the loop function runs over and over again forever
-void loop() {
-  digitalWrite(LED_BUILTIN, HIGH);  // turn the LED on (HIGH is the voltage level)
-  delay(1000);                      // wait for a second
-  digitalWrite(LED_BUILTIN, LOW);   // turn the LED off by making the voltage LOW
-  delay(1000);                      // wait for a second
-}
-```
+    ```c
+    // the setup function runs once when you press reset or power the board
+    void setup() {
+    // initialize digital pin LED_BUILTIN as an output.
+    pinMode(LED_BUILTIN, OUTPUT);
+    }
 
-~~~
+    // the loop function runs over and over again forever
+    void loop() {
+    digitalWrite(LED_BUILTIN, HIGH);  // turn the LED on (HIGH is the voltage level)
+    delay(1000);                      // wait for a second
+    digitalWrite(LED_BUILTIN, LOW);   // turn the LED off by making the voltage LOW
+    delay(1000);                      // wait for a second
+    }
+    ```
 
-There is a lot of abstraction happening here, where are the ports/registers? 
+    ~~~
 
-Let's now turn this into an embedded program!
+    There is a lot of abstraction happening here, where are the ports/registers? 
+
+    Let's now turn this into an embedded program!
 
 
-## Create `blink.c`
+## 2. Create `blink.c`
 
 1. Create a new directory called `embeddedC` and a child directory `blink`
 
@@ -124,7 +126,7 @@ Let's now turn this into an embedded program!
     ~~~
 ------------------
 
-## Compiling: Object file
+## 3. Compiling: Object file
 
 4. We need to compile the code so that it can be uploaded to the atmega328p chip:
 
@@ -223,7 +225,7 @@ Let's now turn this into an embedded program!
     ~~~
 ------------------
 
-## Compiling: `.elf` (Executable and Linkable Format) file
+## 4. Compiling: `.elf` (Executable and Linkable Format) file
 
 6. Now we can make the `.elf` (Executable and Linkable Format) file, run the following code:
 
@@ -294,7 +296,7 @@ Let's now turn this into an embedded program!
 
 -------------
 
-## Compiling: hex file
+## 5. Compiling: hex file
 
 8. Now we need to create the `.hex` file to be burned to the atmega328p:
 
@@ -375,7 +377,7 @@ Let's now turn this into an embedded program!
 
 -----------
 
-## Uploading Blink
+## 6. Uploading Blink
 
 10. Now its time to upload the code:
     - Uni machine:

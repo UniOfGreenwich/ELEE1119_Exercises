@@ -144,12 +144,13 @@ PORTB &= ~(1 << PB5); // Set PB5 low (turn off LED)
 
 ~~~
 
-In this example:
+~~~admonish example title="Explanation"
 
 - `DDRB` configures `PB5` as an output.
 - `PORTB` sets `PB5` to high, turning on the LED.
 - `PORTB` clears `PB5`, turning off the LED
 
+~~~
 
 ## Key registers and their Roles
 

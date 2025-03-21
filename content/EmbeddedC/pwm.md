@@ -2,13 +2,18 @@
 
 # PWM Workbook: Configuring PWM on the ATmega328P
 
-## Introduction to PWM on ATmega328P
+## 1. Introduction to PWM on ATmega328P
+
+
+~~~admonish info
 
 PWM is a technique to control the average power supplied to electronic components by varying the duty cycle of a square wave. The ATmega328P offers several timers that can generate PWM signals. In this workbook, we focus on using `Timer0` to generate an 8-bit PWM signal on `OC0A` (Pin `PD6`).
 
+~~~
+
 ---
 
-## `Timer0` Registers for PWM
+## 2. `Timer0` Registers for PWM
 
 `TCCR` stands for **Timer/Counter Control Register**. On the ATmega328P and similar microcontrollers, these registers control the behavior of each timer/counter module.
 
@@ -18,7 +23,7 @@ Each timer has one or more `TCCR` registers that configure aspects such as:
 - Compare Output Mode (inverting or non-inverting PWM signal)
 - Clock source and prescaler (e.g., no prescaler, prescaler of 8, 64, etc.)
 
-### Types of TCCR Registers on ATmega328P
+### 2.1 Types of TCCR Registers on ATmega328P
 
 The ATmega328P has three timers, each with associated TCCR registers:
 
@@ -34,7 +39,7 @@ The ATmega328P has three timers, each with associated TCCR registers:
 
     - `TCCR2A` and `TCCR2B`: These control `Timer2`, similar to `Timer0` but with different prescaler and clock source options.
 
-### TCCR0A - Timer/Counter Control Register A
+### 2.2 TCCR0A - Timer/Counter Control Register A
 | Bit  | 7      | 6      | 5      | 4      | 3      | 2      | 1      | 0      |
 |------|--------|--------|--------|--------|--------|--------|--------|--------|
 | Name | COM0A1 | COM0A0 | COM0B1 | COM0B0 | -      | -      | WGM01  | WGM00  |
@@ -51,7 +56,8 @@ The ATmega328P has three timers, each with associated TCCR registers:
 - `WGM01` and `WGM00`: Waveform Generation Mode.
   - Setting both `WGM01` and `WGM00` to 1 puts `Timer0` in **Fast PWM mode**.
 
-### TCCR0B - Timer/Counter Control Register B
+### 2.3TCCR0B - Timer/Counter Control Register B
+
 | Bit  | 7    | 6    | 5    | 4    | 3       | 2     | 1     | 0     |
 |------|------|------|------|------|---------|-------|-------|-------|
 | Name | FOC0A| FOC0B| -    | -    | WGM02   | CS02  | CS01  | CS00  |
@@ -62,15 +68,15 @@ The ATmega328P has three timers, each with associated TCCR registers:
 
 ---
 
-## Prescalers
+## 3. Prescalers
 
 The **prescaler** in the ATmega328P (and similar microcontrollers) is a divider that reduces the main system clock **frequency** to a lower frequency for the timer. The prescaler allows you to control the frequency of the timer, which directly affects the speed of operations like **PWM** or delays that the timer generates.
 
-### Purpose of the Prescaler
+### 3.1 Purpose of the Prescaler
 
 The microcontroller’s main clock frequency is often quite high (e.g., 16 MHz on the ATmega328P). Running the timer directly at this speed would result in very high-frequency signals, making it challenging to create longer delays or lower-frequency PWM signals. The prescaler helps by slowing down the timer, making it easier to generate slower or more manageable signals.
 
-### How the Prescaler Works
+### 3.2 How the Prescaler Works
 
 The prescaler takes the main clock frequency and divides it by a specified factor, which is then used as the **input clock** for the timer. For example, if the system clock is 16 MHz and the prescaler is set to 64, then the timer operates at:
 
@@ -78,7 +84,7 @@ The prescaler takes the main clock frequency and divides it by a specified facto
 
 This effectively slows down the timer and allows more extended timing intervals or lower-frequency PWM output.
 
-### Prescaler Options on ATmega328P
+### 3.4 Prescaler Options on ATmega328P
 
 Each timer on the ATmega328P has several prescaler options, typically selectable by configuring specific bits in the `TCCR` (Timer/Counter Control Register).
 
@@ -91,7 +97,8 @@ Each timer on the ATmega328P has several prescaler options, typically selectable
 |256 |0, 1, 2|
 |1024|0, 1, 2|
 
-### Example Calculation of PWM Frequency with a Prescaler
+### 3.5 Example Calculation of PWM Frequency with a Prescaler
+
 When using Fast PWM mode on an 8-bit timer, the PWM frequency can be calculated as:
 
 \\[PWM\ Frequency\ =\ \frac{CPU\ Clock\ Frequency}{Prescaler\ \cdot 256}\\]
@@ -104,7 +111,7 @@ This frequency can then be adjusted by changing the OCR(`OCR0A`) (Output Compare
 
 To set the prescaler for `Timer0` on the ATmega328P, you configure the `CS00`, `CS01`, and `CS02` bits in the `TCCR0B` register. Each combination of these bits determines a different prescaler value. Here’s how you can configure `Timer0` for prescalers of 8, 64, 256, and 1024.
 
-### Setting the Prescaler for `Timer0`
+### 3.6 Setting the Prescaler for `Timer0`
 
 
 | CS02|	CS01|CS00|Prescaler|
@@ -133,7 +140,7 @@ TCCR0B = (1 << CS02) | (1 << CS00); // Prescaler = 1024
 
 ---
 
-## Building the `pwm.c` source code
+## 4. Building the `pwm.c` source code
 
 ~~~admonish warning
 
@@ -158,8 +165,9 @@ TCCR0B = (1 << CS02) | (1 << CS00); // Prescaler = 1024
 
 ~~~
 
-Now we have an understanding of the what is going on under the hood we can convert this `pwm.ino` into and embedded version.
+### 4.1 Basic pwm.ino
 
+Now we have an understanding of the what is going on under the hood we can convert this `pwm.ino` into and embedded version.
 
 ~~~admonish code
 
@@ -176,6 +184,8 @@ void loop(){}
 
 ~~~
 
+~~~admonish example title="Explanation"
+
 Let's have a breakdown of what this is doing incomparison to the embedded version:
 
 - PWM Configuration:
@@ -190,9 +200,9 @@ Let's have a breakdown of what this is doing incomparison to the embedded versio
 
     - In the examples below, we can manually set `TCCR0B`, we will choose between different prescalers to adjust the PWM frequency. This will allow for finer control over the PWM signal characteristics.
 
+~~~
 
-
-### Create `pwm.c`
+### 4.2 Create `pwm.c`
 
 1. Create a new directory inside `embeddedC` called `pwm`
     ~~~admonish terminal
@@ -314,9 +324,9 @@ Let's have a breakdown of what this is doing incomparison to the embedded versio
 
 -------------
 
-## Exercises
+## 5. Exercises
 
-### Exercise 1: Changing the Duty Cycle
+### 5.1 Exercise 1: Changing the Duty Cycle
 Modify the `OCR0A` register in the `main` loop to create different duty cycles. For example, try setting it to 64, 127, and 192. Observe how the brightness of an LED connected to PD6 changes.
 
 **Task**:
@@ -324,7 +334,7 @@ Modify the `OCR0A` register in the `main` loop to create different duty cycles. 
 - Set `OCR0A = 192;` // ~75% duty cycle
 - Record the observed LED brightness.
 
-### Exercise 2: Creating a Smooth Fade Effect
+### 5.2 Exercise 2: Creating a Smooth Fade Effect
 Modify the code to gradually increase the duty cycle from 0 to 255 and then decrease it back to 0 to create a smooth "breathing" LED effect.
 
 **Hint**:
@@ -372,7 +382,7 @@ Modify the code to gradually increase the duty cycle from 0 to 255 and then decr
     ~~~
     
 
-### Exercise 3: Changing the PWM Frequency
+### 5.3 Exercise 3: Changing the PWM Frequency
 Experiment with different prescaler values to change the PWM frequency. Change the **CS02:CS00** bits in **TCCR0B** to see the effects.
 
 **Task**:

@@ -1,6 +1,8 @@
 # First Program
 
-## Git fork.... 
+## 1. Git fork.... 
+
+~~~admonish tip
 
 Go to here and fork the follow repo : 
 
@@ -8,17 +10,11 @@ Go to here and fork the follow repo :
 
 Working together we play with the initial code.
 
+~~~
 
-## Rust Lab: Mocking Text Input
+## 2. Rust Lab: Mocking Text Input
 
-This lab introduces students to fundamental Rust concepts such as input handling, string manipulation, and control flow. We'll break down the code below step-by-step.
-
----
-
-
-## Step-by-Step Breakdown
-
-### 1. **Importing Modules**
+### 2.1 **Importing Modules**
 
 Modify  `src/main.rs` by importing the following modules at the top of script: 
 
@@ -39,7 +35,7 @@ use std::env;
 
 ~~~
 
-### 2. **Main Function**
+### 2.2 **Main Function**
 
 Continue into the `main` block, removing the `println!` macro.
 
@@ -63,7 +59,7 @@ fn main() {
 
 ---
 
-### 3. **Getting Command-Line Arguments**
+### 2.3 **Getting Command-Line Arguments**
 
 Now on a new line after the above variables, add a `Vec` with type `String`, that collects the the arguments passed to the program via the command line
 
@@ -84,7 +80,7 @@ let args: Vec<String> = env::args().collect();
 
 ---
 
-### 4. **Handling Input**
+### 2.4 **Handling Input**
 
 Now that there is functionality to collect the arguments to the program into a vector of strings. We want to create functionality to read the arguments directly when the program is invoked via the CLI, or if not present then request input from the user.
 
@@ -119,7 +115,7 @@ input = match args.get(1) {
 
 ---
 
-### 5. **Normalizing Input**
+### 2.5 **Normalizing Input**
 
 To normalize the the inputted string, we can set the string to all lowercase. 
 
@@ -140,7 +136,7 @@ let input = input.trim().to_ascii_lowercase();
 
 ---
 
-### 6. **Setting Up State Variable**
+### 2.6 **Setting Up State Variable**
 
 To keep track of the the type of letter case we are using at anyone time we have a boolean 
 
@@ -160,7 +156,7 @@ let mut is_uppercase = false;
 
 ---
 
-### 7. **Transforming Input**
+### 2.7 **Transforming Input**
 
 Underneath the code above add the functionality to loop over every letter in the vector `input` and change it to upper or keep as lower case. We need to check if the index value of the string `input`  is of type alpha, rather than numeric in order to convert the value to upper case too.
 
@@ -195,7 +191,7 @@ for c in input.chars() {
 
 ---
 
-### 8. **Output the Result**
+### 2.8 **Output the Result**
 
 Once all conversions have happened the program should return the output to the user via standard out.
 
@@ -216,7 +212,7 @@ println!("{}", mock);
 
 ---
 
-## Compile 
+## 3. Compile 
 
 To compile the code: 
 
@@ -230,9 +226,9 @@ $ cargo build
 
 ---
 
-## Example Execution
+## 4. Example Execution
 
-### Case 1: With Argument
+### 4.1 Case 1: With Argument
 
 ~~~admonish terminal 
 
@@ -243,7 +239,7 @@ hElLo WoRlD
 
 ~~~
 
-### Case 2: Without Argument
+### 4.2 Case 2: Without Argument
 
 ~~~admonish terminal 
 
@@ -258,7 +254,7 @@ hElLo WoRlD
 
 ---
 
-## Concepts Covered
+## 5.Concepts Covered
 1. Command-line arguments.
 2. Reading user input.
 3. String manipulation.

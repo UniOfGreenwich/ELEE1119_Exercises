@@ -426,7 +426,8 @@ In this chapter we are going to combine our previous source code into a centeral
 
 ## Fork and Clone `Libioctrl` library
 
-13. Incase it doesn't work as intended, you can download the `libioctrl` library from GitHub: [CompEng0001/bb.black_pin_library](https://github.com/CompEng0001/bb.black_pin_library/fork)
+13. Incase it doesn't work as intended, you can fork and download the `libioctrl` library from GitHub:
+    -  [https://github.com/CCompEng0001/bb.black_pin_library](https://github.com/CompEng0001/bb.black_pin_library/fork)
 
 14. Clone the forked repo: `git clone git@github.com:YOURUSERNAME/bb.black_pin_library`
 

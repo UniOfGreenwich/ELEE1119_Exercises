@@ -32,7 +32,7 @@ It is important that you have completed the prerequiste sections:
 
 -----------------
 
-## Arduino C version of adc2pwm.ino
+## 1. Arduino C version of adc2pwm.ino
 
 We are essentially going to be converting the following standard adc to pwm program.
 
@@ -74,7 +74,7 @@ void loop() {
 
 -----
 
-## Making our own `adc2pwm.c` program
+## 2. Making our own `adc2pwm.c` program
 
 
 1. Create a new directory inside `embeddedC` called `adc2pwm`
@@ -291,7 +291,7 @@ void loop() {
 ------------
 
 
-## Exercise 1: Vary PWM Frequency with ADC Input
+## 3. Exercise 1: Vary PWM Frequency with ADC Input
 
 Objective: Modify the PWM frequency based on the ADC input value.
 
@@ -313,7 +313,7 @@ Instructions:
 
 --------
 
-## Exercise 2: Implement UART Commands to Control PWM Duty Cycle
+## 4. Exercise 2: Implement UART Commands to Control PWM Duty Cycle
 Objective: Enable the ATmega328P to receive commands over UART to adjust the PWM duty cycle.
 
 Instructions:
@@ -328,7 +328,7 @@ Instructions:
 
 --------
 
-## Exercise 3: Use ADC on Multiple Channels to Control Multiple PWMs
+## 5. Exercise 3: Use ADC on Multiple Channels to Control Multiple PWMs
 
 Objective: Expand the program to read multiple ADC channels and use each reading to control a different PWM pin.
 
@@ -342,7 +342,7 @@ Instructions:
 
 ---------
 
-## Exercise 4: Temperature Sensing with the Internal Temperature Sensor
+## 6. Exercise 4: Temperature Sensing with the Internal Temperature Sensor
 
 Objective: Use the ATmega328P’s internal temperature sensor to display temperature readings over UART and change the brightness of the LED
 

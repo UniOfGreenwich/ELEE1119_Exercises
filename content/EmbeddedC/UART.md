@@ -1,55 +1,59 @@
 # USART
 
-So you are no doubt familiar with the well known `Serial` within the Arduino SDK:
-
-~~~admonish code
-
-```c
-#define BAUDRATE 9600 // Desired Baud Rate
-char name[] = {'H','e','l','l','o',' ','w','o','r','l','d','!','\n'}; 
-
-void setup() {
-  Serial.begin(BAUDRATE);
-}
-
-void loop() {
-
-    for(int i = 0; i < 13;i++){
-      Serial.print(name[i]);
-    }
-	delay(1000);
-}
-```
-
-~~~
-
-There is a lot of abstraction happening here, where are the ports/registers? 
-
-Let's now turn this into an embedded program!
-
-----------
-
+~~~admonish info
 The USART (Universal Synchronous and Asynchronous serial Receiver and Transmitter) module on the ATmega328P is used for serial communication. It allows the microcontroller to send and receive data over a single data line (full-duplex communication) in both synchronous and asynchronous modes.
 
 In asynchronous mode, which is commonly used for UART, data is transferred in bytes, framed with start and stop bits, and synchronized with a clock frequency derived from the system clock. The USART has several registers to manage transmission, reception, baud rate configuration, and framing.
 
-
-~~~admonish info
-
-All information provided in this chapter is summariesd and expanded upon via: [https://ww1.microchip.com/downloads/aemDocuments/documents/MCU08/ProductDocuments/DataSheets/40001906C.pdf](https://ww1.microchip.com/downloads/aemDocuments/documents/MCU08/ProductDocuments/DataSheets/40001906C.pdf) page 264 onwards.
-
 ~~~
 
 
+~~~admonish information
+
+All information provided in this chapter is summariesd and expanded upon from: 
+
+- [https://ww1.microchip.com/downloads/aemDocuments/documents/MCU08/ProductDocuments/DataSheets/40001906C.pdf](https://ww1.microchip.com/downloads/aemDocuments/documents/MCU08/ProductDocuments/DataSheets/40001906C.pdf) page 264 onwards.
+
+~~~
+
+## 1. Basic Uart.ino
+
+1. So you are no doubt familiar with the well known `Serial` within the Arduino SDK:
+
+    ~~~admonish code
+
+    ```c
+    #define BAUDRATE 9600 // Desired Baud Rate
+    char name[] = {'H','e','l','l','o',' ','w','o','r','l','d','!','\n'}; 
+
+    void setup() {
+    Serial.begin(BAUDRATE);
+    }
+
+    void loop() {
+
+        for(int i = 0; i < 13;i++){
+        Serial.print(name[i]);
+        }
+        delay(1000);
+    }
+    ```
+
+    ~~~
+
+    There is a lot of abstraction happening here, where are the ports/registers? 
+
+    Let's now turn this into an embedded program!
+
 ------------
 
-## UBRR0H and UBRR0L (USART Baud Rate Registers)
+## 2. UBRR0H and UBRR0L (USART Baud Rate Registers)
 
-The UBRR (USART Baud Rate Register) is split into two 8-bit registers:
+1. The UBRR (USART Baud Rate Register) is split into two 8-bit registers:
 
-- `UBRR0H`: The high byte of the baud rate register.
-- `UBRR0L`: The low byte of the baud rate register.
-- Together, these registers set the baud rate for serial communication. The formula to calculate the baud prescaler value for the desired baud rate (when using 16x oversampling) is:
+   - `UBRR0H`: The high byte of the baud rate register.
+   - `UBRR0L`: The low byte of the baud rate register.
+   - Together, these registers set the baud rate for serial communication. The formula to calculate the baud prescaler value for the desired baud rate (when using 16x oversampling) is:
 
 <div style="font-size:14px">
 
@@ -61,55 +65,59 @@ The UBRR (USART Baud Rate Register) is split into two 8-bit registers:
 
 </div>
 
-For example, with a 16 MHz clock and a baud rate of `9600`, `UBRRn` will be `103`.
-
-~~~admonish code
-
-```c
-UBRRn  = (((16000000UL / (9600 * 16UL))) - 1) // 103
-UBRR0H = (uint8_t)(UBRRn >> 8);  // Set high byte
-UBRR0L = (uint8_t)UBRRn;         // Set low byte
-```
-
-~~~
-
-~~~admonish info
-
-You **should** visit here to see the documentation of Baud rate:
-- [https://onlinedocs.microchip.com/oxy/GUID-ED37252C-1496-4275-BAEF-5152050ED2C2-en-US-2/GUID-65A53416-8DE2-468E-99CF-09F480AEF734.html](https://onlinedocs.microchip.com/oxy/GUID-ED37252C-1496-4275-BAEF-5152050ED2C2-en-US-2/GUID-65A53416-8DE2-468E-99CF-09F480AEF734.html)
-
-~~~
-
--------
-
-## UCSR0A (USART Control and Status Register A)
-
-`UCSR0A` is a control and status register for the USART, providing various flags and settings:
-
-- `UDRE0` (USART Data Register Empty): This flag indicates that the data register is ready to accept new data for transmission. When `UDRE0` is set (1), it means the data register is empty and ready for a new byte.
+2. For example, with a 16 MHz clock and a baud rate of `9600`, `UBRRn` will be `103`.
 
     ~~~admonish code
 
     ```c
-    while (!(UCSR0A & (1 << UDRE0)));  // Wait until UDRE0 is set (data register empty)
+    UBRRn  = (((16000000UL / (9600 * 16UL))) - 1) // 103
+    UBRR0H = (uint8_t)(UBRRn >> 8);  // Set high byte
+    UBRR0L = (uint8_t)UBRRn;         // Set low byte
     ```
 
     ~~~
 
     ~~~admonish info
 
-    - `TXC0` (Transmit Complete): This flag indicates that the entire frame (including stop bit) has been transmitted.
-    - `RXC0` (Receive Complete): This flag indicates that unread data is available in the receive buffer. When `RXC0` is set (1), the received data is ready to be read from `UDR0`.
+    You **should** visit here to see the documentation of Baud rate:
+    - [https://onlinedocs.microchip.com/oxy/GUID-ED37252C-1496-4275-BAEF-5152050ED2C2-en-US-2/GUID-65A53416-8DE2-468E-99CF-09F480AEF734.html](https://onlinedocs.microchip.com/oxy/GUID-ED37252C-1496-4275-BAEF-5152050ED2C2-en-US-2/GUID-65A53416-8DE2-468E-99CF-09F480AEF734.html)
 
     ~~~
 
 -------
 
-##  UCSR0B (USART Control and Status Register B)
+## 3. UCSR0A (USART Control and Status Register A)
+
+3. `UCSR0A` is a control and status register for the USART, providing various flags and settings:
+
+   - `UDRE0` (USART Data Register Empty): This flag indicates that the data register is ready to accept new data for transmission. When `UDRE0` is set (1), it means the data register is empty and ready for a new byte.
+
+       ~~~admonish code
+
+       ```c
+       while (!(UCSR0A & (1 << UDRE0)));  // Wait until UDRE0 is set (data register empty)
+       ```
+
+       ~~~
+
+       ~~~admonish info
+
+       - `TXC0` (Transmit Complete): This flag indicates that the entire frame (including stop bit) has been transmitted.
+       - `RXC0` (Receive Complete): This flag indicates that unread data is available in the receive buffer. When `RXC0` is set (1), the received data is ready to be read from `UDR0`.
+
+       ~~~
+
+-------
+
+## 4.  UCSR0B (USART Control and Status Register B)
+
+~~~admonish example title="Explanation"
 
 The USART Transmit Data Buffer (TXB) register and USART receive data buffer registers share the same I/O address referred to as USART data register or UDRn. The TXB will be the destination for data written to the `UDR1` register location. Reading the `UDRn` register location will return the contents of the Receive  Data Buffer Register (RXB). `UCSR0B` is another control register that enables and configures key features of the USART:
 
-- `RXEN0` (Receiver Enable): Setting `RXEN0` to 1 enables the USART receiver. This allows the microcontroller to read data from the RX pin
+~~~
+
+4. `RXEN0` (Receiver Enable): Setting `RXEN0` to 1 enables the USART receiver. This allows the microcontroller to read data from the RX pin
 
     ~~~admonish code
 
@@ -119,7 +127,7 @@ The USART Transmit Data Buffer (TXB) register and USART receive data buffer regi
 
     ~~~
 
-- `TXEN0` (Transmitter Enable): Setting `TXEN0` to 1 enables the USART transmitter. This allows the microcontroller to send data via the TX pin.
+5. `TXEN0` (Transmitter Enable): Setting `TXEN0` to 1 enables the USART transmitter. This allows the microcontroller to send data via the TX pin.
 
     ~~~admonish code
 
@@ -140,76 +148,76 @@ The USART Transmit Data Buffer (TXB) register and USART receive data buffer regi
 
 -------
 
-## UCSR0C (USART Control and Status Register C) 
+## 5. UCSR0C (USART Control and Status Register C) 
 
-`UCSR0C` configures the frame format, such as data bits, parity mode, and stop bits:
+6. `UCSR0C` configures the frame format, such as data bits, parity mode, and stop bits:
 
-- `UCSZ01` (Character Size): These bits set the data frame size (number of data bits per character).
-    - `00`: 5 data bits
-    - `01`: 6 data bits
-    - `10`: 7 data bits
-    - `11`: 8 data bits (common setting)
+   - `UCSZ01` (Character Size): These bits set the data frame size (number of data bits per character).
+       - `00`: 5 data bits
+       - `01`: 6 data bits
+       - `10`: 7 data bits
+       - `11`: 8 data bits (common setting)
 
-- `UPM01`(Parity Mode): Sets the parity mode.
-    - `00`: Disabled (no parity)
-    - `10`: Even parity
-    - `11`: Odd parity
+   - `UPM01`(Parity Mode): Sets the parity mode.
+       - `00`: Disabled (no parity)
+       - `10`: Even parity
+       - `11`: Odd parity
 
-    - The parity bit is calculated by doing an exclusive-or of all the data bits. If odd parity is used, the result of the exclusive or is inverted. The relation between the parity bit and data bits is as follows:
-    
-        \\[ P_{even}\ =\ d_{n-1} \oplus\ ...\ \oplus\ d_3\ \oplus\ d_2\ \oplus\ d_1\ \oplus\ d_0\ \oplus\ 0 \\]
-        \\[ P_{odd}\ =\ d_{n-1} \oplus\ ...\ \oplus\ d_3\ \oplus\ d_2\ \oplus\ d_1\ \oplus\ d_0\ \oplus\ 1 \\]
+       - The parity bit is calculated by doing an exclusive-or of all the data bits. If odd parity is used, the result of the exclusive or is inverted. The relation between the parity bit and data bits is as follows:
+       
+           \\[ P_{even}\ =\ d_{n-1} \oplus\ ...\ \oplus\ d_3\ \oplus\ d_2\ \oplus\ d_1\ \oplus\ d_0\ \oplus\ 0 \\]
+           \\[ P_{odd}\ =\ d_{n-1} \oplus\ ...\ \oplus\ d_3\ \oplus\ d_2\ \oplus\ d_1\ \oplus\ d_0\ \oplus\ 1 \\]
 
-        If used, the parity bit is located between the last data bit and first stop bit of a serial frame.
+           If used, the parity bit is located between the last data bit and first stop bit of a serial frame.
 
-- `USBS0` (Stop Bit Select): Sets the number of stop bits.
-    - 0: 1 stop bit
-    - 1: 2 stop bits
+   - `USBS0` (Stop Bit Select): Sets the number of stop bits.
+       - 0: 1 stop bit
+       - 1: 2 stop bits
 
-- For an 8-bit data frame, no parity, and 1 stop bit (a typical UART configuration):
+   - For an 8-bit data frame, no parity, and 1 stop bit (a typical UART configuration):
 
-    ~~~admonish code
+       ~~~admonish code
 
-    ```c
-    UCSR0C |= (1 << UCSZ01) | (1 << UCSZ00); // 8 data bits
-    UCSR0C &= ~(1 << USBS0);                 // 1 stop bit
-    UCSR0C &= ~((1 << UPM01) | (1 << UPM00)); // No parity
-    ```
+       ```c
+       UCSR0C |= (1 << UCSZ01) | (1 << UCSZ00); // 8 data bits
+       UCSR0C &= ~(1 << USBS0);                 // 1 stop bit
+       UCSR0C &= ~((1 << UPM01) | (1 << UPM00)); // No parity
+       ```
 
-    ~~~
+       ~~~
 
 -------
 
-##  UDR0 (USART Data Register)
+## 6. UDR0 (USART Data Register)
 
-`UDR0` (USART Data Register) is the primary data register used to hold data for transmission or received data:
+7. `UDR0` (USART Data Register) is the primary data register used to hold data for transmission or received data:
 
-- Transmit: To send data, write a byte to `UDR0`. This byte is then shifted out serially on the TX pin.
+   - Transmit: To send data, write a byte to `UDR0`. This byte is then shifted out serially on the TX pin.
 
-    ~~~admonish code
+       ~~~admonish code
 
-    ```c
-    UDR0 = data;  // Send a byte of data
-    ```
+       ```c
+       UDR0 = data;  // Send a byte of data
+       ```
 
-    ~~~
+       ~~~
 
-- Receive: To receive data, read a byte from `UDR0`. The `RXC0` flag (in `UCSR0A`) indicates when unread data is available
+   - Receive: To receive data, read a byte from `UDR0`. The `RXC0` flag (in `UCSR0A`) indicates when unread data is available
 
-    ~~~admonish code
+       ~~~admonish code
 
-    ```c
-    data = UDR0;  // Read a byte of received data
-    ```
+       ```c
+       data = UDR0;  // Read a byte of received data
+       ```
 
-    ~~~
+       ~~~
 
 ------------
 
 
-## Create `uart.c`
+## 7. Create `uart.c`
 
-1. Change directory to `embeddedC` that was made last time and create a new child directory `uart`
+8. Change directory to `embeddedC` that was made last time and create a new child directory `uart`
 
     ~~~admonish terminal 
 
@@ -219,7 +227,7 @@ The USART Transmit Data Buffer (TXB) register and USART receive data buffer regi
 
     ~~~
 
-2. Create a new file inside the the `uart` directory called `uart.c`
+9. Create a new file inside the the `uart` directory called `uart.c`
 
     ~~~admonish terminal
 
@@ -229,7 +237,7 @@ The USART Transmit Data Buffer (TXB) register and USART receive data buffer regi
 
     ~~~
 
-3. Now it's time start wrighting out the program:
+10. Now it's time start wrighting out the program:
 
     ~~~admonish code collapsible=true title='Suppressed code here [57 lines]...'
 
@@ -296,7 +304,7 @@ The USART Transmit Data Buffer (TXB) register and USART receive data buffer regi
     ~~~
 
 
-4. We are now going to copy the `Makefile` from the `blink/` created last time, and replace all instances of `blink` with `uart` using the regex feature:
+11. We are now going to copy the `Makefile` from the `blink/` created last time, and replace all instances of `blink` with `uart` using the regex feature:
 
     ~~~admonish terminal
 
@@ -307,7 +315,7 @@ The USART Transmit Data Buffer (TXB) register and USART receive data buffer regi
     
     ~~~
 
-5. Inside vim type the following an press enter to find all instances of `blink` with `uart`
+12. Inside vim type the following an press enter to find all instances of `blink` with `uart`
    
     ~~~admonish terminal
 
@@ -319,11 +327,11 @@ The USART Transmit Data Buffer (TXB) register and USART receive data buffer regi
     ~~~
 
 
-6. Remember like with blink we need to compile and upload the code to the board, ensure it is plugged in, to find the com port on windows:
+13. Remember like with blink we need to compile and upload the code to the board, ensure it is plugged in, to find the com port on windows:
 
     ![](./figures/windows_com_ports_list.png)
 
-7. If the COM port has changed remember to change it in the `Makefile`
+14. If the COM port has changed remember to change it in the `Makefile`
 
     ~~~admonish code
 
@@ -333,13 +341,13 @@ The USART Transmit Data Buffer (TXB) register and USART receive data buffer regi
 
     ~~~
 
-8. Use `make`:
+15. Use `make`:
 
     - `make clean`
     - `make` 
     - `make upload`
 
-9. To see the output of the COM port we need to use something like `Putty`:
+16. To see the output of the COM port we need to use something like `Putty`:
     - It is preinstalled on the university machines, if you want to do it locally on your personal machine you need to download it from here:
         - [https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html](https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html)
 
@@ -349,9 +357,9 @@ The USART Transmit Data Buffer (TXB) register and USART receive data buffer regi
 
 -----
 
-## Two way communication
+## 8. Two way communication
 
-10. Now lets set up the recieving part of the USART, and communicate between to boards, so it is best to pair up for this. Create a new file called `uart_two_way.c`
+17. Now lets set up the recieving part of the USART, and communicate between to boards, so it is best to pair up for this. Create a new file called `uart_two_way.c`
 
  - Both programs should send and receive data between each other.
     
@@ -393,9 +401,9 @@ The USART Transmit Data Buffer (TXB) register and USART receive data buffer regi
     
     ~~~
 
-11. Copy the `Makefile` from `../uart/Makefile` to `uart_two_way/` and use the regex `:%s/\<uart\>/uart_two_way/g`
+18. Copy the `Makefile` from `../uart/Makefile` to `uart_two_way/` and use the regex `:%s/\<uart\>/uart_two_way/g`
 
-12. Compile and run on both devices, wire up:
+19. Compile and run on both devices, wire up:
     - First wire up the Tx(board 1) to Rx (board 2)
     - Ensure the boards ground pins are connected together
     - Send a message
@@ -404,10 +412,10 @@ The USART Transmit Data Buffer (TXB) register and USART receive data buffer regi
     
         ~~~admonish warning
         
-        The should be share a common ground
+        The boards should share a common ground
         
         ~~~
 
-13. Launch Putty and see if you can send data to each other
+20. Launch Putty and see if you can send data to each other
 
     ![](./figures/putty_two_way.gif)

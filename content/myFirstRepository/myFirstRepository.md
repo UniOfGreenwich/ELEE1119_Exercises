@@ -2,25 +2,46 @@
 
 ## Introduction
 
-The first two things you'll want to do are install git and create a free GitHub account.
+~~~admonish important
+- The first two things you'll want to do are install `git` and create a free GitHub account.
+  
+  - If on University machines, use the Software Center to install `git`
 
-Follow the instructions [here](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) to install git (if it's not already installed). Note that for this tutorial we will be using git on the command line only. While there are some great git GUIs (graphical user interfaces), It's easier to learn git using git-specific commands first and then to try out a git GUI once you're more comfortable with the command. 
+  - If your machine, follow the instructions [https://git-scm.com/book/en/v2/Getting-Started-Installing-Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) to install `git` (if it's not already installed).
 
->A note:
->> 95% of other online git resources and discussions will also be for the command-line interface. 
+  - Once you've done that, create a GitHub account [https://github.com/join](https://github.com/join), you should use your university email account, but choose a different password
+~~~
 
-Once you've done that, create a GitHub account [here](https://github.com/join), you should use your university email account, but choose a different password.
+~~~admonish note
 
->**Git and GitHub**
->
->> A quick aside: git and GitHub are **not** the same thing. Git is an open-source, version control tool created in 2005 by developers working on the Linux operating system; GitHub is a company founded in 2008 that makes tools which integrate with git. You do not need GitHub to use git, but you cannot use GitHub without using git. There are many other alternatives to GitHub, such as GitLab, BitBucket, and “host-your-own” solutions such as gogs and gittea. All of these are referred to in git-speak as “remotes”, and all are completely optional. You do not need to use a remote to use git, but it will make sharing your code with others easier.
+-  Note that for this tutorial we will be using `git` on the command line only. While there are some great git GUIs (graphical user interfaces), It's easier to learn git using git-specific commands first and then to try out a git GUI once you're more comfortable with the command. 
+
+- 95% of other online `git` resources and discussions will also be for the command-line interface. 
+
+~~~
+
+.
+
+~~~admonish info 
+
+- Git and GitHub are **not** the same thing. Git is an open-source, version control tool created in 2005 by developers working on the Linux operating system; GitHub is a company founded in 2008 that makes tools which integrate with `git`. 
+
+- You do not need GitHub to use `git`, but you cannot use GitHub without using `git`. 
+
+- There are many other alternatives to GitHub, such as GitLab, BitBucket, and “host-your-own” solutions such as gogs and gittea. All of these are referred to in git-speak as “remotes”, and all are completely optional. 
+
+- You do not need to use a remote to use `git`, but it will make sharing your code with others easier.
+
+~~~
 
 ## Step 1: Create a local git repository 
-When creating a new project on your local machine using git, you'll first create a new repository (or often, 'repo', for short). 
+When creating a new project on your local machine using `git`, you'll first create a new repository (or often, 'repo', for short). 
 
-To use git we'll be using the terminal. If you don't have much experience with the terminal and basic commands, check out this tutorial (If you don’t want/ need a short history lesson, skip to step three.)
+To use `git` we'll be using the terminal. If you don't have much experience with the terminal and basic commands, check out this tutorial (If you don’t want/ need a short history lesson, skip to step three.)
 
 To begin, open up a terminal and move to where you want to place the project on your local machine using the cd (change directory) command. For example, if you have a 'projects' folder on your desktop, you'd do something like:
+
+~~~admonish terminal
 
 ```sh
 ❯ cd Documents/
@@ -33,8 +54,18 @@ To begin, open up a terminal and move to where you want to place the project on 
 
 ~/Documents/myfirstrepository
 ```
+~~~
+
+~~~admonish warning
+
+- Do not use a directory monitored by OneDrive, as there will be conflicts between git and OneDrive. 
+- On University machines navigate to the `G` drive and use Documents or some other Directory 
+
+~~~
 
 To initialize a git repository in the root of the folder, run the `git init` command:
+
+~~~admonish output
 
 ```sh
 ~/Documents/myfirstrepository
@@ -52,7 +83,11 @@ hint: 	git branch -m <name>
 Initialized empty Git repository in /home/seb/Documents/myfirstrepository/.git/
 ```
 
+~~~
+
 Regardless of the output above, rename the current branch with:
+
+~~~admonish terminal
 
 ```sh
 myfirstrepository on master
@@ -62,10 +97,14 @@ myfirstrepository on main
 ❯
 ```
 
+~~~
+
 ## Step 2: Add a new file to the repo
 Go ahead and add a new file to the project, using any text editor you like or running a touch command. `touch newfile.txt` just creates and saves a blank file named `newfile.txt`. 
 
 Once you've added or modified files in a folder containing a git repo, git will notice that  the file exists inside the repo. But, git won't track the file unless you explicitly tell it to. Git only saves/manages changes to files that it tracks, so we’ll need to send a command to confirm that yes, we want git to track our new file.
+
+~~~admonish terminal
 
 ```sh
 
@@ -77,7 +116,11 @@ myfirstrepository on main
 compeng0001.txt
 ```
 
+~~~
+
 After creating the new file, you can use the `git status` command to see which files git knows exist.
+
+~~~admonish output
 
 ```sh
 ❯ git status
@@ -87,41 +130,49 @@ No commits yet
 
 Untracked files:
   (use "git add <file>..." to include in what will be committed)
-	compeng0001.txt
+  compeng0001.txt
 
 nothing added to commit but untracked files present (use "git add" to track)
 ```
 
+~~~
+
 What this basically says is, "Hey, we noticed you created a new file called compeng0001.txt, but unless you use the `git add` command we aren't going to do anything with it."
 
+~~~admonish note title='An interlude: The staging environment, the commit, and you'
 
-> **An interlude: The staging environment, the commit, and you**
-> 
->>One of the most confusing parts when you're first learning git is the concept of the staging environment and how it relates to a `commit`.
->>
->>A [commit](https://docs.github.com/en/free-pro-team@latest/github/getting-started-with-github/github-glossary#:~:text=the%20repository%20owner.-,commit,who%20made%20them%20and%20when.) is a record of what changes you have made since the last time you made a commit. Essentially, you make changes to your repo (for example, adding a file or modifying one) and then tell git to put those changes into a `commit`.
->>
->>Commits make up the essence of your project and allow you to jump to the state of a project at any other `commit`.
->>
->>So, how do you tell git which files to put into a `commit`? This is where the [staging environment](https://git-scm.com/book/en/v2/Git-Basics-Recording-Changes-to-the-Repository) or index come in. As seen in Step 2, when you make changes to your repo, git notices that a file has changed but won't do anything with it (like adding it in a commit).
->>
->>To add a file to a commit, you first need to add it to the staging environment. To do this, you can use the [`git add <filename]>`](http://git-scm.com/docs/git-add) command (see Step 3 below).
->>
->>Once you've used the git add command to add all the files you want to the staging environment, you can then tell git to package them into a commit using the [`git commit`](http://git-scm.com/docs/git-commit) command. 
->>
->>Note: The staging environment, also called 'staging', is the new preferred term for this, but you can also see it referred to as the 'index'.
+- One of the most confusing parts when you're first learning git is the concept of the staging environment and how it relates to a `commit`.
 
+- A [commit](https://docs.github.com/en/free-pro-team@latest/github/getting-started-with-github/github-glossary#:~:text=the%20repository%20owner.-,commit,- o%20made%20them%20and%20when.) is a record of what changes you have made since the last time you made a commit. Essentially, you make changes to your repo (for example, - ding a file or modifying one) and then tell git to put those changes into a `commit`.
+ 
+- Commits make up the essence of your project and allow you to jump to the state of a project at any other `commit`.
+ 
+- So, how do you tell git which files to put into a `commit`? This is where the [staging environment](https://git-scm.com/book/en/v2/- t-Basics-Recording-Changes-to-the-Repository) or index come in. As seen in Step 2, when you make changes to your repo, git notices that a file has changed but won't do - ything with it (like adding it in a commit).
+ 
+- To add a file to a commit, you first need to add it to the staging environment. To do this, you can use the [`git add <filename]>`](http://git-scm.com/docs/git-add) - mmand (see Step 3 below).
+ 
+- Once you've used the git add command to add all the files you want to the staging environment, you can then tell git to package them into a commit using the [`git commit`](http://git-scm.com/docs/git-commit) command. 
+ 
+- Note: The staging environment, also called 'staging', is the new preferred term for this, but you can also see it referred to as the 'index'.
+
+~~~
 
 ## Step 3: Add a file to the staging environment
 
 Add a file to the staging environment using the `git add` command. 
+
+~~~admonish teminal
 
 ```sh
 myfirstrepository on main
 ❯ git add compeng0001.txt
 ```
 
+~~~
+
 If you rerun the `git status` command, you'll see that git has added the file to the staging environment (notice the "Changes to be committed" line). 
+
+~~~admonish admonish
 
 ```sh
 ❯ git status
@@ -131,8 +182,10 @@ No commits yet
 
 Changes to be committed:
   (use "git rm --cached <file>..." to unstage)
-	new file:   compeng0001.txt
+  new file:   compeng0001.txt
 ```
+
+~~~
 
 To reiterate, the file has **not** yet been added to a commit, but it's about to be.
 
@@ -140,21 +193,31 @@ However, first we need to make sure we have some creditentials for the commit to
 
 First set your username:
 
+~~~admonish terminal
+
 ```sh
 git config --global user.name "YourGitHubUserName"
 ```
 
+~~~
+
 Next set your email:
+
+~~~admonish terminal
 
 ```sh
 git config --global user.email "TheEmailYouUsedForGitHub"
 ```
+
+~~~
 
 ## Step 4: Create a commit
 
 It's time to create your first commit!
 
 Run the command `git commit -m "Your message about the commit"`
+
+~~~admonish terminal
 
 ```sh
 myfirstrepository on main
@@ -164,7 +227,18 @@ myfirstrepository on main
  create mode 100644 compeng0001.txt
 ```
 
-The message at the end of the commit should be something related to what the commit contains - maybe it's a new feature, maybe it's a bug fix, maybe it's just fixing a typo. Don't put a message like "asdfadsf" or "foobar". That makes the other people who see your commit sad. Very, very, sad. Commits live forever in a repository (technically you can delete them if you really, really need to but it’s messy), so if you leave a clear explanation of your changes it can be extremely helpful for future programmers (perhaps future you!) who are trying to figure out why some change was made years later.
+~~~
+
+~~~admonish important
+
+The message at the end of the commit should be something related to what the commit contains: 
+- maybe it's a new feature, maybe it's a bug fix, maybe it's just fixing a typo. 
+
+- Don't put a message like "asdfadsf" or "foobar". That makes the other people who see your commit sad. Very, very, sad. 
+
+- Commits live forever in a repository (technically you can delete them if you really, really need to but it’s messy), so if you leave a clear explanation of your changes it can be extremely helpful for future programmers (perhaps future you!) who are trying to figure out why some change was made years later.
+
+~~~
 
 ## Step 5: Create a new branch
 
@@ -178,11 +252,17 @@ Let's say you are on the primary branch and want to create a new branch to devel
 
 After running the above command, you can use the [`git branch`](http://git-scm.com/docs/git-branch) command to confirm that your branch was created:
 
+~~~admonish terminal
+
 ```sh
 myfirstrepository on main
 ❯ git checkout -b dev
 Switched to a new branch 'dev'
 ```
+
+~~~
+
+~~~admonish terminal
 
 ```sh 
 myfirstrepository on mainmerge
@@ -191,16 +271,19 @@ myfirstrepository on mainmerge
   main
 ```
 
+~~~
+
 The branch name with the asterisk next to it indicates which branch you're on at that given time. 
 
+~~~admonish note title='A note on branch names'
 
-> **A note on branch names**
->
->>By default, every git repository’s first branch is named `master` (and is typically used as the primary branch in the project). As part of the tech industry’s general anti-racism work, some groups have begun to use alternate names for the default branch (we are using “primary” in this tutorial, for example). In other documentation and discussions, you may see “master”, or other terms, used to refer to the primary branch. Regardless of the name, just keep in mind that nearly every repository has a primary branch that can be thought of as the official version of the repository. If it’s a website, then the primary branch is the version that users see. If it’s an application, then the primary branch is the version that users download. This isn’t technically necessary (git doesn’t treat any branches differently from other branches), but it’s how git is traditionally used in a project.
->>
->>If you are curious about the decision to use different default branch names, GitHub has an explanation of their change here: [https://github.com/github/renaming](https://github.com/github/renaming)
->>
->>Now, if you switch back to the primary branch and make some more commits, your new branch won't see any of those changes until you [`merge`](http://git-scm.com/docs/git-merge) those changes onto your new branch.
+- By default, every git repository’s first branch is named `master` (and is typically used as the primary branch in the project). As part of the tech industry’s general anti-racism work, some groups have begun to use alternate names for the default branch (we are using “primary” in this tutorial, for example). In other documentation and discussions, you may see “master”, or other terms, used to refer to the primary branch. Regardless of the name, just keep in mind that nearly every repository has a primary branch that can be thought of as the official version of the repository. If it’s a website, then the primary branch is the version that users see. If it’s an application, then the primary branch is the version that users download. This isn’t technically necessary (git doesn’t treat any branches differently from other branches), but it’s how git is traditionally used in a project.
+
+- If you are curious about the decision to use different default branch names, GitHub has an explanation of their change here: [https://github.com/github/renaming](https://github.com/github/renaming)
+
+- Now, if you switch back to the primary branch and make some more commits, your new branch won't see any of those changes until you [`merge`](http://git-scm.com/docs/git-merge) those changes onto your new branch.
+
+~~~
 
 ## Step 6: Create a new repository on GitHub
 
@@ -232,46 +315,19 @@ You will see your new repo has been created with some useful instructions on cre
 
 Go back to the terminal.
 
-## Security and authentication
+## Step 7: Security and authentication
 
 You need to create an ssh key to push and pull to your online storage/repo before we try to sync with the cloud. 
 
 Follow these instructions in the command line.
 
-```sh
-myfirstrepository on  dev
-❯ ssh-keygen -t ed25519 -C "YourGitEmail"
-```
-
-For every line requesting  user input just press the enter key and until the command has finished.
-
-**Output:**
-
-```sh
-Generating public/private ed25519 key pair.
-Enter file in which to save the key (/home/yourusername/.ssh/id_ed25519):
-Created directory '/home/yourusername/.ssh'.
-Enter passphrase (empty for no passphrase):
-Enter same passphrase again:
-Your identification has been saved in /home/yourusername/.ssh/id_ed25519
-Your public key has been saved in /home/yourusername/.ssh/id_ed25519.pub
-The key fingerprint is:
-SHA256:opMi+Jtjau26rE8pbgULmR4gI4SHnkxFV0dZVz1HO2g YourGitEmail
-The key's randomart image is:
-+--[ED25519 256]--+
-|oooo ....oo. ..oo|
-|B.. .   ..  . ..+|
-|B=.          E oo|
-|+*          .   .|
-|o +   . S        |
-|.o o o .         |
-|+ * +            |
-|oBo+ .           |
-|*OO+             |
-+----[SHA256]-----+
-```
+![](./figures/git%20config.gif)
 
 Now you need to get your public key you have generated and add to GitHub.
+
+![](./figures/ssh%20keygen.gif)
+
+~~~admonish terminal
 
 ```sh
 myfirstrepository on  dev
@@ -279,21 +335,43 @@ myfirstrepository on  dev
 ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBJf5t9RcKdkZwlxS14EZn91hDQndAjMIDz+c92kFtfC YourGitEmail
 ```
 
+~~~
+
+~~~admonish warning
+
+ - You only have do this once per machine.
+
+ - If you see the following: 
+
+    ![](./figures/nosshdir.png)
+
+ - Then run the following command:
+
+    - `mkdir ~/.ssh`
+    - `chmod 700 ~/.ssh`
+
+ - Then repeat the `ssh-keygen.exe ...` command
+
+~~~
+
 The copy the output from `ssh-ed25519 ... YourGitEmail` and follow the screenshots below.
 
 <div align=center>
 
-1. ![](./figures/step6-4.png)
-2. ![](./figures/step6-5.png)
-3. ![](./figures/step6-6.png)
-4. ![](./figures/step6-7.png)
+![](./figures/step6-4.png)
+![](./figures/step6-5.png)
+![](./figures/step6-6.png)
+![](./figures/step6-7.png)
+
 </div>
 
 Once completed, go back to the terminal and lets check for a connection:
 
-```sh
-❯ ssh git@github.com
-```
+![](./figures/ssh%20git%20auth.gif)
+
+You may see a similar output below, ensure you write `yes`...
+
+~~~admonish output
 
 ```sh
 The authenticity of host 'github.com (140.82.121.4)' can't be established.
@@ -302,31 +380,40 @@ This key is not known by any other names
 Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
 ```
 
+~~~
+
+
+~~~admonish output
+
 ```sh
 Warning: Permanently added 'github.com' (ED25519) to the list of known hosts.
 PTY allocation request failed on channel 0
 Hi CompEng0001! You've successfully authenticated, but GitHub does not provide shell access.
 Connection to github.com closed.
 ```
->**Note:**
->
->> You only have do this once per machine.
 
+~~~
 
 Now that is done, we can actually push our work to the cloud. 
 
-## Step 7: Push a branch to GitHub
+## Step 8: Push a branch to GitHub
 Now we'll `push` the commit in your branch to your new GitHub repo. This allows other people to see the changes you've made. If they're approved by the repository's owner, the changes can then be merged into the primary branch.
 
 
 First create a reference to the online repo.
+
+~~~admonish terminal
 
 ```sh
 myfirstrepository on dev
 ❯ git remote add origin git@github.com:CompEng0001/myFirstRepo.git
 ```
 
+~~~
+
 To push changes onto a new branch on GitHub, you'll want to run `git push origin yourbranchname`. GitHub will automatically create the branch for you on the remote repository:
+
+~~~admonish terminal
 
 ```sh
 myfirstrepository on dev
@@ -339,7 +426,11 @@ To github.com:CompEng0001/myFirstRepo.git
  * [new branch]      dev -> dev
 ```
 
+~~~
+
 Now go back to the main branch and lets make sure that is pushed to the cloud aswell.
+
+~~~admonish terminal
 
 ```sh
 myfirstrepository on dev
@@ -355,7 +446,11 @@ To push the current branch and set the remote as upstream, use
 
 ```
 
+~~~
+
 ...then:
+
+~~~admonish terminal
 
 ```sh
 myfirstrepository on main
@@ -371,6 +466,7 @@ branch 'main' set up to track 'origin/main'.
 
 ```
 
+~~~
 
 You might be wondering what that "origin" word means in the command above. What happens is that when you clone a remote repository to your local machine, git creates an alias for you. In nearly all cases this alias is called "[origin](https://git-scm.com/book/en/v2/Git-Basics-Working-with-Remotes)." It's essentially shorthand for the remote repository's URL. So, to push your changes to the remote repository, you could've used either the command: `git push git@github.com:git/git.git yourbranchname `or `git push origin yourbranchname`
 
@@ -380,19 +476,35 @@ If you refresh the GitHub page, you'll see note saying a branch with your name h
 
 Now lets make a change locally in the `dev` branch.
 
+~~~admonish terminal
 ```sh 
 myfirstrepository on main
 ❯ git checkout dev
 Switched to branch 'dev'
 ```
+
+~~~
+
+~~~admonish terminal
+
 ```sh
 myfirstrepository on  dev
 ❯ touch anewfile.txt
 ```
+
+~~~
+
+~~~admonish terminal
+
 ```sh
 myfirstrepository on dev [?]
 ❯ git add anewfile.txt
 ```
+
+~~~
+
+~~~admonish terminal
+
 ```sh
 myfirstrepository on dev [+]
 ❯ git commit -m "add: a new file added"
@@ -400,6 +512,11 @@ myfirstrepository on dev [+]
  1 file changed, 0 insertions(+), 0 deletions(-)
  create mode 100644 anewfile.txt
 ```
+
+~~~
+
+~~~admonish terminal
+
 ```sh
 myfirstrepository on dev
 ❯ git push
@@ -409,6 +526,11 @@ To push the current branch and set the remote as upstream, use
     git push --set-upstream origin dev
 
 ```
+
+~~~
+
+~~~admonish terminal
+
 ```sh
 myfirstrepository on dev
 ❯ git push --set-upstream origin dev
@@ -424,9 +546,11 @@ branch 'dev' set up to track 'origin/dev'.
 
 ```
 
+~~~
+
 ![](./figures/step7-1.png)
 
-## Step 8: Create a pull request (PR)
+## Step 9: Create a pull request (PR)
 
 A pull request (or PR) is a way to alert a repo's owners that you want to make some changes to their code. It allows them to review the code and make sure it looks good before putting your changes on the primary branch.
 
@@ -447,7 +571,7 @@ You might see a big green button at the bottom that says 'Merge pull request'. C
 
 Sometimes you'll be a co-owner or the sole owner of a repo, in which case you may not need to create a PR to merge your changes. However, it's still a good idea to make one so you can keep a more complete history of your updates and to make sure you always create a new branch when making changes.
 
-## Step 9: Merge a PR
+## Step 10: Merge a PR
 Go ahead and click the green 'Merge pull request' button. This will merge your changes into the primary branch.
 
 ![](./figures/step8-4.png)
@@ -465,17 +589,24 @@ You can also see the hash code of the commit on the right hand side. A hash code
 
 Now back to the terminal.
 
-## Step 10: Get changes on GitHub back to your computer
+## Step 11: Get changes on GitHub back to your computer
 
 Right now, the repo on GitHub looks a little different than what you have on your local machine. For example, the commit you made in your branch and merged into the primary branch doesn't exist in the primary branch on your local machine.
 
 In order to get the most recent changes that you or others have merged on GitHub, use the `git pull origin master`command(when working on the primary branch). In most cases, this can be shortened to `git pull`.
+
+~~~admonish terminal
 
 ```sh
 ❯ git checkout main
 Switched to branch 'main'
 Your branch is up to date with 'origin/main'.
 ```
+
+~~~
+
+~~~admonish terminal
+
 ```sh
 myfirstrepository on  main
 ❯ git pull
@@ -494,11 +625,15 @@ Fast-forward
  create mode 100644 anewfile.txt
 ```
 
+~~~
+
 This shows you all the files that have changed and how they've changed.
 
 Now we can use the [`git log`](http://git-scm.com/docs/git-log) command again to see all new commits.
 
 (You may need to switch branches back to the primary branch. You can do that using the git checkout master command.)
+
+~~~admonish terminal
 
 ```sh
 myfirstrepository on main
@@ -524,5 +659,7 @@ Date:   Sat Nov 5 11:52:16 2022 +0000
 
     init: This is my first commit
 ```
+
+~~~
 
 Well done, you have completed the first git workflow!

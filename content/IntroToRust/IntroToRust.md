@@ -2,7 +2,7 @@
 
 Rust is a systems programming language focused on speed, memory safety, and parallelism. It's designed to be safe, fast, and easy to use. This tutorial will walk through the basics of Rust, including its syntax, data types, and common patterns.
 
-## Variables
+## 1. Variables
 
 In Rust, variables are immutable by default. To make them mutable, you need to use the `mut` keyword.
 
@@ -16,11 +16,11 @@ y = 15; // allowed because y is mutable
 
 ~~~
 
-## Data Types
+## 2. Data Types
 
 Rust has a variety of data types. The most common ones are:
 
-### Scalar Types
+### 2.1 Scalar Types
 - **Integers**: Whole numbers
   - `i32`, `u32`, `i64`, `u64`, etc.
 - **Floating-point numbers**: Numbers with decimals
@@ -39,7 +39,7 @@ let d: char = 'R';
 ```
 ~~~
 
-### Compound Types
+### 2.2 Compound Types
 - **Tuples**: Group different types into a single compound type.
 - **Arrays**: Store multiple elements of the same type.
 
@@ -52,7 +52,7 @@ let arr: [i32; 3] = [1, 2, 3];
 
 ~~~
 
-## Control Flow
+## 3. Control Flow
 
 Rust supports standard control flow structures:
 
@@ -87,7 +87,7 @@ for i in 0..5 {
 
 ~~~
 
-## Functions
+## 4. Functions
 
 In Rust, functions are declared using the `fn` keyword. Parameters and return types are explicitly defined.
 
@@ -104,7 +104,7 @@ println!("Sum is: {}", result);
 
 ~~~
 
-## Ownership and Borrowing
+## 5. Ownership and Borrowing
 
 Rust's memory management is based on ownership, borrowing, and lifetimes, which helps ensure memory safety without a garbage collector.
 
@@ -123,7 +123,7 @@ fn main() {
 
 ~~~
 
-## Keywords
+## 6. Keywords
 
 Here are some important Rust keywords:
 
@@ -135,7 +135,7 @@ Here are some important Rust keywords:
 - `impl`: Implementation block
 - `mod`: Module declaration
 
-## Common Rust Patterns
+## 7. Common Rust Patterns
 
 Rust encourages functional programming patterns:
 
@@ -161,6 +161,6 @@ match result {
 
 ~~~
 
-## Conclusion
+## 8. Conclusion
 
 Rust's syntax may take some time to learn, but its emphasis on memory safety and concurrency makes it a powerful tool for system programming.

@@ -12,16 +12,17 @@ In this chapter, you will learn how to build a script for reading analog values 
 
 --------
 
-## Understanding ADC Registers and Ports
+## 1. Understanding ADC Registers and Ports
+
 The ATmega328P has a built-in Analog-to-Digital Converter (ADC) that can convert analog signals to digital values. The ADC uses several registers to configure its operation:
 
-### ADMUX Register Overview
+### 1.2 ADMUX Register Overview
 
 The **ADMUX register** is used to configure the ADC (Analog-to-Digital Converter) on the ATmega328P. It allows you to select:
 - The reference voltage for the ADC.
 - The input channel from which the ADC reads the analog value.
 
-### Bit Structure of ADMUX
+### 1.3 Bit Structure of ADMUX
 The ADMUX register is an 8-bit register, where each bit has a specific purpose:
 
 | Bit 7 | Bit 6 | Bit 5 | Bit 4 | Bit 3 | Bit 2 | Bit 1 | Bit 0 |
@@ -31,36 +32,36 @@ The ADMUX register is an 8-bit register, where each bit has a specific purpose:
 - **REFS1, REFS0**: These bits select the reference voltage.
 - **MUX3, MUX2, MUX1, MUX0**: These bits select the ADC input channel
 
-### **ADMUX (ADC Multiplexer Selection Register)**:
-   - **REFS1:REFS0**: Selects the reference voltage for the ADC. We use AVcc (5V) as the reference in our script.
-   - **MUX3:MUX0**: Selects the ADC channel to read from. ADC0 is selected when all MUX bits are 0.
-    
-        ~~~admonish note
+### 1.4 **ADMUX (ADC Multiplexer Selection Register)**:
+ - **REFS1:REFS0**: Selects the reference voltage for the ADC. We use AVcc (5V) as the reference in our script.
+ - **MUX3:MUX0**: Selects the ADC channel to read from. ADC0 is selected when all MUX bits are 0.
+  
+      ~~~admonish note
 
-        The MUX3:MUX0 bits in the ADMUX register select the ADC input channel:
-        | **MUX3** | **MUX2** | **MUX1** | **MUX0** | **Selected ADC Channel** |
-        |----------|----------|----------|----------|-------------------------|
-        | 0        | 0        | 0        | 0        | ADC0 (PC0)             |
-        | 0        | 0        | 0        | 1        | ADC1 (PC1)             |
-        | 0        | 0        | 1        | 0        | ADC2 (PC2)             |
-        | 0        | 0        | 1        | 1        | ADC3 (PC3)             |
-        | 0        | 1        | 0        | 0        | ADC4 (PC4)             |
-        | 0        | 1        | 0        | 1        | ADC5 (PC5)             |
-        | 0        | 1        | 1        | 0        | ADC6 (PC6)             |
-        | 0        | 1        | 1        | 1        | ADC7 (PC7)             |
-        | 1        | 0        | 0        | 0        | Temperature sensor     |
-        | 1        | 1        | 0        | 0        | 1.1V internal reference|
-        | 1        | 1        | 0        | 1        | GND                    |
+      The MUX3:MUX0 bits in the ADMUX register select the ADC input channel:
+      | **MUX3** | **MUX2** | **MUX1** | **MUX0** | **Selected ADC Channel** |
+      |----------|----------|----------|----------|-------------------------|
+      | 0        | 0        | 0        | 0        | ADC0 (PC0)             |
+      | 0        | 0        | 0        | 1        | ADC1 (PC1)             |
+      | 0        | 0        | 1        | 0        | ADC2 (PC2)             |
+      | 0        | 0        | 1        | 1        | ADC3 (PC3)             |
+      | 0        | 1        | 0        | 0        | ADC4 (PC4)             |
+      | 0        | 1        | 0        | 1        | ADC5 (PC5)             |
+      | 0        | 1        | 1        | 0        | ADC6 (PC6)             |
+      | 0        | 1        | 1        | 1        | ADC7 (PC7)             |
+      | 1        | 0        | 0        | 0        | Temperature sensor     |
+      | 1        | 1        | 0        | 0        | 1.1V internal reference|
+      | 1        | 1        | 0        | 1        | GND                    |
 
-        - Use these settings to select the appropriate input channel for your ADC conversions.
-        
-        - We also look at the internal temperature sensor too!
-        ~~~
-
-
+      - Use these settings to select the appropriate input channel for your ADC conversions.
+      
+      - We also look at the internal temperature sensor too!
+      ~~~
 
 
-### Example 1: Setting the Reference Voltage to AVcc
+
+
+### 1.5 Example 1: Setting the Reference Voltage to AVcc
 
 ~~~admonish code
 
@@ -70,15 +71,19 @@ ADMUX = (1 << REFS0);
 
 ~~~
 
-- **Explanation**: 
-  - `(1 << REFS0)` shifts `1` to the position of the **REFS0** bit (bit 6).
-  - This sets **REFS0** to `1` and all other bits to `0`.
+~~~admonish example title="Explanation"
+
+- `(1 << REFS0)` shifts `1` to the position of the **REFS0** bit (bit 6).
+- This sets **REFS0** to `1` and all other bits to `0`.
+
 - **Bitwise Result**:
   - `ADMUX = 0b01000000`
   - `REFS0 = 1` (Reference voltage = AVcc)
   - `MUX3:MUX0 = 0000` (ADC0 channel selected by default)
 
-### Example 2: Setting the Reference Voltage to AVcc and Selecting ADC3
+~~~
+
+### 1.6 Example 2: Setting the Reference Voltage to AVcc and Selecting ADC3
 
 ~~~admonish code
 
@@ -88,17 +93,20 @@ ADMUX = (1 << REFS0) | (1 << MUX1) | (1 << MUX0);
 
 ~~~
 
-- **Explanation**:
-  - `(1 << REFS0)`: Sets the **REFS0** bit (bit 6) to `1` (Reference voltage = AVcc).
-  - `(1 << MUX1)`: Sets the **MUX1** bit (bit 1) to `1`.
-  - `(1 << MUX0)`: Sets the **MUX0** bit (bit 0) to `1`.
-  - The `|` operator combines these settings, setting bits `REFS0`, `MUX1`, and `MUX0` to `1`, while keeping other bits at `0`.
+~~~admonish example title="Explanation"
+
+- `(1 << REFS0)`: Sets the **REFS0** bit (bit 6) to `1` (Reference voltage = AVcc).
+- `(1 << MUX1)`: Sets the **MUX1** bit (bit 1) to `1`.
+- `(1 << MUX0)`: Sets the **MUX0** bit (bit 0) to `1`.
+- The `|` operator combines these settings, setting bits `REFS0`, `MUX1`, and `MUX0` to `1`, while keeping other bits at `0`.
 - **Bitwise Result**:
   - `ADMUX = 0b01000011`
   - `REFS0 = 1` (Reference voltage = AVcc)
   - `MUX3:MUX0 = 0011` (ADC3 channel selected)
 
-### Reminder of Bitwise operations
+~~~
+
+### 1.7 Reminder of Bitwise operations
 
 - `(1 << REFS0)`
     - **Operation**: `1` is shifted left by 6 positions (since REFS0 is bit 6).
@@ -117,7 +125,7 @@ ADMUX = (1 << REFS0) | (1 << MUX1) | (1 << MUX0);
     - `0b01000000 | 0b00000010 | 0b00000001 = 0b01000011`
 
 ---
-### **ADCSRA (ADC Control and Status Register A)**:
+### 1.6  **ADCSRA (ADC Control and Status Register A)**:
    - **ADEN**: ADC Enable. Set this bit to enable the ADC.
    - **ADSC**: ADC Start Conversion. Set this bit to start an ADC conversion.
    - **ADPS2:ADPS0**: ADC Prescaler Select Bits. These bits determine the division factor between the system clock and the ADC clock. We use a prescaler of 128 for accurate readings.
@@ -138,7 +146,9 @@ ADMUX = (1 << REFS0) | (1 << MUX1) | (1 << MUX0);
 
 ----
 
-## Building a program to grab the internal temperature of the chipset
+## 2. Building a program to grab the internal temperature of the chipset
+
+~~~admonish info
 
 Temperature Sensor and ADC Setup:
 
@@ -164,6 +174,8 @@ We can create a linear relationship between the ADC value and the temperature ba
 <p>
 
 </p>
+
+~~~
 
 1. Create a new directory called `internalADCTemp` and navigate to it and then create a file called `internalADCTemp.c`:
 
@@ -303,7 +315,7 @@ We can create a linear relationship between the ADC value and the temperature ba
 
 ---
 
-## So how to access the A0-5 pins
+## 3. So how to access the A0-5 pins
 
 Now, let's write the script step by step:
 
