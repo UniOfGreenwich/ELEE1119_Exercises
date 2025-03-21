@@ -170,52 +170,154 @@
                     <main><div class="sidetoc"><nav class="pagetoc"></nav></div>
                         <h1 id="introduction"><a class="header" href="#introduction">Introduction</a></h1>
 <p>You will be developing and maintaining a series systemScripts, you need to start here.</p>
-<h2 id="script-creation"><a class="header" href="#script-creation">Script creation</a></h2>
-<p>You first need to create a script that you can develop:</p>
+<h2 id="1-script-creation"><a class="header" href="#1-script-creation">1. Script creation</a></h2>
+<ol>
+<li>You first need to create a script that you can develop:</li>
+</ol>
+<div id="admonition-code" class="admonition admonish-code" role="note" aria-labelledby="admonition-code-title">
+<div class="admonition-title">
+<div id="admonition-code-title">
+<p>Code</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-code"></a>
+</div>
+<div>
 <pre><code class="language-sh">$ mkdir -p Documents/Scripts/bash/
 $ cd Documents/Scripts/bash/
 $ touch systemsStats.sh
 </code></pre>
+</div>
+</div>
+<div id="admonition-explanation" class="admonition admonish-example" role="note" aria-labelledby="admonition-explanation-title">
+<div class="admonition-title">
+<div id="admonition-explanation-title">
+<p>Explanation</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-explanation"></a>
+</div>
+<div>
 <ul>
 <li>You have created a series of directories using <code>mkdir -p ...</code></li>
 <li>changed current path to the newely created directories <code>cd ...</code></li>
 <li>finally you create a file with <code>touch</code> in the <code>../bash/</code> directory.</li>
 </ul>
-<h2 id="basics"><a class="header" href="#basics">Basics</a></h2>
+</div>
+</div>
+<h2 id="2-basics"><a class="header" href="#2-basics">2. Basics</a></h2>
 <p>Bash is an interpreter and will execute each line one at a time, so in order to do that we need to specify that the script we are writing is designed for that.</p>
+<ol start="2">
+<li>
 <p>Open the newly created file with the <code>vim</code> text editor</p>
+ <div id="admonition-note" class="admonition admonish-note" role="note" aria-labelledby="admonition-note-title">
+ <div class="admonition-title">
+ <div id="admonition-note-title">
+<p>Note</p>
+ </div>
+ <a class="admonition-anchor-link" href="#admonition-note"></a>
+ </div>
+ <div>
 <pre><code class="language-sh">$ vim systemStats.sh
 </code></pre>
-<ul>
-<li>press the lowercase <code>i</code> to enter <strong>INSERT</strong> mode...</li>
-</ul>
+ </div>
+ </div>
+ <div id="admonition-tip" class="admonition admonish-tip" role="note" aria-labelledby="admonition-tip-title">
+ <div class="admonition-title">
+ <div id="admonition-tip-title">
+<p>Tip</p>
+ </div>
+ <a class="admonition-anchor-link" href="#admonition-tip"></a>
+ </div>
+ <div>
+<p>press the lowercase <code>i</code> to enter <strong>INSERT</strong> mode...</p>
+ </div>
+ </div>
+</li>
+<li>
 <p>Reproduce the following:</p>
-<pre><code class="language-sh">
-#! /usr/bin/env cat
+ <div id="admonition-code-1" class="admonition admonish-code" role="note" aria-labelledby="admonition-code-1-title">
+ <div class="admonition-title">
+ <div id="admonition-code-1-title">
+<p>Code</p>
+ </div>
+ <a class="admonition-anchor-link" href="#admonition-code-1"></a>
+ </div>
+ <div>
+<pre><code class="language-sh">#! /usr/bin/env cat
 
 echo Hello World, Goodbye World!
 </code></pre>
+ </div>
+ </div>
+ <div id="admonition-tip-1" class="admonition admonish-tip" role="note" aria-labelledby="admonition-tip-1-title">
+ <div class="admonition-title">
+ <div id="admonition-tip-1-title">
+<p>Tip</p>
+ </div>
+ <a class="admonition-anchor-link" href="#admonition-tip-1"></a>
+ </div>
+ <div>
 <ul>
 <li>press the <strong>ESC</strong> key to exit <strong>INSERT</strong> mode..</li>
 <li>press the shift and the colon key to enter <strong>COMMAND</strong> mode</li>
 <li>press <code>w</code> and <code>q</code> so the bottom of the <code>vim</code> looks like <code>:wq</code> and press the return key to write <code>w</code> and quit <code>q</code>.</li>
 </ul>
+ </div>
+ </div>
+</li>
+<li>
 <p>Run the script:</p>
+ <div id="admonition-output" class="admonition admonish-output" role="note" aria-labelledby="admonition-output-title">
+ <div class="admonition-title">
+ <div id="admonition-output-title">
+<p>Output</p>
+ </div>
+ <a class="admonition-anchor-link" href="#admonition-output"></a>
+ </div>
+ <div>
 <pre><code class="language-sh">$ bash systemStats.sh
 &gt; Hello world, Goodbye World!
 </code></pre>
+ </div>
+ </div>
+ <div id="admonition-explanation-1" class="admonition admonish-example" role="note" aria-labelledby="admonition-explanation-1-title">
+ <div class="admonition-title">
+ <div id="admonition-explanation-1-title">
+<p>Explanation</p>
+ </div>
+ <a class="admonition-anchor-link" href="#admonition-explanation-1"></a>
+ </div>
+ <div>
 <ul>
 <li><code>bash</code> command executes the content of the script as bash script regardless of the shebang <code>#! /usr/bin/env bash</code> this is correct behaviour as the bash runs the first line of code... <code>echo ...</code></li>
 </ul>
+ </div>
+ </div>
+</li>
+<li>
 <p>Lets change the file modifiers so that the <code>systemStat.sh</code> is now an executable.</p>
+ <div id="admonition-output-1" class="admonition admonish-output" role="note" aria-labelledby="admonition-output-1-title">
+ <div class="admonition-title">
+ <div id="admonition-output-1-title">
+<p>Output</p>
+ </div>
+ <a class="admonition-anchor-link" href="#admonition-output-1"></a>
+ </div>
+ <div>
 <pre><code class="language-sh">$ ls -lah
 &gt; drwxr-xr-x dev users 4.0 KB Tue Oct 10 19:13:49 2023  .
 &gt; drwx------ dev users 4.0 KB Tue Oct 10 12:40:13 2023  ..
 &gt; .rw-r--r-- dev users   0 B  Tue Oct 10 19:13:49 2023  systemStats.sh
 </code></pre>
-<blockquote>
-<p><strong>Note</strong></p>
-<blockquote>
+ </div>
+ </div>
+ <div id="admonition-explanation-2" class="admonition admonish-example" role="note" aria-labelledby="admonition-explanation-2-title">
+ <div class="admonition-title">
+ <div id="admonition-explanation-2-title">
+<p>Explanation</p>
+ </div>
+ <a class="admonition-anchor-link" href="#admonition-explanation-2"></a>
+ </div>
+ <div>
 <ul>
 <li><code>d</code> stands for directory</li>
 <li>modifiers are broken down into 3 octet sets,
@@ -226,9 +328,19 @@ echo Hello World, Goodbye World!
 </ul>
 </li>
 </ul>
-</blockquote>
-</blockquote>
+ </div>
+ </div>
+</li>
+<li>
 <p>Running the following to change permissions for this:</p>
+ <div id="admonition-terminal" class="admonition admonish-terminal" role="note" aria-labelledby="admonition-terminal-title">
+ <div class="admonition-title">
+ <div id="admonition-terminal-title">
+<p>Terminal</p>
+ </div>
+ <a class="admonition-anchor-link" href="#admonition-terminal"></a>
+ </div>
+ <div>
 <pre><code class="language-sh">...
 &gt; .rw-r--r-- dev users   0 B  Tue Oct 10 19:13:49 2023  systemStats.sh
 $ chmod +x systemStats.sh
@@ -237,52 +349,195 @@ $ ls -lah
 &gt; ...
 &gt; .rwxr-xr-x dev users   0 B  Tue Oct 10 19:13:49 2023  systemStats.sh
 </code></pre>
+ </div>
+ </div>
+</li>
+<li>
 <p>Now that the file is an exectuable we can call it like this:</p>
+ <div id="admonition-output-2" class="admonition admonish-output" role="note" aria-labelledby="admonition-output-2-title">
+ <div class="admonition-title">
+ <div id="admonition-output-2-title">
+<p>Output</p>
+ </div>
+ <a class="admonition-anchor-link" href="#admonition-output-2"></a>
+ </div>
+ <div>
 <pre><code class="language-sh">$ ./systemStats.sh
 &gt;#! /usr/bin/env cat
 &gt;
 &gt;echo Hello World, Goodbye World!
 </code></pre>
+ </div>
+ </div>
+ <div id="admonition-explanation-3" class="admonition admonish-example" role="note" aria-labelledby="admonition-explanation-3-title">
+ <div class="admonition-title">
+ <div id="admonition-explanation-3-title">
+<p>Explanation</p>
+ </div>
+ <a class="admonition-anchor-link" href="#admonition-explanation-3"></a>
+ </div>
+ <div>
 <p>This is because the file is an executable and the shebang runs the script with the program at the end of the line i.e <code>cat</code></p>
-<p>As proof lets use cat directly:</p>
+ </div>
+ </div>
+</li>
+<li>
+<p>As proof lets use <code>cat</code> directly:</p>
+ <div id="admonition-output-3" class="admonition admonish-output" role="note" aria-labelledby="admonition-output-3-title">
+ <div class="admonition-title">
+ <div id="admonition-output-3-title">
+<p>Output</p>
+ </div>
+ <a class="admonition-anchor-link" href="#admonition-output-3"></a>
+ </div>
+ <div>
 <pre><code class="language-sh">$ cat systemStats.sh
 &gt;#! /usr/bin/env cat
 &gt;
 &gt;echo Hello World, Goodbye World!
 </code></pre>
+ </div>
+ </div>
+</li>
+<li>
 <p>Changing the shebang to <code>bash</code> will ensure the <code>bash</code> program is called instead.</p>
+ <div id="admonition-terminal-1" class="admonition admonish-terminal" role="note" aria-labelledby="admonition-terminal-1-title">
+ <div class="admonition-title">
+ <div id="admonition-terminal-1-title">
+<p>Terminal</p>
+ </div>
+ <a class="admonition-anchor-link" href="#admonition-terminal-1"></a>
+ </div>
+ <div>
 <pre><code class="language-sh">$ vim ./systemStats.sh
 </code></pre>
+ </div>
+ </div>
+</li>
+<li>
 <p>Again remember to press <code>i</code> to enter <strong>INSERT</strong> mode, and reproduce the following</p>
+<div id="admonition-code-2" class="admonition admonish-code" role="note" aria-labelledby="admonition-code-2-title">
+<div class="admonition-title">
+<div id="admonition-code-2-title">
+<p>Code</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-code-2"></a>
+</div>
+<div>
 <pre><code class="language-sh">#! /usr/bin/env bash
 
 echo Hello World, Goodbye World!
 </code></pre>
+</div>
+</div>
+</li>
+<li>
 <p>Run the program and you will get the same output as <code>bash systemStats.sh</code></p>
+<div id="admonition-output-4" class="admonition admonish-output" role="note" aria-labelledby="admonition-output-4-title">
+<div class="admonition-title">
+<div id="admonition-output-4-title">
+<p>Output</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-output-4"></a>
+</div>
+<div>
 <pre><code class="language-sh">$ ./systemStats.sh
 &gt; Hello World, Goodbye World!
 </code></pre>
-<h2 id="a-more-meaningful-script"><a class="header" href="#a-more-meaningful-script">A more meaningful script</a></h2>
+</div>
+</div>
+</li>
+</ol>
+<h2 id="3-a-more-meaningful-script"><a class="header" href="#3-a-more-meaningful-script">3. A more meaningful script</a></h2>
+<ol start="12">
+<li>
 <p>Scripting is useful for automating process and system admin. For example, getting lots of information from all over the OS using one script.</p>
+<div id="admonition-output-5" class="admonition admonish-output" role="note" aria-labelledby="admonition-output-5-title">
+<div class="admonition-title">
+<div id="admonition-output-5-title">
+<p>Output</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-output-5"></a>
+</div>
+<div>
 <pre><code class="language-sh">$ cat /etc/hostname
 &gt; Rock-c4-plus
 </code></pre>
+</div>
+</div>
+</li>
+<li>
 <p>Lets add that to our script:</p>
-<pre><code class="language-sh">$ vim systemStats.sh
+<div id="admonition-terminal-2" class="admonition admonish-terminal" role="note" aria-labelledby="admonition-terminal-2-title">
+<div class="admonition-title">
+<div id="admonition-terminal-2-title">
+<p>Terminal</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-terminal-2"></a>
+</div>
+<div>
+<pre><code>```sh
+$ vim systemStats.sh
+```
 </code></pre>
+</div>
+</div>
+</li>
+<li>
 <p>Reproduce the following:</p>
+<div id="admonition-code-3" class="admonition admonish-code" role="note" aria-labelledby="admonition-code-3-title">
+<div class="admonition-title">
+<div id="admonition-code-3-title">
+<p>Code</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-code-3"></a>
+</div>
+<div>
 <pre><code class="language-sh">#! /usr/bin/env bash
 
 # echo Hello World, Goodbye World!
 hostname
 </code></pre>
-<p>Remember to change to <strong>INSERT</strong> mode and write and quit.</p>
+</div>
+</div>
+</li>
+<li>
 <p>Running this will look like:</p>
+<div id="admonition-output-6" class="admonition admonish-output" role="note" aria-labelledby="admonition-output-6-title">
+<div class="admonition-title">
+<div id="admonition-output-6-title">
+<p>Output</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-output-6"></a>
+</div>
+<div>
 <pre><code class="language-sh">$ ./systemStats.sh
 Rock-c4-plus
 </code></pre>
+</div>
+</div>
+<div id="admonition-explanation-4" class="admonition admonish-example" role="note" aria-labelledby="admonition-explanation-4-title">
+<div class="admonition-title">
+<div id="admonition-explanation-4-title">
+<p>Explanation</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-explanation-4"></a>
+</div>
+<div>
 <p>This is because we have commented out the <code>echo ...</code> witht the <code>#</code> hash symbol.</p>
+</div>
+</div>
+</li>
+<li>
 <p>Running <code>cat /etc/os-release</code> will give you the following:</p>
+<div id="admonition-output-7" class="admonition admonish-output" role="note" aria-labelledby="admonition-output-7-title">
+<div class="admonition-title">
+<div id="admonition-output-7-title">
+<p>Output</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-output-7"></a>
+</div>
+<div>
 <pre><code class="language-sh">$ cat /etc/os-release
 PRETTY_NAME="Debian GNU/Linux 11 (bullseye)"
 NAME="Debian GNU/Linux"
@@ -293,25 +548,97 @@ HOME_URL="https://www.debian.org/"
 SUPPORT_URL="https://www.debian.org/support"
 BUG_REPORT_URL="https://bugs.debian.org/"
 </code></pre>
+</div>
+</div>
+</li>
+<li>
 <p>What we need to isolate is the OS's name, which is identifiable via the <code>NAME=...</code>. To do this will use two exta packages, <code>grep</code> and <code>awk</code> to get what we need.</p>
+<div id="admonition-output-8" class="admonition admonish-output" role="note" aria-labelledby="admonition-output-8-title">
+<div class="admonition-title">
+<div id="admonition-output-8-title">
+<p>Output</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-output-8"></a>
+</div>
+<div>
 <pre><code class="language-sh">$ cat /etc/os-release | grep -w NAME | awk -F '=' '{print $2}'
 "Debian GNU/Linux"
 </code></pre>
-<p>Here we are piping, <code>|</code>, the output of <code>cat ...</code> into the command <code>grep</code> with option <code>-w</code>. This option <code>-w</code> means "<em>select only those lines containing matches that form whole word.</em>". So we are searching for <code>NAME</code>.</p>
+</div>
+</div>
+<div id="admonition-explanation-5" class="admonition admonish-example" role="note" aria-labelledby="admonition-explanation-5-title">
+<div class="admonition-title">
+<div id="admonition-explanation-5-title">
+<p>Explanation</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-explanation-5"></a>
+</div>
+<div>
+<ul>
+<li>Here we are piping, <code>|</code>, the output of <code>cat ...</code> into the command <code>grep</code> with option <code>-w</code>.</li>
+<li>This option <code>-w</code> means "<em>select only those lines containing matches that form whole word.</em>".</li>
+<li>So we are searching for <code>NAME</code>.</li>
+</ul>
+</div>
+</div>
+</li>
+<li>
 <p>Next we pipe the result of that search, <code>NAME="Debian GNU/Linux"</code> into <code>awk</code> to grab only <code>Debian GNU/Linux</code> where we split the result based on a delimeter, <code>=</code>, with the option <code>-F</code> (Field delimeter). The delimited format is:</p>
 <p><img src="./step1.svg" alt="" /></p>
+</li>
+<li>
 <p>However we want the string between the <code>"</code>, so we modify the command to take more than one delimitter, order matters:</p>
+<div id="admonition-output-9" class="admonition admonish-output" role="note" aria-labelledby="admonition-output-9-title">
+<div class="admonition-title">
+<div id="admonition-output-9-title">
+<p>Output</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-output-9"></a>
+</div>
+<div>
 <pre><code class="language-sh">$ cat /etc/os-release | grep -w NAME | awk -F '[="]' '{print $3}'
 Debian GNU/Linux
 </code></pre>
+</div>
+</div>
+<div id="admonition-note-1" class="admonition admonish-note" role="note" aria-labelledby="admonition-note-1-title">
+<div class="admonition-title">
+<div id="admonition-note-1-title">
+<p>Note</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-note-1"></a>
+</div>
+<div>
 <p>Note the addition of <code>[="]</code> and <code>$3</code>:</p>
+</div>
+</div>
 <p><img src="./step2.svg" alt="" /></p>
+<div id="admonition-explanation-6" class="admonition admonish-example" role="note" aria-labelledby="admonition-explanation-6-title">
+<div class="admonition-title">
+<div id="admonition-explanation-6-title">
+<p>Explanation</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-explanation-6"></a>
+</div>
+<div>
 <ul>
 <li>Field 1 (<code>$1</code>): NAME</li>
 <li>Field 2 (<code>$2</code>): (empty string, as there is nothing between <code>=</code> and <code>"</code>)</li>
 <li>Field 3 (<code>$3</code>): Debian GNU/Linux</li>
 </ul>
+</div>
+</div>
+</li>
+<li>
 <p>Now that we have isolated <code>Debian GNU/Linux</code>, we can add this functionality to our script, after the line <code>cat /etc/hostname</code>:</p>
+<div id="admonition-code-4" class="admonition admonish-code" role="note" aria-labelledby="admonition-code-4-title">
+<div class="admonition-title">
+<div id="admonition-code-4-title">
+<p>Code</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-code-4"></a>
+</div>
+<div>
 <pre><code class="language-sh">#! /usr/bin/env bash
 
 # echo Hello World, Goodbye World!
@@ -319,16 +646,48 @@ Debian GNU/Linux
 cat /etc/hostname
 cat /etc/os-release | grep -w NAME | awk -F '[="]' '{print $3}'
 </code></pre>
+</div>
+</div>
+</li>
+<li>
 <p>If you run this program now you should get the following output:</p>
+<div id="admonition-output-10" class="admonition admonish-output" role="note" aria-labelledby="admonition-output-10-title">
+<div class="admonition-title">
+<div id="admonition-output-10-title">
+<p>Output</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-output-10"></a>
+</div>
+<div>
 <pre><code class="language-sh">$ ./systemsStat.sh
 Rock-c4-plus
 Debian GNU/Linux
 </code></pre>
+</div>
+</div>
+</li>
+<li>
 <p>Now we want the OS version from the <code>VERSION="11 (bullseye)"</code> output of <code>cat /etc/os-release</code>, using what you have learned above try to isolate <code>bullseye</code>.</p>
-<details>
-<summary>Suggested Solution</summary>
+<details id="admonition-terminal-3" class="admonition admonish-terminal" role="note" aria-labelledby="admonition-terminal-3-title">
+<summary class="admonition-title">
+<div id="admonition-terminal-3-title">
+<p>Terminal</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-terminal-3"></a>
+</summary>
+<div>
 <pre><code class="language-sh">cat /etc/os-release | grep -w NAME | awk -F '[="()]' '{print $4}'
 </code></pre>
+</div>
+</details>
+<details id="admonition-explanation-7" class="admonition admonish-example" role="note" aria-labelledby="admonition-explanation-7-title">
+<summary class="admonition-title">
+<div id="admonition-explanation-7-title">
+<p>Explanation</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-explanation-7"></a>
+</summary>
+<div>
 <ul>
 <li>
 <p>The first field, <code>$1</code>, is everything before the equal sign (<code>=</code>), which is VERSION.</p>
@@ -341,17 +700,42 @@ Debian GNU/Linux
 </li>
 <li>
 <p>The fourth field, <code>$4</code>, is everything between the opening parenthesis (<code>(</code>) and the closing parenthesis (<code>)</code>), which is <code>bullseye</code>.</p>
-<p><img src="./step3.svg" alt="" /></p>
 </li>
 </ul>
+<p><img src="./step3.svg" alt="" /></p>
+</div>
 </details>
+</li>
+<li>
 <p>Once completed add the code to the script like before, run to verify the expected output:</p>
+<div id="admonition-output-11" class="admonition admonish-output" role="note" aria-labelledby="admonition-output-11-title">
+<div class="admonition-title">
+<div id="admonition-output-11-title">
+<p>Output</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-output-11"></a>
+</div>
+<div>
 <pre><code class="language-sh">$ ./systemsStats.sh
 Rock-c4-plus
 Debian GNU/Linux
 bullseye
 </code></pre>
+</div>
+</div>
+<div id="admonition-success" class="admonition admonish-success" role="note" aria-labelledby="admonition-success-title">
+<div class="admonition-title">
+<div id="admonition-success-title">
+<p>Success</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-success"></a>
+</div>
+<div>
 <p>If you have completed the above the well done.</p>
+</div>
+</div>
+</li>
+</ol>
 
                     </main>
                     <nav class="nav-wrapper" aria-label="Page navigation">

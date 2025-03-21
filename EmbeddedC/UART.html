@@ -169,37 +169,6 @@
                 <div id="content" class="content">
                     <main><div class="sidetoc"><nav class="pagetoc"></nav></div>
                         <h1 id="usart"><a class="header" href="#usart">USART</a></h1>
-<p>So you are no doubt familiar with the well known <code>Serial</code> within the Arduino SDK:</p>
-<div id="admonition-code" class="admonition admonish-code" role="note" aria-labelledby="admonition-code-title">
-<div class="admonition-title">
-<div id="admonition-code-title">
-<p>Code</p>
-</div>
-<a class="admonition-anchor-link" href="#admonition-code"></a>
-</div>
-<div>
-<pre><code class="language-c">#define BAUDRATE 9600 // Desired Baud Rate
-char name[] = {'H','e','l','l','o',' ','w','o','r','l','d','!','\n'}; 
-
-void setup() {
-  Serial.begin(BAUDRATE);
-}
-
-void loop() {
-
-    for(int i = 0; i &lt; 13;i++){
-      Serial.print(name[i]);
-    }
-	delay(1000);
-}
-</code></pre>
-</div>
-</div>
-<p>There is a lot of abstraction happening here, where are the ports/registers?</p>
-<p>Let's now turn this into an embedded program!</p>
-<hr />
-<p>The USART (Universal Synchronous and Asynchronous serial Receiver and Transmitter) module on the ATmega328P is used for serial communication. It allows the microcontroller to send and receive data over a single data line (full-duplex communication) in both synchronous and asynchronous modes.</p>
-<p>In asynchronous mode, which is commonly used for UART, data is transferred in bytes, framed with start and stop bits, and synchronized with a clock frequency derived from the system clock. The USART has several registers to manage transmission, reception, baud rate configuration, and framing.</p>
 <div id="admonition-info" class="admonition admonish-info" role="note" aria-labelledby="admonition-info-title">
 <div class="admonition-title">
 <div id="admonition-info-title">
@@ -208,52 +177,110 @@ void loop() {
 <a class="admonition-anchor-link" href="#admonition-info"></a>
 </div>
 <div>
-<p>All information provided in this chapter is summariesd and expanded upon via: <a href="https://ww1.microchip.com/downloads/aemDocuments/documents/MCU08/ProductDocuments/DataSheets/40001906C.pdf">https://ww1.microchip.com/downloads/aemDocuments/documents/MCU08/ProductDocuments/DataSheets/40001906C.pdf</a> page 264 onwards.</p>
+<p>The USART (Universal Synchronous and Asynchronous serial Receiver and Transmitter) module on the ATmega328P is used for serial communication. It allows the microcontroller to send and receive data over a single data line (full-duplex communication) in both synchronous and asynchronous modes.</p>
+<p>In asynchronous mode, which is commonly used for UART, data is transferred in bytes, framed with start and stop bits, and synchronized with a clock frequency derived from the system clock. The USART has several registers to manage transmission, reception, baud rate configuration, and framing.</p>
 </div>
 </div>
+<div id="admonition-note" class="admonition admonish-note" role="note" aria-labelledby="admonition-note-title">
+<div class="admonition-title">
+<div id="admonition-note-title">
+<p>Note</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-note"></a>
+</div>
+<div>
+<p>All information provided in this chapter is summariesd and expanded upon from:</p>
+<ul>
+<li><a href="https://ww1.microchip.com/downloads/aemDocuments/documents/MCU08/ProductDocuments/DataSheets/40001906C.pdf">https://ww1.microchip.com/downloads/aemDocuments/documents/MCU08/ProductDocuments/DataSheets/40001906C.pdf</a> page 264 onwards.</li>
+</ul>
+</div>
+</div>
+<h2 id="1-basic-uartino"><a class="header" href="#1-basic-uartino">1. Basic Uart.ino</a></h2>
+<ol>
+<li>
+<p>So you are no doubt familiar with the well known <code>Serial</code> within the Arduino SDK:</p>
+ <div id="admonition-code" class="admonition admonish-code" role="note" aria-labelledby="admonition-code-title">
+ <div class="admonition-title">
+ <div id="admonition-code-title">
+<p>Code</p>
+ </div>
+ <a class="admonition-anchor-link" href="#admonition-code"></a>
+ </div>
+ <div>
+<pre><code class="language-c">#define BAUDRATE 9600 // Desired Baud Rate
+char name[] = {'H','e','l','l','o',' ','w','o','r','l','d','!','\n'}; 
+
+void setup() {
+Serial.begin(BAUDRATE);
+}
+
+void loop() {
+
+    for(int i = 0; i &lt; 13;i++){
+    Serial.print(name[i]);
+    }
+    delay(1000);
+}
+</code></pre>
+ </div>
+ </div>
+<p>There is a lot of abstraction happening here, where are the ports/registers?</p>
+<p>Let's now turn this into an embedded program!</p>
+</li>
+</ol>
 <hr />
-<h2 id="ubrr0h-and-ubrr0l-usart-baud-rate-registers"><a class="header" href="#ubrr0h-and-ubrr0l-usart-baud-rate-registers">UBRR0H and UBRR0L (USART Baud Rate Registers)</a></h2>
+<h2 id="2-ubrr0h-and-ubrr0l-usart-baud-rate-registers"><a class="header" href="#2-ubrr0h-and-ubrr0l-usart-baud-rate-registers">2. UBRR0H and UBRR0L (USART Baud Rate Registers)</a></h2>
+<ol>
+<li>
 <p>The UBRR (USART Baud Rate Register) is split into two 8-bit registers:</p>
 <ul>
 <li><code>UBRR0H</code>: The high byte of the baud rate register.</li>
 <li><code>UBRR0L</code>: The low byte of the baud rate register.</li>
 <li>Together, these registers set the baud rate for serial communication. The formula to calculate the baud prescaler value for the desired baud rate (when using 16x oversampling) is:</li>
 </ul>
+</li>
+</ol>
 <div style="font-size:14px">
 <p>\[ UBRR \ =\ 103 \Leftarrow \left( \frac{ 16000000 }{ 153600 } \right) - 1 \Leftarrow \left( \frac{16\ \cdot 10^{9}}{9600 \cdot 16} \right) - 1 \Leftarrow \left( \frac{f_{osc}}{BAUD \cdot 16} \right) - 1 \]</p>
 <p>\[ BAUD\ =\ 9600 \Leftarrow \left( \frac{ 16000000 }{ 1664 } \right) - 1 \Leftarrow \left( \frac{16\ \cdot 10^{9}}{16 * 104} \right) \Leftarrow \left( \frac{f_{osc}}{ 16 \cdot (UBRR + 1) } \right) - 1 \]</p>
 </div>
+<ol start="2">
+<li>
 <p>For example, with a 16 MHz clock and a baud rate of <code>9600</code>, <code>UBRRn</code> will be <code>103</code>.</p>
-<div id="admonition-code-1" class="admonition admonish-code" role="note" aria-labelledby="admonition-code-1-title">
-<div class="admonition-title">
-<div id="admonition-code-1-title">
+ <div id="admonition-code-1" class="admonition admonish-code" role="note" aria-labelledby="admonition-code-1-title">
+ <div class="admonition-title">
+ <div id="admonition-code-1-title">
 <p>Code</p>
-</div>
-<a class="admonition-anchor-link" href="#admonition-code-1"></a>
-</div>
-<div>
+ </div>
+ <a class="admonition-anchor-link" href="#admonition-code-1"></a>
+ </div>
+ <div>
 <pre><code class="language-c">UBRRn  = (((16000000UL / (9600 * 16UL))) - 1) // 103
 UBRR0H = (uint8_t)(UBRRn &gt;&gt; 8);  // Set high byte
 UBRR0L = (uint8_t)UBRRn;         // Set low byte
 </code></pre>
-</div>
-</div>
-<div id="admonition-info-1" class="admonition admonish-info" role="note" aria-labelledby="admonition-info-1-title">
-<div class="admonition-title">
-<div id="admonition-info-1-title">
+ </div>
+ </div>
+ <div id="admonition-info-1" class="admonition admonish-info" role="note" aria-labelledby="admonition-info-1-title">
+ <div class="admonition-title">
+ <div id="admonition-info-1-title">
 <p>Info</p>
-</div>
-<a class="admonition-anchor-link" href="#admonition-info-1"></a>
-</div>
-<div>
+ </div>
+ <a class="admonition-anchor-link" href="#admonition-info-1"></a>
+ </div>
+ <div>
 <p>You <strong>should</strong> visit here to see the documentation of Baud rate:</p>
 <ul>
 <li><a href="https://onlinedocs.microchip.com/oxy/GUID-ED37252C-1496-4275-BAEF-5152050ED2C2-en-US-2/GUID-65A53416-8DE2-468E-99CF-09F480AEF734.html">https://onlinedocs.microchip.com/oxy/GUID-ED37252C-1496-4275-BAEF-5152050ED2C2-en-US-2/GUID-65A53416-8DE2-468E-99CF-09F480AEF734.html</a></li>
 </ul>
-</div>
-</div>
+ </div>
+ </div>
+</li>
+</ol>
 <hr />
-<h2 id="ucsr0a-usart-control-and-status-register-a"><a class="header" href="#ucsr0a-usart-control-and-status-register-a">UCSR0A (USART Control and Status Register A)</a></h2>
+<h2 id="3-ucsr0a-usart-control-and-status-register-a"><a class="header" href="#3-ucsr0a-usart-control-and-status-register-a">3. UCSR0A (USART Control and Status Register A)</a></h2>
+<ol start="3">
+<li>
 <p><code>UCSR0A</code> is a control and status register for the USART, providing various flags and settings:</p>
 <ul>
 <li>
@@ -286,47 +313,59 @@ UBRR0L = (uint8_t)UBRRn;         // Set low byte
   </div>
 </li>
 </ul>
+</li>
+</ol>
 <hr />
-<h2 id="ucsr0b-usart-control-and-status-register-b"><a class="header" href="#ucsr0b-usart-control-and-status-register-b">UCSR0B (USART Control and Status Register B)</a></h2>
+<h2 id="4--ucsr0b-usart-control-and-status-register-b"><a class="header" href="#4--ucsr0b-usart-control-and-status-register-b">4.  UCSR0B (USART Control and Status Register B)</a></h2>
+<div id="admonition-explanation" class="admonition admonish-example" role="note" aria-labelledby="admonition-explanation-title">
+<div class="admonition-title">
+<div id="admonition-explanation-title">
+<p>Explanation</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-explanation"></a>
+</div>
+<div>
 <p>The USART Transmit Data Buffer (TXB) register and USART receive data buffer registers share the same I/O address referred to as USART data register or UDRn. The TXB will be the destination for data written to the <code>UDR1</code> register location. Reading the <code>UDRn</code> register location will return the contents of the Receive  Data Buffer Register (RXB). <code>UCSR0B</code> is another control register that enables and configures key features of the USART:</p>
-<ul>
+</div>
+</div>
+<ol start="4">
 <li>
 <p><code>RXEN0</code> (Receiver Enable): Setting <code>RXEN0</code> to 1 enables the USART receiver. This allows the microcontroller to read data from the RX pin</p>
-  <div id="admonition-code-3" class="admonition admonish-code" role="note" aria-labelledby="admonition-code-3-title">
-  <div class="admonition-title">
-  <div id="admonition-code-3-title">
+ <div id="admonition-code-3" class="admonition admonish-code" role="note" aria-labelledby="admonition-code-3-title">
+ <div class="admonition-title">
+ <div id="admonition-code-3-title">
 <p>Code</p>
-  </div>
-  <a class="admonition-anchor-link" href="#admonition-code-3"></a>
-  </div>
-  <div>
+ </div>
+ <a class="admonition-anchor-link" href="#admonition-code-3"></a>
+ </div>
+ <div>
 <pre><code class="language-c">UCSR0B |= (1 &lt;&lt; RXEN0);  // Enable receiver
 </code></pre>
-  </div>
-  </div>
+ </div>
+ </div>
 </li>
 <li>
 <p><code>TXEN0</code> (Transmitter Enable): Setting <code>TXEN0</code> to 1 enables the USART transmitter. This allows the microcontroller to send data via the TX pin.</p>
-  <div id="admonition-code-4" class="admonition admonish-code" role="note" aria-labelledby="admonition-code-4-title">
-  <div class="admonition-title">
-  <div id="admonition-code-4-title">
+ <div id="admonition-code-4" class="admonition admonish-code" role="note" aria-labelledby="admonition-code-4-title">
+ <div class="admonition-title">
+ <div id="admonition-code-4-title">
 <p>Code</p>
-  </div>
-  <a class="admonition-anchor-link" href="#admonition-code-4"></a>
-  </div>
-  <div>
+ </div>
+ <a class="admonition-anchor-link" href="#admonition-code-4"></a>
+ </div>
+ <div>
 <pre><code class="language-c">UCSR0B |= (1 &lt;&lt; TXEN0);  // Enable transmitter
 </code></pre>
-  </div>
-  </div>
-  <div id="admonition-info-3" class="admonition admonish-info" role="note" aria-labelledby="admonition-info-3-title">
-  <div class="admonition-title">
-  <div id="admonition-info-3-title">
+ </div>
+ </div>
+ <div id="admonition-info-3" class="admonition admonish-info" role="note" aria-labelledby="admonition-info-3-title">
+ <div class="admonition-title">
+ <div id="admonition-info-3-title">
 <p>Info</p>
-  </div>
-  <a class="admonition-anchor-link" href="#admonition-info-3"></a>
-  </div>
-  <div>
+ </div>
+ <a class="admonition-anchor-link" href="#admonition-info-3"></a>
+ </div>
+ <div>
 <ul>
 <li>
 <p><code>RXCIE0</code> (Receive Complete Interrupt Enable): Enables interrupt on data reception.</p>
@@ -338,12 +377,14 @@ UBRR0L = (uint8_t)UBRRn;         // Set low byte
 <p><code>UDRIE0</code> (Data Register Empty Interrupt Enable): Enables interrupt when the data register is empty.</p>
 </li>
 </ul>
-  </div>
-  </div>
+ </div>
+ </div>
 </li>
-</ul>
+</ol>
 <hr />
-<h2 id="ucsr0c-usart-control-and-status-register-c"><a class="header" href="#ucsr0c-usart-control-and-status-register-c">UCSR0C (USART Control and Status Register C)</a></h2>
+<h2 id="5-ucsr0c-usart-control-and-status-register-c"><a class="header" href="#5-ucsr0c-usart-control-and-status-register-c">5. UCSR0C (USART Control and Status Register C)</a></h2>
+<ol start="6">
+<li>
 <p><code>UCSR0C</code> configures the frame format, such as data bits, parity mode, and stop bits:</p>
 <ul>
 <li>
@@ -400,8 +441,12 @@ UCSR0C &amp;= ~((1 &lt;&lt; UPM01) | (1 &lt;&lt; UPM00)); // No parity
   </div>
 </li>
 </ul>
+</li>
+</ol>
 <hr />
-<h2 id="udr0-usart-data-register"><a class="header" href="#udr0-usart-data-register">UDR0 (USART Data Register)</a></h2>
+<h2 id="6-udr0-usart-data-register"><a class="header" href="#6-udr0-usart-data-register">6. UDR0 (USART Data Register)</a></h2>
+<ol start="7">
+<li>
 <p><code>UDR0</code> (USART Data Register) is the primary data register used to hold data for transmission or received data:</p>
 <ul>
 <li>
@@ -435,9 +480,11 @@ UCSR0C &amp;= ~((1 &lt;&lt; UPM01) | (1 &lt;&lt; UPM00)); // No parity
   </div>
 </li>
 </ul>
+</li>
+</ol>
 <hr />
-<h2 id="create-uartc"><a class="header" href="#create-uartc">Create <code>uart.c</code></a></h2>
-<ol>
+<h2 id="7-create-uartc"><a class="header" href="#7-create-uartc">7. Create <code>uart.c</code></a></h2>
+<ol start="8">
 <li>
 <p>Change directory to <code>embeddedC</code> that was made last time and create a new child directory <code>uart</code></p>
  <div id="admonition-terminal" class="admonition admonish-terminal" role="note" aria-labelledby="admonition-terminal-title">
@@ -470,14 +517,14 @@ UCSR0C &amp;= ~((1 &lt;&lt; UPM01) | (1 &lt;&lt; UPM00)); // No parity
 </li>
 <li>
 <p>Now it's time start wrighting out the program:</p>
- <details id="admonition-suppressed-code-here-57-lines" class="admonition admonish-code" role="note" aria-labelledby="admonition-suppressed-code-here-57-lines-title">
- <summary class="admonition-title">
- <div id="admonition-suppressed-code-here-57-lines-title">
+<details id="admonition-suppressed-code-here-57-lines" class="admonition admonish-code" role="note" aria-labelledby="admonition-suppressed-code-here-57-lines-title">
+<summary class="admonition-title">
+<div id="admonition-suppressed-code-here-57-lines-title">
 <p>Suppressed code here [57 lines]...</p>
- </div>
- <a class="admonition-anchor-link" href="#admonition-suppressed-code-here-57-lines"></a>
- </summary>
- <div>
+</div>
+<a class="admonition-anchor-link" href="#admonition-suppressed-code-here-57-lines"></a>
+</summary>
+<div>
 <pre><code class="language-c">#include &lt;avr/io.h&gt;      // Contains all the I/O Register Macros
 #include &lt;util/delay.h&gt;  // Generates a Blocking Delay
 
@@ -536,40 +583,40 @@ int main()
         return 0;
 }
 </code></pre>
- </div>
- </details>
+</div>
+</details>
 </li>
 <li>
 <p>We are now going to copy the <code>Makefile</code> from the <code>blink/</code> created last time, and replace all instances of <code>blink</code> with <code>uart</code> using the regex feature:</p>
- <div id="admonition-terminal-2" class="admonition admonish-terminal" role="note" aria-labelledby="admonition-terminal-2-title">
- <div class="admonition-title">
- <div id="admonition-terminal-2-title">
+<div id="admonition-terminal-2" class="admonition admonish-terminal" role="note" aria-labelledby="admonition-terminal-2-title">
+<div class="admonition-title">
+<div id="admonition-terminal-2-title">
 <p>Terminal</p>
- </div>
- <a class="admonition-anchor-link" href="#admonition-terminal-2"></a>
- </div>
- <div>
+</div>
+<a class="admonition-anchor-link" href="#admonition-terminal-2"></a>
+</div>
+<div>
 <pre><code class="language-sh">$ cp ../blink/Makefile .
 $ vim Makefile
 </code></pre>
- </div>
- </div>
+</div>
+</div>
 </li>
 <li>
 <p>Inside vim type the following an press enter to find all instances of <code>blink</code> with <code>uart</code></p>
- <div id="admonition-terminal-3" class="admonition admonish-terminal" role="note" aria-labelledby="admonition-terminal-3-title">
- <div class="admonition-title">
- <div id="admonition-terminal-3-title">
+<div id="admonition-terminal-3" class="admonition admonish-terminal" role="note" aria-labelledby="admonition-terminal-3-title">
+<div class="admonition-title">
+<div id="admonition-terminal-3-title">
 <p>Terminal</p>
- </div>
- <a class="admonition-anchor-link" href="#admonition-terminal-3"></a>
- </div>
- <div>
+</div>
+<a class="admonition-anchor-link" href="#admonition-terminal-3"></a>
+</div>
+<div>
 <pre><code class="language-vim">:%s/\&lt;blink\&gt;/uart/g
 </code></pre>
 <p><img src="./figures/makeuart.gif" alt="" /></p>
- </div>
- </div>
+</div>
+</div>
 </li>
 <li>
 <p>Remember like with blink we need to compile and upload the code to the board, ensure it is plugged in, to find the com port on windows:</p>
@@ -577,18 +624,18 @@ $ vim Makefile
 </li>
 <li>
 <p>If the COM port has changed remember to change it in the <code>Makefile</code></p>
- <div id="admonition-code-8" class="admonition admonish-code" role="note" aria-labelledby="admonition-code-8-title">
- <div class="admonition-title">
- <div id="admonition-code-8-title">
+<div id="admonition-code-8" class="admonition admonish-code" role="note" aria-labelledby="admonition-code-8-title">
+<div class="admonition-title">
+<div id="admonition-code-8-title">
 <p>Code</p>
- </div>
- <a class="admonition-anchor-link" href="#admonition-code-8"></a>
- </div>
- <div>
+</div>
+<a class="admonition-anchor-link" href="#admonition-code-8"></a>
+</div>
+<div>
 <pre><code class="language-Makefile">PORT = COM#
 </code></pre>
- </div>
- </div>
+</div>
+</div>
 </li>
 <li>
 <p>Use <code>make</code>:</p>
@@ -612,8 +659,8 @@ $ vim Makefile
 </li>
 </ol>
 <hr />
-<h2 id="two-way-communication"><a class="header" href="#two-way-communication">Two way communication</a></h2>
-<ol start="10">
+<h2 id="8-two-way-communication"><a class="header" href="#8-two-way-communication">8. Two way communication</a></h2>
+<ol start="17">
 <li>Now lets set up the recieving part of the USART, and communicate between to boards, so it is best to pair up for this. Create a new file called <code>uart_two_way.c</code></li>
 </ol>
 <ul>
@@ -663,7 +710,7 @@ int main() {
  </div>
 </li>
 </ul>
-<ol start="11">
+<ol start="18">
 <li>
 <p>Copy the <code>Makefile</code> from <code>../uart/Makefile</code> to <code>uart_two_way/</code> and use the regex <code>:%s/\&lt;uart\&gt;/uart_two_way/g</code></p>
 </li>
@@ -692,7 +739,7 @@ int main() {
   <a class="admonition-anchor-link" href="#admonition-warning"></a>
   </div>
   <div>
-<p>The should be share a common ground</p>
+<p>The boards should share a common ground</p>
   </div>
   </div>
 </li>

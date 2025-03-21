@@ -171,111 +171,130 @@
                         <h1 id="learning-c"><a class="header" href="#learning-c">Learning C</a></h1>
 <p>We will be doing this lab inconjuction with the C lecture. Key concepts will be explained and you will put into practice.</p>
 <p>So let's make our first program.</p>
-<p>To do this you will need to open up a terminal and ensure your system has <code>gcc</code> installed.</p>
-<blockquote>
-<blockquote>
-<p><a href="https://gcc.gnu.org/gcc-13/">https://gcc.gnu.org/gcc-13/</a></p>
-</blockquote>
-</blockquote>
-<p>Create a new directory and call it <code>ELEE1119/Learning_C</code> we can do this using the following commands in terminal.</p>
-<div id="admonition-terminal" class="admonition admonish-terminal" role="note" aria-labelledby="admonition-terminal-title">
+<div id="admonition-important" class="admonition admonish-tip" role="note" aria-labelledby="admonition-important-title">
 <div class="admonition-title">
-<div id="admonition-terminal-title">
-<p>Terminal</p>
+<div id="admonition-important-title">
+<p>Important</p>
 </div>
-<a class="admonition-anchor-link" href="#admonition-terminal"></a>
+<a class="admonition-anchor-link" href="#admonition-important"></a>
 </div>
 <div>
+<p>To do this you will need to open up a terminal and ensure your system has <code>gcc</code> installed.</p>
+<ul>
+<li><a href="https://gcc.gnu.org/gcc-13/">https://gcc.gnu.org/gcc-13/</a></li>
+</ul>
+</div>
+</div>
+<h2 id="1-first-c-program"><a class="header" href="#1-first-c-program">1. First C Program</a></h2>
+<ol>
+<li>
+<p>Create a new directory and call it <code>ELEE1119/Learning_C</code> we can do this using the following commands in terminal.</p>
+ <div id="admonition-terminal" class="admonition admonish-terminal" role="note" aria-labelledby="admonition-terminal-title">
+ <div class="admonition-title">
+ <div id="admonition-terminal-title">
+<p>Terminal</p>
+ </div>
+ <a class="admonition-anchor-link" href="#admonition-terminal"></a>
+ </div>
+ <div>
 <pre><code>$  mkdir -p ELEE1119/Learning_C
 </code></pre>
-</div>
-</div>
-<div id="admonition-warning" class="admonition admonish-warning" role="note" aria-labelledby="admonition-warning-title">
-<div class="admonition-title">
-<div id="admonition-warning-title">
+ </div>
+ </div>
+ <div id="admonition-warning" class="admonition admonish-warning" role="note" aria-labelledby="admonition-warning-title">
+ <div class="admonition-title">
+ <div id="admonition-warning-title">
 <p>Warning</p>
-</div>
-<a class="admonition-anchor-link" href="#admonition-warning"></a>
-</div>
-<div>
+ </div>
+ <a class="admonition-anchor-link" href="#admonition-warning"></a>
+ </div>
+ <div>
 <ul>
 <li>the <code>$</code> symbol used in the above indicates that this is a command that should be entered into the terminal.</li>
 <li>these are shell commands written in <code>c</code>.</li>
 </ul>
-</div>
-</div>
+ </div>
+ </div>
+</li>
+<li>
 <p>Now you are to navigate to this directory using the following command and create your first file:</p>
-<div id="admonition-terminal-1" class="admonition admonish-terminal" role="note" aria-labelledby="admonition-terminal-1-title">
-<div class="admonition-title">
-<div id="admonition-terminal-1-title">
+ <div id="admonition-terminal-1" class="admonition admonish-terminal" role="note" aria-labelledby="admonition-terminal-1-title">
+ <div class="admonition-title">
+ <div id="admonition-terminal-1-title">
 <p>Terminal</p>
-</div>
-<a class="admonition-anchor-link" href="#admonition-terminal-1"></a>
-</div>
-<div>
+ </div>
+ <a class="admonition-anchor-link" href="#admonition-terminal-1"></a>
+ </div>
+ <div>
 <pre><code>$  cd ELEE1119/Learning_C
 $  touch helloworld.c
 </code></pre>
-</div>
-</div>
-<div id="admonition-note" class="admonition admonish-note" role="note" aria-labelledby="admonition-note-title">
-<div class="admonition-title">
-<div id="admonition-note-title">
+ </div>
+ </div>
+ <div id="admonition-note" class="admonition admonish-note" role="note" aria-labelledby="admonition-note-title">
+ <div class="admonition-title">
+ <div id="admonition-note-title">
 <p>Note</p>
-</div>
-<a class="admonition-anchor-link" href="#admonition-note"></a>
-</div>
-<div>
+ </div>
+ <a class="admonition-anchor-link" href="#admonition-note"></a>
+ </div>
+ <div>
 <p>Each line should be entered in seperately</p>
-</div>
-</div>
+ </div>
+ </div>
+</li>
+<li>
 <p>If we use the command <code>ls</code> we can list the content of the directory and should see at a file named 'helloworld.c'</p>
-<div id="admonition-terminal-2" class="admonition admonish-terminal" role="note" aria-labelledby="admonition-terminal-2-title">
-<div class="admonition-title">
-<div id="admonition-terminal-2-title">
+ <div id="admonition-terminal-2" class="admonition admonish-terminal" role="note" aria-labelledby="admonition-terminal-2-title">
+ <div class="admonition-title">
+ <div id="admonition-terminal-2-title">
 <p>Terminal</p>
-</div>
-<a class="admonition-anchor-link" href="#admonition-terminal-2"></a>
-</div>
-<div>
+ </div>
+ <a class="admonition-anchor-link" href="#admonition-terminal-2"></a>
+ </div>
+ <div>
 <pre><code>$ ls
 </code></pre>
-</div>
-</div>
-<div id="admonition-output" class="admonition admonish-output" role="note" aria-labelledby="admonition-output-title">
-<div class="admonition-title">
-<div id="admonition-output-title">
+ </div>
+ </div>
+ <div id="admonition-output" class="admonition admonish-output" role="note" aria-labelledby="admonition-output-title">
+ <div class="admonition-title">
+ <div id="admonition-output-title">
 <p>Output</p>
-</div>
-<a class="admonition-anchor-link" href="#admonition-output"></a>
-</div>
-<div>
+ </div>
+ <a class="admonition-anchor-link" href="#admonition-output"></a>
+ </div>
+ <div>
 <pre><code>helloworld.c
 </code></pre>
-</div>
-</div>
+ </div>
+ </div>
+</li>
+<li>
 <p>Now we are going to open up and edit the content of the file and write it out:</p>
-<div id="admonition-terminal-3" class="admonition admonish-terminal" role="note" aria-labelledby="admonition-terminal-3-title">
-<div class="admonition-title">
-<div id="admonition-terminal-3-title">
+ <div id="admonition-terminal-3" class="admonition admonish-terminal" role="note" aria-labelledby="admonition-terminal-3-title">
+ <div class="admonition-title">
+ <div id="admonition-terminal-3-title">
 <p>Terminal</p>
-</div>
-<a class="admonition-anchor-link" href="#admonition-terminal-3"></a>
-</div>
-<div>
+ </div>
+ <a class="admonition-anchor-link" href="#admonition-terminal-3"></a>
+ </div>
+ <div>
 <pre><code>$ vim helloworld.c
 </code></pre>
-</div>
-</div>
+ </div>
+ </div>
+</li>
+<li>
 <p>Enter the following:</p>
-<div id="admonition-code" class="admonition admonish-code" role="note" aria-labelledby="admonition-code-title">
-<div class="admonition-title">
-<div id="admonition-code-title">
+ <div id="admonition-code" class="admonition admonish-code" role="note" aria-labelledby="admonition-code-title">
+ <div class="admonition-title">
+ <div id="admonition-code-title">
 <p>Code</p>
-</div>
-<a class="admonition-anchor-link" href="#admonition-code"></a>
-</div>
-<div>
+ </div>
+ <a class="admonition-anchor-link" href="#admonition-code"></a>
+ </div>
+ <div>
 <pre><code class="language-c">#include &lt;stdio.h&gt; // we need this library to get access to the input and out put methods for printing to terminal
 
 int main()
@@ -287,16 +306,16 @@ int main()
     return 0; // returns 0 to the int of main() and terminate the program
 }
 </code></pre>
-</div>
-</div>
-<div id="admonition-tip" class="admonition admonish-tip" role="note" aria-labelledby="admonition-tip-title">
-<div class="admonition-title">
-<div id="admonition-tip-title">
+ </div>
+ </div>
+ <div id="admonition-tip" class="admonition admonish-tip" role="note" aria-labelledby="admonition-tip-title">
+ <div class="admonition-title">
+ <div id="admonition-tip-title">
 <p>Tip</p>
-</div>
-<a class="admonition-anchor-link" href="#admonition-tip"></a>
-</div>
-<div>
+ </div>
+ <a class="admonition-anchor-link" href="#admonition-tip"></a>
+ </div>
+ <div>
 <ul>
 <li>
 <p>To use <code>i</code> to enter <strong>INSERT</strong> mode</p>
@@ -308,16 +327,16 @@ int main()
 <p><code>:wq</code> write and quit</p>
 </li>
 </ul>
-</div>
-</div>
-<div id="admonition-explanation" class="admonition admonish-example" role="note" aria-labelledby="admonition-explanation-title">
-<div class="admonition-title">
-<div id="admonition-explanation-title">
+ </div>
+ </div>
+ <div id="admonition-explanation" class="admonition admonish-example" role="note" aria-labelledby="admonition-explanation-title">
+ <div class="admonition-title">
+ <div id="admonition-explanation-title">
 <p>Explanation</p>
-</div>
-<a class="admonition-anchor-link" href="#admonition-explanation"></a>
-</div>
-<div>
+ </div>
+ <a class="admonition-anchor-link" href="#admonition-explanation"></a>
+ </div>
+ <div>
 <p>Some explanation about the above code:</p>
 <ul>
 <li>
@@ -342,29 +361,31 @@ int main()
 <p>By including this header file we have access to the <code>printf()</code> function that enables us to return information to the terminal in string format.</p>
 </li>
 </ul>
-</div>
-</div>
+ </div>
+ </div>
+</li>
+<li>
 <p>Now we are going to compile the code so that we have an executable file that can be run from the terminal:</p>
-<div id="admonition-terminal-4" class="admonition admonish-terminal" role="note" aria-labelledby="admonition-terminal-4-title">
-<div class="admonition-title">
-<div id="admonition-terminal-4-title">
+ <div id="admonition-terminal-4" class="admonition admonish-terminal" role="note" aria-labelledby="admonition-terminal-4-title">
+ <div class="admonition-title">
+ <div id="admonition-terminal-4-title">
 <p>Terminal</p>
-</div>
-<a class="admonition-anchor-link" href="#admonition-terminal-4"></a>
-</div>
-<div>
+ </div>
+ <a class="admonition-anchor-link" href="#admonition-terminal-4"></a>
+ </div>
+ <div>
 <pre><code>$ gcc helloworld -o helloworld.exe
 </code></pre>
-</div>
-</div>
-<div id="admonition-info" class="admonition admonish-info" role="note" aria-labelledby="admonition-info-title">
-<div class="admonition-title">
-<div id="admonition-info-title">
+ </div>
+ </div>
+ <div id="admonition-info" class="admonition admonish-info" role="note" aria-labelledby="admonition-info-title">
+ <div class="admonition-title">
+ <div id="admonition-info-title">
 <p>Info</p>
-</div>
-<a class="admonition-anchor-link" href="#admonition-info"></a>
-</div>
-<div>
+ </div>
+ <a class="admonition-anchor-link" href="#admonition-info"></a>
+ </div>
+ <div>
 <ul>
 <li>
 <p><code>gcc</code> is another shell command that is built in <code>c</code>, it's purpose is to compile <code>.c</code> files into executables using the the <code>gcc</code>.</p>
@@ -376,36 +397,62 @@ int main()
 <p>For more info -&gt; <a href="https://man7.org/linux/man-pages/man1/gcc.1.html">gcc</a></p>
 </li>
 </ul>
-</div>
-</div>
+ </div>
+ </div>
+</li>
+<li>
 <p>Now let's see the fruits of our labour, the file can be executed as follows:</p>
-<div id="admonition-output-1" class="admonition admonish-output" role="note" aria-labelledby="admonition-output-1-title">
-<div class="admonition-title">
-<div id="admonition-output-1-title">
+ <div id="admonition-output-1" class="admonition admonish-output" role="note" aria-labelledby="admonition-output-1-title">
+ <div class="admonition-title">
+ <div id="admonition-output-1-title">
 <p>Output</p>
-</div>
-<a class="admonition-anchor-link" href="#admonition-output-1"></a>
-</div>
-<div>
+ </div>
+ <a class="admonition-anchor-link" href="#admonition-output-1"></a>
+ </div>
+ <div>
 <pre><code>$ ./helloworld.exe
 Hello World
 Goodbye World
 </code></pre>
-</div>
-</div>
+ </div>
+ </div>
+ <div id="admonition-success" class="admonition admonish-success" role="note" aria-labelledby="admonition-success-title">
+ <div class="admonition-title">
+ <div id="admonition-success-title">
+<p>Success</p>
+ </div>
+ <a class="admonition-anchor-link" href="#admonition-success"></a>
+ </div>
+ <div>
 <p>Congratulations, you used the programming language of the gods!</p>
+ </div>
+ </div>
+</li>
+</ol>
 <hr />
-<h2 id="inputoutput-functions"><a class="header" href="#inputoutput-functions">Input/Output functions</a></h2>
-<p>In C programming, <code>printf()</code> is one of the main output function. The function sends formatted output to the screen. For example, the code below is a modified version of the helloworld programme we wrote a moment ago.</p>
-<p>Create a new file <code>vim inputoutput.c</code> and reproduce the code below:</p>
-<div id="admonition-code-1" class="admonition admonish-code" role="note" aria-labelledby="admonition-code-1-title">
+<h2 id="2-inputoutput-functions"><a class="header" href="#2-inputoutput-functions">2. Input/Output functions</a></h2>
+<div id="admonition-explanation-1" class="admonition admonish-example" role="note" aria-labelledby="admonition-explanation-1-title">
 <div class="admonition-title">
-<div id="admonition-code-1-title">
-<p>Code</p>
+<div id="admonition-explanation-1-title">
+<p>Explanation</p>
 </div>
-<a class="admonition-anchor-link" href="#admonition-code-1"></a>
+<a class="admonition-anchor-link" href="#admonition-explanation-1"></a>
 </div>
 <div>
+<p>In C programming, <code>printf()</code> is one of the main output function. The function sends formatted output to the screen. For example, the code below is a modified version of the helloworld programme we wrote a moment ago.</p>
+</div>
+</div>
+<ol>
+<li>
+<p>Create a new file <code>vim inputoutput.c</code> and reproduce the code below:</p>
+ <div id="admonition-code-1" class="admonition admonish-code" role="note" aria-labelledby="admonition-code-1-title">
+ <div class="admonition-title">
+ <div id="admonition-code-1-title">
+<p>Code</p>
+ </div>
+ <a class="admonition-anchor-link" href="#admonition-code-1"></a>
+ </div>
+ <div>
 <pre><code class="language-c">#include &lt;stdio.h&gt;    
 int main()
 { 
@@ -414,35 +461,51 @@ int main()
     return 0;
 }
 </code></pre>
-</div>
-</div>
+ </div>
+ </div>
+ <div id="admonition-tip-1" class="admonition admonish-tip" role="note" aria-labelledby="admonition-tip-1-title">
+ <div class="admonition-title">
+ <div id="admonition-tip-1-title">
+<p>Tip</p>
+ </div>
+ <a class="admonition-anchor-link" href="#admonition-tip-1"></a>
+ </div>
+ <div>
 <p>Remeber to use the vim shortcuts from before to edit, write and quit.</p>
+ </div>
+ </div>
+</li>
+<li>
 <p>Compile and run:</p>
-<div id="admonition-terminal-5" class="admonition admonish-terminal" role="note" aria-labelledby="admonition-terminal-5-title">
-<div class="admonition-title">
-<div id="admonition-terminal-5-title">
+ <div id="admonition-terminal-5" class="admonition admonish-terminal" role="note" aria-labelledby="admonition-terminal-5-title">
+ <div class="admonition-title">
+ <div id="admonition-terminal-5-title">
 <p>Terminal</p>
-</div>
-<a class="admonition-anchor-link" href="#admonition-terminal-5"></a>
-</div>
-<div>
+ </div>
+ <a class="admonition-anchor-link" href="#admonition-terminal-5"></a>
+ </div>
+ <div>
 <pre><code>$ gcc inputoutput.c -o inputoutput.anything
 $ ./inputoutput.anything
 C Programming
 </code></pre>
-</div>
-</div>
+ </div>
+ </div>
+</li>
+</ol>
 <hr />
-<h3 id="data-type-printing-integer"><a class="header" href="#data-type-printing-integer">Data Type: Printing Integer</a></h3>
+<h3 id="22-data-type-printing-integer"><a class="header" href="#22-data-type-printing-integer">2.2 Data Type: Printing Integer</a></h3>
+<ol start="3">
+<li>
 <p>Now we are going to modifiy the script again <code>$ vim inputoutput.c</code> to look like below:</p>
-<div id="admonition-code-2" class="admonition admonish-code" role="note" aria-labelledby="admonition-code-2-title">
-<div class="admonition-title">
-<div id="admonition-code-2-title">
+ <div id="admonition-code-2" class="admonition admonish-code" role="note" aria-labelledby="admonition-code-2-title">
+ <div class="admonition-title">
+ <div id="admonition-code-2-title">
 <p>Code</p>
-</div>
-<a class="admonition-anchor-link" href="#admonition-code-2"></a>
-</div>
-<div>
+ </div>
+ <a class="admonition-anchor-link" href="#admonition-code-2"></a>
+ </div>
+ <div>
 <pre><code class="language-c">#include &lt;stdio.h&gt;
 int main()
 {
@@ -451,41 +514,79 @@ int main()
     return 0;
 }
 </code></pre>
-</div>
-</div>
+ </div>
+ </div>
+ <div id="admonition-explanation-2" class="admonition admonish-example" role="note" aria-labelledby="admonition-explanation-2-title">
+ <div class="admonition-title">
+ <div id="admonition-explanation-2-title">
+<p>Explanation</p>
+ </div>
+ <a class="admonition-anchor-link" href="#admonition-explanation-2"></a>
+ </div>
+ <div>
+<p>We use <code>%d</code> format specifier to print <code>int</code> types. Here, the <code>%d</code> inside the quotations will be replaced by the value of <code>testInteger</code>.</p>
+ </div>
+ </div>
+ <div id="admonition-tip-2" class="admonition admonish-tip" role="note" aria-labelledby="admonition-tip-2-title">
+ <div class="admonition-title">
+ <div id="admonition-tip-2-title">
+<p>Tip</p>
+ </div>
+ <a class="admonition-anchor-link" href="#admonition-tip-2"></a>
+ </div>
+ <div>
 <p>Remeber to use the vim shortcuts from before to edit, write and quit.</p>
+ </div>
+ </div>
+</li>
+<li>
 <p>Run the script again...</p>
+ <div id="admonition-terminal-6" class="admonition admonish-terminal" role="note" aria-labelledby="admonition-terminal-6-title">
+ <div class="admonition-title">
+ <div id="admonition-terminal-6-title">
+<p>Terminal</p>
+ </div>
+ <a class="admonition-anchor-link" href="#admonition-terminal-6"></a>
+ </div>
+ <div>
 <pre><code>$ ./inputoutput.anything
 </code></pre>
 <p>What happened?</p>
+ </div>
+ </div>
+</li>
+<li>
 <p>Well we need to recompile the code.</p>
-<div id="admonition-output-2" class="admonition admonish-output" role="note" aria-labelledby="admonition-output-2-title">
-<div class="admonition-title">
-<div id="admonition-output-2-title">
+ <details id="admonition-output-2" class="admonition admonish-output" role="note" aria-labelledby="admonition-output-2-title">
+ <summary class="admonition-title">
+ <div id="admonition-output-2-title">
 <p>Output</p>
-</div>
-<a class="admonition-anchor-link" href="#admonition-output-2"></a>
-</div>
-<div>
+ </div>
+ <a class="admonition-anchor-link" href="#admonition-output-2"></a>
+ </summary>
+ <div>
 <pre><code>$ gcc inputoutput.c -o inputoutput.anything
 $ ./inputoutput.anything
 Number = 5
 
 </code></pre>
-<p>We use <code>%d</code> format specifier to print <code>int</code> types. Here, the <code>%d</code> inside the quotations will be replaced by the value of <code>testInteger</code>.</p>
-</div>
-</div>
+ </div>
+ </details>
+</li>
+</ol>
 <hr />
-<h3 id="data-types-printing-float-and-double"><a class="header" href="#data-types-printing-float-and-double">Data Types: Printing Float and Double</a></h3>
+<h3 id="23-data-types-printing-float-and-double"><a class="header" href="#23-data-types-printing-float-and-double">2.3 Data Types: Printing Float and Double</a></h3>
+<ol start="6">
+<li>
 <p>Open and modify the same file again to look like below:</p>
-<div id="admonition-code-3" class="admonition admonish-code" role="note" aria-labelledby="admonition-code-3-title">
-<div class="admonition-title">
-<div id="admonition-code-3-title">
+ <div id="admonition-code-3" class="admonition admonish-code" role="note" aria-labelledby="admonition-code-3-title">
+ <div class="admonition-title">
+ <div id="admonition-code-3-title">
 <p>Code</p>
-</div>
-<a class="admonition-anchor-link" href="#admonition-code-3"></a>
-</div>
-<div>
+ </div>
+ <a class="admonition-anchor-link" href="#admonition-code-3"></a>
+ </div>
+ <div>
 <pre><code class="language-c">#include &lt;stdio.h&gt;
 int main()
 {
@@ -497,35 +598,53 @@ int main()
     return 0;
 }
 </code></pre>
-</div>
-</div>
-<p>Compile the code again using format <code>gcc &lt;filesource&gt; -o &lt;fileoutput&gt;</code>... hint what did you do before?</p>
+ </div>
+ </div>
+ <div id="admonition-explanation-3" class="admonition admonish-example" role="note" aria-labelledby="admonition-explanation-3-title">
+ <div class="admonition-title">
+ <div id="admonition-explanation-3-title">
+<p>Explanation</p>
+ </div>
+ <a class="admonition-anchor-link" href="#admonition-explanation-3"></a>
+ </div>
+ <div>
+<p>To print float, we use <code>%f</code> format specifier. Similarly, we use <code>%lf</code> to print double values.</p>
+ </div>
+ </div>
+</li>
+<li>
+<p>Compile the code again using format <code>gcc &lt;filesource&gt; -o &lt;fileoutput&gt;</code>...</p>
+</li>
+<li>
 <p>Run it <code>./&lt;fileoutput&gt;</code>:</p>
-<div id="admonition-output-3" class="admonition admonish-output" role="note" aria-labelledby="admonition-output-3-title">
-<div class="admonition-title">
-<div id="admonition-output-3-title">
+ <div id="admonition-output-3" class="admonition admonish-output" role="note" aria-labelledby="admonition-output-3-title">
+ <div class="admonition-title">
+ <div id="admonition-output-3-title">
 <p>Output</p>
-</div>
-<a class="admonition-anchor-link" href="#admonition-output-3"></a>
-</div>
-<div>
+ </div>
+ <a class="admonition-anchor-link" href="#admonition-output-3"></a>
+ </div>
+ <div>
 <pre><code>$ ./inputoutput.anything 
 number1 = 13.500000
 number2 = 12.400000
 </code></pre>
-</div>
-</div>
-<p>To print float, we use <code>%f</code> format specifier. Similarly, we use <code>%lf</code> to print double values.</p>
-<h3 id="data-types-printing-characters"><a class="header" href="#data-types-printing-characters">Data Types: Printing Characters</a></h3>
+ </div>
+ </div>
+</li>
+</ol>
+<h3 id="24-data-types-printing-characters"><a class="header" href="#24-data-types-printing-characters">2.4 Data Types: Printing Characters</a></h3>
+<ol start="9">
+<li>
 <p>Open and modify the same file again to look like below:</p>
-<div id="admonition-code-4" class="admonition admonish-code" role="note" aria-labelledby="admonition-code-4-title">
-<div class="admonition-title">
-<div id="admonition-code-4-title">
+ <div id="admonition-code-4" class="admonition admonish-code" role="note" aria-labelledby="admonition-code-4-title">
+ <div class="admonition-title">
+ <div id="admonition-code-4-title">
 <p>Code</p>
-</div>
-<a class="admonition-anchor-link" href="#admonition-code-4"></a>
-</div>
-<div>
+ </div>
+ <a class="admonition-anchor-link" href="#admonition-code-4"></a>
+ </div>
+ <div>
 <pre><code class="language-c">#include &lt;stdio.h&gt;
 int main()
 {
@@ -534,8 +653,21 @@ int main()
     return 0;
 } 
 </code></pre>
-</div>
-</div>
+ </div>
+ </div>
+ <div id="admonition-explanation-4" class="admonition admonish-example" role="note" aria-labelledby="admonition-explanation-4-title">
+ <div class="admonition-title">
+ <div id="admonition-explanation-4-title">
+<p>Explanation</p>
+ </div>
+ <a class="admonition-anchor-link" href="#admonition-explanation-4"></a>
+ </div>
+ <div>
+<p>To print <code>char</code>, we use <code>%c</code> format specifier.</p>
+ </div>
+ </div>
+</li>
+<li>
 <p>Remember to compile and then run:</p>
 <div id="admonition-output-4" class="admonition admonish-output" role="note" aria-labelledby="admonition-output-4-title">
 <div class="admonition-title">
@@ -547,13 +679,25 @@ int main()
 <div>
 <pre><code>$ ./inputoutput.anything 
 character = a
-
 </code></pre>
 </div>
 </div>
-<p>To print <code>char</code>, we use <code>%c</code> format specifier.</p>
-<h3 id="user-input-in-c"><a class="header" href="#user-input-in-c">User Input in C</a></h3>
+</li>
+</ol>
+<h3 id="25-user-input-in-c"><a class="header" href="#25-user-input-in-c">2.5 User Input in C</a></h3>
+<div id="admonition-tip-3" class="admonition admonish-tip" role="note" aria-labelledby="admonition-tip-3-title">
+<div class="admonition-title">
+<div id="admonition-tip-3-title">
+<p>Tip</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-tip-3"></a>
+</div>
+<div>
 <p>In C programming, <code>scanf()</code> is one of the commonly used function to take input from the user. The <code>scanf()</code> function reads formatted input from the standard input such as keyboards.</p>
+</div>
+</div>
+<ol start="11">
+<li>
 <p>Again we will modify the program to look like the code below:</p>
 <div id="admonition-code-5" class="admonition admonish-code" role="note" aria-labelledby="admonition-code-5-title">
 <div class="admonition-title">
@@ -575,6 +719,20 @@ int main()
 </code></pre>
 </div>
 </div>
+<div id="admonition-explanation-5" class="admonition admonish-example" role="note" aria-labelledby="admonition-explanation-5-title">
+<div class="admonition-title">
+<div id="admonition-explanation-5-title">
+<p>Explanation</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-explanation-5"></a>
+</div>
+<div>
+<p>Here, we have used <code>%d</code> format specifier inside the <code>scanf()</code> function to take <code>int</code> input from the user. When the user enters an integer, it is stored in the <code>testInteger</code> variable.</p>
+<p>Notice, that we have used <code>&amp;testInteger</code> inside <code>scanf()</code>. It is because <code>&amp;testInteger</code> gets the address of <code>testInteger</code>, and the value entered by the user is stored in that address. We will cover addressing and pointers at a later date.</p>
+</div>
+</div>
+</li>
+<li>
 <p>Compile and run:</p>
 <div id="admonition-output-5" class="admonition admonish-output" role="note" aria-labelledby="admonition-output-5-title">
 <div class="admonition-title">
@@ -590,20 +748,10 @@ Number = 4
 </code></pre>
 </div>
 </div>
-<p>Here, we have used <code>%d</code> format specifier inside the <code>scanf()</code> function to take <code>int</code> input from the user. When the user enters an integer, it is stored in the <code>testInteger</code> variable.</p>
-<div id="admonition-info-1" class="admonition admonish-info" role="note" aria-labelledby="admonition-info-1-title">
-<div class="admonition-title">
-<div id="admonition-info-1-title">
-<p>Info</p>
-</div>
-<a class="admonition-anchor-link" href="#admonition-info-1"></a>
-</div>
-<div>
-<p>Notice, that we have used <code>&amp;testInteger</code> inside <code>scanf()</code>. It is because <code>&amp;testInteger</code> gets the address of <code>testInteger</code>, and the value entered by the user is stored in that address. We will cover addressing and pointers at a later date.</p>
-</div>
-</div>
+</li>
+</ol>
 <hr />
-<h2 id="format-specifiers"><a class="header" href="#format-specifiers">Format Specifiers</a></h2>
+<h2 id="3-format-specifiers"><a class="header" href="#3-format-specifiers">3. Format Specifiers</a></h2>
 <p>Here is a table of possible format specifiers for input and output:</p>
 <div class="table-wrapper"><table><thead><tr><th>Data Type</th><th>Format Specifier</th></tr></thead><tbody>
 <tr><td><code>int</code></td><td><code>%d</code></td></tr>
@@ -622,29 +770,33 @@ Number = 4
 </tbody></table>
 </div>
 <hr />
-<h2 id="data-types"><a class="header" href="#data-types">Data Types</a></h2>
-<p>Create a new file with <code>nano</code> like this:</p>
-<div id="admonition-terminal-6" class="admonition admonish-terminal" role="note" aria-labelledby="admonition-terminal-6-title">
-<div class="admonition-title">
-<div id="admonition-terminal-6-title">
+<h2 id="4-data-types"><a class="header" href="#4-data-types">4. Data Types</a></h2>
+<ol>
+<li>
+<p>Create a new file with <code>vim</code> like this:</p>
+ <div id="admonition-terminal-7" class="admonition admonish-terminal" role="note" aria-labelledby="admonition-terminal-7-title">
+ <div class="admonition-title">
+ <div id="admonition-terminal-7-title">
 <p>Terminal</p>
-</div>
-<a class="admonition-anchor-link" href="#admonition-terminal-6"></a>
-</div>
-<div>
+ </div>
+ <a class="admonition-anchor-link" href="#admonition-terminal-7"></a>
+ </div>
+ <div>
 <pre><code>$ vim dataTypeSize.c
 </code></pre>
-</div>
-</div>
+ </div>
+ </div>
+</li>
+<li>
 <p>We are going to write a program that returns the size of each data type availabe in <code>c</code>.</p>
-<div id="admonition-code-6" class="admonition admonish-code" role="note" aria-labelledby="admonition-code-6-title">
-<div class="admonition-title">
-<div id="admonition-code-6-title">
+ <div id="admonition-code-6" class="admonition admonish-code" role="note" aria-labelledby="admonition-code-6-title">
+ <div class="admonition-title">
+ <div id="admonition-code-6-title">
 <p>Code</p>
-</div>
-<a class="admonition-anchor-link" href="#admonition-code-6"></a>
-</div>
-<div>
+ </div>
+ <a class="admonition-anchor-link" href="#admonition-code-6"></a>
+ </div>
+ <div>
 <pre><code class="language-c">#include&lt;stdio.h&gt;
 int main(){
 
@@ -662,32 +814,33 @@ int main(){
 }
 
 </code></pre>
-</div>
-</div>
-<div id="admonition-terminal-7" class="admonition admonish-terminal" role="note" aria-labelledby="admonition-terminal-7-title">
-<div class="admonition-title">
-<div id="admonition-terminal-7-title">
+ </div>
+ </div>
+ <div id="admonition-terminal-8" class="admonition admonish-terminal" role="note" aria-labelledby="admonition-terminal-8-title">
+ <div class="admonition-title">
+ <div id="admonition-terminal-8-title">
 <p>Terminal</p>
-</div>
-<a class="admonition-anchor-link" href="#admonition-terminal-7"></a>
-</div>
-<div>
+ </div>
+ <a class="admonition-anchor-link" href="#admonition-terminal-8"></a>
+ </div>
+ <div>
 <pre><code>gcc dataTypeSize.c -o dataTypeSize
 </code></pre>
-</div>
-</div>
+ </div>
+ </div>
+</li>
+<li>
 <p>Now enter the following to see the data types and there available sizes in bytes:</p>
-<div id="admonition-output-6" class="admonition admonish-output" role="note" aria-labelledby="admonition-output-6-title">
-<div class="admonition-title">
-<div id="admonition-output-6-title">
+ <div id="admonition-output-6" class="admonition admonish-output" role="note" aria-labelledby="admonition-output-6-title">
+ <div class="admonition-title">
+ <div id="admonition-output-6-title">
 <p>Output</p>
-</div>
-<a class="admonition-anchor-link" href="#admonition-output-6"></a>
-</div>
-<div>
+ </div>
+ <a class="admonition-anchor-link" href="#admonition-output-6"></a>
+ </div>
+ <div>
 <pre><code>$ ./dataTypeSize
 
-```c
 Data_Types              Storage_Size 
 char                    1 byte(s) 
 int                     4 byte(s) 
@@ -698,8 +851,10 @@ long                    8 byte(s)
 unsigned long           8 byte(s) 
 long double             16 byte(s) 
 </code></pre>
-</div>
-</div>
+ </div>
+ </div></li>
+</ol>
+
                     </main>
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->

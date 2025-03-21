@@ -173,26 +173,52 @@
 <h2 id="bash-system"><a class="header" href="#bash-system">Bash system</a></h2>
 <ol>
 <li>Navigate to a terminal to with a bash shell</li>
-<li><code>cd</code> to <code>ELEE1119</code>, <code>$ cd ~/ELEE1119</code></li>
-<li>Make new directory, <code>$ mkdir scripting</code></li>
+<li>Make a new directory with the <code>mkdir</code> command called <code>Shell</code>, and the change to that directory <code>$ cd ~/path/to/Shell</code></li>
+<li>Make new directory, <code>$ mkdir scripting</code> and again change directory to <code>scripting</code></li>
 </ol>
 <hr />
 <h2 id="task-1--shebanghashbang"><a class="header" href="#task-1--shebanghashbang">Task 1. <code>#!</code> Shebang/hashbang</a></h2>
 <ol>
 <li>
 <p>Create a new file called <code>script.sh</code></p>
-<ul>
-<li><code>$ touch script.sh</code></li>
-</ul>
+<div id="admonition-terminal" class="admonition admonish-terminal" role="note" aria-labelledby="admonition-terminal-title">
+<div class="admonition-title">
+<div id="admonition-terminal-title">
+<p>Terminal</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-terminal"></a>
+</div>
+<div>
+<pre><code>$ touch script.sh
+</code></pre>
+</div>
+</div>
 </li>
 <li>
 <p>Then edit the file</p>
-<ul>
-<li><code>$ vim script.sh</code></li>
-</ul>
+<div id="admonition-terminal-1" class="admonition admonish-terminal" role="note" aria-labelledby="admonition-terminal-1-title">
+<div class="admonition-title">
+<div id="admonition-terminal-1-title">
+<p>Terminal</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-terminal-1"></a>
+</div>
+<div>
+<pre><code>$ nano script.sh
+</code></pre>
+</div>
+</div>
 </li>
 <li>
 <p>Reproduce the following...</p>
+<div id="admonition-code" class="admonition admonish-code" role="note" aria-labelledby="admonition-code-title">
+<div class="admonition-title">
+<div id="admonition-code-title">
+<p>Code</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-code"></a>
+</div>
+<div>
 <pre><code class="language-sh"> #! /usr/bin/env cat
  VAR1=Hello
  VAR2=World!
@@ -201,24 +227,61 @@
  echo ${VAR1} ${VAR2}
  echo ${VAR3} ${VAR2}
 </code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Write out <code>ctrl+x</code></p>
 </li>
 <li>
 <p>Modify the file's mode bits so that it becomes an executable</p>
+<div id="admonition-terminal-2" class="admonition admonish-terminal" role="note" aria-labelledby="admonition-terminal-2-title">
+<div class="admonition-title">
+<div id="admonition-terminal-2-title">
+<p>Terminal</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-terminal-2"></a>
+</div>
+<div>
 <pre><code class="language-sh">$ ls -l
 $ chmod +x script.sh
 $ ls -l
 </code></pre>
+</div>
+</div>
 <ul>
 <li>
 <p>performing <code>ls -l</code> either side of the <code>chmod</code> command shows the information about the file such as its mode bits.</p>
 <ul>
-<li><strong>Before:</strong>
+<li>
+<p><strong>Before:</strong></p>
+<div id="admonition-output" class="admonition admonish-output" role="note" aria-labelledby="admonition-output-title">
+<div class="admonition-title">
+<div id="admonition-output-title">
+<p>Output</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-output"></a>
+</div>
+<div>
 <pre><code class="language-sh">-rw-r--r-- 1 jovyan users  107 Feb 22 12:35 script.sh
 </code></pre>
+</div>
+</div>
 </li>
-<li><strong>After:</strong>
+<li>
+<p><strong>After:</strong></p>
+<div id="admonition-output-1" class="admonition admonish-output" role="note" aria-labelledby="admonition-output-1-title">
+<div class="admonition-title">
+<div id="admonition-output-1-title">
+<p>Output</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-output-1"></a>
+</div>
+<div>
 <pre><code class="language-sh">-rwxr-xr-x 1 jovyan users    107 Feb 22 12:35 script.sh
 </code></pre>
+</div>
+</div>
 </li>
 </ul>
 </li>
@@ -227,30 +290,73 @@ $ ls -l
 <li>
 <p>Now you are going to run the script two ways.</p>
 <ul>
-<li>first way is to call the script via bash directly:
+<li>
+<p>first way is to call the script via bash directly:</p>
+   <div id="admonition-terminal-3" class="admonition admonish-terminal" role="note" aria-labelledby="admonition-terminal-3-title">
+   <div class="admonition-title">
+   <div id="admonition-terminal-3-title">
+<p>Terminal</p>
+   </div>
+   <a class="admonition-anchor-link" href="#admonition-terminal-3"></a>
+   </div>
+   <div>
 <pre><code class="language-sh">$ bash script.sh
 </code></pre>
+   </div>
+   </div>
 <ul>
-<li><strong>Ouput:</strong>
+<li>
+<p><strong>Ouput:</strong></p>
+ <div id="admonition-output-2" class="admonition admonish-output" role="note" aria-labelledby="admonition-output-2-title">
+ <div class="admonition-title">
+ <div id="admonition-output-2-title">
+<p>Output</p>
+ </div>
+ <a class="admonition-anchor-link" href="#admonition-output-2"></a>
+ </div>
+ <div>
 <pre><code class="language-sh">Hello World!
 Goodbye World!
 </code></pre>
+ </div>
+ </div>
 </li>
 </ul>
 </li>
-<li>Second way is to run the script as an executable</li>
-</ul>
+<li>
+<p>Second way is to run the script as an executable</p>
+  <div id="admonition-terminal-4" class="admonition admonish-terminal" role="note" aria-labelledby="admonition-terminal-4-title">
+  <div class="admonition-title">
+  <div id="admonition-terminal-4-title">
+<p>Terminal</p>
+  </div>
+  <a class="admonition-anchor-link" href="#admonition-terminal-4"></a>
+  </div>
+  <div>
 <pre><code class="language-sh">./script.sh
 </code></pre>
-<ul>
-<li><strong>Ouput:</strong>
+  </div>
+  </div>
+</li>
+<li>
+<p><strong>Ouput:</strong></p>
+ <div id="admonition-output-3" class="admonition admonish-output" role="note" aria-labelledby="admonition-output-3-title">
+ <div class="admonition-title">
+ <div id="admonition-output-3-title">
+<p>Output</p>
+ </div>
+ <a class="admonition-anchor-link" href="#admonition-output-3"></a>
+ </div>
+ <div>
 <pre><code class="language-sh">#! /usr/bin/env cat
- VAR1=Hello
- VAR2=World!
- VAR3=Goodbye
- echo ${VAR1} ${VAR2}
- echo ${VAR3} ${VAR2}
+VAR1=Hello
+VAR2=World!
+VAR3=Goodbye
+echo ${VAR1} ${VAR2}
+echo ${VAR3} ${VAR2}
 </code></pre>
+ </div>
+ </div>
 </li>
 </ul>
 </li>
@@ -258,51 +364,97 @@ Goodbye World!
 <p>Lets modifiy the script so that the <code>#! /usr/bin/env wc</code></p>
 <ul>
 <li>
+<p>write out <code>ctrl+x</code></p>
+</li>
+<li>
 <p>What will running the script do?</p>
 </li>
 <li>
 <p>Run it and find out.</p>
-   <details>
-   <summary>Answer</summary>
+   <details id="admonition-terminal-5" class="admonition admonish-terminal" role="note" aria-labelledby="admonition-terminal-5-title">
+   <summary class="admonition-title">
+   <div id="admonition-terminal-5-title">
+<p>Terminal</p>
+   </div>
+   <a class="admonition-anchor-link" href="#admonition-terminal-5"></a>
+   </summary>
+   <div>
 <pre><code class="language-sh">$ ./script.sh
     12 97 ./script.sh
 </code></pre>
+<p>So you can see that the <code>#!</code> is only operated on when the script is run as an executable, where as using <code>bash</code> command we are calling the interpreter directly and it ignores the <code>#!</code>.</p>
+   </div>
    </details>
 </li>
 </ul>
 </li>
 </ol>
-<p>So you can see that the <code>#!</code> is only operated on when the script is run as an executable, where as using <code>bash</code> command we are calling the interpreter directly and it ignores the <code>#!</code>.</p>
 <hr />
 <h2 id="task-2-variables"><a class="header" href="#task-2-variables">Task 2. Variables</a></h2>
 <ol>
-<li>create a new file and call it <code>int-or-string.sh</code></li>
-<li>Reproduce the following:
-<pre><code class="language-sh">#! /usr/bin/env bash
-A=2334                # Integer... though still a string
-echo "A = ${A} "      # a = 2335
-A=$(( ${A} + 1 ))     # increment A by 1.
-echo "A = ${A} "      # a = 2335
-echo                  # Integer, still.
-</code></pre>
+<li>
+<p>create a new file and call it <code>int-or-string.sh</code></p>
 </li>
-<li>You can change the mode bits again if you like or run with just <code>bash</code>.
+<li>
+<p>Reproduce the following:</p>
+ <div id="admonition-code-1" class="admonition admonish-code" role="note" aria-labelledby="admonition-code-1-title">
+ <div class="admonition-title">
+ <div id="admonition-code-1-title">
+<p>Code</p>
+ </div>
+ <a class="admonition-anchor-link" href="#admonition-code-1"></a>
+ </div>
+ <div>
+<pre><code class="language-sh">#! /usr/bin/env bash
+A=2334                   # Integer... though still a string
+echo "A = ${A} "         # a = 2335
+A=$(( ${A} + 1 ))        # increment A by 1.
+echo "A = ${A} "         # a = 2335, Integer, still.
+echo                     # new empty line
+</code></pre>
+ </div>
+ </div>
+</li>
+<li>
+<p>You can change the mode bits again if you like or run with just <code>bash</code>.</p>
 <ul>
-<li><code>bash int-or-string.sh</code></li>
-<li>or <code>chmod +x int-or-string.sh</code>, <code>./int-or-string.sh</code></li>
-<li><strong>Output:</strong>
+<li>
+<p><code>bash int-or-string.sh</code></p>
+</li>
+<li>
+<p>or <code>chmod +x int-or-string.sh</code>, <code>./int-or-string.sh</code></p>
+</li>
+<li>
+<p><strong>Output:</strong></p>
+<div id="admonition-output-4" class="admonition admonish-output" role="note" aria-labelledby="admonition-output-4-title">
+<div class="admonition-title">
+<div id="admonition-output-4-title">
+<p>Output</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-output-4"></a>
+</div>
+<div>
 <pre><code class="language-sh">A = 2334
 A = 2335 
 </code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>This behaved as expected, using arthemtric expansion <code>$((...))</code> to increment variable <code>A</code> by 1.</p>
 </li>
 </ul>
 </li>
-</ol>
-<ul>
-<li>This behaved as expected, using arthemtric expansion <code>$((...))</code> to increment variable <code>A</code> by 1.</li>
-</ul>
-<ol start="4">
-<li>Modify the script to include, pay attention to the comments.
+<li>
+<p>Modify the script to include, pay attention to the comments.</p>
+<div id="admonition-code-2" class="admonition admonish-code" role="note" aria-labelledby="admonition-code-2-title">
+<div class="admonition-title">
+<div id="admonition-code-2-title">
+<p>Code</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-code-2"></a>
+</div>
+<div>
 <pre><code class="language-sh">B=${A/23/BB}             # Substitute "BB" for "23".
                          # This transforms $b into a string.
 echo "B = ${B}"          # B = BB35
@@ -322,9 +474,19 @@ D=$(( ${D} + 1 ))        # 2334 + 1
 echo "D = ${D}"          # D = 2335
 echo
 </code></pre>
+</div>
+</div>
 <ul>
-<li><strong>Output:</strong></li>
-</ul>
+<li>
+<p><strong>Output:</strong></p>
+   <div id="admonition-output-5" class="admonition admonish-output" role="note" aria-labelledby="admonition-output-5-title">
+   <div class="admonition-title">
+   <div id="admonition-output-5-title">
+<p>Output</p>
+   </div>
+   <a class="admonition-anchor-link" href="#admonition-output-5"></a>
+   </div>
+   <div>
 <pre><code class="language-sh">A = 2334
 A = 2335 
 
@@ -336,10 +498,24 @@ C = BB34
 D = 2334
 D = 2335
 </code></pre>
+   </div>
+   </div>
 </li>
-<li>Still on Variables... create a new script called <code>my-name-is.sh</code>
+</ul>
+</li>
+<li>
+<p>Still on Variables... create a new script called <code>my-name-is.sh</code></p>
 <ul>
-<li>reproduce the following code, like from the lecture slide.
+<li>
+<p>reproduce the following code, like from the lecture slide.</p>
+<div id="admonition-code-3" class="admonition admonish-code" role="note" aria-labelledby="admonition-code-3-title">
+<div class="admonition-title">
+<div id="admonition-code-3-title">
+<p>Code</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-code-3"></a>
+</div>
+<div>
 <pre><code class="language-sh">#! /usr/bin/env bash
 GREETING=Hi
 STATEMENT="my name is,"
@@ -352,168 +528,115 @@ echo ${STATEMENT} ${INTERROGATIVEPRONOUN1}
 echo ${STATEMENT} ${INTERROGATIVEPRONOUN2}
 echo ${STATEMENT} ${ALLITERATION} ${NAME}
 </code></pre>
+</div>
+</div>
 </li>
-<li>again note the Uppercase standard for nameing convention here.</li>
-<li>Notice how not all variables values are explicitly declared as string <code>""</code>. You only need to do this if there are spaces between letters/words.</li>
-<li>run the command.
+<li>
+<p>again note the Uppercase standard for nameing convention here.</p>
+</li>
+<li>
+<p>Notice how not all variables values are explicitly declared as string <code>""</code>. You only need to do this if there are spaces between letters/words.</p>
+</li>
+<li>
+<p>run the command.</p>
+<div id="admonition-terminal-6" class="admonition admonish-terminal" role="note" aria-labelledby="admonition-terminal-6-title">
+<div class="admonition-title">
+<div id="admonition-terminal-6-title">
+<p>Terminal</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-terminal-6"></a>
+</div>
+<div>
 <pre><code class="language-sh"> $ bash my-name-is.sh
 </code></pre>
+</div>
+</div>
 </li>
-<li><strong>Output:</strong>
+<li>
+<p><strong>Output:</strong></p>
+<div id="admonition-output-6" class="admonition admonish-output" role="note" aria-labelledby="admonition-output-6-title">
+<div class="admonition-title">
+<div id="admonition-output-6-title">
+<p>Output</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-output-6"></a>
+</div>
+<div>
 <pre><code class="language-sh">my name is, what?
 my name is, who?
 my name is, chka-chka Slim Shady
 </code></pre>
-</li>
+</div>
+</div>
+   <div id="admonition-explanation" class="admonition admonish-example" role="note" aria-labelledby="admonition-explanation-title">
+   <div class="admonition-title">
+   <div id="admonition-explanation-title">
+<p>Explanation</p>
+   </div>
+   <a class="admonition-anchor-link" href="#admonition-explanation"></a>
+   </div>
+   <div>
+<ul>
 <li>But hold on... what about <code>NAME=${1:-"Slim Shady"}</code>
 <ul>
 <li>Well this special operation allows default values to be assigned to the variable if something is <code>null</code> such as <code>1</code> is the positional number for a parameter coming into the script when it is called from the CLIm if this is <code>null</code> then set <code>NAME=Slim Shady</code>.</li>
 </ul>
 </li>
-<li>Try calling the script but this time provide your first name, or mulitple names encapsulated with <code>"name name name"</code>
-<pre><code class="language-sh">$ bash my-name-is.sh Seb
-</code></pre>
+</ul>
+   </div>
+   </div>
 </li>
-<li><strong>Output:</strong>
+<li>
+<p>Try calling the script but this time provide your first name, or mulitple names encapsulated with <code>"name name name"</code></p>
+ <div id="admonition-terminal-7" class="admonition admonish-terminal" role="note" aria-labelledby="admonition-terminal-7-title">
+ <div class="admonition-title">
+ <div id="admonition-terminal-7-title">
+<p>Terminal</p>
+ </div>
+ <a class="admonition-anchor-link" href="#admonition-terminal-7"></a>
+ </div>
+ <div>
+<pre><code class="language-sh">$ bash my-name-is.sh Seb 
+</code></pre>
+ </div>
+ </div>
+</li>
+<li>
+<p><strong>Output:</strong></p>
+  <div id="admonition-output-7" class="admonition admonish-output" role="note" aria-labelledby="admonition-output-7-title">
+  <div class="admonition-title">
+  <div id="admonition-output-7-title">
+<p>Output</p>
+  </div>
+  <a class="admonition-anchor-link" href="#admonition-output-7"></a>
+  </div>
+  <div>
 <pre><code class="language-sh">my name is, what?
 my name is, who?
 my name is, chka-chka Seb
 </code></pre>
+  </div>
+  </div>
 </li>
 </ul>
 </li>
 </ol>
 <hr />
-<h2 id="task-3--special-parameters-and-conditions"><a class="header" href="#task-3--special-parameters-and-conditions">Task 3.  Special parameters and conditions</a></h2>
-<p>So now you are going to understand in more detail how parameters work.</p>
-<ol>
-<li>Create a new script called <code>parameters.sh</code></li>
-<li>edit the script to look like this:
-<pre><code class="language-sh">#! /usr/bin/env bash
-while getopts u:a:f: flag
-do
-case "${flag}" in
-    u) username=${OPTARG};;
-    a) age=${OPTARG};;
-    f) fullname=${OPTARG};;
-esac
-done
-echo "Username: $username" echo "Age: $age" echo "Full Name: $fullname"
-</code></pre>
-<ul>
-<li>
-<p>Run the script by only supplying your username, age and full name.</p>
-</li>
-<li>
-<p>What happened?</p>
-<details>
-<summary>Answer</summary>
-<pre><code class="language-sh">bash parameters.sh  sb7326l nonyabusiness "Seb Blair"
-Username:  echo Age:  echo Full Name: 
-</code></pre>
-</details>
-</li>
-<li>
-<p>Try again this time provide your a <code>-u</code> then the username.</p>
-<details>
-<summary>Answer</summary>
-<pre><code class="language-sh">bash parameters.sh -u sb7326l nonyabusiness "Seb Blair"
-Username: sb7326l echo Age:  echo Full Name: 
-</code></pre>
-</details>
-</li>
-<li>
-<p>Repeat but provide all options <code>-u</code>, <code>-a</code>, and <code>-f</code></p>
-<details>
-<summary>Answer</summary>
-<pre><code class="language-sh">bash parameters.sh -u sb7326l -a nonyabusiness -f "Seb Blair"
-Username: sb7326l echo Age: nonyabusiness echo Full Name: Seb Blair
-</code></pre>
-</details>
-</li>
-</ul>
-</li>
-<li>Modify the code again, so that parameters can be precheck before coming to <code>getopts</code>
-<pre><code class="language-sh">#! /usr/bin/env bash
-if [[ $# -gt 6 ]];then
-   echo -e "Too many arguments supplied:\n$#"
-   exit 1
-elif [[ $# == 0 ]]; then
-   echo -e "Not enough arguments supplied:\n$#"
-   exit 1
-fi
-
-while getopts u:a:f: flag
-do
-case "${flag}" in
-   u) username=${OPTARG};;
-   a) age=${OPTARG};;
-   f) fullname=${OPTARG};;
-   ?) echo "Not a recongnised option: ${flag}\n"
-   exit 1;; # this is will catch illegal options
-esac
-done
-echo "Username: $username"  "Age: $age"  "Full Name: $fullname"
-</code></pre>
-</li>
-</ol>
-<ul>
-<li>
-<p>Try to run the script with no parameters, what happens?</p>
-</li>
-<li>
-<p>Try to run the script with more than 6 parameters, what happens?</p>
-</li>
-<li>
-<p>What about providing a flag that is not accounted for?</p>
-<pre><code class="language-sh">bash parameters.sh -U sb7326l -a nonyabusiness -f "Seb Blair"
-</code></pre>
-<details>
-<summary>Answer</summary>
-<pre><code class="language-sh">$ bash parameters.sh -U sb7326l -a nonyabusiness -f "Seb Blair"
-parameters.sh: illegal option -- U
-Username:  Age:  Full Name: 
-</code></pre>
-<p>So you see that the <code>getopts</code> deals with illegal options.</p>
-<p>Out of curosity, what happens if you change your parameters orders..?</p>
-</details>
-</li>
-</ul>
-<hr />
-<h2 id="task-4-reading-from-stdin"><a class="header" href="#task-4-reading-from-stdin">Task 4. Reading from stdin</a></h2>
-<p>Here you are replicating what was in the lecture using the <code>read</code> command to caputer user input.</p>
-<ol>
-<li>create a new script called <code>userinput.sh</code></li>
-<li>reproduce the following code, pay attention to the comments:</li>
-</ol>
-<pre><code class="language-sh">#! /usr/bin/env bash
-echo -n "Enter your name:"
-read NAME # stores user's input 
-echo "Your name is:" ${NAME} # prints user's input
-
-# prompt with and stores user's input 
-read -p "Enter your name: " NAME 
-echo Your name is ${NAME}.
-
-# prompt with suppressed feature enable so user input is hidden
-read  -t  5 -p "Enter your password: "$'\n' -s PASSWORD 
-echo ${PASSWORD} # though it is stored as plain text here... 
-
-read -a WORDS &lt;&lt;&lt; "Hello world!" # stores an array '-a` 
-echo ${WORDS[0]} # accessing the arrays indicies
-echo ${WORDS[1]} 
-echo ${WORDS[@]} # access the entire array
-echo ${#WORDS[1]}  # get length of the index
-echo ${#WORDS[@]} # get lenght of array
-</code></pre>
-<hr />
-<h2 id="task-5-loops"><a class="header" href="#task-5-loops">Task 5. Loops</a></h2>
+<h2 id="task-3-loops"><a class="header" href="#task-3-loops">Task 3. Loops</a></h2>
 <ol>
 <li>
 <p>Create a new script called <code>forloops.sh</code></p>
 </li>
 <li>
 <p>Reproduce the following code, pay attention to the comments.</p>
+<div id="admonition-code-4" class="admonition admonish-code" role="note" aria-labelledby="admonition-code-4-title">
+<div class="admonition-title">
+<div id="admonition-code-4-title">
+<p>Code</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-code-4"></a>
+</div>
+<div>
 <pre><code class="language-sh">#! /usr/bin/env bash
 DIR="task5"
 
@@ -527,17 +650,37 @@ for a in 1 2 3 ; do
    touch ${DIR}/foo_$a
 done
 </code></pre>
+</div>
+</div>
 </li>
 <li>
 <p>Run this command, and see if you get a new directory filled with files.</p>
 </li>
 <li>
 <p>You can check by running the ls  &amp; wc -l command in terminal:</p>
+<div id="admonition-terminal-8" class="admonition admonish-terminal" role="note" aria-labelledby="admonition-terminal-8-title">
+<div class="admonition-title">
+<div id="admonition-terminal-8-title">
+<p>Terminal</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-terminal-8"></a>
+</div>
+<div>
 <pre><code class="language-sh">$ ls task5/ | wc -l
 </code></pre>
+</div>
+</div>
 </li>
 <li>
 <p>Lets modify the script again</p>
+<div id="admonition-code-5" class="admonition admonish-code" role="note" aria-labelledby="admonition-code-5-title">
+<div class="admonition-title">
+<div id="admonition-code-5-title">
+<p>Code</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-code-5"></a>
+</div>
+<div>
 <pre><code class="language-sh">#! /usr/bin/env bash
 DIR="task5"
 
@@ -558,12 +701,22 @@ for a in $( seq ${COUNT} ${BOUND} ) ; do
    touch ${DIR}/foo_$a
 done
 </code></pre>
+</div>
+</div>
 </li>
 <li>
 <p>Run the command and perform the command <code>ls task5/ | wc -l</code> to see if the files have been created. Rinse and repeat a few times to see if it works.</p>
 </li>
 <li>
 <p>Now create a <code>whileloop.sh</code> file</p>
+<div id="admonition-code-6" class="admonition admonish-code" role="note" aria-labelledby="admonition-code-6-title">
+<div class="admonition-title">
+<div id="admonition-code-6-title">
+<p>Code</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-code-6"></a>
+</div>
+<div>
 <pre><code class="language-sh">#! /usr/bin/env bash
  COUNTER=1
 
@@ -579,8 +732,11 @@ done
  echo ${COUNTER}
  COUNTER=$((${COUNTER}-1))
  done
+
  echo All done
 </code></pre>
+</div>
+</div>
 </li>
 </ol>
 <ul>
@@ -598,6 +754,206 @@ done
 </ul>
 </li>
 </ul>
+<h2 id="task-4--special-parameters-and-conditions"><a class="header" href="#task-4--special-parameters-and-conditions">Task 4.  Special parameters and conditions</a></h2>
+<p>So now you are going to understand in more detail how parameters work.</p>
+<ol>
+<li>
+<p>Create a new script called <code>parameters.sh</code></p>
+</li>
+<li>
+<p>edit the script to look like this:</p>
+ <div id="admonition-code-7" class="admonition admonish-code" role="note" aria-labelledby="admonition-code-7-title">
+ <div class="admonition-title">
+ <div id="admonition-code-7-title">
+<p>Code</p>
+ </div>
+ <a class="admonition-anchor-link" href="#admonition-code-7"></a>
+ </div>
+ <div>
+<pre><code class="language-sh">#! /usr/bin/env bash
+while getopts u:a:f: flag
+do
+case "${flag}" in
+    u) username=${OPTARG};;
+    a) age=${OPTARG};;
+    f) fullname=${OPTARG};;
+esac
+done
+echo "Username: $username" echo "Age: $age" echo "Full Name: $fullname"
+</code></pre>
+ </div>
+ </div>
+<ul>
+<li>
+<p>Run the script by only supplying your username, age and full name.</p>
+</li>
+<li>
+<p>What happened?</p>
+  <details id="admonition-terminal-answer" class="admonition admonish-terminal" role="note" aria-labelledby="admonition-terminal-answer-title">
+  <summary class="admonition-title">
+  <div id="admonition-terminal-answer-title">
+<p>Terminal Answer</p>
+  </div>
+  <a class="admonition-anchor-link" href="#admonition-terminal-answer"></a>
+  </summary>
+  <div>
+<pre><code class="language-sh">bash parameters.sh sb1501 nonyabusiness "Seb Blair"
+Username:  echo Age:  echo Full Name: 
+</code></pre>
+  </div>
+  </details>
+</details>
+</li>
+<li>
+<p>Try again this time provide your a <code>-u</code> then the username.</p>
+  <details id="admonition-terminal-answer-1" class="admonition admonish-terminal" role="note" aria-labelledby="admonition-terminal-answer-1-title">
+  <summary class="admonition-title">
+  <div id="admonition-terminal-answer-1-title">
+<p>Terminal Answer</p>
+  </div>
+  <a class="admonition-anchor-link" href="#admonition-terminal-answer-1"></a>
+  </summary>
+  <div>
+<pre><code class="language-sh">bash parameters.sh -u sb1501 nonyabusiness "Seb Blair"
+Username: sb1501 echo Age:  echo Full Name: 
+</code></pre>
+  </div>
+  </details>
+</li>
+<li>
+<p>Repeat but provide all options <code>-u</code>, <code>-a</code>, and <code>-f</code></p>
+  <details id="admonition-terminal-answer-2" class="admonition admonish-terminal" role="note" aria-labelledby="admonition-terminal-answer-2-title">
+  <summary class="admonition-title">
+  <div id="admonition-terminal-answer-2-title">
+<p>Terminal Answer</p>
+  </div>
+  <a class="admonition-anchor-link" href="#admonition-terminal-answer-2"></a>
+  </summary>
+  <div>
+<pre><code class="language-sh">bash parameters.sh -u sb1501 -a nonyabusiness -f "Seb Blair"
+Username: sb1501 echo Age: nonyabusiness echo Full Name: Seb Blair
+</code></pre>
+  </div>
+  </details>
+</li>
+</ul>
+</li>
+<li>
+<p>Modify the code again, so that parameters can be precheck before coming to <code>getopts</code></p>
+<div id="admonition-code-8" class="admonition admonish-code" role="note" aria-labelledby="admonition-code-8-title">
+<div class="admonition-title">
+<div id="admonition-code-8-title">
+<p>Code</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-code-8"></a>
+</div>
+<div>
+<pre><code class="language-sh">#! /usr/bin/env bash
+if [[ $# -gt 6 ]];then
+   echo -e "Too many arguments supplied:\n$#"
+   exit 1
+elif [[ $# == 0 ]]; then
+   echo -e "Not enough arguments supplied:\n$#"
+   exit 1
+fi
+
+while getopts u:a:f: flag
+do
+case "${flag}" in
+   u) username=${OPTARG};;
+   a) age=${OPTARG};;
+   f) fullname=${OPTARG};;
+esac
+done
+echo "Username: $username"  "Age: $age"  "Full Name: $fullname"
+</code></pre>
+</div>
+</div>
+</li>
+</ol>
+<ul>
+<li>
+<p>Try to run the script with no parameters, what happens?</p>
+</li>
+<li>
+<p>Try to run the script with more than 6 parameters, what happens?</p>
+</li>
+<li>
+<p>What about providing a flag that is not accounted for?</p>
+<div id="admonition-terminal-9" class="admonition admonish-terminal" role="note" aria-labelledby="admonition-terminal-9-title">
+<div class="admonition-title">
+<div id="admonition-terminal-9-title">
+<p>Terminal</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-terminal-9"></a>
+</div>
+<div>
+<pre><code class="language-sh">bash parameters.sh -U sb1501 -a nonyabusiness -f "Seb Blair"
+</code></pre>
+</div>
+</div>
+<details id="admonition-output-answer" class="admonition admonish-output" role="note" aria-labelledby="admonition-output-answer-title">
+<summary class="admonition-title">
+<div id="admonition-output-answer-title">
+<p>Output: Answer</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-output-answer"></a>
+</summary>
+<div>
+<pre><code class="language-sh">$ bash parameters.sh -U sb1501 -a nonyabusiness -f "Seb Blair"
+  parameters.sh: illegal option -- U
+  Username:  Age:  Full Name: 
+</code></pre>
+<p>So you see that the <code>getopts</code> deals with illegal options.</p>
+<p>Out of curosity, what happens if you change your parameters orders..?</p>
+</div>
+</details>
+</li>
+</ul>
+<hr />
+<h2 id="task-5-reading-from-stdin"><a class="header" href="#task-5-reading-from-stdin">Task 5. Reading from stdin</a></h2>
+<p>Here you are replicating what was in the lecture using the <code>read</code> command to caputer user input.</p>
+<ol>
+<li>
+<p>create a new script called <code>userinput.sh</code></p>
+</li>
+<li>
+<p>reproduce the following code, pay attention to the comments:</p>
+ <div id="admonition-code-9" class="admonition admonish-code" role="note" aria-labelledby="admonition-code-9-title">
+ <div class="admonition-title">
+ <div id="admonition-code-9-title">
+<p>Code</p>
+ </div>
+ <a class="admonition-anchor-link" href="#admonition-code-9"></a>
+ </div>
+ <div>
+<pre><code class="language-sh">#! /usr/bin/env bash
+echo -n "Enter your name:"
+read NAME # stores user's input 
+echo "Your name is:" ${NAME} # prints user's input
+
+# prompt with and stores user's input 
+read -p "Enter your name: " NAME 
+echo Your name is ${NAME}.
+
+# prompt with suppressed feature enable so user input is hidden
+read  -t  5 -p "Enter your password: "$'\n' -s PASSWORD 
+echo ${PASSWORD} # though it is stored as plain text here... 
+
+read -a WORDS &lt;&lt;&lt; "Hello world!" # stores an array '-a` 
+echo ${WORDS[0]} # accessing the arrays indicies
+echo ${WORDS[1]} 
+echo ${WORDS[@]} # access the entire array
+echo ${#WORDS[1]}  # get length of the index
+echo ${#WORDS[@]} # get lenght of array
+</code></pre>
+ </div>
+ </div>
+</li>
+<li>
+<p>Run the code, what output/experience do you get?</p>
+</li>
+</ol>
 
                     </main>
                     <nav class="nav-wrapper" aria-label="Page navigation">

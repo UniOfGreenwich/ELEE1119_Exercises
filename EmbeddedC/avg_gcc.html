@@ -169,45 +169,77 @@
                 <div id="content" class="content">
                     <main><div class="sidetoc"><nav class="pagetoc"></nav></div>
                         <h1 id="avr-gcc-and-avrdude"><a class="header" href="#avr-gcc-and-avrdude">avr-gcc and avrdude</a></h1>
-<h2 id="avr-gcc-the-compiler-for-avr-microcontrollers"><a class="header" href="#avr-gcc-the-compiler-for-avr-microcontrollers">AVR-GCC: The Compiler for AVR Microcontrollers</a></h2>
+<h2 id="1-avr-gcc-the-compiler-for-avr-microcontrollers"><a class="header" href="#1-avr-gcc-the-compiler-for-avr-microcontrollers">1. AVR-GCC: The Compiler for AVR Microcontrollers</a></h2>
+<div id="admonition-note" class="admonition admonish-note" role="note" aria-labelledby="admonition-note-title">
+<div class="admonition-title">
+<div id="admonition-note-title">
+<p>Note</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-note"></a>
+</div>
+<div>
 <p><strong>avr-gcc</strong> is a compiler based on the GNU Compiler Collection (GCC) tailored for AVR microcontrollers, such as those made by Microchip. It translates C code into machine code specific to the AVR architecture, enabling the programming of microcontrollers like the ATmega328P and ATtiny series.</p>
-<h3 id="setting-up-avr-gcc"><a class="header" href="#setting-up-avr-gcc">Setting Up <code>avr-gcc</code></a></h3>
+</div>
+</div>
+<h2 id="2-setting-up-avr-gcc"><a class="header" href="#2-setting-up-avr-gcc">2. Setting Up <code>avr-gcc</code></a></h2>
+<ol>
+<li>
 <p>To begin programming with <code>avr-gcc</code>, ensure the following software is installed:</p>
+ <div id="admonition-explanation" class="admonition admonish-example" role="note" aria-labelledby="admonition-explanation-title">
+ <div class="admonition-title">
+ <div id="admonition-explanation-title">
+<p>Explanation</p>
+ </div>
+ <a class="admonition-anchor-link" href="#admonition-explanation"></a>
+ </div>
+ <div>
 <ol>
 <li><strong>avr-gcc</strong>: The compiler for AVR microcontrollers.</li>
 <li><strong>avrdude</strong>: A utility for uploading compiled code to the microcontroller.</li>
 <li><strong>Makefile (optional)</strong>: For automating the compilation and uploading process.</li>
 </ol>
-<h4 id="adding-avr-gcc-and-avrdude-for-compiling-and-uploading-to-your-path"><a class="header" href="#adding-avr-gcc-and-avrdude-for-compiling-and-uploading-to-your-path">Adding avr-gcc and avrdude for compiling and uploading to your PATH</a></h4>
-<p>Add either of the following to your <code>~/.bashrc</code> file</p>
+ </div>
+ </div>
+</li>
+</ol>
+<h3 id="22-adding-avr-gcc-and-avrdude-for-compiling-and-uploading-to-your-path"><a class="header" href="#22-adding-avr-gcc-and-avrdude-for-compiling-and-uploading-to-your-path">2.2 Adding avr-gcc and avrdude for compiling and uploading to your PATH</a></h3>
+<ol start="2">
+<li>Add either of the following to your <code>~/.bashrc</code> file</li>
+</ol>
+<ul>
+<li>
 <p>If you are on a university PC then:</p>
-<div id="admonition-code" class="admonition admonish-code" role="note" aria-labelledby="admonition-code-title">
-<div class="admonition-title">
-<div id="admonition-code-title">
+ <div id="admonition-code" class="admonition admonish-code" role="note" aria-labelledby="admonition-code-title">
+ <div class="admonition-title">
+ <div id="admonition-code-title">
 <p>Code</p>
-</div>
-<a class="admonition-anchor-link" href="#admonition-code"></a>
-</div>
-<div>
+ </div>
+ <a class="admonition-anchor-link" href="#admonition-code"></a>
+ </div>
+ <div>
 <pre><code class="language-bash">export PATH=$PATH:"/c/ProgramData/arduino-ide-v2/Local/Arduino15/packages/arduino/tools/avr-gcc/7.3.0-atmel3.6.1-arduino7/bin"
 export PATH=$PATH:"/c/ProgramData/arduino-ide-v2/Local/Arduino15/packages/arduino/tools/avr-dude/6.3.0-arduino17/bin"
 </code></pre>
-</div>
-</div>
+ </div>
+ </div>
+</li>
+<li>
 <p>If you are on a on your own windows PC then:</p>
-<div id="admonition-code-1" class="admonition admonish-code" role="note" aria-labelledby="admonition-code-1-title">
-<div class="admonition-title">
-<div id="admonition-code-1-title">
+ <div id="admonition-code-1" class="admonition admonish-code" role="note" aria-labelledby="admonition-code-1-title">
+ <div class="admonition-title">
+ <div id="admonition-code-1-title">
 <p>Code</p>
-</div>
-<a class="admonition-anchor-link" href="#admonition-code-1"></a>
-</div>
-<div>
+ </div>
+ <a class="admonition-anchor-link" href="#admonition-code-1"></a>
+ </div>
+ <div>
 <pre><code class="language-bash">export PATH=$PATH:"/c/users/yourusername/AppData/Local/Arduino15/packages/arduino/tools/avr-gcc/7.3.0-atmel3.6.1-arduino7/bin"
 export PATH=$PATH:"/c/users/yourusername/AppData/Local/Arduino15/packages/arduino/tools/avr-dude/6.3.0-arduino17/bin"
 </code></pre>
-</div>
-</div>
+ </div>
+ </div></li>
+</ul>
+
                     </main>
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->

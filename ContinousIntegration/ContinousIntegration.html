@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>ADC to PWM Library - Advanced Computer Engineering</title>
+        <title>Continous Integration - Advanced Computer Engineering</title>
 
 
         <!-- Custom HTML head -->
@@ -139,7 +139,7 @@
                         <a href="https://github.com/uniofgreenwich/ELEE1119_Exercises" title="Git repository" aria-label="Git repository">
                             <i id="git-repository-button" class="fa fa-github"></i>
                         </a>
-                        <a href="https://github.com/uniofgreenwich/ELEE1119_Exercises/edit/main/content/PWMLibrary/ADCtoPWM.md" title="Suggest an edit" aria-label="Suggest an edit">
+                        <a href="https://github.com/uniofgreenwich/ELEE1119_Exercises/edit/main/content/ContinousIntegration/ContinousIntegration.md" title="Suggest an edit" aria-label="Suggest an edit">
                             <i id="git-edit-button" class="fa fa-edit"></i>
                         </a>
 
@@ -168,74 +168,16 @@
 
                 <div id="content" class="content">
                     <main><div class="sidetoc"><nav class="pagetoc"></nav></div>
-                        <h1 id="adc-to-pwm-functionality"><a class="header" href="#adc-to-pwm-functionality">ADC to PWM functionality</a></h1>
-<h2 id="updating-the-pwm-library"><a class="header" href="#updating-the-pwm-library">Updating the PWM library</a></h2>
-<p>We need to add the a new prototype to the <code>pwm.h</code> and the body to the <code>pwm.c</code> files, that converts the ADC value to a the correct PWM duty cycle against the specified period.</p>
-<div id="admonition-note" class="admonition admonish-note" role="note" aria-labelledby="admonition-note-title">
-<div class="admonition-title">
-<div id="admonition-note-title">
-<p>Note</p>
-</div>
-<a class="admonition-anchor-link" href="#admonition-note"></a>
-</div>
-<div>
-<p>Remember that the Beaglebone blacks ADC chip does not use 8bit levels, i.e 0-255 like you would find on a Arduino board. It uses provides the duty cycle as % of the period.</p>
-</div>
-</div>
+                        <h1 id="introduction-continous-integration"><a class="header" href="#introduction-continous-integration">Introduction: Continous Integration</a></h1>
 <ol>
 <li>
-<p>Open the <code>pwm.h</code> file and modify to include the prototype below called <code>map</code>:</p>
- <details id="admonition-suppressed-code-here-7-lines" class="admonition admonish-code" role="note" aria-labelledby="admonition-suppressed-code-here-7-lines-title">
- <summary class="admonition-title">
- <div id="admonition-suppressed-code-here-7-lines-title">
-<p>Suppressed code here [7 lines]</p>
- </div>
- <a class="admonition-anchor-link" href="#admonition-suppressed-code-here-7-lines"></a>
- </summary>
- <div>
-<pre><code class="language-h">#ifndef PWM_H
-#define PWM_H
-
-...
-
-unsigned int map(u_int16_t adc_value, unsigned int period_ns);
-
-#endif
-</code></pre>
- </div>
- </details>
+<p>Create a repository on Github, call it what you want.</p>
 </li>
 <li>
-<p>Next we need to modify the <code>pwm.c</code> file to include the body of the previously defined prototype, place the function at the bottom of the file:</p>
- <details id="admonition-suppressed-code-here-14-lines" class="admonition admonish-code" role="note" aria-labelledby="admonition-suppressed-code-here-14-lines-title">
- <summary class="admonition-title">
- <div id="admonition-suppressed-code-here-14-lines-title">
-<p>Suppressed code here [14 lines]</p>
- </div>
- <a class="admonition-anchor-link" href="#admonition-suppressed-code-here-14-lines"></a>
- </summary>
- <div>
-<pre><code class="language-c">... 
-
-// Map ADC value to PWM duty cycle with user-specified period
-unsigned int map(u_int16_t adc_value, unsigned int period_ns) {
-
-    if (adc_value &gt; 4095) {
-        fprintf(stderr, "ADC value out of range\n");
-        return 1;
-    }
-
-    // Map ADC value (0 to 4095) to PWM duty cycle (0 to period_ns)
-    unsigned int duty_cycle_ns = (adc_value * period_ns) / 4095;
-
-    return duty_cycle_ns;
-}
-</code></pre>
- </div>
- </details>
+<p>Next clone it to your system.</p>
 </li>
 <li>
-<p>Now you need to remake the library:</p>
+<p>Create the following directory</p>
  <div id="admonition-terminal" class="admonition admonish-terminal" role="note" aria-labelledby="admonition-terminal-title">
  <div class="admonition-title">
  <div id="admonition-terminal-title">
@@ -244,163 +186,237 @@ unsigned int map(u_int16_t adc_value, unsigned int period_ns) {
  <a class="admonition-anchor-link" href="#admonition-terminal"></a>
  </div>
  <div>
-<pre><code class="language-sh">$ make clean
-$ make uninstall
-$ make install
+<pre><code>$ mkdir -p .github/workflows
 </code></pre>
  </div>
  </div>
+</li>
+<li>
+<p>Create the following the following file inside of <code>.github/workflows/</code> called <code>check_readme.yml</code> and place the following inside the that file:</p>
+ <div id="admonition-code" class="admonition admonish-code" role="note" aria-labelledby="admonition-code-title">
+ <div class="admonition-title">
+ <div id="admonition-code-title">
+<p>Code</p>
+ </div>
+ <a class="admonition-anchor-link" href="#admonition-code"></a>
+ </div>
+ <div>
+<pre><code class="language-yaml">name: README Check
+
+on:
+push:
+    branches:
+    - main  # Change this to your main branch name if different
+
+jobs:
+check-readme:
+    name: Check README
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+    uses: actions/checkout@v2
+    
+    - name: Check for README.md
+    run: |
+        if [ ! -f README.md ]; then
+        echo "ERROR: README.md not found!"
+        exit 1
+        fi
+    
+    - name: Check README headings - Level 1
+    run: |
+        if ! grep -q '^# Introduction' README.md; then
+        echo "ERROR: Introduction heading missing!"
+        exit 1
+        fi
+        if ! grep -q '^# Description' README.md; then
+        echo "ERROR: Description heading missing!"
+        exit 1
+        fi
+    
+    - name: Check README headings - Level 2
+    run: |
+        if ! grep -q '^## Author' README.md; then
+        echo "ERROR: Author heading missing!"
+        exit 1
+        fi
+        if ! grep -q '^## License' README.md; then
+        echo "ERROR: License heading missing!"
+        exit 1
+        fi
+</code></pre>
+ </div>
+ </div>
+</li>
+<li>
+<p>Here is what is going on:</p>
 </li>
 </ol>
-<hr />
-<h2 id="implementing-an-example"><a class="header" href="#implementing-an-example">Implementing an example</a></h2>
-<ol start="4">
+<ul>
 <li>
-<p>We are going to create a script that utlises what we did for <code>adc_read.c</code> and <code>pwm_test.c</code>, by utilising both libraries <code>pwm.h</code> and <code>adc.h</code>.</p>
-<details id="admonition-suppressed-code-here-61-lines" class="admonition admonish-code" role="note" aria-labelledby="admonition-suppressed-code-here-61-lines-title">
-<summary class="admonition-title">
-<div id="admonition-suppressed-code-here-61-lines-title">
-<p>Suppressed code here [61 lines]</p>
-</div>
-<a class="admonition-anchor-link" href="#admonition-suppressed-code-here-61-lines"></a>
-</summary>
-<div>
-<pre><code class="language-c">#include "pwm.h"
-#include "adc.h"
-#include &lt;stdio.h&gt;
-#include &lt;unistd.h&gt;
-#include &lt;stdint.h&gt;
-
-int main() {
-    PWM pwm;
-    unsigned int adc_reading = 0;
-    unsigned int user_defined_period_ns = 100000; // User-defined period in nanoseconds (1 ms for 1 kHz)
-    unsigned int duty_cycle = 0;
-
-    // Initialize PWM on a specified pin, for example "P8_13"
-    pwm_init(&amp;pwm, "P8_13");
-
-    // Set initial PWM period
-    pwm_set_period(&amp;pwm, user_defined_period_ns);
-
-    // Enable PWM output
-    pwm_enable(&amp;pwm);
-
-    qprintf("Phy: %s\nChannel: %s\nChip: %s\nPeriod path: %s\nDuty Cycle path: %s\nEnable path: %s\nPin Mode Path: %s\nPin Mode Sate: %s\n",pwm.phy_pin,pwm.channel,pwm.chip,pwm.period_path,pwm.duty_cycle_path,pwm.enable_path,pwm.pin_mode_path, pwm.pin_mode_state);
-
-    // Loop to read ADC values and update PWM duty cycle
-    for (int i = 0; i &lt; 30; i++) {
-        adc_get_value(0, &amp;adc_reading); // Read ADC value from channel 0
-        printf("ADC Reading: %u\n", adc_reading);
-
-        // Map the ADC reading to the PWM duty cycle and update it
-        duty_cycle = map(adc_reading, user_defined_period_ns);
-
-        pwm_set_duty_cycle(&amp;pwm, duty_cycle);
-
-        sleep(1); // Update every 1 second
-    }
-
-    // Disable PWM and clean up
-    pwm_disable(&amp;pwm);
-    pwm_cleanup(&amp;pwm);
-
-    return 0;
-}
+<p>This line specifies the name of the workflow. It will be displayed in the Actions tab of your GitHub repository.</p>
+  <div id="admonition-terminal-1" class="admonition admonish-terminal" role="note" aria-labelledby="admonition-terminal-1-title">
+  <div class="admonition-title">
+  <div id="admonition-terminal-1-title">
+<p>Terminal</p>
+  </div>
+  <a class="admonition-anchor-link" href="#admonition-terminal-1"></a>
+  </div>
+  <div>
+<pre><code class="language-yaml">name: README Check
 </code></pre>
-</div>
-</details>
+  </div>
+  </div>
 </li>
 <li>
-<p>Remember to create a <code>Makefile</code> file:</p>
- <details id="admonition-suppressed-code-here-25-lines" class="admonition admonish-code" role="note" aria-labelledby="admonition-suppressed-code-here-25-lines-title">
- <summary class="admonition-title">
- <div id="admonition-suppressed-code-here-25-lines-title">
-<p>Suppressed code here [25 lines]</p>
- </div>
- <a class="admonition-anchor-link" href="#admonition-suppressed-code-here-25-lines"></a>
- </summary>
- <div>
-<pre><code class="language-makefile"># Compiler and flags
-CC = gcc
-CFLAGS = -Wall -Werror
-
-# Target executable name
-TARGET = adc2pwm
-
-# Source files
-SRC = adc2pwm.c
-
-# Library to link against
-LIBS = -lioctrl
-
-# Default target: build the executable
-all: $(TARGET)
-
-# Build the executable
-$(TARGET): $(SRC)
-        $(CC) $(CFLAGS) $(SRC) $(LIBS) -o $(TARGET)
-
-# Clean up build artifacts
-clean:
-        rm -f $(TARGET)
-
-# Phony targets to avoid conflicts with files of the same name
-.PHONY: all clean
+<p>This section defines when the workflow should be triggered. In this case, it triggers on every push to the main branch. You can adjust the branch name if your main branch is named differently.</p>
+  <div id="admonition-code-1" class="admonition admonish-code" role="note" aria-labelledby="admonition-code-1-title">
+  <div class="admonition-title">
+  <div id="admonition-code-1-title">
+<p>Code</p>
+  </div>
+  <a class="admonition-anchor-link" href="#admonition-code-1"></a>
+  </div>
+  <div>
+<pre><code class="language-yaml">on:
+push:
+    branches:
+    - main  # Change this to your main branch name if different
 </code></pre>
- </div>
- </details>
+  </div>
+  </div>
 </li>
 <li>
-<p>If all is well, and you have connected up your circuity correctly, the LED should change it's brightness based on the resistance from the potentiometer, for example you may see this terminal output:</p>
-<details id="admonition-output" class="admonition admonish-output" role="note" aria-labelledby="admonition-output-title">
-<summary class="admonition-title">
-<div id="admonition-output-title">
-<p>Output</p>
-</div>
-<a class="admonition-anchor-link" href="#admonition-output"></a>
-</summary>
-<div>
-<pre><code>PWM initialized with:
-Physical Pin: P8_13
-Channel: 7
-Chip: 1
-Period path: /sys/class/pwm/pwm-7:1/period
-Duty Cycle path: /sys/class/pwm/pwm-7:1/duty_cycle
-Enable path: /sys/class/pwm/pwm-7:1/enable
-ADC Reading: 0
-ADC Reading: 0
-ADC Reading: 283
-ADC Reading: 697
-ADC Reading: 1313
-ADC Reading: 1674
-ADC Reading: 1907
-ADC Reading: 2454
-ADC Reading: 2968
-ADC Reading: 3367
-ADC Reading: 3687
-ADC Reading: 3989
-ADC Reading: 3920
-ADC Reading: 4001
-ADC Reading: 3932
-ADC Reading: 3985
-ADC Reading: 4002
-ADC Reading: 4002
-ADC Reading: 4001
-...
+<p>This part starts defining the jobs to be executed. In this case, there is only one job named check-readme. It runs on an Ubuntu environment (specifically, the latest version).</p>
+  <div id="admonition-code-2" class="admonition admonish-code" role="note" aria-labelledby="admonition-code-2-title">
+  <div class="admonition-title">
+  <div id="admonition-code-2-title">
+<p>Code</p>
+  </div>
+  <a class="admonition-anchor-link" href="#admonition-code-2"></a>
+  </div>
+  <div>
+<pre><code class="language-yaml">jobs:
+check-readme:
+    name: Check README
+    runs-on: ubuntu-latest
 </code></pre>
-</div>
-</details></li>
+  </div>
+  </div>
+</li>
+<li>
+<p>This step checks out the code from the repository using the <code>actions/checkout@v2</code> action. It ensures that the workflow has access to the codebase.</p>
+  <div id="admonition-code-3" class="admonition admonish-code" role="note" aria-labelledby="admonition-code-3-title">
+  <div class="admonition-title">
+  <div id="admonition-code-3-title">
+<p>Code</p>
+  </div>
+  <a class="admonition-anchor-link" href="#admonition-code-3"></a>
+  </div>
+  <div>
+<pre><code class="language-yaml">steps:
+- name: Checkout repository
+uses: actions/checkout@v2
+</code></pre>
+  </div>
+  </div>
+</li>
+<li>
+<p>This step runs a shell script to check if the README.md file exists in the repository. If the file doesn't exist, it prints an error message and exits the workflow with a non-zero status code.</p>
+  <div id="admonition-code-4" class="admonition admonish-code" role="note" aria-labelledby="admonition-code-4-title">
+  <div class="admonition-title">
+  <div id="admonition-code-4-title">
+<p>Code</p>
+  </div>
+  <a class="admonition-anchor-link" href="#admonition-code-4"></a>
+  </div>
+  <div>
+<pre><code class="language-yaml">    - name: Check for README.md
+  run: |
+    if [ ! -f README.md ]; then
+      echo "ERROR: README.md not found!"
+      exit 1
+    fi
+</code></pre>
+  </div>
+  </div>
+</li>
+<li>
+<p>This step checks for level 1 headings (# Heading) in the README.md file. It uses grep to search for the specific heading. If the heading is not found, it prints an error message and exits the workflow with a non-zero status code.</p>
+  <div id="admonition-code-5" class="admonition admonish-code" role="note" aria-labelledby="admonition-code-5-title">
+  <div class="admonition-title">
+  <div id="admonition-code-5-title">
+<p>Code</p>
+  </div>
+  <a class="admonition-anchor-link" href="#admonition-code-5"></a>
+  </div>
+  <div>
+<pre><code class="language-yaml">- name: Check README headings - Level 1
+run: |
+if ! grep -q '^# Introduction' README.md; then
+    echo "ERROR: Introduction heading missing!"
+    exit 1
+fi
+if ! grep -q '^# Description' README.md; then
+    echo "ERROR: Description heading missing!"
+    exit 1
+fi
+</code></pre>
+  </div>
+  </div>
+</li>
+<li>
+<p>Similar to the previous step, this one checks for level 2 headings (## Heading) in the README.md file. It uses grep to search for the specific headings (Author and License). If any of the headings are not found, it prints an error message and exits the workflow with a non-zero status code.</p>
+  <div id="admonition-code-6" class="admonition admonish-code" role="note" aria-labelledby="admonition-code-6-title">
+  <div class="admonition-title">
+  <div id="admonition-code-6-title">
+<p>Code</p>
+  </div>
+  <a class="admonition-anchor-link" href="#admonition-code-6"></a>
+  </div>
+  <div>
+<pre><code class="language-yaml">- name: Check README headings - Level 2
+    run: |
+    if ! grep -q '^## Author' README.md; then
+        echo "ERROR: Author heading missing!"
+        exit 1
+    fi
+    if ! grep -q '^## License' README.md; then
+        echo "ERROR: License heading missing!"
+        exit 1
+    fi
+</code></pre>
+  </div>
+  </div>
+</li>
+</ul>
+<ol start="6">
+<li>
+<p>Create a <code>README.md</code> and add the <code># Introduction</code> to the first line</p>
+</li>
+<li>
+<p><code>$ git commit -am "add: add README.md and check_readme.yaml</code></p>
+</li>
+<li>
+<p><code>$ git push</code></p>
+</li>
+<li>
+<p>Now go to the repo on line and watch the <strong>actions</strong> unfold.</p>
+</li>
+<li>
+<p>Try to pass each test.</p>
+</li>
 </ol>
 
                     </main>
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../PWMLibrary/PWMLibrary.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../ContinousDeployment/ContinousDeployment.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="../Libioctrl/Libioctrl.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../ReleaseDeployment/ReleaseDeployment.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -410,11 +426,11 @@ ADC Reading: 4001
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../PWMLibrary/PWMLibrary.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../ContinousDeployment/ContinousDeployment.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="../Libioctrl/Libioctrl.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../ReleaseDeployment/ReleaseDeployment.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>

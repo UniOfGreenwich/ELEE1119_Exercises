@@ -205,34 +205,39 @@ export PATH=$PATH:"/c/Program Files/w64devkit/bin"
 </ul>
 </div>
 </div>
+<h2 id="1-blinkino"><a class="header" href="#1-blinkino">1. <code>blink.ino</code></a></h2>
+<ol>
+<li>
 <p>So you are no doubt familiar with the well known <code>blink.ino</code>:</p>
-<div id="admonition-code" class="admonition admonish-code" role="note" aria-labelledby="admonition-code-title">
-<div class="admonition-title">
-<div id="admonition-code-title">
+ <div id="admonition-code" class="admonition admonish-code" role="note" aria-labelledby="admonition-code-title">
+ <div class="admonition-title">
+ <div id="admonition-code-title">
 <p>Code</p>
-</div>
-<a class="admonition-anchor-link" href="#admonition-code"></a>
-</div>
-<div>
+ </div>
+ <a class="admonition-anchor-link" href="#admonition-code"></a>
+ </div>
+ <div>
 <pre><code class="language-c">// the setup function runs once when you press reset or power the board
 void setup() {
-  // initialize digital pin LED_BUILTIN as an output.
-  pinMode(LED_BUILTIN, OUTPUT);
+// initialize digital pin LED_BUILTIN as an output.
+pinMode(LED_BUILTIN, OUTPUT);
 }
 
 // the loop function runs over and over again forever
 void loop() {
-  digitalWrite(LED_BUILTIN, HIGH);  // turn the LED on (HIGH is the voltage level)
-  delay(1000);                      // wait for a second
-  digitalWrite(LED_BUILTIN, LOW);   // turn the LED off by making the voltage LOW
-  delay(1000);                      // wait for a second
+digitalWrite(LED_BUILTIN, HIGH);  // turn the LED on (HIGH is the voltage level)
+delay(1000);                      // wait for a second
+digitalWrite(LED_BUILTIN, LOW);   // turn the LED off by making the voltage LOW
+delay(1000);                      // wait for a second
 }
 </code></pre>
-</div>
-</div>
+ </div>
+ </div>
 <p>There is a lot of abstraction happening here, where are the ports/registers?</p>
 <p>Let's now turn this into an embedded program!</p>
-<h2 id="create-blinkc"><a class="header" href="#create-blinkc">Create <code>blink.c</code></a></h2>
+</li>
+</ol>
+<h2 id="2-create-blinkc"><a class="header" href="#2-create-blinkc">2. Create <code>blink.c</code></a></h2>
 <ol>
 <li>
 <p>Create a new directory called <code>embeddedC</code> and a child directory <code>blink</code></p>
@@ -338,7 +343,7 @@ register_value &amp;= ~(1 &lt;&lt; 2); // 0b11111011
 </li>
 </ol>
 <hr />
-<h2 id="compiling-object-file"><a class="header" href="#compiling-object-file">Compiling: Object file</a></h2>
+<h2 id="3-compiling-object-file"><a class="header" href="#3-compiling-object-file">3. Compiling: Object file</a></h2>
 <ol start="4">
 <li>
 <p>We need to compile the code so that it can be uploaded to the atmega328p chip:</p>
@@ -483,7 +488,7 @@ e:    90 40           sbci    r25, 0x00       ; 0
 </li>
 </ol>
 <hr />
-<h2 id="compiling-elf-executable-and-linkable-format-file"><a class="header" href="#compiling-elf-executable-and-linkable-format-file">Compiling: <code>.elf</code> (Executable and Linkable Format) file</a></h2>
+<h2 id="4-compiling-elf-executable-and-linkable-format-file"><a class="header" href="#4-compiling-elf-executable-and-linkable-format-file">4. Compiling: <code>.elf</code> (Executable and Linkable Format) file</a></h2>
 <ol start="6">
 <li>
 <p>Now we can make the <code>.elf</code> (Executable and Linkable Format) file, run the following code:</p>
@@ -568,7 +573,7 @@ Contents of section .debug_str:
 </li>
 </ol>
 <hr />
-<h2 id="compiling-hex-file"><a class="header" href="#compiling-hex-file">Compiling: hex file</a></h2>
+<h2 id="5-compiling-hex-file"><a class="header" href="#5-compiling-hex-file">5. Compiling: hex file</a></h2>
 <ol start="8">
 <li>
 <p>Now we need to create the <code>.hex</code> file to be burned to the atmega328p:</p>
@@ -696,7 +701,7 @@ Contents of section .sec1:
 </li>
 </ol>
 <hr />
-<h2 id="uploading-blink"><a class="header" href="#uploading-blink">Uploading Blink</a></h2>
+<h2 id="6-uploading-blink"><a class="header" href="#6-uploading-blink">6. Uploading Blink</a></h2>
 <ol start="10">
 <li>
 <p>Now its time to upload the code:</p>

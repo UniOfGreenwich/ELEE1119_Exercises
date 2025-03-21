@@ -169,11 +169,11 @@
                 <div id="content" class="content">
                     <main><div class="sidetoc"><nav class="pagetoc"></nav></div>
                         <h1 id="writing-man-pages"><a class="header" href="#writing-man-pages">Writing <code>man-pages</code></a></h1>
-<h2 id="introduction"><a class="header" href="#introduction">Introduction</a></h2>
+<h2 id="1-introduction"><a class="header" href="#1-introduction">1. Introduction</a></h2>
 <p>Manual pages are the canonical type of documentation for Unix systems. They are a bit arcane, but for a technology several decades old, they’ve held up quite well. The arcane bit is the markup language. This is a brief tutorial on writing good manual pages, at least for the typical cases. You’ll be assumed to be familiar with reading manual pages already.</p>
 <p>There are actually many ways to produce manual pages. The <code>man(1)</code> command needs a file using <code>troff(1)</code> formatting commands. <code>troff</code> is a typesetting system from the 1970s, written by the Unix developers. The <code>troff</code> file can be written manually, or generated from other formats, such as <code>DocBook</code> or Perl POD markup. On Linux, <code>groff</code>, the GNU implementation of <code>troff</code>, is used.</p>
 <hr />
-<h2 id="conventions-in-manual-pages"><a class="header" href="#conventions-in-manual-pages">Conventions in manual pages</a></h2>
+<h2 id="2-conventions-in-manual-pages"><a class="header" href="#2-conventions-in-manual-pages">2. Conventions in manual pages</a></h2>
 <p>The important thing is that the formatted page follows manpage typesetting and other conventions, so that readers can efficiently extract the needed information from them. This bit is important: manpages are <strong>reference documentation</strong>, intended to <strong>quickly answer questions</strong> like "what is the purpose of this command?" or "is there an option to show more information about files?".</p>
 <p>Here are some of the more important conventions:</p>
 <ul>
@@ -201,11 +201,19 @@ add examples for the common cases, not just special ones: you may think your pro
 </li>
 </ul>
 <hr />
-<h2 id="example-manual-page"><a class="header" href="#example-manual-page">Example manual page</a></h2>
-<blockquote>
-<p>You can complete this on a linux machine or environment.</p>
-</blockquote>
-<p><code>troff</code> is a programming language for typesetting. It has a macro facility, and several macro packages have been written for writing manual pages. The most common of these is the <code>-man</code> one. Here’s an example of a <code>manpage</code>, using that, reproduce this opening a file called <code>corrupt.1</code></p>
+<h2 id="3-example-manual-page"><a class="header" href="#3-example-manual-page">3. Example manual page</a></h2>
+<p><code>troff</code> is a programming language for typesetting. It has a macro facility, and several macro packages have been written for writing manual pages. The most common of these is the <code>-man</code> one.</p>
+<ol>
+<li>
+<p>Here’s an example of a <code>manpage</code>, using <code>vim</code>, reproduce this opening a file called <code>corrupt.1</code></p>
+ <div id="admonition-code" class="admonition admonish-code" role="note" aria-labelledby="admonition-code-title">
+ <div class="admonition-title">
+ <div id="admonition-code-title">
+<p>Code</p>
+ </div>
+ <a class="admonition-anchor-link" href="#admonition-code"></a>
+ </div>
+ <div>
 <pre><code>.TH CORRUPT 1
 .SH NAME
 corrupt \- modify files by randomly changing bits
@@ -223,39 +231,119 @@ modifies files by toggling a randomly chosen bit.
 Set the number of bits to modify.
 Default is one bit.
 </code></pre>
+ </div>
+ </div>
+</li>
+<li>
 <p>Save that in a file, and then view it using the command:</p>
+ <div id="admonition-terminal" class="admonition admonish-terminal" role="note" aria-labelledby="admonition-terminal-title">
+ <div class="admonition-title">
+ <div id="admonition-terminal-title">
+<p>Terminal</p>
+ </div>
+ <a class="admonition-anchor-link" href="#admonition-terminal"></a>
+ </div>
+ <div>
 <pre><code>$ gzip &lt; corrupt.1 &gt; corrupt.1.gz &amp;&amp; man -l corrupt.1.gz
 </code></pre>
+ </div>
+ </div>
+</li>
+<li>
 <p>The output should be approximately like this (after a manual conversion to HTML to allow fonts):</p>
-<div align=center>
+ <div align=center>
 <p><img src="./figures/mansyntax.png" alt="center" /></p>
-</div>
+ </div>
+</li>
+</ol>
 <hr />
-<h2 id="the-title-th"><a class="header" href="#the-title-th">The title: .TH</a></h2>
+<h2 id="4-the-title-th"><a class="header" href="#4-the-title-th">4. The title: .TH</a></h2>
+<ol start="4">
+<li>
 <p>Every manual page should start by specifying its title:</p>
+ <div id="admonition-code-1" class="admonition admonish-code" role="note" aria-labelledby="admonition-code-1-title">
+ <div class="admonition-title">
+ <div id="admonition-code-1-title">
+<p>Code</p>
+ </div>
+ <a class="admonition-anchor-link" href="#admonition-code-1"></a>
+ </div>
+ <div>
 <pre><code>.TH CORRUPT 1
 </code></pre>
+ </div>
+ </div>
+ <div id="admonition-explanation" class="admonition admonish-example" role="note" aria-labelledby="admonition-explanation-title">
+ <div class="admonition-title">
+ <div id="admonition-explanation-title">
+<p>Explanation</p>
+ </div>
+ <a class="admonition-anchor-link" href="#admonition-explanation"></a>
+ </div>
+ <div>
 <p>Here, <strong>CORRUPT</strong> is the name of the manual page, and <strong>1</strong> is the section in which the manual page belongs (section 1 for user commands, 2 for system calls, etc; see man-pages(7)` for the whole list).</p>
+ </div>
+ </div>
+</li>
+<li>
 <p>You can additionally add three more pieces of information: the date of this revision of the manual page, where the program it documents came from, and the title of the whole book to which this page belongs to.</p>
+</li>
+</ol>
 <hr />
-<h2 id="name-section"><a class="header" href="#name-section">NAME section</a></h2>
+<h2 id="5-name-section"><a class="header" href="#5-name-section">5. NAME section</a></h2>
+<div id="admonition-code-2" class="admonition admonish-code" role="note" aria-labelledby="admonition-code-2-title">
+<div class="admonition-title">
+<div id="admonition-code-2-title">
+<p>Code</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-code-2"></a>
+</div>
+<div>
 <pre><code>.SH NAME
 corrupt \- modify files by randomly changing bits
 </code></pre>
+</div>
+</div>
+<div id="admonition-explanation-1" class="admonition admonish-example" role="note" aria-labelledby="admonition-explanation-1-title">
+<div class="admonition-title">
+<div id="admonition-explanation-1-title">
+<p>Explanation</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-explanation-1"></a>
+</div>
+<div>
 <p>The <strong>NAME</strong> section declares the name of command that is being documented. It also gives a very brief explanation of what it does. These two parts are separated by backslash-dash. That’s a magic combination, the <code>man</code> command requires it.</p>
 <p>This section is the source for data for <code>man -k</code> searches. That’s a useful feature, and it is good to pay a bit of attention to making the brief explanation as useful as possible. However, do keep it brief; having it be broken on several lines looks bad. (It may be a sign of a badly designed program if the brief explanation is hard to write.)</p>
 <p>The Debian and derivatives man implementation comes with <code>lexgrog</code>, which can verify that you get the <strong>NAME</strong> section right.</p>
+</div>
+</div>
 <hr />
-<h2 id="synopsis-section"><a class="header" href="#synopsis-section">SYNOPSIS section</a></h2>
+<h2 id="6-synopsis-section"><a class="header" href="#6-synopsis-section">6. SYNOPSIS section</a></h2>
+<p>In this section, we give the user a summary of how the command line syntax of the program looks like. Font usage is important here, and carries information. All the parts that are in bold are things that the user is expected to write verbatim. Italic indicates values the user is expected to fill in. Normal font is used for syntax meta-characters: for the brackets that indicate optionality, and the ellipsis that indicates repetition.</p>
+<div id="admonition-code-3" class="admonition admonish-code" role="note" aria-labelledby="admonition-code-3-title">
+<div class="admonition-title">
+<div id="admonition-code-3-title">
+<p>Code</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-code-3"></a>
+</div>
+<div>
 <pre><code>.SH SYNOPSIS
 .B corrupt
 [\fB\-n\fR \fIBITS\fR]
 [\fB\-\-bits\fR \fIBITS\fR]
 .IR file ...
 </code></pre>
-<p>In this section, we give the user a summary of how the command line syntax of the program looks like. Font usage is important here, and carries information. All the parts that are in bold are things that the user is expected to write verbatim. Italic indicates values the user is expected to fill in. Normal font is used for syntax meta-characters: for the brackets that indicate optionality, and the ellipsis that indicates repetition.</p>
-<hr />
-<h2 id="using-fonts"><a class="header" href="#using-fonts">Using fonts</a></h2>
+</div>
+</div>
+<div id="admonition-explanation-2" class="admonition admonish-example" role="note" aria-labelledby="admonition-explanation-2-title">
+<div class="admonition-title">
+<div id="admonition-explanation-2-title">
+<p>Explanation</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-explanation-2"></a>
+</div>
+<div>
 <p>Fonts can be set in two ways:</p>
 <ul>
 <li>
@@ -283,19 +371,31 @@ corrupt \- modify files by randomly changing bits
 <p>An unfortunate bit of arcane syntax is that dashes in options should be prefixed by backslashes. Thus, write <code>\-\-bits</code>, not just <code>--bits</code>. The <strong>Debian</strong> and <strong>Ubuntu</strong> implementation of <code>man</code> treats them the same, for terminal output, but this is not portable.</p>
 <p>Technically a naked <code>-</code> means a hyphen, whereas <code>\-</code> means a minus sign.</p>
 <p>Typographically these are distinct, and they are also distinct in Unicode. The typesetter is free to break a line at a hyphen, but not at a minus. For dashes in options, you should thus use minuses, but in normal text, for normal words, the hyphen.</p>
+</div>
+</div>
 <hr />
-<h2 id="description-section"><a class="header" href="#description-section">DESCRIPTION section</a></h2>
+<h2 id="7-description-section"><a class="header" href="#7-description-section">7. DESCRIPTION section</a></h2>
+<p>The <strong>DESCRIPTION</strong> section describes what the program does, in more detail than the <strong>NAME</strong> section. There are no artificial size limits here, but it’s still good style to avoid being long-winded. At the same time, it is perhaps best to not be quite as terse as the example.</p>
+<div id="admonition-code-4" class="admonition admonish-code" role="note" aria-labelledby="admonition-code-4-title">
+<div class="admonition-title">
+<div id="admonition-code-4-title">
+<p>Code</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-code-4"></a>
+</div>
+<div>
 <pre><code>.SH DESCRIPTION
 .B corrupt
 modifies files by toggling a randomly chosen bit.
 </code></pre>
-<p>The <strong>DESCRIPTION</strong> section describes what the program does, in more detail than the <strong>NAME</strong> section. There are no artificial size limits here, but it’s still good style to avoid being long-winded. At the same time, it is perhaps best to not be quite as terse as the example.</p>
+</div>
+</div>
 <hr />
-<h2 id="paragraphs-and-line-structure"><a class="header" href="#paragraphs-and-line-structure">Paragraphs and line structure</a></h2>
+<h2 id="8-paragraphs-and-line-structure"><a class="header" href="#8-paragraphs-and-line-structure">8. Paragraphs and line structure</a></h2>
 <p>If you write more than one paragraph, start the other paragraphs with the <code>.PP</code> command. Do not just leave an empty line; this makes <code>troff</code> sometimes do the wrong thing. In fact, the manual page source should have no empty lines at all.</p>
 <p><code>troff</code> prefers you to start every sentence on a new line. This lets it typeset end-of-sentence whitespace better, when it produces output using proportional fonts. Also, this makes it easier to compare versions of a manpage with <code>diff</code>.</p>
 <hr />
-<h2 id="more-about-fonts"><a class="header" href="#more-about-fonts">More about fonts</a></h2>
+<h2 id="9--more-about-fonts"><a class="header" href="#9--more-about-fonts">9.  More about fonts</a></h2>
 <p>There are some more font convention:</p>
 <ul>
 <li>use bold for the command you are documenting</li>
@@ -304,14 +404,34 @@ modifies files by toggling a randomly chosen bit.
 </ul>
 <p>See <strong>man-pages(7)</strong> for more details.</p>
 <hr />
-<h2 id="options-section"><a class="header" href="#options-section">OPTIONS section</a></h2>
+<h2 id="10-options-section"><a class="header" href="#10-options-section">10. OPTIONS section</a></h2>
+<ol start="5">
+<li>
+<p>Options are perhaps the most tedious part to document. It is also the part where proper formatting gives the most benefit to the reader.</p>
+ <div id="admonition-code-5" class="admonition admonish-code" role="note" aria-labelledby="admonition-code-5-title">
+ <div class="admonition-title">
+ <div id="admonition-code-5-title">
+<p>Code</p>
+ </div>
+ <a class="admonition-anchor-link" href="#admonition-code-5"></a>
+ </div>
+ <div>
 <pre><code>.SH OPTIONS
 .TP
 .BR \-n ", " \-\-bits =\fIBITS\fR
 Set the number of bits to modify.
 Default is one bit.
 </code></pre>
-<p>Options are perhaps the most tedious part to document. It is also the part where proper formatting gives the most benefit to the reader.</p>
+ </div>
+ </div>
+ <div id="admonition-explanation-3" class="admonition admonish-example" role="note" aria-labelledby="admonition-explanation-3-title">
+ <div class="admonition-title">
+ <div id="admonition-explanation-3-title">
+<p>Explanation</p>
+ </div>
+ <a class="admonition-anchor-link" href="#admonition-explanation-3"></a>
+ </div>
+ <div>
 <p>First, there is the list structure. This is achieved with the <code>.TP</code> command, which is kind of magic. It takes the next line, and does not indent it, and then indents the rest of the paragraph. This gives the nice indented-paragraph style that makes it easy to quickly scan even a long list of options to find the right one.</p>
 <p>That first, un-indented line describes the option, giving its name, and indicates if it gets an argument or not. If there are several names for an option (a long one, and a one-letter one, for example), they should be on the same line, separated by commas. The one-letter option name does not get the option argument, to keep things short.</p>
 <p>Fonts are again used to clarify things:</p>
@@ -320,13 +440,29 @@ Default is one bit.
 <li>any argument is in italic, but the equals sign (if any) is in normal font</li>
 <li>the comma between options is in normal font.</li>
 </ul>
+ </div>
+ </div>
+</li>
+</ol>
 <hr />
-<h2 id="comments-in-troff-source"><a class="header" href="#comments-in-troff-source">Comments in <code>troff</code> source</a></h2>
+<h2 id="11-comments-in-troff-source"><a class="header" href="#11-comments-in-troff-source">11. Comments in <code>troff</code> source</a></h2>
 <p><code>troff</code> also supports comments: start a line with <code>.\"</code> and it is a comment. You can use them, for example, to add white space between descriptions of options in the <strong>OPTIONS</strong> section (remember, no empty lines).</p>
 <hr />
-<h2 id="marking-up-examples"><a class="header" href="#marking-up-examples">Marking up examples</a></h2>
+<h2 id="12-marking-up-examples"><a class="header" href="#12-marking-up-examples">12. Marking up examples</a></h2>
+<ol start="6">
+<li>
 <p>Most manual pages benefit from an <strong>EXAMPLES</strong> section, which shows basic use of the command. Sometimes advanced use is also useful to show, but basic use is almost always useful, because that’s what people need most often.</p>
+</li>
+<li>
 <p>Marking up examples of command line use is a bit tricky in manual pages. Here’s an example of an example, trt this in a new file called <code>example.1</code>:</p>
+ <div id="admonition-code-6" class="admonition admonish-code" role="note" aria-labelledby="admonition-code-6-title">
+ <div class="admonition-title">
+ <div id="admonition-code-6-title">
+<p>Code</p>
+ </div>
+ <a class="admonition-anchor-link" href="#admonition-code-6"></a>
+ </div>
+ <div>
 <pre><code>.TH EXAMPLES 1
 .SH EXAMPLES
 To write some text to the standard output, use the
@@ -342,12 +478,42 @@ usual string
 .PP
 Nifty, huh?
 </code></pre>
+ </div>
+ </div>
+ <div id="admonition-terminal-1" class="admonition admonish-terminal" role="note" aria-labelledby="admonition-terminal-1-title">
+ <div class="admonition-title">
+ <div id="admonition-terminal-1-title">
+<p>Terminal</p>
+ </div>
+ <a class="admonition-anchor-link" href="#admonition-terminal-1"></a>
+ </div>
+ <div>
 <pre><code class="language-sh">$ gzip &lt; example.1 &gt; example.1.gz  &amp;&amp; man -l example.1
 </code></pre>
-<div align=center>
+ </div>
+ </div>
+ <div id="admonition-output" class="admonition admonish-output" role="note" aria-labelledby="admonition-output-title">
+ <div class="admonition-title">
+ <div id="admonition-output-title">
+<p>Output</p>
+ </div>
+ <a class="admonition-anchor-link" href="#admonition-output"></a>
+ </div>
+ <div>
+ <div align=center>
 <p><img src="./figures/example1.png" alt="" /></p>
-</div>
-A few new troff commands:
+ </div>
+ </div>
+ </div>
+ <div id="admonition-explanation-4" class="admonition admonish-example" role="note" aria-labelledby="admonition-explanation-4-title">
+ <div class="admonition-title">
+ <div id="admonition-explanation-4-title">
+<p>Explanation</p>
+ </div>
+ <a class="admonition-anchor-link" href="#admonition-explanation-4"></a>
+ </div>
+ <div>
+<p>A few new troff commands:</p>
 <ul>
 <li><code>.nf</code> turns off paragraph filling mode: we don’t want that for showing command lines.</li>
 <li><code>.fi</code> turns it back on.</li>
@@ -356,6 +522,10 @@ A few new troff commands:
 <li><code>\\</code> puts a backslash in the output. Since troff uses backslash for fonts and other in-line commands, it needs to be doubled in the manual page source so that the output has one.</li>
 </ul>
 <p>The backslash is used to show that the shell command line is broken into two physical lines, even if it is just one logical command. This is fairly commonly needed in manual pages: the page width is usually only 80 monospace characters wide, and with margins and indentations there’s often only about 60 or 65 characters per line in the example. Command line examples therefore need to be wrapped, and it’s better to be done explicitly in the manual page source than letting the man program do it.</p>
+ </div>
+ </div>
+</li>
+</ol>
 <hr />
 <h2 id="other-ways-of-creating-manual-pages"><a class="header" href="#other-ways-of-creating-manual-pages">Other ways of creating manual pages</a></h2>
 <p>This example used the -man macros for <code>troff</code>, since that is the most common way to write manual pages. However, they are admittedly arcane at this point in history. They’re pretty easy to write, but not nearly as convenient as, say, Perl POD markup, or DocBook markup (see the refentry element). However, those other markup languages require conversion tools to produce a file that man can actually use, and the tools do not always properly follow the manpage formatting conventions.</p>

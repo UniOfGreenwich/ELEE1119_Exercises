@@ -170,7 +170,7 @@
                     <main><div class="sidetoc"><nav class="pagetoc"></nav></div>
                         <h1 id="intro-to-rust"><a class="header" href="#intro-to-rust">Intro to Rust</a></h1>
 <p>Rust is a systems programming language focused on speed, memory safety, and parallelism. It's designed to be safe, fast, and easy to use. This tutorial will walk through the basics of Rust, including its syntax, data types, and common patterns.</p>
-<h2 id="variables"><a class="header" href="#variables">Variables</a></h2>
+<h2 id="1-variables"><a class="header" href="#1-variables">1. Variables</a></h2>
 <p>In Rust, variables are immutable by default. To make them mutable, you need to use the <code>mut</code> keyword.</p>
 <div id="admonition-code" class="admonition admonish-code" role="note" aria-labelledby="admonition-code-title">
 <div class="admonition-title">
@@ -188,9 +188,9 @@ y = 15; // allowed because y is mutable
 <span class="boring">}</span></code></pre></pre>
 </div>
 </div>
-<h2 id="data-types"><a class="header" href="#data-types">Data Types</a></h2>
+<h2 id="2-data-types"><a class="header" href="#2-data-types">2. Data Types</a></h2>
 <p>Rust has a variety of data types. The most common ones are:</p>
-<h3 id="scalar-types"><a class="header" href="#scalar-types">Scalar Types</a></h3>
+<h3 id="21-scalar-types"><a class="header" href="#21-scalar-types">2.1 Scalar Types</a></h3>
 <ul>
 <li><strong>Integers</strong>: Whole numbers
 <ul>
@@ -226,7 +226,7 @@ let d: char = 'R';
 <span class="boring">}</span></code></pre></pre>
 </div>
 </div>
-<h3 id="compound-types"><a class="header" href="#compound-types">Compound Types</a></h3>
+<h3 id="22-compound-types"><a class="header" href="#22-compound-types">2.2 Compound Types</a></h3>
 <ul>
 <li><strong>Tuples</strong>: Group different types into a single compound type.</li>
 <li><strong>Arrays</strong>: Store multiple elements of the same type.</li>
@@ -246,7 +246,7 @@ let arr: [i32; 3] = [1, 2, 3];
 <span class="boring">}</span></code></pre></pre>
 </div>
 </div>
-<h2 id="control-flow"><a class="header" href="#control-flow">Control Flow</a></h2>
+<h2 id="3-control-flow"><a class="header" href="#3-control-flow">3. Control Flow</a></h2>
 <p>Rust supports standard control flow structures:</p>
 <ul>
 <li><code>if</code>, <code>else</code></li>
@@ -286,7 +286,7 @@ for i in 0..5 {
 <span class="boring">}</span></code></pre></pre>
 </div>
 </div>
-<h2 id="functions"><a class="header" href="#functions">Functions</a></h2>
+<h2 id="4-functions"><a class="header" href="#4-functions">4. Functions</a></h2>
 <p>In Rust, functions are declared using the <code>fn</code> keyword. Parameters and return types are explicitly defined.</p>
 <div id="admonition-code-4" class="admonition admonish-code" role="note" aria-labelledby="admonition-code-4-title">
 <div class="admonition-title">
@@ -307,7 +307,7 @@ println!("Sum is: {}", result);
 <span class="boring">}</span></code></pre></pre>
 </div>
 </div>
-<h2 id="ownership-and-borrowing"><a class="header" href="#ownership-and-borrowing">Ownership and Borrowing</a></h2>
+<h2 id="5-ownership-and-borrowing"><a class="header" href="#5-ownership-and-borrowing">5. Ownership and Borrowing</a></h2>
 <p>Rust's memory management is based on ownership, borrowing, and lifetimes, which helps ensure memory safety without a garbage collector.</p>
 <ul>
 <li><strong>Ownership</strong>: Each value in Rust has a single owner.</li>
@@ -328,7 +328,7 @@ println!("Sum is: {}", result);
 }</code></pre></pre>
 </div>
 </div>
-<h2 id="keywords"><a class="header" href="#keywords">Keywords</a></h2>
+<h2 id="6-keywords"><a class="header" href="#6-keywords">6. Keywords</a></h2>
 <p>Here are some important Rust keywords:</p>
 <ul>
 <li><code>let</code>, <code>mut</code>: Variable binding and mutability</li>
@@ -339,7 +339,7 @@ println!("Sum is: {}", result);
 <li><code>impl</code>: Implementation block</li>
 <li><code>mod</code>: Module declaration</li>
 </ul>
-<h2 id="common-rust-patterns"><a class="header" href="#common-rust-patterns">Common Rust Patterns</a></h2>
+<h2 id="7-common-rust-patterns"><a class="header" href="#7-common-rust-patterns">7. Common Rust Patterns</a></h2>
 <p>Rust encourages functional programming patterns:</p>
 <ul>
 <li><strong>Pattern Matching</strong>: Using <code>match</code> for more complex decision making.</li>
@@ -375,7 +375,7 @@ match result {
 <p><code>Some</code> is an <code>enum</code> variant used in the <code>Option</code> type. The <code>Option</code> type is a way of representing a value that might or might not be present. It's commonly used for error handling or situations where a value could be missing.</p>
 </div>
 </div>
-<h2 id="conclusion"><a class="header" href="#conclusion">Conclusion</a></h2>
+<h2 id="8-conclusion"><a class="header" href="#8-conclusion">8. Conclusion</a></h2>
 <p>Rust's syntax may take some time to learn, but its emphasis on memory safety and concurrency makes it a powerful tool for system programming.</p>
 
                     </main>

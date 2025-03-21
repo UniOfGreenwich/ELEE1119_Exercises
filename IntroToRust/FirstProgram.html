@@ -169,17 +169,24 @@
                 <div id="content" class="content">
                     <main><div class="sidetoc"><nav class="pagetoc"></nav></div>
                         <h1 id="first-program"><a class="header" href="#first-program">First Program</a></h1>
-<h2 id="git-fork"><a class="header" href="#git-fork">Git fork....</a></h2>
+<h2 id="1-git-fork"><a class="header" href="#1-git-fork">1. Git fork....</a></h2>
+<div id="admonition-tip" class="admonition admonish-tip" role="note" aria-labelledby="admonition-tip-title">
+<div class="admonition-title">
+<div id="admonition-tip-title">
+<p>Tip</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-tip"></a>
+</div>
+<div>
 <p>Go to here and fork the follow repo :</p>
 <ul>
 <li><a href="https://github.com/UniOfGreenwich/learn-rust-with-github-codespaces/fork">https://github.com/UniOfGreenwich/learn-rust-with-github-codespaces/fork</a></li>
 </ul>
 <p>Working together we play with the initial code.</p>
-<h2 id="rust-lab-mocking-text-input"><a class="header" href="#rust-lab-mocking-text-input">Rust Lab: Mocking Text Input</a></h2>
-<p>This lab introduces students to fundamental Rust concepts such as input handling, string manipulation, and control flow. We'll break down the code below step-by-step.</p>
-<hr />
-<h2 id="step-by-step-breakdown"><a class="header" href="#step-by-step-breakdown">Step-by-Step Breakdown</a></h2>
-<h3 id="1-importing-modules"><a class="header" href="#1-importing-modules">1. <strong>Importing Modules</strong></a></h3>
+</div>
+</div>
+<h2 id="2-rust-lab-mocking-text-input"><a class="header" href="#2-rust-lab-mocking-text-input">2. Rust Lab: Mocking Text Input</a></h2>
+<h3 id="21-importing-modules"><a class="header" href="#21-importing-modules">2.1 <strong>Importing Modules</strong></a></h3>
 <p>Modify  <code>src/main.rs</code> by importing the following modules at the top of script:</p>
 <div id="admonition-code" class="admonition admonish-code" role="note" aria-labelledby="admonition-code-title">
 <div class="admonition-title">
@@ -211,7 +218,7 @@ use std::env;
 </ul>
 </div>
 </div>
-<h3 id="2-main-function"><a class="header" href="#2-main-function">2. <strong>Main Function</strong></a></h3>
+<h3 id="22-main-function"><a class="header" href="#22-main-function">2.2 <strong>Main Function</strong></a></h3>
 <p>Continue into the <code>main</code> block, removing the <code>println!</code> macro.</p>
 <div id="admonition-code-1" class="admonition admonish-code" role="note" aria-labelledby="admonition-code-1-title">
 <div class="admonition-title">
@@ -242,7 +249,7 @@ use std::env;
 </div>
 </div>
 <hr />
-<h3 id="3-getting-command-line-arguments"><a class="header" href="#3-getting-command-line-arguments">3. <strong>Getting Command-Line Arguments</strong></a></h3>
+<h3 id="23-getting-command-line-arguments"><a class="header" href="#23-getting-command-line-arguments">2.3 <strong>Getting Command-Line Arguments</strong></a></h3>
 <p>Now on a new line after the above variables, add a <code>Vec</code> with type <code>String</code>, that collects the the arguments passed to the program via the command line</p>
 <div id="admonition-code-2" class="admonition admonish-code" role="note" aria-labelledby="admonition-code-2-title">
 <div class="admonition-title">
@@ -273,7 +280,7 @@ use std::env;
 </div>
 </div>
 <hr />
-<h3 id="4-handling-input"><a class="header" href="#4-handling-input">4. <strong>Handling Input</strong></a></h3>
+<h3 id="24-handling-input"><a class="header" href="#24-handling-input">2.4 <strong>Handling Input</strong></a></h3>
 <p>Now that there is functionality to collect the arguments to the program into a vector of strings. We want to create functionality to read the arguments directly when the program is invoked via the CLI, or if not present then request input from the user.</p>
 <div id="admonition-code-3" class="admonition admonish-code" role="note" aria-labelledby="admonition-code-3-title">
 <div class="admonition-title">
@@ -318,7 +325,7 @@ use std::env;
 </div>
 </div>
 <hr />
-<h3 id="5-normalizing-input"><a class="header" href="#5-normalizing-input">5. <strong>Normalizing Input</strong></a></h3>
+<h3 id="25-normalizing-input"><a class="header" href="#25-normalizing-input">2.5 <strong>Normalizing Input</strong></a></h3>
 <p>To normalize the the inputted string, we can set the string to all lowercase.</p>
 <div id="admonition-code-4" class="admonition admonish-code" role="note" aria-labelledby="admonition-code-4-title">
 <div class="admonition-title">
@@ -349,7 +356,7 @@ use std::env;
 </div>
 </div>
 <hr />
-<h3 id="6-setting-up-state-variable"><a class="header" href="#6-setting-up-state-variable">6. <strong>Setting Up State Variable</strong></a></h3>
+<h3 id="26-setting-up-state-variable"><a class="header" href="#26-setting-up-state-variable">2.6 <strong>Setting Up State Variable</strong></a></h3>
 <p>To keep track of the the type of letter case we are using at anyone time we have a boolean</p>
 <div id="admonition-code-5" class="admonition admonish-code" role="note" aria-labelledby="admonition-code-5-title">
 <div class="admonition-title">
@@ -379,7 +386,7 @@ use std::env;
 </div>
 </div>
 <hr />
-<h3 id="7-transforming-input"><a class="header" href="#7-transforming-input">7. <strong>Transforming Input</strong></a></h3>
+<h3 id="27-transforming-input"><a class="header" href="#27-transforming-input">2.7 <strong>Transforming Input</strong></a></h3>
 <p>Underneath the code above add the functionality to loop over every letter in the vector <code>input</code> and change it to upper or keep as lower case. We need to check if the index value of the string <code>input</code>  is of type alpha, rather than numeric in order to convert the value to upper case too.</p>
 <div id="admonition-code-6" class="admonition admonish-code" role="note" aria-labelledby="admonition-code-6-title">
 <div class="admonition-title">
@@ -430,7 +437,7 @@ use std::env;
 </div>
 </div>
 <hr />
-<h3 id="8-output-the-result"><a class="header" href="#8-output-the-result">8. <strong>Output the Result</strong></a></h3>
+<h3 id="28-output-the-result"><a class="header" href="#28-output-the-result">2.8 <strong>Output the Result</strong></a></h3>
 <p>Once all conversions have happened the program should return the output to the user via standard out.</p>
 <div id="admonition-code-7" class="admonition admonish-code" role="note" aria-labelledby="admonition-code-7-title">
 <div class="admonition-title">
@@ -461,7 +468,7 @@ use std::env;
 </div>
 </div>
 <hr />
-<h2 id="compile"><a class="header" href="#compile">Compile</a></h2>
+<h2 id="3-compile"><a class="header" href="#3-compile">3. Compile</a></h2>
 <p>To compile the code:</p>
 <div id="admonition-terminal" class="admonition admonish-terminal" role="note" aria-labelledby="admonition-terminal-title">
 <div class="admonition-title">
@@ -476,8 +483,8 @@ use std::env;
 </div>
 </div>
 <hr />
-<h2 id="example-execution"><a class="header" href="#example-execution">Example Execution</a></h2>
-<h3 id="case-1-with-argument"><a class="header" href="#case-1-with-argument">Case 1: With Argument</a></h3>
+<h2 id="4-example-execution"><a class="header" href="#4-example-execution">4. Example Execution</a></h2>
+<h3 id="41-case-1-with-argument"><a class="header" href="#41-case-1-with-argument">4.1 Case 1: With Argument</a></h3>
 <div id="admonition-terminal-1" class="admonition admonish-terminal" role="note" aria-labelledby="admonition-terminal-1-title">
 <div class="admonition-title">
 <div id="admonition-terminal-1-title">
@@ -491,7 +498,7 @@ hElLo WoRlD
 </code></pre>
 </div>
 </div>
-<h3 id="case-2-without-argument"><a class="header" href="#case-2-without-argument">Case 2: Without Argument</a></h3>
+<h3 id="42-case-2-without-argument"><a class="header" href="#42-case-2-without-argument">4.2 Case 2: Without Argument</a></h3>
 <div id="admonition-terminal-2" class="admonition admonish-terminal" role="note" aria-labelledby="admonition-terminal-2-title">
 <div class="admonition-title">
 <div id="admonition-terminal-2-title">
@@ -508,7 +515,7 @@ hElLo WoRlD
 </div>
 </div>
 <hr />
-<h2 id="concepts-covered"><a class="header" href="#concepts-covered">Concepts Covered</a></h2>
+<h2 id="5concepts-covered"><a class="header" href="#5concepts-covered">5.Concepts Covered</a></h2>
 <ol>
 <li>Command-line arguments.</li>
 <li>Reading user input.</li>

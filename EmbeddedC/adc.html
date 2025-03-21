@@ -189,15 +189,15 @@
 </div>
 </div>
 <hr />
-<h2 id="understanding-adc-registers-and-ports"><a class="header" href="#understanding-adc-registers-and-ports">Understanding ADC Registers and Ports</a></h2>
+<h2 id="1-understanding-adc-registers-and-ports"><a class="header" href="#1-understanding-adc-registers-and-ports">1. Understanding ADC Registers and Ports</a></h2>
 <p>The ATmega328P has a built-in Analog-to-Digital Converter (ADC) that can convert analog signals to digital values. The ADC uses several registers to configure its operation:</p>
-<h3 id="admux-register-overview"><a class="header" href="#admux-register-overview">ADMUX Register Overview</a></h3>
+<h3 id="12-admux-register-overview"><a class="header" href="#12-admux-register-overview">1.2 ADMUX Register Overview</a></h3>
 <p>The <strong>ADMUX register</strong> is used to configure the ADC (Analog-to-Digital Converter) on the ATmega328P. It allows you to select:</p>
 <ul>
 <li>The reference voltage for the ADC.</li>
 <li>The input channel from which the ADC reads the analog value.</li>
 </ul>
-<h3 id="bit-structure-of-admux"><a class="header" href="#bit-structure-of-admux">Bit Structure of ADMUX</a></h3>
+<h3 id="13-bit-structure-of-admux"><a class="header" href="#13-bit-structure-of-admux">1.3 Bit Structure of ADMUX</a></h3>
 <p>The ADMUX register is an 8-bit register, where each bit has a specific purpose:</p>
 <div class="table-wrapper"><table><thead><tr><th>Bit 7</th><th>Bit 6</th><th>Bit 5</th><th>Bit 4</th><th>Bit 3</th><th>Bit 2</th><th>Bit 1</th><th>Bit 0</th></tr></thead><tbody>
 <tr><td>REFS1</td><td>REFS0</td><td>ADLAR</td><td>MUX3</td><td>MUX2</td><td>MUX1</td><td>MUX0</td><td></td></tr>
@@ -207,7 +207,7 @@
 <li><strong>REFS1, REFS0</strong>: These bits select the reference voltage.</li>
 <li><strong>MUX3, MUX2, MUX1, MUX0</strong>: These bits select the ADC input channel</li>
 </ul>
-<h3 id="admux-adc-multiplexer-selection-register"><a class="header" href="#admux-adc-multiplexer-selection-register"><strong>ADMUX (ADC Multiplexer Selection Register)</strong>:</a></h3>
+<h3 id="14-admux-adc-multiplexer-selection-register"><a class="header" href="#14-admux-adc-multiplexer-selection-register">1.4 <strong>ADMUX (ADC Multiplexer Selection Register)</strong>:</a></h3>
 <ul>
 <li>
 <p><strong>REFS1:REFS0</strong>: Selects the reference voltage for the ADC. We use AVcc (5V) as the reference in our script.</p>
@@ -249,7 +249,7 @@
    </div>
 </li>
 </ul>
-<h3 id="example-1-setting-the-reference-voltage-to-avcc"><a class="header" href="#example-1-setting-the-reference-voltage-to-avcc">Example 1: Setting the Reference Voltage to AVcc</a></h3>
+<h3 id="15-example-1-setting-the-reference-voltage-to-avcc"><a class="header" href="#15-example-1-setting-the-reference-voltage-to-avcc">1.5 Example 1: Setting the Reference Voltage to AVcc</a></h3>
 <div id="admonition-code" class="admonition admonish-code" role="note" aria-labelledby="admonition-code-title">
 <div class="admonition-title">
 <div id="admonition-code-title">
@@ -262,14 +262,23 @@
 </code></pre>
 </div>
 </div>
+<div id="admonition-explanation" class="admonition admonish-example" role="note" aria-labelledby="admonition-explanation-title">
+<div class="admonition-title">
+<div id="admonition-explanation-title">
+<p>Explanation</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-explanation"></a>
+</div>
+<div>
 <ul>
-<li><strong>Explanation</strong>:
-<ul>
-<li><code>(1 &lt;&lt; REFS0)</code> shifts <code>1</code> to the position of the <strong>REFS0</strong> bit (bit 6).</li>
-<li>This sets <strong>REFS0</strong> to <code>1</code> and all other bits to <code>0</code>.</li>
-</ul>
+<li>
+<p><code>(1 &lt;&lt; REFS0)</code> shifts <code>1</code> to the position of the <strong>REFS0</strong> bit (bit 6).</p>
 </li>
-<li><strong>Bitwise Result</strong>:
+<li>
+<p>This sets <strong>REFS0</strong> to <code>1</code> and all other bits to <code>0</code>.</p>
+</li>
+<li>
+<p><strong>Bitwise Result</strong>:</p>
 <ul>
 <li><code>ADMUX = 0b01000000</code></li>
 <li><code>REFS0 = 1</code> (Reference voltage = AVcc)</li>
@@ -277,7 +286,9 @@
 </ul>
 </li>
 </ul>
-<h3 id="example-2-setting-the-reference-voltage-to-avcc-and-selecting-adc3"><a class="header" href="#example-2-setting-the-reference-voltage-to-avcc-and-selecting-adc3">Example 2: Setting the Reference Voltage to AVcc and Selecting ADC3</a></h3>
+</div>
+</div>
+<h3 id="16-example-2-setting-the-reference-voltage-to-avcc-and-selecting-adc3"><a class="header" href="#16-example-2-setting-the-reference-voltage-to-avcc-and-selecting-adc3">1.6 Example 2: Setting the Reference Voltage to AVcc and Selecting ADC3</a></h3>
 <div id="admonition-code-1" class="admonition admonish-code" role="note" aria-labelledby="admonition-code-1-title">
 <div class="admonition-title">
 <div id="admonition-code-1-title">
@@ -290,15 +301,19 @@
 </code></pre>
 </div>
 </div>
-<ul>
-<li><strong>Explanation</strong>:
+<div id="admonition-explanation-1" class="admonition admonish-example" role="note" aria-labelledby="admonition-explanation-1-title">
+<div class="admonition-title">
+<div id="admonition-explanation-1-title">
+<p>Explanation</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-explanation-1"></a>
+</div>
+<div>
 <ul>
 <li><code>(1 &lt;&lt; REFS0)</code>: Sets the <strong>REFS0</strong> bit (bit 6) to <code>1</code> (Reference voltage = AVcc).</li>
 <li><code>(1 &lt;&lt; MUX1)</code>: Sets the <strong>MUX1</strong> bit (bit 1) to <code>1</code>.</li>
 <li><code>(1 &lt;&lt; MUX0)</code>: Sets the <strong>MUX0</strong> bit (bit 0) to <code>1</code>.</li>
 <li>The <code>|</code> operator combines these settings, setting bits <code>REFS0</code>, <code>MUX1</code>, and <code>MUX0</code> to <code>1</code>, while keeping other bits at <code>0</code>.</li>
-</ul>
-</li>
 <li><strong>Bitwise Result</strong>:
 <ul>
 <li><code>ADMUX = 0b01000011</code></li>
@@ -307,7 +322,9 @@
 </ul>
 </li>
 </ul>
-<h3 id="reminder-of-bitwise-operations"><a class="header" href="#reminder-of-bitwise-operations">Reminder of Bitwise operations</a></h3>
+</div>
+</div>
+<h3 id="17-reminder-of-bitwise-operations"><a class="header" href="#17-reminder-of-bitwise-operations">1.7 Reminder of Bitwise operations</a></h3>
 <ul>
 <li>
 <p><code>(1 &lt;&lt; REFS0)</code></p>
@@ -339,7 +356,7 @@
 </li>
 </ul>
 <hr />
-<h3 id="adcsra-adc-control-and-status-register-a"><a class="header" href="#adcsra-adc-control-and-status-register-a"><strong>ADCSRA (ADC Control and Status Register A)</strong>:</a></h3>
+<h3 id="16--adcsra-adc-control-and-status-register-a"><a class="header" href="#16--adcsra-adc-control-and-status-register-a">1.6  <strong>ADCSRA (ADC Control and Status Register A)</strong>:</a></h3>
 <ul>
 <li>
 <p><strong>ADEN</strong>: ADC Enable. Set this bit to enable the ADC.</p>
@@ -374,7 +391,15 @@ So \(\therefore \)
 </li>
 </ul>
 <hr />
-<h2 id="building-a-program-to-grab-the-internal-temperature-of-the-chipset"><a class="header" href="#building-a-program-to-grab-the-internal-temperature-of-the-chipset">Building a program to grab the internal temperature of the chipset</a></h2>
+<h2 id="2-building-a-program-to-grab-the-internal-temperature-of-the-chipset"><a class="header" href="#2-building-a-program-to-grab-the-internal-temperature-of-the-chipset">2. Building a program to grab the internal temperature of the chipset</a></h2>
+<div id="admonition-info-1" class="admonition admonish-info" role="note" aria-labelledby="admonition-info-1-title">
+<div class="admonition-title">
+<div id="admonition-info-1-title">
+<p>Info</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-info-1"></a>
+</div>
+<div>
 <p>Temperature Sensor and ADC Setup:</p>
 <ul>
 <li>The internal temperature sensor is connected to a single-ended ADC input.</li>
@@ -394,6 +419,8 @@ manufacturing calibration values (<code>TS_GAIN</code>, <code>TS_OFFSET</code>)<
 <p>\[Temperature(^\circ C)\ =\ (ADC_{value}-Offset) \cdot Scale\ Factor\]</p>
 <p>
 </p>
+</div>
+</div>
 <ol>
 <li>
 <p>Create a new directory called <code>internalADCTemp</code> and navigate to it and then create a file called <code>internalADCTemp.c</code>:</p>
@@ -556,7 +583,7 @@ clean:
 </li>
 </ol>
 <hr />
-<h2 id="so-how-to-access-the-a0-5-pins"><a class="header" href="#so-how-to-access-the-a0-5-pins">So how to access the A0-5 pins</a></h2>
+<h2 id="3-so-how-to-access-the-a0-5-pins"><a class="header" href="#3-so-how-to-access-the-a0-5-pins">3. So how to access the A0-5 pins</a></h2>
 <p>Now, let's write the script step by step:</p>
 <ul>
 <li>

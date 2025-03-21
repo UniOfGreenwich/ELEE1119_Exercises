@@ -350,29 +350,29 @@ int set_buffer_length(unsigned int len);
   <a class="admonition-anchor-link" href="#admonition-complete-code-here-48-lines"></a>
   </summary>
   <div>
-<pre><code>  ```h
-</code></pre>
-<p>#ifndef ADC_H_
-#define ADC_H_</p>
-<p>/**************************************************</p>
-<ul>
-<li>Contents                                       *</li>
-<li>***********************************************/</li>
-</ul>
-<p>#define SYSFS_ADC_DIR "/sys/bus/iio/devices/iio:device0"
+<pre><code class="language-h">#ifndef ADC_H_
+#define ADC_H_
+
+/**************************************************
+* Contents                                       *
+* ***********************************************/
+
+#define SYSFS_ADC_DIR "/sys/bus/iio/devices/iio:device0"
 #define SYSFS_ADC_ENABLE_PATH "/sys/bus/iio/devices/iio:device0/buffer/enable"
 #define SYSFS_ADC_LENGTH_PATH "/sys/bus/iio/devices/iio:device0/buffer/length"
-#define SYSFS_ADC_SCAN_DIR "/sys/bus/iio/devices/iio:device0/scan_elements"</p>
-<p>#define POLL_TIMEOUT (3 * 1000) /<em>3 seconds</em>/</p>
-<p>#define MAX_BUF 256
+#define SYSFS_ADC_SCAN_DIR "/sys/bus/iio/devices/iio:device0/scan_elements"
+
+#define POLL_TIMEOUT (3 * 1000) /*3 seconds*/
+
+#define MAX_BUF 256
 #define MAX_LEN_BUF 100
 #define ADC_BUF 6
 #define REFVOLTAGE 1.8
 #define MAXADC 4096
-#define MAX_SAMPLE_RATE 2000000 // 200kSPS</p>
-<p>/************************************************</p>
-<ul>
-<li>ADC RELATED                                  *
+#define MAX_SAMPLE_RATE 2000000 // 200kSPS
+
+/************************************************
+* ADC RELATED                                  *
 ************************************************/
 int adc_get_value(unsigned int adcPin, unsigned int *value);
 int adc_fd_open(unsigned int gpio);
@@ -383,14 +383,12 @@ int enable_channel(unsigned int adcPin);
 int disable_channel(unsigned int adcPin);
 int enable_buffer(void);
 int disable_buffer(void);
-int set_buffer_length(unsigned int len);</li>
-</ul>
-<p>#endif /* ADC_H_*/</p>
-<pre><code>
-&lt;/div&gt;
-&lt;/details&gt;
+int set_buffer_length(unsigned int len);
 
+#endif /* ADC_H_*/
 </code></pre>
+  </div>
+  </details>
 </li>
 </ul>
 <h2 id="3-updating-adcc"><a class="header" href="#3-updating-adcc">3. Updating <code>adc.c</code></a></h2>
